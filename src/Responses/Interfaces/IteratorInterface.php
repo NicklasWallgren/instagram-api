@@ -8,11 +8,11 @@ interface IteratorInterface
     /**
      * @return bool
      */
-    public function next(): bool;
+    public function next();
 
     /**
      * @return bool
      */
-    public function rewind(): bool;
+    public function rewind();
 
 }

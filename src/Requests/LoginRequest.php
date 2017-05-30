@@ -2,15 +2,18 @@
 
 namespace NicklasW\Instagram\Requests;
 
+use GuzzleHttp\Promise\Promise;
+use NicklasW\Instagram\HttpClients\Client as HttpClient;
 use NicklasW\Instagram\Requests\Http\Builders\LoginRequestBuilder;
+use NicklasW\Instagram\Requests\Traits\RequestMethods;
 use NicklasW\Instagram\Responses\LoginResponseMessage;
 use NicklasW\Instagram\Responses\Serializers\LoginSerializer;
 use NicklasW\Instagram\Session\Session;
-use NicklasW\Instagram\DTO\Interfaces\ResponseMessageInterface;
-use NicklasW\Instagram\HttpClients\Client as HttpClient;
 
 class LoginRequest extends Request
 {
+
+    use RequestMethods;
 
     /**
      * @var string The username
@@ -40,13 +43,14 @@ class LoginRequest extends Request
     /**
      * Fire the request.
      *
-     * @return ResponseMessageInterface
+     * @return Promise
      */
-    public function fire(): ResponseMessageInterface
+    public function fire(): Promise
     {
         $request = new LoginRequestBuilder($this->username, $this->password, $this->session);
 
-        return (new LoginSerializer($this->session, $this->httpClient))->decode($this->httpClient->request($request->build()));
+        // Return a promise chain
+        return $this->request($request->build(), new LoginSerializer($this->session, $this->httpClient));
     }
 
 }

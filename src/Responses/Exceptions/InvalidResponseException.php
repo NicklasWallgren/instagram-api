@@ -8,6 +8,8 @@ use NicklasW\Instagram\DTO\Envelope;
 class InvalidResponseException extends Exception
 {
 
+    const DEFAULT_MESSAGE = 'Invalid response';
+
     /**
      * @var Envelope
      */
@@ -16,13 +18,13 @@ class InvalidResponseException extends Exception
     /**
      * InvalidResponseException constructor.
      *
-     * @param Envelope $envelope
+     * @param Envelope|null $envelope
      */
-    public function __construct(Envelope $envelope)
+    public function __construct(Envelope $envelope = null)
     {
         $this->envelope = $envelope;
 
-        parent::__construct($envelope->getMessage(), 0, null);
+        parent::__construct($envelope? $envelope->getMessage() : self::DEFAULT_MESSAGE, 0, null);
     }
 
     /**

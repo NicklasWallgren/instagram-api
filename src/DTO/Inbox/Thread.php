@@ -2,9 +2,12 @@
 
 namespace NicklasW\Instagram\DTO\Inbox;
 
+use GuzzleHttp\Promise\Promise;
+use function GuzzleHttp\Promise\task;
 use NicklasW\Instagram\DTO\Cursor\RequestIterator;
 use NicklasW\Instagram\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use NicklasW\Instagram\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use function NicklasW\Instagram\Support\unwrap;
 
 class Thread extends RequestIterator implements OnItemDecodeInterface
 {
@@ -420,24 +423,26 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Step forward and get the next items in thread.
      *
-     * @return bool
+     * @return bool|Promise<bool>
      */
-    public function next(): bool
+    public function next()
     {
         // Check whether there are any older posts
         if (!$this->getHasOlder()) {
             return false;
         }
 
-        return $this->retrieve($this->oldestCursor);
+        return $this->client->getAdapter()->run(function () {
+            return $this->retrieve($this->oldestCursor);
+        });
     }
 
     /**
      * Step backward and get the previous items in thread.
      *
-     * @return bool
+     * @return bool|Promise<bool>
      */
-    public function rewind(): bool
+    public function rewind()
     {
         // Check whether there are any newer posts
         if (!$this->getHasNewer()) {
@@ -453,26 +458,32 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      * @param string $cursor
      * @return bool
      */
-    protected function retrieve(?string $cursor = null): bool
+    protected function retrieve(?string $cursor = null)
     {
         // Query for thread items by cursor
-        $message = $this->thread($this->threadId, $cursor);
+        $promise = task(function () use ($cursor) {
+            return $this->thread($this->threadId, $cursor);
+        });
 
-        // Check if we successfully retrieved additional thread items
-        if (!$message->isSuccess()) {
-            return false;
-        }
+        return $promise->then(function ($promise) {
+            $message = unwrap($promise);
 
-        // Retrieve the thread
-        $thread = $message->getThread();
+            // Check if we successfully retrieved additional thread items
+            if (!$message->isSuccess()) {
+                return false;
+            }
 
-        $this->setNewestCursor($thread->getNewestCursor())
-             ->setOldestCursor($thread->getOldestCursor())
-             ->setItems($thread->getItems())
-             ->setHasOlder($thread->getHasOlder())
-             ->setHasNewer($thread->getHasNewer());
+            // Retrieve the thread
+            $thread = $message->getThread();
 
-        return true;
+            $this->setNewestCursor($thread->getNewestCursor())
+                 ->setOldestCursor($thread->getOldestCursor())
+                 ->setItems($thread->getItems())
+                 ->setHasOlder($thread->getHasOlder())
+                 ->setHasNewer($thread->getHasNewer());
+
+            return true;
+        });
     }
 
     /**
@@ -493,10 +504,11 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      */
     protected function onDecodeUsers()
     {
-        // Remove the old keys
-
-        foreach ($this->users as $user) {
+        // Group by user id
+        foreach ($this->users as $index => $user) {
             $this->users[$user->getId()] = $user;
+
+            unset($this->users[$index]);
         }
     }
 
@@ -505,10 +517,11 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      */
     protected function onDecodeLeftUsers()
     {
-        // Remove the old keys
-
-        foreach ($this->leftUsers as $user) {
+        // Group by user id
+        foreach ($this->leftUsers as $index => $user) {
             $this->leftUsers[$user->getId()] = $user;
+
+            unset($this->leftUsers[$index]);
         }
     }
 

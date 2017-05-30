@@ -2,8 +2,8 @@
 
 namespace NicklasW\Instagram\Requests\Traits;
 
+use GuzzleHttp\Promise\Promise;
 use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\DTO\Messages\HeaderMessage;
 use NicklasW\Instagram\DTO\Messages\InboxMessage;
 use NicklasW\Instagram\DTO\Messages\SessionMessage;
 use NicklasW\Instagram\DTO\Messages\ThreadMessage;
@@ -16,9 +16,9 @@ trait MakeRequestsAccessable
      *
      * @param string $username
      * @param string $password
-     * @return SessionMessage
+     * @return SessionMessage|Promise<SessionMessage>
      */
-    public function login(string $username, string $password): SessionMessage
+    public function login(string $username, string $password): ?SessionMessage
     {
         return $this->getClient()->login($username, $password);
     }
@@ -26,7 +26,7 @@ trait MakeRequestsAccessable
     /**
      * Returns the inbox.
      *
-     * @return InboxMessage
+     * @return InboxMessage|Promise<InboxMessage>
      */
     public function inbox()
     {
@@ -38,7 +38,7 @@ trait MakeRequestsAccessable
      *
      * @param string      $id     The thread id
      * @param string|null $cursor The cursor
-     * @return ThreadMessage
+     * @return ThreadMessage|Promise<ThreadMessage>
      */
     public function thread(string $id, ?string $cursor = null)
     {

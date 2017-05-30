@@ -3,7 +3,7 @@
 
 namespace NicklasW\Instagram\Requests;
 
-use NicklasW\Instagram\DTO\Interfaces\ResponseMessageInterface;
+use GuzzleHttp\Promise\Promise;
 use NicklasW\Instagram\HttpClients\Client as HttpClient;
 use NicklasW\Instagram\Session\Session;
 
@@ -35,8 +35,8 @@ abstract class Request
     /**
      * Fire the request.
      *
-     * @return ResponseMessageInterface
+     * @return Promise
      */
-    abstract public function fire(): ResponseMessageInterface;
+    abstract public function fire(): Promise;
 
 }

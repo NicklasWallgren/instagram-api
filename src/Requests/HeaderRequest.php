@@ -2,14 +2,17 @@
 
 namespace NicklasW\Instagram\Requests;
 
-use NicklasW\Instagram\DTO\Interfaces\ResponseMessageInterface;
+use GuzzleHttp\Promise\Promise;
+use NicklasW\Instagram\HttpClients\Client as HttpClient;
 use NicklasW\Instagram\Requests\Http\Builders\HeaderRequestBuilder;
+use NicklasW\Instagram\Requests\Traits\RequestMethods;
 use NicklasW\Instagram\Responses\Serializers\HeaderSerializer;
 use NicklasW\Instagram\Session\Session;
-use NicklasW\Instagram\HttpClients\Client as HttpClient;
 
 class HeaderRequest extends Request
 {
+
+    use RequestMethods;
 
     /**
      * @var string
@@ -33,14 +36,15 @@ class HeaderRequest extends Request
     /**
      * Fire the request.
      *
-     * @return ResponseMessageInterface
+     * @return Promise
      */
-    public function fire(): ResponseMessageInterface
+    public function fire(): Promise
     {
         // Build the request instance
         $request = new HeaderRequestBuilder($this->signature, $this->session);
 
-        return (new HeaderSerializer())->decode($this->httpClient->request($request->build()));
+        // Return a promise chain
+        return $this->request($request->build(), new HeaderSerializer());
     }
 
 }

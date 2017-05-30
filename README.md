@@ -8,6 +8,10 @@ Instagram Private API library
 # Install
 Run the command `composer require nicklasw/instagram-api`.
 
+# Features
+- Supports asynchronous requests
+- Easily extendable with new requests
+
 # Usage
 EG:
 ```php
@@ -52,6 +56,13 @@ foreach ($thread->getItems() as $item) {
     }
 }
 ```
+
+## Contributing
+  - Fork it!
+  - Create your feature branch: `git checkout -b my-new-feature`
+  - Commit your changes: `git commit -am 'Useful information about your new features'`
+  - Push to the branch: `git push origin my-new-feature`
+  - Submit a pull request
 
 ## Contributors
   - [Nicklas Wallgren](https://github.com/NicklasWallgren)

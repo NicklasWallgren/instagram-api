@@ -2,16 +2,20 @@
 
 namespace NicklasW\Instagram\Requests;
 
+use GuzzleHttp\Promise\Promise;
 use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\DTO\Interfaces\ResponseMessageInterface;
+use NicklasW\Instagram\HttpClients\Client as HttpClient;
 use NicklasW\Instagram\Requests\Http\Builders\ThreadRequestBuilder;
+use NicklasW\Instagram\Requests\Traits\RequestMethods;
 use NicklasW\Instagram\Responses\LoginResponseMessage;
 use NicklasW\Instagram\Responses\Serializers\ThreadSerializer;
 use NicklasW\Instagram\Session\Session;
-use NicklasW\Instagram\HttpClients\Client as HttpClient;
+use function GuzzleHttp\Promise\task;
 
 class ThreadRequest extends Request
 {
+
+    use RequestMethods;
 
     /**
      * @var Client
@@ -49,13 +53,13 @@ class ThreadRequest extends Request
     /**
      * Fire the request.
      *
-     * @return ResponseMessageInterface
+     * @return Promise<ThreadMessage>
      */
-    public function fire(): ResponseMessageInterface
+    public function fire(): Promise
     {
         $request = (new ThreadRequestBuilder($this->session, $this->id, $this->cursor));
 
-        return (new ThreadSerializer($this->client))->decode($this->httpClient->request($request->build()));
+        return $this->request($request->build(), new ThreadSerializer($this->client));
     }
 
 }

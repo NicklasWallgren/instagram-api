@@ -2,10 +2,12 @@
 
 namespace NicklasW\Instagram\HttpClients;
 
+use Exception;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -85,6 +87,36 @@ class Client
 
         try {
             $response = $this->client->send($request, ['cookies' => $this->getCookies()]);
+        } catch (ClientException $e) {
+            $response = $e->getResponse();
+
+            // Check whether we retrieved a standardalized API request error
+            if ($response->getStatusCode() !== 400) {
+                throw $e;
+            }
+
+            // Retrieve the response envelope content
+            $response = $e->getResponse();
+        }
+
+        return $response;
+    }
+
+    /**
+     * Sends the HTTP request.
+     *
+     * @param Request $request
+     * @return Promise
+     */
+    public function requestAsync(Request $request): Promise
+    {
+        $response = null;
+
+        try {
+            $response = $this->client->sendAsync($request, ['cookies' => $this->getCookies()]);
+
+            // Handle promise with client exception
+
         } catch (ClientException $e) {
             $response = $e->getResponse();
 

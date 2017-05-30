@@ -2,16 +2,19 @@
 
 namespace NicklasW\Instagram\Requests;
 
+use GuzzleHttp\Promise\Promise;
 use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\DTO\Interfaces\ResponseMessageInterface;
+use NicklasW\Instagram\HttpClients\Client as HttpClient;
 use NicklasW\Instagram\Requests\Http\Builders\InboxRequestBuilder;
+use NicklasW\Instagram\Requests\Traits\RequestMethods;
 use NicklasW\Instagram\Responses\LoginResponseMessage;
 use NicklasW\Instagram\Responses\Serializers\InboxSerializer;
-use NicklasW\Instagram\HttpClients\Client as HttpClient;
 use NicklasW\Instagram\Session\Session;
 
 class InboxRequest extends Request
 {
+
+    use RequestMethods;
 
     /**
      * @var Client
@@ -35,17 +38,13 @@ class InboxRequest extends Request
     /**
      * Fire the request.
      *
-     * @return ResponseMessageInterface
+     * @return Promise
      */
-    public function fire(): ResponseMessageInterface
+    public function fire(): Promise
     {
         $request = new InboxRequestBuilder($this->session);
 
-        // pass the container class
-        // client
-        // logged in user
-
-        return (new InboxSerializer($this->client))->decode($this->httpClient->request($request->build()));
+        return $this->request($request->build(), new InboxSerializer($this->client));
     }
 
 }
