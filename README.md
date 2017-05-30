@@ -9,7 +9,7 @@ Instagram Private API library
 Run the command `composer require nicklasw/instagram-api`.
 
 # Features
-- Supports asynchronous requests
+- Supports asynchronous and parallel requests
 - Easily extendable with new requests
 
 # Usage

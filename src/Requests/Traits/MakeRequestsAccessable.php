@@ -18,7 +18,7 @@ trait MakeRequestsAccessable
      * @param string $password
      * @return SessionMessage|Promise<SessionMessage>
      */
-    public function login(string $username, string $password): ?SessionMessage
+    public function login(string $username, string $password)
     {
         return $this->getClient()->login($username, $password);
     }

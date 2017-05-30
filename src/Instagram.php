@@ -3,6 +3,7 @@
 namespace NicklasW\Instagram;
 
 use GuzzleHttp\ClientInterface;
+use NicklasW\Instagram\Client\Adapters\Interfaces\AdapterInterface;
 use NicklasW\Instagram\Client\Client;
 use NicklasW\Instagram\Devices\DeviceBuilderInterface;
 use NicklasW\Instagram\Requests\Traits\MakeRequestsAccessable;
@@ -19,14 +20,24 @@ class Instagram
     protected $client;
 
     /**
+     * @var ClientInterface|null
+     */
+    private $httpClient;
+
+    /**
      * Instagram constructor.
      *
-     * @param ClientInterface        $httpClient
-     * @param DeviceBuilderInterface $builder
+     * @param ClientInterface|null        $httpClient
+     * @param DeviceBuilderInterface|null $builder
+     * @param AdapterInterface|null       $adapter
      */
-    public function __construct(?ClientInterface $httpClient = null, ?DeviceBuilderInterface $builder = null)
-    {
-        $this->client = new Client($httpClient, $builder);
+    public function __construct(
+        ?ClientInterface $httpClient = null,
+        ?DeviceBuilderInterface $builder = null,
+        ?AdapterInterface $adapter = null
+    ) {
+        $this->client = new Client($httpClient, $builder, $adapter);
+        $this->httpClient = $httpClient;
     }
 
     /**

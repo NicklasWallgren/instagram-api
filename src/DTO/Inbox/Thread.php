@@ -413,9 +413,9 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Retrieves the whole thread with thread items.
      *
-     * @return bool
+     * @return bool|Promise<bool>
      */
-    public function whole(): bool
+    public function whole()
     {
         return $this->retrieve();
     }

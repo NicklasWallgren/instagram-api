@@ -55,9 +55,9 @@ class Client
      * @param AdapterInterface|null  $adapter
      */
     public function __construct(
-        ClientInterface $client = null,
-        DeviceBuilderInterface $builder = null,
-        AdapterInterface $adapter = null
+        ?ClientInterface $client = null,
+        ?DeviceBuilderInterface $builder = null,
+        ?AdapterInterface $adapter = null
     ) {
         $this->client = new HttpClient($client);
         $this->builder = $builder?: new DeviceBuilder();
