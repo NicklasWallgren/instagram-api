@@ -57,8 +57,10 @@ class ThreadRequest extends Request
      */
     public function fire(): Promise
     {
+        // Build the request instance
         $request = (new ThreadRequestBuilder($this->session, $this->id, $this->cursor));
 
+        // Return a promise chain
         return $this->request($request->build(), new ThreadSerializer($this->client));
     }
 

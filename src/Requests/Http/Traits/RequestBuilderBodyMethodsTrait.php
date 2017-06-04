@@ -3,9 +3,12 @@
 namespace NicklasW\Instagram\Requests\Http\Traits;
 
 use NicklasW\Instagram\Requests\Http\Marshallers\SerializerInterface;
+use NicklasW\Instagram\Requests\Traits\RequestBuilderMethodsTrait;
 
-trait RequestBodyMethodsTrait
+trait RequestBuilderBodyMethodsTrait
 {
+
+    use RequestBuilderMethodsTrait;
 
     /**
      * Returns the payload.

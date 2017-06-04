@@ -6,20 +6,20 @@ use GuzzleHttp\Psr7\Request;
 use NicklasW\Instagram\HttpClients\Client;
 use NicklasW\Instagram\Requests\Http\Marshallers\SerializerInterface;
 use NicklasW\Instagram\Requests\Http\Marshallers\UrlEncodedSerializer;
-use NicklasW\Instagram\Requests\Http\Traits\RequestBodyMethodsTrait;
+use NicklasW\Instagram\Requests\Http\Traits\RequestBuilderBodyMethodsTrait;
 use NicklasW\Instagram\Requests\Support\SignatureSupport;
 use NicklasW\Instagram\Session\Session;
 use Psr\Http\Message\StreamInterface;
 
-class LoginRequestBuilder extends AbstractRequestBuilder
+class LoginRequestBuilder extends AbstractQueryRequestBuilder
 {
 
-    use RequestBodyMethodsTrait;
+    use RequestBuilderBodyMethodsTrait;
 
     /**
      * @var string The login request URI
      */
-    protected const REQUEST_URI = 'accounts/login/';
+    protected static $REQUEST_URI = 'accounts/login/';
 
     /**
      * @var string The username

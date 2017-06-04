@@ -47,6 +47,7 @@ class LoginRequest extends Request
      */
     public function fire(): Promise
     {
+        // Build the request instance
         $request = new LoginRequestBuilder($this->username, $this->password, $this->session);
 
         // Return a promise chain

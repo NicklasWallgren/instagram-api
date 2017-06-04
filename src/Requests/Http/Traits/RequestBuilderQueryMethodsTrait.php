@@ -2,8 +2,14 @@
 
 namespace NicklasW\Instagram\Requests\Http\Traits;
 
-trait RequestQueryMethodsTrait
+use NicklasW\Instagram\Requests\Traits\RequestBuilderMethodsTrait;
+
+trait RequestBuilderQueryMethodsTrait
 {
+
+    use RequestBuilderMethodsTrait {
+        getUri as protected getBaseUri;
+    }
 
     /**
      * Returns the query parameters.
@@ -32,7 +38,7 @@ trait RequestQueryMethodsTrait
      */
     protected function getUri(): string
     {
-        return sprintf('%s%s', parent::getUri(), $this->getMethodUri());
+        return sprintf('%s%s', $this->getBaseUri(), $this->getMethodUri());
     }
 
     /**

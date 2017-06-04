@@ -2,21 +2,15 @@
 
 namespace NicklasW\Instagram\Requests\Http\Builders;
 
-use GuzzleHttp\Psr7\Request;
-use NicklasW\Instagram\HttpClients\Client;
-use NicklasW\Instagram\Requests\Http\Marshallers\SerializerInterface;
-use NicklasW\Instagram\Requests\Http\Traits\RequestQueryMethodsTrait;
 use NicklasW\Instagram\Session\Session;
 
-class ThreadRequestBuilder extends AbstractRequestBuilder
+class ThreadRequestBuilder extends AbstractQueryRequestBuilder
 {
-
-    use RequestQueryMethodsTrait;
 
     /**
      * @var string The inbox request uri
      */
-    protected const REQUEST_URI = 'direct_v2/threads/';
+    protected static $REQUEST_URI = 'direct_v2/threads/';
 
     /**
      * @var string The uri template
@@ -46,16 +40,6 @@ class ThreadRequestBuilder extends AbstractRequestBuilder
         $this->cursor = $cursor;
 
         parent::__construct($session);
-    }
-
-    /**
-     * Builds HTTP request.
-     *
-     * @return Request
-     */
-    public function build(): Request
-    {
-        return new Request(Client::METHOD_POST, $this->getUri(), $this->getHeaders());
     }
 
     /**
@@ -94,16 +78,6 @@ class ThreadRequestBuilder extends AbstractRequestBuilder
         if ($this->cursor !== null) {
             $query['cursor'] = $this->cursor;
         }
-    }
-
-    /**
-     * The request body serializer.
-     *
-     * @return SerializerInterface
-     */
-    protected function serializer(): ?SerializerInterface
-    {
-        return null;
     }
 
 }

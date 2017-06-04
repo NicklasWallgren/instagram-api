@@ -42,8 +42,10 @@ class InboxRequest extends Request
      */
     public function fire(): Promise
     {
+        // Build the request instance
         $request = new InboxRequestBuilder($this->session);
 
+        // Return a promise chain
         return $this->request($request->build(), new InboxSerializer($this->client));
     }
 

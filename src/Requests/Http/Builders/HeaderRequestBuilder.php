@@ -2,19 +2,17 @@
 
 namespace NicklasW\Instagram\Requests\Http\Builders;
 
-use GuzzleHttp\Psr7\Request;
-use NicklasW\Instagram\HttpClients\Client;
 use NicklasW\Instagram\Requests\Http\Marshallers\SerializerInterface;
 use NicklasW\Instagram\Requests\Http\Marshallers\UrlEncodedSerializer;
 use NicklasW\Instagram\Session\Session;
 
-class HeaderRequestBuilder extends AbstractRequestBuilder
+class HeaderRequestBuilder extends AbstractPayloadRequestBuilder
 {
 
     /**
      * @var string The login request URI
      */
-    protected const REQUEST_URI = 'si/fetch_headers/';
+    protected static $REQUEST_URI = 'si/fetch_headers/';
 
     /**
      * @var string The signature
@@ -35,34 +33,16 @@ class HeaderRequestBuilder extends AbstractRequestBuilder
     }
 
     /**
-     * Sets the signature.
+     * Returns the body parameters.
      *
-     * @param string $signature
-     * @return HeaderRequestBuilder
+     * @return array
      */
-    public function setSignature(string $signature): HeaderRequestBuilder
+    protected function getBodyParameters(): array
     {
-        $this->signature = $signature;
-
-        return $this;
-    }
-
-    /**
-     * Builds the HTTP request.
-     *
-     * @return Request
-     */
-    public function build(): Request
-    {
-        $body = [
+        return [
             'challenge_type' => 'signup',
             'guid'           => $this->signature,
         ];
-
-        return new Request(Client::METHOD_POST,
-            $this->getUri(),
-            $this->getHeaders(),
-            $this->serializer()->encode($body));
     }
 
     /**
@@ -74,4 +54,5 @@ class HeaderRequestBuilder extends AbstractRequestBuilder
     {
         return new UrlEncodedSerializer();
     }
+
 }

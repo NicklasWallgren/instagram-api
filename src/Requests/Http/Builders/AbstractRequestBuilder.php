@@ -3,8 +3,6 @@
 namespace NicklasW\Instagram\Requests\Http\Builders;
 
 use GuzzleHttp\Psr7\Request;
-use NicklasW\Instagram\Requests\Http\HeadersBuilder;
-use NicklasW\Instagram\Requests\Http\Marshallers\SerializerInterface;
 use NicklasW\Instagram\Session\Session;
 
 abstract class AbstractRequestBuilder
@@ -13,12 +11,12 @@ abstract class AbstractRequestBuilder
     /**
      * @var string The endpoint url
      */
-    protected const ENDPOINT_URL = 'https://i.instagram.com/api/v1';
+    protected static $ENDPOINT_URL = 'https://i.instagram.com/api/v1';
 
     /**
      * @var string The request uri
      */
-    protected const REQUEST_URI = null;
+    protected static $REQUEST_URI = null;
 
     /**
      * @var Session
@@ -40,26 +38,51 @@ abstract class AbstractRequestBuilder
      *
      * @return Request
      */
-    abstract public function build(): Request;
+    public function build(): Request
+    {
+        return new Request(
+            $this->getType(),
+            $this->getUri(),
+            $this->getHeaders(),
+            $this->getBody());
+    }
 
     /**
-     * Returns the default headers.
+     * Returns the session.
      *
-     * @return array
+     * @return Session
      */
-    protected function getHeaders(): array
+    public function getSession(): Session
     {
-        return (new HeadersBuilder())->build($this->session);
+        return $this->session;
     }
+
+    /**
+     * Returns the method type.
+     *
+     * @return string
+     */
+    abstract protected function getType(): string;
 
     /**
      * Returns the request full uri.
      *
      * @return string
      */
-    protected function getUri(): string
-    {
-        return sprintf('%s/%s', static::ENDPOINT_URL, static::REQUEST_URI);
-    }
+    abstract protected function getUri(): string;
+
+    /**
+     * Returns the default headers.
+     *
+     * @return array
+     */
+    abstract protected function getHeaders(): array;
+
+    /**
+     * Returns the payload.
+     *
+     * @return string|null
+     */
+    abstract protected function getBody(): ?string;
 
 }
