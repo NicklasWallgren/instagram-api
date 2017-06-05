@@ -6,6 +6,8 @@ use Exception;
 use GuzzleHttp\Promise\Promise;
 use NicklasW\Instagram\Client\Adapters\Interfaces\AdapterInterface;
 use NicklasW\Instagram\Client\Adapters\UnwrapAdapter;
+use NicklasW\Instagram\Client\Features\DiscoverFeatures;
+use NicklasW\Instagram\Client\Features\DiscoverFeaturesTrait;
 use NicklasW\Instagram\Devices\Builders\DeviceBuilder;
 use NicklasW\Instagram\Devices\Interfaces\DeviceBuilderInterface;
 use NicklasW\Instagram\DTO\CsrfTokenMessage;
@@ -26,6 +28,8 @@ use function NicklasW\Instagram\Support\uuid;
 
 class Client
 {
+
+    use DiscoverFeaturesTrait;
 
     /**
      * @var HttpClient The Http client

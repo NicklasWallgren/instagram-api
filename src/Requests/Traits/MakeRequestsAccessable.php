@@ -4,6 +4,7 @@ namespace NicklasW\Instagram\Requests\Traits;
 
 use GuzzleHttp\Promise\Promise;
 use NicklasW\Instagram\Client\Client;
+use NicklasW\Instagram\DTO\Messages\Discover\ExploreMessage;
 use NicklasW\Instagram\DTO\Messages\InboxMessage;
 use NicklasW\Instagram\DTO\Messages\SessionMessage;
 use NicklasW\Instagram\DTO\Messages\ThreadMessage;
@@ -43,6 +44,16 @@ trait MakeRequestsAccessable
     public function thread(string $id, ?string $cursor = null)
     {
         return $this->getClient()->thread($id, $cursor);
+    }
+
+    /**
+     * Returns the explore items.
+     *
+     * @return ExploreMessage|Promise<ExploreMessage>
+     */
+    public function explore()
+    {
+        return $this->getClient()->explore();
     }
 
     /**
