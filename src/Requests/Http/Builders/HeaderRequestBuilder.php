@@ -4,10 +4,13 @@ namespace NicklasW\Instagram\Requests\Http\Builders;
 
 use NicklasW\Instagram\Requests\Http\Marshallers\SerializerInterface;
 use NicklasW\Instagram\Requests\Http\Marshallers\UrlEncodedSerializer;
+use NicklasW\Instagram\Requests\Http\Traits\UrlEncodedSerializerTrait;
 use NicklasW\Instagram\Session\Session;
 
 class HeaderRequestBuilder extends AbstractPayloadRequestBuilder
 {
+
+    use UrlEncodedSerializerTrait;
 
     /**
      * @var string The login request URI
@@ -43,16 +46,6 @@ class HeaderRequestBuilder extends AbstractPayloadRequestBuilder
             'challenge_type' => 'signup',
             'guid'           => $this->signature,
         ];
-    }
-
-    /**
-     * The request body serializer.
-     *
-     * @return SerializerInterface
-     */
-    protected function serializer(): SerializerInterface
-    {
-        return new UrlEncodedSerializer();
     }
 
 }

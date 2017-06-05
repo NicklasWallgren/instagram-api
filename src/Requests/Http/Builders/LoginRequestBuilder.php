@@ -7,14 +7,15 @@ use NicklasW\Instagram\HttpClients\Client;
 use NicklasW\Instagram\Requests\Http\Marshallers\SerializerInterface;
 use NicklasW\Instagram\Requests\Http\Marshallers\UrlEncodedSerializer;
 use NicklasW\Instagram\Requests\Http\Traits\RequestBuilderBodyMethodsTrait;
+use NicklasW\Instagram\Requests\Http\Traits\SignedPayloadSerializerTrait;
 use NicklasW\Instagram\Requests\Support\SignatureSupport;
 use NicklasW\Instagram\Session\Session;
 use Psr\Http\Message\StreamInterface;
 
-class LoginRequestBuilder extends AbstractQueryRequestBuilder
+class LoginRequestBuilder extends AbstractPayloadRequestBuilder
 {
 
-    use RequestBuilderBodyMethodsTrait;
+    use SignedPayloadSerializerTrait;
 
     /**
      * @var string The login request URI
@@ -44,19 +45,6 @@ class LoginRequestBuilder extends AbstractQueryRequestBuilder
         $this->password = $password;
 
         parent::__construct($session);
-    }
-
-    /**
-     * Builds the HTTP request.
-     *
-     * @return Request
-     */
-    public function build(): Request
-    {
-        return new Request(Client::METHOD_POST,
-            $this->getUri(),
-            $this->getHeaders(),
-            $this->getBody());
     }
 
     /**
@@ -90,27 +78,5 @@ class LoginRequestBuilder extends AbstractQueryRequestBuilder
             '_csrftoken' => sprintf('Set-Cookie: csrftoken=%s', $this->session->getCsrfToken()->getToken()),
         ], $parameters);
     }
-
-    /**
-     * The request body serializer.
-     *
-     * @return SerializerInterface
-     */
-    protected function serializer(): SerializerInterface
-    {
-        return new class implements SerializerInterface
-        {
-
-            /**
-             * Encodes the body.
-             *
-             * @param string $body
-             * @return null|StreamInterface|resource|string
-             */
-            public function encode($body)
-            {
-                return SignatureSupport::signature(json_encode($body));
-            }
-        };
-    }
+    
 }
