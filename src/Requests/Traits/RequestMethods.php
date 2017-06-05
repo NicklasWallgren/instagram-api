@@ -2,9 +2,9 @@
 
 namespace NicklasW\Instagram\Requests\Traits;
 
-use function GuzzleHttp\Promise\task;
 use NicklasW\Instagram\Responses\Interfaces\SerializerInterface;
 use Psr\Http\Message\RequestInterface;
+use function GuzzleHttp\Promise\task;
 
 trait RequestMethods
 {
@@ -27,6 +27,15 @@ trait RequestMethods
             return task(function () use ($response, $serializer) {
                 // Queue the serialization
                 return $serializer->decode($response->wait());
+            });
+        })->otherwise(function ($exception) use($serializer) {
+            // Retrieve the response
+            $response = $exception->getResponse();
+
+            // Compose a task, reject promise on failure
+            return task(function () use ($response, $serializer) {
+                // Queue the serialization
+                return $serializer->decode($response);
             });
         });
     }

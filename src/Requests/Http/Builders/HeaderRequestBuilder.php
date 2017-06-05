@@ -2,8 +2,6 @@
 
 namespace NicklasW\Instagram\Requests\Http\Builders;
 
-use NicklasW\Instagram\Requests\Http\Marshallers\SerializerInterface;
-use NicklasW\Instagram\Requests\Http\Marshallers\UrlEncodedSerializer;
 use NicklasW\Instagram\Requests\Http\Traits\UrlEncodedSerializerTrait;
 use NicklasW\Instagram\Session\Session;
 
