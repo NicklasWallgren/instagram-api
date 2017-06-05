@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Http\Marshallers;
+namespace NicklasW\Instagram\Requests\Http\Serializers;
 
 class UrlEncodedSerializer implements SerializerInterface
 {
