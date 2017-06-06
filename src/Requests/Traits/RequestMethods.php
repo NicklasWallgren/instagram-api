@@ -29,9 +29,6 @@ trait RequestMethods
                 return $serializer->decode($response->wait());
             });
         })->otherwise(function ($exception) use($serializer) {
-
-            var_dump($exception);
-
             // Retrieve the response
             $response = $exception->getResponse();
 
