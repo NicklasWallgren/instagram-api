@@ -31,7 +31,7 @@ trait RequestBuilderMethodsTrait
      */
     protected function getUri(): string
     {
-        return sprintf('%s/%s', static::$ENDPOINT_URL, static::$REQUEST_URI);
+        return sprintf('%s/%s', static::$ENDPOINT_URL, $this->getRequestUri());
     }
 
     /**
@@ -50,5 +50,12 @@ trait RequestBuilderMethodsTrait
      * @return Session
      */
     abstract protected function getSession(): Session;
+
+    /**
+     * Returns the request uri.
+     *
+     * @return string
+     */
+    abstract protected function getRequestUri(): string;
 
 }

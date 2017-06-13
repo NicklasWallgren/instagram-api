@@ -58,6 +58,16 @@ abstract class AbstractRequestBuilder
     }
 
     /**
+     * Returns the request uri.
+     *
+     * @return string
+     */
+    protected function getRequestUri(): string
+    {
+        return static::$REQUEST_URI;
+    }
+
+    /**
      * Returns the method type.
      *
      * @return string
