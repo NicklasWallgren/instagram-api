@@ -21,6 +21,16 @@ class HeadersBuilder
     protected const CONNECTION_TYPE = 'X-IG-Connection-Type';
 
     /**
+     * @var string The connection speed
+     */
+    protected const CONNECTION_SPEED = 'X-IG-Connection-Speed';
+
+    /**
+     * @var string The http engine
+     */
+    protected const HTTP_ENGINE = 'X-FB-HTTP-Engine';
+
+    /**
      * Returns the default headers.
      *
      * @return array
@@ -33,12 +43,26 @@ class HeadersBuilder
         $device = $session->getDevice();
 
         return array_merge([
-            self::USER_AGENT      => $device->identifier(),
-            self::CAPABILITIES    => '3ToAAA==',
-            self::CONNECTION_TYPE => 'WIFI',
-            'Content-Type'        => 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Accept-Language'     => 'en-US',
+            self::USER_AGENT       => $device->identifier(),
+            self::CAPABILITIES     => '3ToAAA==',
+            self::CONNECTION_TYPE  => 'WIFI',
+            self::CONNECTION_SPEED => $this->getConnectionSpeed(),
+            self::HTTP_ENGINE      => 'Liger',
+            'Connection'           => 'keep-alive',
+            'Content-Type'         => 'application/x-www-form-urlencoded; charset=UTF-8',
+            'Accept-Language'      => 'en-US',
+            'Accept'               => '*/*',
         ], []);
+    }
+
+    /**
+     * Returns the connection speed.
+     *
+     * @return string
+     */
+    protected function getConnectionSpeed(): string
+    {
+        return rand(1000, 3700) . 'kbps';
     }
 
 }
