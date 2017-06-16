@@ -417,7 +417,9 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      */
     public function whole()
     {
-        return $this->retrieve();
+        return $this->client->getAdapter()->run(function () {
+            return $this->retrieve();
+        });
     }
 
     /**
