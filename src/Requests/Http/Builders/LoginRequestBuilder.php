@@ -5,7 +5,7 @@ namespace NicklasW\Instagram\Requests\Http\Builders;
 use GuzzleHttp\Psr7\Request;
 use NicklasW\Instagram\HttpClients\Client;
 use NicklasW\Instagram\Requests\Http\Serializers\SerializerInterface;
-use NicklasW\Instagram\Requests\Http\Serializers\UrlEncodedSerializer;
+use NicklasW\Instagram\Requests\Http\Serializers\UrlEncodeSerializer;
 use NicklasW\Instagram\Requests\Http\Traits\RequestBuilderBodyMethodsTrait;
 use NicklasW\Instagram\Requests\Http\Traits\SignedPayloadSerializerTrait;
 use NicklasW\Instagram\Requests\Support\SignatureSupport;

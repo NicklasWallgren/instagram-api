@@ -5,6 +5,7 @@ namespace NicklasW\Instagram\Support;
 use Closure;
 use GuzzleHttp\Promise\Promise;
 use NicklasW\Instagram\Client\Client;
+use NicklasW\Instagram\DTO\Envelope;
 use NicklasW\Instagram\HttpClients\Client as HttpClient;
 use NicklasW\Instagram\Requests\GenericRequest;
 use NicklasW\Instagram\Requests\Http\Builders\AbstractRequestBuilder;
@@ -39,8 +40,8 @@ function unwrap($value)
 /**
  * Generates a generic request instance.
  *
- * @param string|AbstractRequestBuilder $uri
- * @param serializer|AbstractSerializer $serializer
+ * @param string|AbstractRequestBuilder $uri The request uri or request builder
+ * @param Envelope|AbstractSerializer   $serializer The response envelope or serializer
  * @return Closure
  */
 function request($uri, $serializer)

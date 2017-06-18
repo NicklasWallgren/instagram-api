@@ -3,7 +3,7 @@
 namespace NicklasW\Instagram\Requests\Http\Traits;
 
 use NicklasW\Instagram\Requests\Http\Serializers\SerializerInterface;
-use NicklasW\Instagram\Requests\Http\Serializers\UrlEncodedSerializer;
+use NicklasW\Instagram\Requests\Http\Serializers\UrlEncodeSerializer;
 
 trait UrlEncodedSerializerTrait
 {
@@ -15,7 +15,7 @@ trait UrlEncodedSerializerTrait
      */
     protected function serializer(): SerializerInterface
     {
-        return new UrlEncodedSerializer();
+        return new UrlEncodeSerializer();
     }
 
 }

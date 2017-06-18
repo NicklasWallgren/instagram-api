@@ -2,7 +2,7 @@
 
 namespace NicklasW\Instagram\Requests\Http\Serializers;
 
-class UrlEncodedSerializer implements SerializerInterface
+class UrlEncodeSerializer implements SerializerInterface
 {
 
     /**

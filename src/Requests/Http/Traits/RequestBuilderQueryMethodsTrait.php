@@ -12,6 +12,11 @@ trait RequestBuilderQueryMethodsTrait
     }
 
     /**
+     * @var string The uri template
+     */
+    protected static $URI_TEMPLATE = null;
+
+    /**
      * Returns the query parameters.
      *
      * @return array
