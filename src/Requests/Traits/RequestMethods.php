@@ -2,7 +2,6 @@
 
 namespace NicklasW\Instagram\Requests\Traits;
 
-use Exception;
 use NicklasW\Instagram\Responses\Interfaces\SerializerInterface;
 use Psr\Http\Message\RequestInterface;
 use function GuzzleHttp\Promise\task;
@@ -30,19 +29,6 @@ trait RequestMethods
                 return $serializer->decode($response->wait());
             });
         })->otherwise(function ($exception) use($serializer) {
-
-
-            var_dump($exception->hasResponse());
-            var_dump($exception->getResponse());
-//            var_dump($exception->getTraceAsString());
-            var_dump($exception->getMessage());
-
-            // handle default exceptions
-            // if no response?
-
-
-            // reject
-
             // Retrieve the response
             $response = $exception->getResponse();
 
