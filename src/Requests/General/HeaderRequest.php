@@ -1,12 +1,13 @@
 <?php
 
-namespace NicklasW\Instagram\Requests;
+namespace NicklasW\Instagram\Requests\General;
 
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\HttpClients\Client as HttpClient;
-use NicklasW\Instagram\Requests\Http\Builders\HeaderRequestBuilder;
+use NicklasW\Instagram\Http\Client as HttpClient;
+use NicklasW\Instagram\Requests\General\Builders\HeaderRequestBuilder;
+use NicklasW\Instagram\Requests\Request;
 use NicklasW\Instagram\Requests\Traits\RequestMethods;
-use NicklasW\Instagram\Responses\Serializers\HeaderSerializer;
+use NicklasW\Instagram\Responses\Serializers\General\HeaderSerializer;
 use NicklasW\Instagram\Session\Session;
 
 class HeaderRequest extends Request

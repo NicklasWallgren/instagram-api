@@ -15,12 +15,12 @@ use NicklasW\Instagram\DTO\Messages\HeaderMessage;
 use NicklasW\Instagram\DTO\Messages\InboxMessage;
 use NicklasW\Instagram\DTO\Messages\SessionMessage;
 use NicklasW\Instagram\DTO\Messages\ThreadMessage;
-use NicklasW\Instagram\HttpClients\Client as HttpClient;
-use NicklasW\Instagram\Requests\HeaderRequest;
-use NicklasW\Instagram\Requests\InboxRequest;
-use NicklasW\Instagram\Requests\LoginRequest;
+use NicklasW\Instagram\Http\Client as HttpClient;
+use NicklasW\Instagram\Requests\Direct\InboxRequest;
+use NicklasW\Instagram\Requests\Direct\ThreadRequest;
+use NicklasW\Instagram\Requests\General\HeaderRequest;
 use NicklasW\Instagram\Requests\Support\SignatureSupport;
-use NicklasW\Instagram\Requests\ThreadRequest;
+use NicklasW\Instagram\Requests\User\LoginRequest;
 use NicklasW\Instagram\Session\Builders\SessionBuilder;
 use NicklasW\Instagram\Session\Session;
 use function GuzzleHttp\Promise\task;
@@ -64,8 +64,8 @@ class Client
         ?AdapterInterface $adapter = null
     ) {
         $this->client = new HttpClient($client);
-        $this->builder = $builder?: new DeviceBuilder();
-        $this->adapter = $adapter?: new UnwrapAdapter();
+        $this->builder = $builder ?: new DeviceBuilder();
+        $this->adapter = $adapter ?: new UnwrapAdapter();
     }
 
     /**
@@ -119,7 +119,7 @@ class Client
     public function login(string $username, string $password)
     {
         // Initialize a new session
-        $this->session = (new SessionBuilder())->build($username, $password, $this->builder);
+        $this->session = (new SessionBuilder())->build($this->builder);
 
         return $this->adapter->run(function () use ($username, $password) {
             // Retrieve the header message
@@ -202,17 +202,7 @@ class Client
      */
     protected function isSessionAvailable(): bool
     {
-        return true;
-    }
-
-    /**
-     * Returns true whether a user is authenticated, false otherwise.
-     *
-     * @return bool
-     */
-    protected function isAuthenticated(): bool
-    {
-        return true;
+        return $this->session !== null;
     }
 
 }

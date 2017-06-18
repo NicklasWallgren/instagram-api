@@ -1,14 +1,15 @@
 <?php
 
-namespace NicklasW\Instagram\Requests;
+namespace NicklasW\Instagram\Requests\Direct;
 
 use GuzzleHttp\Promise\Promise;
 use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\HttpClients\Client as HttpClient;
-use NicklasW\Instagram\Requests\Http\Builders\InboxRequestBuilder;
+use NicklasW\Instagram\Http\Client as HttpClient;
+use NicklasW\Instagram\Requests\Direct\Builders\InboxRequestBuilder;
+use NicklasW\Instagram\Requests\Request;
 use NicklasW\Instagram\Requests\Traits\RequestMethods;
 use NicklasW\Instagram\Responses\LoginResponseMessage;
-use NicklasW\Instagram\Responses\Serializers\InboxSerializer;
+use NicklasW\Instagram\Responses\Serializers\Direct\InboxSerializer;
 use NicklasW\Instagram\Session\Session;
 
 class InboxRequest extends Request

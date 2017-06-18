@@ -47,7 +47,6 @@ $instagram
 
 Unwrap adapter
 ```php
-
 use NicklasW\Instagram\DTO\General\ItemType;
 use NicklasW\Instagram\Instagram;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Http\Builders\Discover;
+namespace NicklasW\Instagram\Requests\Discover\Builders;
 
 use NicklasW\Instagram\Requests\Http\Builders\AbstractQueryRequestBuilder;
 

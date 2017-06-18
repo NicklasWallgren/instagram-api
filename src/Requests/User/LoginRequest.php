@@ -1,13 +1,14 @@
 <?php
 
-namespace NicklasW\Instagram\Requests;
+namespace NicklasW\Instagram\Requests\User;
 
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\HttpClients\Client as HttpClient;
-use NicklasW\Instagram\Requests\Http\Builders\LoginRequestBuilder;
+use NicklasW\Instagram\Http\Client as HttpClient;
+use NicklasW\Instagram\Requests\Request;
 use NicklasW\Instagram\Requests\Traits\RequestMethods;
+use NicklasW\Instagram\Requests\User\Builders\LoginRequestBuilder;
 use NicklasW\Instagram\Responses\LoginResponseMessage;
-use NicklasW\Instagram\Responses\Serializers\LoginSerializer;
+use NicklasW\Instagram\Responses\Serializers\User\LoginSerializer;
 use NicklasW\Instagram\Session\Session;
 
 class LoginRequest extends Request

@@ -22,7 +22,7 @@ class Instagram
     /**
      * @var ClientInterface|null
      */
-    private $httpClient;
+    protected $httpClient;
 
     /**
      * Instagram constructor.

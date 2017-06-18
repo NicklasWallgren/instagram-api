@@ -1,9 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Http\Builders;
+namespace NicklasW\Instagram\Requests\Direct\Builders;
 
 use GuzzleHttp\Psr7\Request;
-use NicklasW\Instagram\HttpClients\Client;
+use NicklasW\Instagram\Http\Client;
+use NicklasW\Instagram\Requests\Http\Builders\AbstractQueryRequestBuilder;
 use NicklasW\Instagram\Requests\Http\Serializers\SerializerInterface;
 use NicklasW\Instagram\Requests\Http\Serializers\UrlEncodeSerializer;
 use NicklasW\Instagram\Requests\Http\Traits\RequestBuilderQueryMethodsTrait;

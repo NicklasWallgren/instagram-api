@@ -1,7 +1,8 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Http\Builders;
+namespace NicklasW\Instagram\Requests\General\Builders;
 
+use NicklasW\Instagram\Requests\Http\Builders\AbstractPayloadRequestBuilder;
 use NicklasW\Instagram\Requests\Http\Traits\UrlEncodedSerializerTrait;
 use NicklasW\Instagram\Session\Session;
 

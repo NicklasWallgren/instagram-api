@@ -13,12 +13,10 @@ class SessionBuilder
     /**
      * The session builder.
      *
-     * @param string                 $username
-     * @param string                 $password
      * @param DeviceBuilderInterface $deviceBuilder
      * @return Session
      */
-    public function build(string $username, string $password, DeviceBuilderInterface $deviceBuilder): Session
+    public function build(DeviceBuilderInterface $deviceBuilder): Session
     {
         // Build the device instance
         $device = $deviceBuilder->build();

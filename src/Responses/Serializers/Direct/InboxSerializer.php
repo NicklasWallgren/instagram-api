@@ -1,10 +1,11 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Serializers;
+namespace NicklasW\Instagram\Responses\Serializers\Direct;
 
 use NicklasW\Instagram\Client\Client;
 use NicklasW\Instagram\DTO\Envelope;
 use NicklasW\Instagram\DTO\Messages\InboxMessage;
+use NicklasW\Instagram\Responses\Serializers\AbstractSerializer;
 use NicklasW\Instagram\Responses\Serializers\Interfaces\OnDecodeInterface;
 
 class InboxSerializer extends AbstractSerializer implements OnDecodeInterface

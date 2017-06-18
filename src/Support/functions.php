@@ -6,7 +6,7 @@ use Closure;
 use GuzzleHttp\Promise\Promise;
 use NicklasW\Instagram\Client\Client;
 use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\HttpClients\Client as HttpClient;
+use NicklasW\Instagram\Http\Client as HttpClient;
 use NicklasW\Instagram\Requests\GenericRequest;
 use NicklasW\Instagram\Requests\Http\Builders\AbstractRequestBuilder;
 use NicklasW\Instagram\Requests\Http\Builders\GenericRequestBuilder;

@@ -5,8 +5,8 @@ namespace NicklasW\Instagram\Requests\Discover;
 
 use GuzzleHttp\Promise\Promise;
 use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\HttpClients\Client as HttpClient;
-use NicklasW\Instagram\Requests\Http\Builders\Discover\ExploreRequestBuilder;
+use NicklasW\Instagram\Http\Client as HttpClient;
+use NicklasW\Instagram\Requests\Discover\Builders\ExploreRequestBuilder;
 use NicklasW\Instagram\Requests\Request;
 use NicklasW\Instagram\Requests\Traits\RequestMethods;
 use NicklasW\Instagram\Responses\Serializers\Discover\ExploreSerializer;

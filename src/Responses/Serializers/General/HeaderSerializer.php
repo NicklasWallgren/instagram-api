@@ -1,11 +1,12 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Serializers;
+namespace NicklasW\Instagram\Responses\Serializers\General;
 
 use NicklasW\Instagram\DTO\Envelope;
 use NicklasW\Instagram\DTO\Interfaces\ResponseMessageInterface;
 use NicklasW\Instagram\DTO\Messages\HeaderMessage;
 use NicklasW\Instagram\Responses\Exceptions\InvalidResponseException;
+use NicklasW\Instagram\Responses\Serializers\AbstractSerializer;
 use NicklasW\Instagram\Responses\Traits\CsrfTokenRetrieverTrait;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 

@@ -4,7 +4,7 @@
 namespace NicklasW\Instagram\Requests;
 
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\HttpClients\Client as HttpClient;
+use NicklasW\Instagram\Http\Client as HttpClient;
 use NicklasW\Instagram\Session\Session;
 
 abstract class Request

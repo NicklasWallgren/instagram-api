@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Http\Builders;
+namespace NicklasW\Instagram\Requests\Direct\Builders;
 
 use NicklasW\Instagram\Session\Session;
 

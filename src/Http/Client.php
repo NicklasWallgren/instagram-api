@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\HttpClients;
+namespace NicklasW\Instagram\Http;
 
 use Exception;
 use GuzzleHttp\Client as HttpClient;
@@ -114,9 +114,6 @@ class Client
 
         try {
             $response = $this->client->sendAsync($request, ['cookies' => $this->getCookies()]);
-
-            // Handle promise with client exception
-
         } catch (ClientException $e) {
             $response = $e->getResponse();
 
@@ -148,6 +145,8 @@ class Client
     }
 
     /**
+     * Returns the cookies.
+     *
      * @return CookieJar
      */
     public function getCookies(): CookieJar
@@ -160,6 +159,8 @@ class Client
     }
 
     /**
+     * Sets the cookies.
+     *
      * @param CookieJar $cookies
      */
     public function setCookies(CookieJar $cookies)

@@ -2,7 +2,7 @@
 
 namespace NicklasW\Instagram\Requests\Traits;
 
-use NicklasW\Instagram\HttpClients\Client;
+use NicklasW\Instagram\Http\Client;
 use NicklasW\Instagram\Requests\Http\HeadersBuilder;
 use NicklasW\Instagram\Session\Session;
 

@@ -2,7 +2,7 @@
 
 namespace NicklasW\Instagram\Requests;
 
-use NicklasW\Instagram\HttpClients\Client as HttpClient;
+use NicklasW\Instagram\Http\Client as HttpClient;
 use NicklasW\Instagram\Requests\Http\Builders\AbstractQueryRequestBuilder;
 use NicklasW\Instagram\Requests\Http\Builders\GenericRequestBuilder;
 use NicklasW\Instagram\Requests\Traits\RequestMethods;
