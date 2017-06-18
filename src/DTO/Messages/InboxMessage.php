@@ -25,10 +25,10 @@ class InboxMessage extends Envelope
      */
     protected $seqId;
 
-//    /**
-//     * @var
-//     */
-//    protected $subscription;
+    /**
+     * @var
+     */
+    protected $subscription;
 
     /**
      * @var int
@@ -36,11 +36,11 @@ class InboxMessage extends Envelope
      */
     protected $pendingRequestsTotal;
 
-//    /**
-//     * @var
-//     * @name pending_requests_user
-//     */
-//    protected $pending_requests_users;
+    /**
+     * @var
+     * @name pending_requests_user
+     */
+    protected $pendingRequestsUsers;
 
     /**
      * @return \NicklasW\Instagram\DTO\Inbox\Inbox
