@@ -88,6 +88,34 @@ foreach ($thread->getItems() as $item) {
 }
 ```
 
+## Exception classes
+- ApiResponseException
+    - Generic API response exception, includes envelope
+- BadPasswordException
+- InvalidUserException
+- RateLimitException
+- InvalidResponseException
+    - Generic HTTP response exception
+
+
+## Proxy
+```php
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// Create the guzzle client
+$client = new GuzzleHttp\Client(['proxy' => 'INSERT_PROXY']);
+
+// Initialize the Instagram library, pass the client
+$instagram = new Instagram($client);
+
+// Authenticate using username and password
+$envelope = $instagram->login('INSERT_USERNAME', 'INSERT_PASSWORD')->wait();
+
+// Output the response
+var_dump($envelope);
+
+```
+
 ## Contributing
   - Fork it!
   - Create your feature branch: `git checkout -b my-new-feature`
