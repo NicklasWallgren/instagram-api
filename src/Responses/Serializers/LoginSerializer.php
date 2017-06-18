@@ -51,7 +51,7 @@ class LoginSerializer extends AbstractSerializer
 
         $this->update($response, $message);
 
-        $message->setSession($this->session, $message);
+        $message->setSession($this->session);
 
         return $message;
     }
