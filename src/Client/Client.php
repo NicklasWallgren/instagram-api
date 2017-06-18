@@ -3,6 +3,7 @@
 namespace NicklasW\Instagram\Client;
 
 use Exception;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\Promise;
 use NicklasW\Instagram\Client\Adapters\Interfaces\AdapterInterface;
 use NicklasW\Instagram\Client\Adapters\UnwrapAdapter;

@@ -3,6 +3,7 @@
 namespace NicklasW\Instagram\Responses\Traits;
 
 use NicklasW\Instagram\DTO\CsrfToken;
+use NicklasW\Instagram\Responses\Exceptions\ApiResponseException;
 use NicklasW\Instagram\Responses\Exceptions\InvalidResponseException;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 

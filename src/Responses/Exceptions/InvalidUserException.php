@@ -2,7 +2,7 @@
 
 namespace NicklasW\Instagram\Responses\Exceptions;
 
-class InvalidUserException extends InvalidResponseException
+class InvalidUserException extends ApiResponseException
 {
 
 }

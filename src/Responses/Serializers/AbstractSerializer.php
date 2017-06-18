@@ -4,7 +4,7 @@ namespace NicklasW\Instagram\Responses\Serializers;
 
 use NicklasW\Instagram\DTO\Envelope;
 use NicklasW\Instagram\DTO\Interfaces\ResponseMessageInterface;
-use NicklasW\Instagram\Responses\Exceptions\InvalidResponseException;
+use NicklasW\Instagram\Responses\Exceptions\ApiResponseException;
 use NicklasW\Instagram\Responses\Interfaces\SerializerInterface;
 use NicklasW\Instagram\Responses\Serializers\Interfaces\OnDecodeInterface;
 use NicklasW\Instagram\Responses\Traits\ErrorTypeMethodsTrait;
@@ -30,13 +30,13 @@ abstract class AbstractSerializer implements SerializerInterface
      *
      * @param HttpResponseInterface $response
      * @return ResponseMessageInterface
-     * @throws InvalidResponseException
+     * @throws ApiResponseException
      * @throws \Exception
      */
     public function decode(HttpResponseInterface $response): ResponseMessageInterface
     {
         if (!$this->isValidHttpResponse($response)) {
-            throw new InvalidResponseException(new Envelope((string)$response->getBody()));
+            throw new ApiResponseException(new Envelope((string)$response->getBody()));
         }
 
         // Compose a new message instance

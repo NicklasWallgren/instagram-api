@@ -2,9 +2,7 @@
 
 namespace NicklasW\Instagram\Responses\Exceptions;
 
-class RateLimitException extends InvalidResponseException
+class RateLimitException extends ApiResponseException
 {
-
-
 
 }

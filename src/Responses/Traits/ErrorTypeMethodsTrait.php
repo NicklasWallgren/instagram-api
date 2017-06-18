@@ -6,7 +6,7 @@ use Exception;
 use NicklasW\Instagram\DTO\Envelope;
 use NicklasW\Instagram\DTO\General\ResponseErrorTypes;
 use NicklasW\Instagram\Responses\Exceptions\BadPasswordException;
-use NicklasW\Instagram\Responses\Exceptions\InvalidResponseException;
+use NicklasW\Instagram\Responses\Exceptions\ApiResponseException;
 use NicklasW\Instagram\Responses\Exceptions\InvalidUserException;
 use NicklasW\Instagram\Responses\Exceptions\RateLimitException;
 
@@ -41,7 +41,7 @@ trait ErrorTypeMethodsTrait
                 break;
 
             default:
-                $exception = new InvalidResponseException($envelope);
+                $exception = new ApiResponseException($envelope);
 
                 break;
 

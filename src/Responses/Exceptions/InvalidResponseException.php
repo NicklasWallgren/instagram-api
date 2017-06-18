@@ -3,36 +3,23 @@
 namespace NicklasW\Instagram\Responses\Exceptions;
 
 use Exception;
-use NicklasW\Instagram\DTO\Envelope;
 
 class InvalidResponseException extends Exception
 {
 
-    const DEFAULT_MESSAGE = 'Invalid response';
-
     /**
-     * @var Envelope
+     * @var string The default error message
      */
-    protected $envelope;
+    const DEFAULT_MESSAGE = 'Invalid response';
 
     /**
      * InvalidResponseException constructor.
      *
-     * @param Envelope|null $envelope
+     * @param string $message
      */
-    public function __construct(Envelope $envelope = null)
+    public function __construct(?string $message = self::DEFAULT_MESSAGE)
     {
-        $this->envelope = $envelope;
-
-        parent::__construct($envelope? $envelope->getMessage() : self::DEFAULT_MESSAGE, 0, null);
-    }
-
-    /**
-     * @return Envelope
-     */
-    public function getEnvelope(): Envelope
-    {
-        return $this->envelope;
+        parent::__construct($message, 0, null);
     }
 
 }
