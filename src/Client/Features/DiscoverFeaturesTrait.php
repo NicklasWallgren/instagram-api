@@ -13,6 +13,8 @@ use NicklasW\Instagram\Requests\Discover\TopLiveRequest;
 trait DiscoverFeaturesTrait
 {
 
+    use DefaultFeaturesTrait;
+
     /**
      * Retrieves the discover explore items.
      *
@@ -54,6 +56,5 @@ trait DiscoverFeaturesTrait
             return (new ChannelsRequest($this, $this->session, $this->client))->fire();
         });
     }
-
 
 }

@@ -22,7 +22,7 @@ composer require nicklasw/instagram-api
 
 Promise adapter
 ```php
-use NicklasW\Instagram\Responses\Exceptions\InvalidResponseException;
+use NicklasW\Instagram\Responses\Exceptions\ApiResponseException;
 use NicklasW\Instagram\DTO\Messages\InboxMessage;
 use NicklasW\Instagram\DTO\Messages\SessionMessage;
 use NicklasW\Instagram\Instagram;
@@ -38,7 +38,7 @@ $instagram
     })->then(function (InboxMessage $envelope) {
         // Outputs the threads
         var_dump($envelope->getInbox()->getThreads());
-    })->otherwise(function (InvalidResponseException $exception) {
+    })->otherwise(function (ApiResponseException $exception) {
         // Outputs the error message
         var_dump($exception->getEnvelope()->getMessage());
     })
@@ -100,7 +100,7 @@ foreach ($thread->getItems() as $item) {
 
 ## Proxy
 ```php
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once '/vendor/autoload.php';
 
 // Create the guzzle client
 $client = new GuzzleHttp\Client(['proxy' => 'INSERT_PROXY']);
