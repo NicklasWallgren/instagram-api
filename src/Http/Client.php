@@ -2,7 +2,6 @@
 
 namespace NicklasW\Instagram\Http;
 
-use Exception;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Cookie\CookieJar;

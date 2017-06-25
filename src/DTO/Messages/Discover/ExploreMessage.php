@@ -70,7 +70,7 @@ class ExploreMessage extends Envelope
     }
 
     /**
-     * @return Model\ExploreItem[]
+     * @return array
      */
     public function getItems(): array
     {

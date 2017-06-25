@@ -4,7 +4,7 @@ namespace NicklasW\Instagram\Responses\Serializers\Direct;
 
 use NicklasW\Instagram\Client\Client;
 use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\DTO\Messages\ThreadMessage;
+use NicklasW\Instagram\DTO\Messages\Direct\ThreadMessage;
 use NicklasW\Instagram\Responses\Serializers\AbstractSerializer;
 use NicklasW\Instagram\Responses\Serializers\Interfaces\OnDecodeInterface;
 

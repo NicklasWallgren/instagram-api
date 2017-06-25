@@ -1,14 +1,14 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Inbox;
+namespace NicklasW\Instagram\DTO\Direct;
 
-use NicklasW\Instagram\DTO\General\User;
+use NicklasW\Instagram\DTO\DTO;
 use NicklasW\Instagram\DTO\Interfaces\UserDetailsInterface;
 use NicklasW\Instagram\DTO\Interfaces\UserInterface;
 use NicklasW\Instagram\Responses\Serializers\Interfaces\OnDecodeRequirementsInterface;
 use NicklasW\Instagram\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 
-class ThreadItem implements OnItemDecodeInterface, OnDecodeRequirementsInterface
+class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequirementsInterface
 {
 
     /**
@@ -165,6 +165,62 @@ class ThreadItem implements OnItemDecodeInterface, OnDecodeRequirementsInterface
     public function setParent(Thread $parent)
     {
         $this->parent = $parent;
+    }
+
+    /**
+     * @param mixed $itemId
+     */
+    public function setItemId($itemId)
+    {
+        $this->itemId = $itemId;
+    }
+
+    /**
+     * @param mixed $userId
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    }
+
+    /**
+     * @param float $timestamp
+     */
+    public function setTimestamp(float $timestamp)
+    {
+        $this->timestamp = $timestamp;
+    }
+
+    /**
+     * @param mixed $itemType
+     */
+    public function setItemType($itemType)
+    {
+        $this->itemType = $itemType;
+    }
+
+    /**
+     * @param ThreadMediaItem $media
+     */
+    public function setMedia(ThreadMediaItem $media)
+    {
+        $this->media = $media;
+    }
+
+    /**
+     * @param mixed $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
+
+    /**
+     * @param mixed $clientContext
+     */
+    public function setClientContext($clientContext)
+    {
+        $this->clientContext = $clientContext;
     }
 
     /**

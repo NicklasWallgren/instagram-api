@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Inbox;
+namespace NicklasW\Instagram\DTO\Direct;
 
 use NicklasW\Instagram\Client\Client;
 use NicklasW\Instagram\Responses\Serializers\Interfaces\OnItemDecodeInterface;
@@ -30,7 +30,7 @@ class Inbox implements OnItemDecodeInterface
     protected $unseenCountTimestamp;
 
     /**
-     * @var \NicklasW\Instagram\DTO\Inbox\Thread[]
+     * @var \NicklasW\Instagram\DTO\Direct\Thread[]
      */
     protected $threads;
 

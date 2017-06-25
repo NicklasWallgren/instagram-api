@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Inbox;
+namespace NicklasW\Instagram\DTO\Direct;
 
 use NicklasW\Instagram\DTO\General\MediaType;
 

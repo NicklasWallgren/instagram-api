@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Messages;
+namespace NicklasW\Instagram\DTO\Messages\Direct;
 
 use NicklasW\Instagram\DTO\Envelope;
 use NicklasW\Instagram\Responses\Serializers\Interfaces\OnItemDecodeInterface;
@@ -16,14 +16,14 @@ class ThreadMessage extends Envelope implements OnItemDecodeInterface
     /**
      * The logged in user property.
      *
-     * @var \NicklasW\Instagram\DTO\Inbox\Thread
+     * @var \NicklasW\Instagram\DTO\Direct\Thread
      */
     protected $thread;
 
     /**
-     * @return \NicklasW\Instagram\DTO\Inbox\Thread
+     * @return \NicklasW\Instagram\DTO\Direct\Thread
      */
-    public function getThread(): \NicklasW\Instagram\DTO\Inbox\Thread
+    public function getThread(): \NicklasW\Instagram\DTO\Direct\Thread
     {
         return $this->thread;
     }

@@ -20,7 +20,7 @@ trait ErrorTypeMethodsTrait
      * @param Envelope $envelope
      * @return Exception
      */
-    public function toException(string $type, Envelope $envelope): Exception
+    public function toException(?string $type, Envelope $envelope): Exception
     {
         $exception = null;
 

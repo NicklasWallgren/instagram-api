@@ -1,12 +1,13 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Inbox;
+namespace NicklasW\Instagram\DTO\Direct;
 
 use GuzzleHttp\Promise\Promise;
-use function GuzzleHttp\Promise\task;
 use NicklasW\Instagram\DTO\Cursor\RequestIterator;
+use NicklasW\Instagram\DTO\General\ItemType;
 use NicklasW\Instagram\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use NicklasW\Instagram\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use function GuzzleHttp\Promise\task;
 use function NicklasW\Instagram\Support\unwrap;
 
 class Thread extends RequestIterator implements OnItemDecodeInterface
@@ -32,7 +33,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     protected $leftUsers = [];
 
     /**
-     * @var \NicklasW\Instagram\DTO\Inbox\ThreadItem[]
+     * @var \NicklasW\Instagram\DTO\Direct\ThreadItem[]
      */
     protected $items;
 
@@ -451,14 +452,51 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
             return false;
         }
 
-        return $this->retrieve($this->newestCursor);
+        return $this->client->getAdapter()->run(function () {
+            return $this->retrieve($this->newestCursor);
+        });
+    }
+
+    /**
+     * Sends a message to the thread.
+     *
+     * @param string $text
+     * @return bool|Promise<bool>
+     */
+    public function sendMessage(string $text)
+    {
+        $promise = task(function () use ($text) {
+            return $this->sendThreadMessage($text, $this->threadId);
+        });
+
+        return $promise->then(function ($promise) use ($text) {
+            $message = unwrap($promise);
+
+            // Check if the message was successful
+            if (!$message->isSuccess()) {
+                return false;
+            }
+
+            // Build the thread item
+            $item = ThreadItem::create([
+                'itemType' => ItemType::TEXT,
+                'user'     => $this->getSender(),
+                'text'     => $text,
+                $message->getPayload(),
+            ]);
+
+            $this->items[] = $item;
+
+            return true;
+        });
+
     }
 
     /**
      * Retrieve thread items by cursor.
      *
      * @param string $cursor
-     * @return bool
+     * @return bool|Promise<bool>
      */
     protected function retrieve(?string $cursor = null)
     {
@@ -525,6 +563,16 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
 
             unset($this->leftUsers[$index]);
         }
+    }
+
+    /**
+     * Returns the sender.
+     *
+     * @return \NicklasW\Instagram\DTO\Session\User
+     */
+    protected function getSender()
+    {
+        return $this->client->getSession()->getUser();
     }
 
     /**

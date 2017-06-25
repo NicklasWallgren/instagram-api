@@ -54,8 +54,6 @@ class LoginSerializer extends AbstractSerializer
 
         $message->setSession($this->session);
 
-        // Set as logged in on session?
-
         return $message;
     }
 

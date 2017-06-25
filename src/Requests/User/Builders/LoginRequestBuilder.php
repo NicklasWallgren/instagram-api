@@ -2,16 +2,9 @@
 
 namespace NicklasW\Instagram\Requests\User\Builders;
 
-use GuzzleHttp\Psr7\Request;
-use NicklasW\Instagram\Http\Client;
 use NicklasW\Instagram\Requests\Http\Builders\AbstractPayloadRequestBuilder;
-use NicklasW\Instagram\Requests\Http\Serializers\SerializerInterface;
-use NicklasW\Instagram\Requests\Http\Serializers\UrlEncodeSerializer;
-use NicklasW\Instagram\Requests\Http\Traits\RequestBuilderBodyMethodsTrait;
 use NicklasW\Instagram\Requests\Http\Traits\SignedPayloadSerializerTrait;
-use NicklasW\Instagram\Requests\Support\SignatureSupport;
 use NicklasW\Instagram\Session\Session;
-use Psr\Http\Message\StreamInterface;
 
 class LoginRequestBuilder extends AbstractPayloadRequestBuilder
 {

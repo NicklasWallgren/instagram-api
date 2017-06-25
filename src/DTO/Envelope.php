@@ -2,10 +2,16 @@
 
 namespace NicklasW\Instagram\DTO;
 
+use NicklasW\Instagram\DTO\Interfaces\PropertiesInterface;
 use NicklasW\Instagram\DTO\Interfaces\ResponseMessageInterface;
+use NicklasW\Instagram\DTO\Traits\PropertiesTrait;
+use Traits\MappableTrait;
 
-class Envelope implements ResponseMessageInterface
+class Envelope implements ResponseMessageInterface, PropertiesInterface
 {
+
+    use MappableTrait;
+    use PropertiesTrait;
 
     /**
      * @var string The success status
@@ -50,25 +56,25 @@ class Envelope implements ResponseMessageInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getStatus(): string
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getErrorType()
+    public function getErrorType(): ?string
     {
         return $this->errorType;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }

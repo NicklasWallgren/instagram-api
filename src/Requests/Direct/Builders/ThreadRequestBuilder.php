@@ -2,6 +2,7 @@
 
 namespace NicklasW\Instagram\Requests\Direct\Builders;
 
+use NicklasW\Instagram\Requests\Http\Builders\AbstractQueryRequestBuilder;
 use NicklasW\Instagram\Session\Session;
 
 class ThreadRequestBuilder extends AbstractQueryRequestBuilder

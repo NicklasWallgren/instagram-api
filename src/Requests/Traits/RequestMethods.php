@@ -2,12 +2,51 @@
 
 namespace NicklasW\Instagram\Requests\Traits;
 
+use NicklasW\Instagram\Requests\GenericRequest;
 use NicklasW\Instagram\Responses\Interfaces\SerializerInterface;
+use NicklasW\Instagram\Session\Session;
 use Psr\Http\Message\RequestInterface;
 use function GuzzleHttp\Promise\task;
+use function NicklasW\Instagram\Support\uuid;
 
 trait RequestMethods
 {
+
+    /**
+     * @var Session
+     */
+    protected $session;
+
+    /**
+     * Adds a unique context to the payload.
+     *
+     * @param GenericRequest|null $request
+     * @return GenericRequest
+     */
+    public function addUniqueContext(?GenericRequest $request = null): GenericRequest
+    {
+        $request = $request?: $this;
+
+        $request->setPost('client_context', uuid(true));
+
+        return $request;
+    }
+
+    /**
+     * Adds the CSRF token and User id to the payload.
+     *
+     * @param GenericRequest|null $request
+     * @return GenericRequest
+     */
+    public function addCSRFTokenAndUserId(?GenericRequest $request = null): GenericRequest
+    {
+        $request = $request?: $this;
+
+        $request->setPost('_csrftoken', $this->session->getCsrfToken()->getToken());
+        $request->setPost('_uid', $this->session->getUser()->getId());
+
+        return $request;
+    }
 
     /**
      * Asynchronous request.
@@ -28,7 +67,7 @@ trait RequestMethods
                 // Queue the serialization
                 return $serializer->decode($response->wait());
             });
-        })->otherwise(function ($exception) use($serializer) {
+        })->otherwise(function ($exception) use ($serializer) {
             // Retrieve the response
             $response = $exception->getResponse();
 

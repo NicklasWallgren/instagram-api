@@ -5,7 +5,6 @@ namespace NicklasW\Instagram\Requests\Http\Traits;
 use NicklasW\Instagram\Requests\Http\Serializers\SerializerInterface;
 use NicklasW\Instagram\Requests\Http\Serializers\SignSerializer;
 use NicklasW\Instagram\Requests\Http\Serializers\UrlEncodeSerializer;
-use NicklasW\Instagram\Requests\Support\SignatureSupport;
 
 trait CommonSerializerTrait
 {
@@ -37,7 +36,7 @@ trait CommonSerializerTrait
      * @param int $mode
      * @return GenericRequest
      */
-    public function setMode(int $mode): GenericRequest
+    public function setMode(int $mode): SerializerInterface
     {
         $this->mode = $mode;
 
