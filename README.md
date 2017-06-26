@@ -1,6 +1,9 @@
 # Instagram Private API
 
 [![PHP7.1 Ready](https://img.shields.io/badge/PHP71-ready-green.svg)][link-packagist]
+[![Latest Stable Version](https://poser.pugx.org/nicklasw/instagram-api/v/stable)](https://packagist.org/packages/nicklasw/instagram-api)
+[![Latest Unstable Version](https://poser.pugx.org/nicklasw/instagram-api/v/unstable)](https://packagist.org/packages/nicklasw/instagram-api)
+[![License](https://poser.pugx.org/nicklasw/instagram-api/license)](https://packagist.org/packages/nicklasw/instagram-api)
 
 Instagram Private API library
 
