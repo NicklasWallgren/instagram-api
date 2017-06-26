@@ -65,5 +65,4 @@ class InboxMessage extends Envelope
     {
         return $this->pendingRequestsTotal;
     }
-
 }

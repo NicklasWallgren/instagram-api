@@ -21,17 +21,10 @@ class ParameterFactory
         $resource = null;
 
         switch ($type) {
-
             case self::TYPE_HEADERS:
-
-
-
-
                 break;
         }
 
         return $resource;
     }
-
-
 }

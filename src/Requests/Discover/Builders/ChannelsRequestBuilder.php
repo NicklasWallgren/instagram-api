@@ -11,5 +11,4 @@ class ChannelsRequestBuilder extends AbstractQueryRequestBuilder
      * @var string The discover channels home request uri
      */
     protected static $REQUEST_URI = 'discover/channels_home/';
-
 }

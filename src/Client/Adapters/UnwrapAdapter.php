@@ -20,5 +20,4 @@ class UnwrapAdapter implements AdapterInterface
 
         return $promise->wait();
     }
-
 }

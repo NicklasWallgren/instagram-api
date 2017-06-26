@@ -35,5 +35,4 @@ abstract class RequestIterator implements IteratorInterface
     {
         return $this->client;
     }
-
 }

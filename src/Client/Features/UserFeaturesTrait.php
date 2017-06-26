@@ -37,5 +37,4 @@ trait UserFeaturesTrait
             });
         });
     }
-
 }

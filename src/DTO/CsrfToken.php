@@ -29,5 +29,4 @@ class CsrfToken
     {
         return $this->token;
     }
-
 }

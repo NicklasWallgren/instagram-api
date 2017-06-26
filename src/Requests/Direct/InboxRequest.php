@@ -49,5 +49,4 @@ class InboxRequest extends Request
         // Return a promise chain
         return $this->request($request->build(), new InboxSerializer($this->client));
     }
-
 }

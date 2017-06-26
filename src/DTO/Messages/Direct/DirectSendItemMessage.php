@@ -51,5 +51,4 @@ class DirectSendItemMessage extends Envelope
     {
         return $this->payload;
     }
-
 }

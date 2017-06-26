@@ -44,10 +44,8 @@ trait ErrorTypeMethodsTrait
                 $exception = new ApiResponseException($envelope);
 
                 break;
-
         }
 
         return $exception;
     }
-
 }

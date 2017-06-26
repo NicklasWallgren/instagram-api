@@ -30,5 +30,4 @@ trait RequirementsParserMethodsTrait
     {
         return $parameters !== null? explode(',', $parameters) : [];
     }
-
 }

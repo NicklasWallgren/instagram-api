@@ -12,5 +12,4 @@ interface OnItemDecodeInterface
      * @param array $requirements
      */
     public function onDecode(array $container, $requirements = []): void;
-
 }

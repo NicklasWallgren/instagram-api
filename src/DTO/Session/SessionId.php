@@ -27,5 +27,4 @@ class SessionId
     {
         return $this->id;
     }
-
 }

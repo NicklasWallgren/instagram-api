@@ -31,5 +31,4 @@ trait DefaultFeaturesTrait
      * @throws Exception
      */
     abstract protected function checkPrerequisites();
-
 }

@@ -18,5 +18,4 @@ class ImageVersions2
     {
         return $this->candidates;
     }
-
 }

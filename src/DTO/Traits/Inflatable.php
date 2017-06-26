@@ -19,7 +19,6 @@ trait Inflatable
         $properties = $this->properties($properties);
 
         foreach ($properties as $property => $value) {
-
             if ($value instanceof PropertiesInterface) {
                 $this->inflate($value);
             }
@@ -79,5 +78,4 @@ trait Inflatable
 
         return $subject;
     }
-
 }

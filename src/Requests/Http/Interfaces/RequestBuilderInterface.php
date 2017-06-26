@@ -32,5 +32,4 @@ interface RequestBuilderInterface
      * @return string|null
      */
     public function getBody(): ?string;
-
 }

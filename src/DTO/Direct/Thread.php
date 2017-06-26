@@ -489,7 +489,6 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
 
             return true;
         });
-
     }
 
     /**
@@ -598,5 +597,4 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
 
         return $user->getId() == $userId ? $user : null;
     }
-
 }

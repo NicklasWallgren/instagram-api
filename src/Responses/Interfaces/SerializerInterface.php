@@ -15,5 +15,4 @@ interface SerializerInterface
      * @return ResponseMessageInterface
      */
     public function decode(HttpResponseInterface $response): ResponseMessageInterface;
-
 }

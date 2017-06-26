@@ -24,5 +24,4 @@ abstract class DTO implements PropertiesInterface
 
         return $instance->inflate($properties);
     }
-
 }

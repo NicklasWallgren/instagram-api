@@ -18,5 +18,4 @@ class ResponseErrorTypes
      * @var string The invalid user error type
      */
     const INVALID_USER = 'invalid_user';
-
 }

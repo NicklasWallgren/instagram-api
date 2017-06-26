@@ -19,5 +19,4 @@ class PromiseAdapter implements AdapterInterface
     {
         return task($callback);
     }
-
 }

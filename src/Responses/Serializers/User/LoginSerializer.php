@@ -80,5 +80,4 @@ class LoginSerializer extends AbstractSerializer
     {
         return new SessionMessage();
     }
-
 }

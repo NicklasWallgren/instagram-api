@@ -49,5 +49,4 @@ class TopLiveRequest extends Request
         // Return a promise chain
         return $this->request($request->build(), new TopLiveSerializer($this->client));
     }
-
 }

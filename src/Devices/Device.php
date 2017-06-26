@@ -199,5 +199,4 @@ class Device implements DeviceInterface
     {
         return $this->compose($this, self::DEVICE_VERSION, self::LOCALE);
     }
-
 }

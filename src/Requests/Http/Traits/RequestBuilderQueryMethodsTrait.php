@@ -68,5 +68,4 @@ trait RequestBuilderQueryMethodsTrait
     {
         return '?' . http_build_query($this->getQueryParameters(), '', '&');
     }
-
 }

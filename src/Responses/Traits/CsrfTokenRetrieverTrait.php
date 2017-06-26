@@ -35,5 +35,4 @@ trait CsrfTokenRetrieverTrait
 
         return new CsrfToken(end($token));
     }
-
 }

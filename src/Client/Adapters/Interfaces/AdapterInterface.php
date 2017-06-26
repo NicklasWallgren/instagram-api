@@ -11,5 +11,4 @@ interface AdapterInterface
      * @param callable $callback
      */
     public function run(callable $callback);
-
 }

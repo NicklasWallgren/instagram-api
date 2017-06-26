@@ -49,5 +49,4 @@ class ExploreRequest extends Request
         // Return a promise chain
         return $this->request($request->build(), new ExploreSerializer($this->client));
     }
-
 }

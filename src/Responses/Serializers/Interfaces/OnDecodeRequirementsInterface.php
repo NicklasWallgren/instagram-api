@@ -11,5 +11,4 @@ interface OnDecodeRequirementsInterface
      * @return array
      */
     public function requirements();
-
 }

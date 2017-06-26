@@ -45,5 +45,4 @@ class InboxSerializer extends AbstractSerializer implements OnDecodeInterface
     {
         $message->onDecode(['client' => $this->client]);
     }
-
 }

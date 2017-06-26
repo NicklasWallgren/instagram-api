@@ -68,5 +68,4 @@ class SignatureSupport
 
         return $type ? $uuid : str_replace('-', '', $uuid);
     }
-
 }

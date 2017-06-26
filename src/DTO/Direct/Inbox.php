@@ -127,5 +127,4 @@ class Inbox implements OnItemDecodeInterface
 
         $this->propagate($container);
     }
-
 }

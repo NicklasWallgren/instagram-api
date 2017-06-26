@@ -234,8 +234,6 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
 //        $this->parent = $requirements['parent'];
 
 //        print_r($this->getUser());
-
-
     }
 
     /**
@@ -247,5 +245,4 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
     {
         return ['user:userId', 'parent'];
     }
-
 }

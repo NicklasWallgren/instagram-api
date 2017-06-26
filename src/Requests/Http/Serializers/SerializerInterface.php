@@ -14,5 +14,4 @@ interface SerializerInterface
      * @return null|StreamInterface|resource|string
      */
     public function encode($body);
-
 }

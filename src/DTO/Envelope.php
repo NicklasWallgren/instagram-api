@@ -96,5 +96,4 @@ class Envelope implements ResponseMessageInterface, PropertiesInterface
     {
         return $this->status === static::STATUS_SUCCESS;
     }
-
 }

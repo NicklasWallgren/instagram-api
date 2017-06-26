@@ -40,5 +40,4 @@ class HeaderSerializer extends AbstractSerializer
     {
         return null;
     }
-
 }

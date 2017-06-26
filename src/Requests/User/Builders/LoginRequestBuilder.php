@@ -72,5 +72,4 @@ class LoginRequestBuilder extends AbstractPayloadRequestBuilder
             '_csrftoken' => sprintf('Set-Cookie: csrftoken=%s', $this->session->getCsrfToken()->getToken()),
         ], $parameters);
     }
-    
 }

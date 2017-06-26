@@ -97,5 +97,4 @@ class GenericRequestBuilder extends AbstractPayloadRequestBuilder
     {
         return $this->uri;
     }
-
 }

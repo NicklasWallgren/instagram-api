@@ -59,5 +59,4 @@ class Instagram
     {
         return $this->client;
     }
-
 }

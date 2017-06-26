@@ -41,8 +41,13 @@ class ThreadRequest extends Request
      * @param string      $id
      * @param string|null $cursor
      */
-    public function __construct(Client $client, Session $session, HttpClient $httpClient, string $id, ?string $cursor = null)
-    {
+    public function __construct(
+        Client $client,
+        Session $session,
+        HttpClient $httpClient,
+        string $id,
+        ?string $cursor = null
+    ) {
         $this->client = $client;
         $this->id = $id;
         $this->cursor = $cursor;
@@ -63,5 +68,4 @@ class ThreadRequest extends Request
         // Return a promise chain
         return $this->request($request->build(), new ThreadSerializer($this->client));
     }
-
 }

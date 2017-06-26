@@ -108,5 +108,4 @@ class ExploreMessage extends Envelope
     {
         return $this->rankToken;
     }
-
 }

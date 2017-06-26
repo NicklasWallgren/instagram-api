@@ -92,5 +92,4 @@ class ThreadMediaItem
     {
         return $this->originalHeight;
     }
-
 }

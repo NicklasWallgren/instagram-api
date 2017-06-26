@@ -36,5 +36,4 @@ trait SessionIdRetrieverTrait
 
         return new SessionId(end($token));
     }
-
 }

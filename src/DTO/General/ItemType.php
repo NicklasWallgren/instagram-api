@@ -69,5 +69,4 @@ class ItemType
      * @var string
      */
     const LINK = 'link';
-
 }

@@ -31,6 +31,4 @@ class HeaderMessage extends Envelope
 
         return $this;
     }
-
-
 }

@@ -169,7 +169,7 @@ trait OnPropagateDecodeEventTrait
         }
 
         // Retrieve the required parameter value
-        $parameters = array_map(function(string $parameter) use($subject) {
+        $parameters = array_map(function (string $parameter) use ($subject) {
             return $this->getRequirementParameterValue($subject, $parameter);
         }, $parameters);
 
@@ -219,5 +219,4 @@ trait OnPropagateDecodeEventTrait
     {
         return [$subject];
     }
-
 }

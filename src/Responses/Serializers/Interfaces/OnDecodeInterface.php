@@ -13,5 +13,4 @@ interface OnDecodeInterface
      * @param Envelope $message
      */
     public function onDecode(Envelope &$message): void;
-
 }

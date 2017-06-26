@@ -124,5 +124,4 @@ class Client
     {
         return $this->session !== null;
     }
-
 }

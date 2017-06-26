@@ -68,7 +68,8 @@ abstract class AbstractSerializer implements SerializerInterface
      */
     protected function isValidHttpResponse(HttpResponseInterface $response): bool
     {
-        return $response->getStatusCode() === static::STATUS_SUCCESS || $response->getStatusCode() === static::STATUS_ERROR;
+        return $response->getStatusCode() === static::STATUS_SUCCESS ||
+            $response->getStatusCode() === static::STATUS_ERROR;
     }
 
     /**
@@ -94,5 +95,4 @@ abstract class AbstractSerializer implements SerializerInterface
             $this->onDecode($message);
         }
     }
-
 }

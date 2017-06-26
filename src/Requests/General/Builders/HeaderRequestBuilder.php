@@ -46,5 +46,4 @@ class HeaderRequestBuilder extends AbstractPayloadRequestBuilder
             'guid'           => $this->signature,
         ];
     }
-
 }

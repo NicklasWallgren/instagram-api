@@ -60,6 +60,3 @@ function request($uri, $serializer)
         return new GenericRequest($session, $httpClient, $uri, $serializer);
     };
 }
-
-
-

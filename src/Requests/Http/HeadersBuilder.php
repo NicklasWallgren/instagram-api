@@ -64,5 +64,4 @@ class HeadersBuilder
     {
         return rand(1000, 3700) . 'kbps';
     }
-
 }

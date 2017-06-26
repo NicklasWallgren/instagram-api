@@ -25,5 +25,4 @@ interface UserInterface
      * @return string|null
      */
     public function getFullname(): ?string;
-
 }

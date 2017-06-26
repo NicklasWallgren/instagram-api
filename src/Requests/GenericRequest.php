@@ -96,5 +96,4 @@ class GenericRequest extends Request
         // Return a promise chain
         return $this->request($this->requestBuilder->build(), $this->serializer);
     }
-
 }

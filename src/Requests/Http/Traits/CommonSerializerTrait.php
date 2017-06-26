@@ -68,5 +68,4 @@ trait CommonSerializerTrait
 
         return $serializer;
     }
-
 }

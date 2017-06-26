@@ -51,5 +51,4 @@ trait MakeDirectRequestAccessible
      * @return Client
      */
     abstract protected function getClient(): Client;
-
 }

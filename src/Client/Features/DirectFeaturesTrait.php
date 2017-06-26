@@ -80,5 +80,4 @@ trait DirectFeaturesTrait
             return $request->fire();
         });
     }
-
 }

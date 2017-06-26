@@ -43,5 +43,4 @@ class Image
     {
         return $this->height;
     }
-
 }

@@ -44,7 +44,8 @@ abstract class AbstractRequestBuilder
             $this->getType(),
             $this->getUri(),
             $this->getHeaders(),
-            $this->getBody());
+            $this->getBody()
+        );
     }
 
     /**
@@ -94,5 +95,4 @@ abstract class AbstractRequestBuilder
      * @return string|null
      */
     abstract protected function getBody(): ?string;
-
 }

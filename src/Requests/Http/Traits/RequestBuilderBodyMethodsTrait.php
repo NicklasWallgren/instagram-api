@@ -36,5 +36,4 @@ trait RequestBuilderBodyMethodsTrait
      * @return SerializerInterface
      */
     abstract protected function serializer(): SerializerInterface;
-
 }

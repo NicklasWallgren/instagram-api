@@ -56,5 +56,4 @@ trait DiscoverFeaturesTrait
             return (new ChannelsRequest($this, $this->session, $this->client))->fire();
         });
     }
-
 }

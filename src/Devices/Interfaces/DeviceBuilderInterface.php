@@ -11,5 +11,4 @@ interface DeviceBuilderInterface
      * @return DeviceInterface
      */
     public function build(): DeviceInterface;
-
 }

@@ -66,5 +66,4 @@ class TopLiveMessage extends Envelope
     {
         return $this->nextMaxId;
     }
-
 }

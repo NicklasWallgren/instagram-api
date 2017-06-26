@@ -41,5 +41,4 @@ trait GeneralFeaturesTrait
     {
         return $this->session !== null;
     }
-
 }

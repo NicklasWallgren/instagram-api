@@ -145,5 +145,4 @@ class Session
     {
         $this->cookies = $cookies;
     }
-
 }

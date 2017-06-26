@@ -25,5 +25,4 @@ class SessionBuilder
             ->setUuid(SignatureSupport::uuid())
             ->setDevice($device);
     }
-
 }

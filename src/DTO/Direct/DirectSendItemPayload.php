@@ -74,5 +74,4 @@ class DirectSendItemPayload extends DTO
     {
         return $this->threadId;
     }
-
 }

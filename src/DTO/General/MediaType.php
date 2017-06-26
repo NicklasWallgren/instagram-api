@@ -15,7 +15,4 @@ class MediaType
      *
      */
     const VIDEO = 2;
-
-
-
 }

@@ -66,5 +66,4 @@ class ChannelsMessage extends Envelope
     {
         return $this->nextMaxId;
     }
-
 }

@@ -37,5 +37,4 @@ class ApiResponseException extends Exception
     {
         return $this->envelope;
     }
-
 }

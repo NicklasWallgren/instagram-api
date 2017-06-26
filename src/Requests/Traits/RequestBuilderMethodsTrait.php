@@ -57,5 +57,4 @@ trait RequestBuilderMethodsTrait
      * @return string
      */
     abstract protected function getRequestUri(): string;
-
 }

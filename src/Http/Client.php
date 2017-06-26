@@ -166,5 +166,4 @@ class Client
     {
         $this->cookies = $cookies;
     }
-
 }

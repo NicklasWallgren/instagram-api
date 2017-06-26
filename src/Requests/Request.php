@@ -38,5 +38,4 @@ abstract class Request
      * @return Promise
      */
     abstract public function fire(): Promise;
-
 }

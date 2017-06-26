@@ -14,5 +14,4 @@ interface IteratorInterface
      * @return bool
      */
     public function rewind();
-
 }

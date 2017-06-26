@@ -28,5 +28,4 @@ abstract class AbstractQueryRequestBuilder extends AbstractRequestBuilder
     {
         return null;
     }
-
 }

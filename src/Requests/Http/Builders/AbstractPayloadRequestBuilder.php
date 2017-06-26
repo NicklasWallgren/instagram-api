@@ -8,5 +8,4 @@ abstract class AbstractPayloadRequestBuilder extends AbstractRequestBuilder
 {
 
     use RequestBuilderBodyMethodsTrait;
-
 }

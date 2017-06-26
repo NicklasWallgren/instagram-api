@@ -11,5 +11,4 @@ interface PropertiesInterface
      * @return array
      */
     public function getProperties(): array;
-
 }

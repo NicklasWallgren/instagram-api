@@ -17,5 +17,4 @@ trait MakeRequestsAccessible
      * @return Client
      */
     abstract protected function getClient(): Client;
-
 }

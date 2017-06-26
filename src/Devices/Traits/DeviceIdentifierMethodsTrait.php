@@ -17,7 +17,8 @@ trait DeviceIdentifierMethodsTrait
      */
     public function compose(DeviceInterface $device, string $applicationVersion, string $locale): string
     {
-        return sprintf('Instagram %s Android (%s; %s; %s; %s; %s; %s; %s; %s)',
+        return sprintf(
+            'Instagram %s Android (%s; %s; %s; %s; %s; %s; %s; %s)',
             $applicationVersion,
             $device->version(),
             $device->dpi(),
@@ -29,5 +30,4 @@ trait DeviceIdentifierMethodsTrait
             $locale
         );
     }
-
 }

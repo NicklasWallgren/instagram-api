@@ -17,5 +17,4 @@ trait UrlEncodedSerializerTrait
     {
         return new UrlEncodeSerializer();
     }
-
 }

@@ -51,5 +51,4 @@ class DeviceBuilder implements DeviceBuilderInterface
     {
         $metadata[] = SignatureSupport::deviceId(md5('test'));
     }
-
 }

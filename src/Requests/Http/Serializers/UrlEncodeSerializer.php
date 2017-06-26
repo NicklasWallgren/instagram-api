@@ -15,5 +15,4 @@ class UrlEncodeSerializer implements SerializerInterface
     {
         return http_build_query($body, '', '&');
     }
-
 }

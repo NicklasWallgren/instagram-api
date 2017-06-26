@@ -54,5 +54,4 @@ class LoginRequest extends Request
         // Return a promise chain
         return $this->request($request->build(), new LoginSerializer($this->session, $this->httpClient));
     }
-
 }

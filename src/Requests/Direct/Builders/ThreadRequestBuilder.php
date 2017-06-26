@@ -80,5 +80,4 @@ class ThreadRequestBuilder extends AbstractQueryRequestBuilder
             $query['cursor'] = $this->cursor;
         }
     }
-
 }

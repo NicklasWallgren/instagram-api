@@ -27,5 +27,4 @@ class ThreadMessage extends Envelope implements OnItemDecodeInterface
     {
         return $this->thread;
     }
-
 }

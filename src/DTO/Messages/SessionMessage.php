@@ -49,5 +49,4 @@ class SessionMessage extends Envelope
     {
         $this->session = $session;
     }
-
 }
