@@ -3,13 +3,13 @@
 namespace NicklasW\Instagram\DTO\Cursor;
 
 use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\Requests\Traits\MakeRequestsAccessable;
+use NicklasW\Instagram\Requests\Traits\MakeRequestsAccessible;
 use NicklasW\Instagram\Responses\Interfaces\IteratorInterface;
 
 abstract class RequestIterator implements IteratorInterface
 {
 
-    use MakeRequestsAccessable;
+    use MakeRequestsAccessible;
 
     /**
      * @var Client

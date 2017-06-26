@@ -6,13 +6,13 @@ use GuzzleHttp\ClientInterface;
 use NicklasW\Instagram\Client\Adapters\Interfaces\AdapterInterface;
 use NicklasW\Instagram\Client\Client;
 use NicklasW\Instagram\Devices\DeviceBuilderInterface;
-use NicklasW\Instagram\Requests\Traits\MakeRequestsAccessable;
+use NicklasW\Instagram\Requests\Traits\MakeRequestsAccessible;
 use NicklasW\Instagram\Session\Session;
 
 class Instagram
 {
 
-    use MakeRequestsAccessable;
+    use MakeRequestsAccessible;
 
     /**
      * @var Client The Instagram API client

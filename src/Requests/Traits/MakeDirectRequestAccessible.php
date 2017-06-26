@@ -5,27 +5,11 @@ namespace NicklasW\Instagram\Requests\Traits;
 use GuzzleHttp\Promise\Promise;
 use NicklasW\Instagram\Client\Client;
 use NicklasW\Instagram\DTO\Messages\Direct\DirectSendItemMessage;
-use NicklasW\Instagram\DTO\Messages\Discover\ChannelsMessage;
-use NicklasW\Instagram\DTO\Messages\Discover\ExploreMessage;
-use NicklasW\Instagram\DTO\Messages\Discover\TopLiveMessage;
 use NicklasW\Instagram\DTO\Messages\Direct\InboxMessage;
-use NicklasW\Instagram\DTO\Messages\SessionMessage;
 use NicklasW\Instagram\DTO\Messages\Direct\ThreadMessage;
 
-trait MakeRequestsAccessable
+trait MakeDirectRequestAccessible
 {
-
-    /**
-     * Login a user
-     *
-     * @param string $username
-     * @param string $password
-     * @return SessionMessage|Promise<SessionMessage>
-     */
-    public function login(string $username, string $password)
-    {
-        return $this->getClient()->login($username, $password);
-    }
 
     /**
      * Returns the inbox.
@@ -59,36 +43,6 @@ trait MakeRequestsAccessable
     public function sendThreadMessage(string $text, string $threadId)
     {
         return $this->getClient()->sendThreadMessage($text, $threadId);
-    }
-
-    /**
-     * Returns the discover explore items.
-     *
-     * @return ExploreMessage|Promise<ExploreMessage>
-     */
-    public function explore()
-    {
-        return $this->getClient()->explore();
-    }
-
-    /**
-     * Returns the discover top lives items.
-     *
-     * @return TopLiveMessage|Promise<TopLiveMessage>
-     */
-    public function topLives()
-    {
-        return $this->getClient()->topLives();
-    }
-
-    /**
-     * Returns the discover channels items.
-     *
-     * @return ChannelsMessage|Promise<ChannelsMessage>
-     */
-    public function channels()
-    {
-        return $this->getClient()->channels();
     }
 
     /**
