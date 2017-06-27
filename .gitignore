@@ -1,0 +1,9 @@
+# composer
+vendor/
+composer.lock
+
+# travis
+travis/
+
+.php_cs
+.php_cs.cache
