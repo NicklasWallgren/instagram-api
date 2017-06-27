@@ -1,0 +1,23 @@
+language: php
+
+php:
+    - 7.1
+
+sudo: false
+
+cache:
+  directory:
+    - $HOME/.composer/cache
+
+install:
+  - composer update -n --prefer-dist $COMPOSER_FLAGS
+  - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.0/coveralls.phar
+
+before_script:
+    - mkdir -p build/logs
+
+script:
+  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+
+after_script:
+  - php coveralls.phar -v
