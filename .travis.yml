@@ -3,8 +3,6 @@ language: php
 php:
     - 7.1
 
-sudo: false
-
 cache:
   directories:
     - $HOME/.composer/cache
@@ -21,4 +19,4 @@ script:
   - vendor/bin/phpcs --standard=ruleset.xml ./src
 
 after_script:
-  - php coveralls.phar -v
+  - php coveralls.phar -v --exclude-no-stmt
