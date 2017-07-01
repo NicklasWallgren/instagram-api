@@ -26,10 +26,10 @@ composer require nicklasw/instagram-api
 
 Promise adapter
 ```php
-use NicklasW\Instagram\Responses\Exceptions\ApiResponseException;
-use NicklasW\Instagram\DTO\Messages\InboxMessage;
-use NicklasW\Instagram\DTO\Messages\SessionMessage;
-use NicklasW\Instagram\Instagram;
+use Instagram\SDK\Responses\Exceptions\ApiResponseException;
+use Instagram\SDK\DTO\Messages\InboxMessage;
+use Instagram\SDK\DTO\Messages\SessionMessage;
+use Instagram\SDK\Instagram;
 
 require_once 'vendor/autoload.php';
 
@@ -51,8 +51,8 @@ $instagram
 
 Unwrap adapter
 ```php
-use NicklasW\Instagram\DTO\General\ItemType;
-use NicklasW\Instagram\Instagram;
+use Instagram\SDK\DTO\General\ItemType;
+use Instagram\SDK\Instagram;
 
 require_once 'vendor/autoload.php';
 
