@@ -1,14 +1,14 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Direct;
+namespace Instagram\SDK\DTO\Direct;
 
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\DTO\Cursor\RequestIterator;
-use NicklasW\Instagram\DTO\General\ItemType;
-use NicklasW\Instagram\Responses\Serializers\Interfaces\OnItemDecodeInterface;
-use NicklasW\Instagram\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Instagram\SDK\DTO\Cursor\RequestIterator;
+use Instagram\SDK\DTO\General\ItemType;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
+use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use function GuzzleHttp\Promise\task;
-use function NicklasW\Instagram\Support\unwrap;
+use function Instagram\SDK\Support\unwrap;
 
 class Thread extends RequestIterator implements OnItemDecodeInterface
 {
@@ -22,18 +22,18 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     protected $threadId;
 
     /**
-     * @var \NicklasW\Instagram\DTO\General\User[]
+     * @var \Instagram\SDK\DTO\General\User[]
      */
     protected $users = [];
 
     /**
-     * @var \NicklasW\Instagram\DTO\General\User[]
+     * @var \Instagram\SDK\DTO\General\User[]
      * @name left_users
      */
     protected $leftUsers = [];
 
     /**
-     * @var \NicklasW\Instagram\DTO\Direct\ThreadItem[]
+     * @var \Instagram\SDK\DTO\Direct\ThreadItem[]
      */
     protected $items;
 
@@ -124,7 +124,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     }
 
     /**
-     * @return \NicklasW\Instagram\DTO\General\User[]
+     * @return \Instagram\SDK\DTO\General\User[]
      */
     public function getUsers(): array
     {
@@ -247,7 +247,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     }
 
     /**
-     * @param \NicklasW\Instagram\DTO\General\User[] $users
+     * @param \Instagram\SDK\DTO\General\User[] $users
      * @return $this
      */
     public function setUsers(array $users)
@@ -567,7 +567,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Returns the sender.
      *
-     * @return \NicklasW\Instagram\DTO\Session\User
+     * @return \Instagram\SDK\DTO\Session\User
      */
     protected function getSender()
     {
@@ -578,7 +578,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      * Returns the user by id.
      *
      * @param int $userId
-     * @return \NicklasW\Instagram\DTO\General\User|null
+     * @return \Instagram\SDK\DTO\General\User|null
      */
     protected function getUser(int $userId)
     {

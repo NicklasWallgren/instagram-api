@@ -1,14 +1,14 @@
 <?php
 
-namespace NicklasW\Instagram\Client\Features;
+namespace Instagram\SDK\Client\Features;
 
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\DTO\Messages\Discover\ChannelsMessage;
-use NicklasW\Instagram\DTO\Messages\Discover\ExploreMessage;
-use NicklasW\Instagram\DTO\Messages\Discover\TopLiveMessage;
-use NicklasW\Instagram\Requests\Discover\ChannelsRequest;
-use NicklasW\Instagram\Requests\Discover\ExploreRequest;
-use NicklasW\Instagram\Requests\Discover\TopLiveRequest;
+use Instagram\SDK\DTO\Messages\Discover\ChannelsMessage;
+use Instagram\SDK\DTO\Messages\Discover\ExploreMessage;
+use Instagram\SDK\DTO\Messages\Discover\TopLiveMessage;
+use Instagram\SDK\Requests\Discover\ChannelsRequest;
+use Instagram\SDK\Requests\Discover\ExploreRequest;
+use Instagram\SDK\Requests\Discover\TopLiveRequest;
 
 trait DiscoverFeaturesTrait
 {

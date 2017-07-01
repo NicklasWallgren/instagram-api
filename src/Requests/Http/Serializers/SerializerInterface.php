@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Http\Serializers;
+namespace Instagram\SDK\Requests\Http\Serializers;
 
 use Psr\Http\Message\StreamInterface;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Interfaces;
+namespace Instagram\SDK\Responses\Interfaces;
 
 interface IteratorInterface
 {

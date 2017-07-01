@@ -1,9 +1,9 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Http\Traits;
+namespace Instagram\SDK\Requests\Http\Traits;
 
-use NicklasW\Instagram\Requests\Http\Serializers\SerializerInterface;
-use NicklasW\Instagram\Requests\Support\SignatureSupport;
+use Instagram\SDK\Requests\Http\Serializers\SerializerInterface;
+use Instagram\SDK\Requests\Support\SignatureSupport;
 
 trait SignedPayloadSerializerTrait
 {

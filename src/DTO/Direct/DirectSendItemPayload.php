@@ -1,8 +1,8 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Direct;
+namespace Instagram\SDK\DTO\Direct;
 
-use NicklasW\Instagram\DTO\DTO;
+use Instagram\SDK\DTO\DTO;
 
 class DirectSendItemPayload extends DTO
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace NicklasW\Instagram\Devices\Builders;
+namespace Instagram\SDK\Devices\Builders;
 
-use NicklasW\Instagram\Devices\Device;
-use NicklasW\Instagram\Devices\Interfaces\DeviceBuilderInterface;
-use NicklasW\Instagram\Devices\Interfaces\DeviceInterface;
-use NicklasW\Instagram\Requests\Support\SignatureSupport;
+use Instagram\SDK\Devices\Device;
+use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
+use Instagram\SDK\Devices\Interfaces\DeviceInterface;
+use Instagram\SDK\Requests\Support\SignatureSupport;
 
 class DeviceBuilder implements DeviceBuilderInterface
 {

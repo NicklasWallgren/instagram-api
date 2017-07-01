@@ -1,19 +1,19 @@
 <?php
 
-namespace NicklasW\Instagram\Support;
+namespace Instagram\SDK\Support;
 
 use Closure;
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\Http\Client as HttpClient;
-use NicklasW\Instagram\Requests\GenericRequest;
-use NicklasW\Instagram\Requests\Http\Builders\AbstractRequestBuilder;
-use NicklasW\Instagram\Requests\Http\Builders\GenericRequestBuilder;
-use NicklasW\Instagram\Requests\Support\SignatureSupport;
-use NicklasW\Instagram\Responses\Serializers\AbstractSerializer;
-use NicklasW\Instagram\Responses\Serializers\GenericSerializer;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Client\Client;
+use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Requests\GenericRequest;
+use Instagram\SDK\Requests\Http\Builders\AbstractRequestBuilder;
+use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
+use Instagram\SDK\Requests\Support\SignatureSupport;
+use Instagram\SDK\Responses\Serializers\AbstractSerializer;
+use Instagram\SDK\Responses\Serializers\GenericSerializer;
+use Instagram\SDK\Session\Session;
 
 /**
  * Generates a universal unique identifier.

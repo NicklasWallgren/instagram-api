@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Direct;
+namespace Instagram\SDK\DTO\Direct;
 
-use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\Responses\Serializers\Interfaces\OnItemDecodeInterface;
-use NicklasW\Instagram\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Instagram\SDK\Client\Client;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
+use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 
 class Inbox implements OnItemDecodeInterface
 {
@@ -30,7 +30,7 @@ class Inbox implements OnItemDecodeInterface
     protected $unseenCountTimestamp;
 
     /**
-     * @var \NicklasW\Instagram\DTO\Direct\Thread[]
+     * @var \Instagram\SDK\DTO\Direct\Thread[]
      */
     protected $threads;
 

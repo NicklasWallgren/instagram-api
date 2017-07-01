@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\Client\Features;
+namespace Instagram\SDK\Client\Features;
 
 use Exception;
-use NicklasW\Instagram\Client\Adapters\Interfaces\AdapterInterface;
-use NicklasW\Instagram\Http\Client as HttpClient;
+use Instagram\SDK\Client\Adapters\Interfaces\AdapterInterface;
+use Instagram\SDK\Http\Client as HttpClient;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 trait DefaultFeaturesTrait

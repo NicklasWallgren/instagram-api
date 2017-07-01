@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Serializers\Traits;
+namespace Instagram\SDK\Responses\Serializers\Traits;
 
 use Exception;
-use NicklasW\Instagram\Responses\Serializers\Interfaces\OnDecodeRequirementsInterface;
-use NicklasW\Instagram\Responses\Serializers\Interfaces\OnItemDecodeInterface;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeRequirementsInterface;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 
 trait OnPropagateDecodeEventTrait
 {

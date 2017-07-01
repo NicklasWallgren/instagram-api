@@ -1,9 +1,9 @@
 <?php
 
-namespace NicklasW\Instagram\Devices;
+namespace Instagram\SDK\Devices;
 
-use NicklasW\Instagram\Devices\Interfaces\DeviceInterface;
-use NicklasW\Instagram\Devices\Traits\DeviceIdentifierMethodsTrait;
+use Instagram\SDK\Devices\Interfaces\DeviceInterface;
+use Instagram\SDK\Devices\Traits\DeviceIdentifierMethodsTrait;
 
 class Device implements DeviceInterface
 {

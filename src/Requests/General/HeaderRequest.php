@@ -1,14 +1,14 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\General;
+namespace Instagram\SDK\Requests\General;
 
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\Http\Client as HttpClient;
-use NicklasW\Instagram\Requests\General\Builders\HeaderRequestBuilder;
-use NicklasW\Instagram\Requests\Request;
-use NicklasW\Instagram\Requests\Traits\RequestMethods;
-use NicklasW\Instagram\Responses\Serializers\General\HeaderSerializer;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Requests\General\Builders\HeaderRequestBuilder;
+use Instagram\SDK\Requests\Request;
+use Instagram\SDK\Requests\Traits\RequestMethods;
+use Instagram\SDK\Responses\Serializers\General\HeaderSerializer;
+use Instagram\SDK\Session\Session;
 
 class HeaderRequest extends Request
 {

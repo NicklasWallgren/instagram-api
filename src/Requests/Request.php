@@ -1,11 +1,11 @@
 <?php
 
 
-namespace NicklasW\Instagram\Requests;
+namespace Instagram\SDK\Requests;
 
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\Http\Client as HttpClient;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Session\Session;
 
 abstract class Request
 {

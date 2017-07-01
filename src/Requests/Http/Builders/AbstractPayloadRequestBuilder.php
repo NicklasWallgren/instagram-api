@@ -1,8 +1,8 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Http\Builders;
+namespace Instagram\SDK\Requests\Http\Builders;
 
-use NicklasW\Instagram\Requests\Http\Traits\RequestBuilderBodyMethodsTrait;
+use Instagram\SDK\Requests\Http\Traits\RequestBuilderBodyMethodsTrait;
 
 abstract class AbstractPayloadRequestBuilder extends AbstractRequestBuilder
 {

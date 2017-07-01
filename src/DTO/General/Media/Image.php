@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\General\Media;
+namespace Instagram\SDK\DTO\General\Media;
 
 class Image
 {

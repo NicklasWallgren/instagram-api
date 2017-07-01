@@ -1,8 +1,8 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\General;
+namespace Instagram\SDK\DTO\General;
 
-use NicklasW\Instagram\DTO\Interfaces\UserInterface;
+use Instagram\SDK\DTO\Interfaces\UserInterface;
 
 class User implements UserInterface
 {

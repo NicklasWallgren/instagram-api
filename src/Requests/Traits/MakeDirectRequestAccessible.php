@@ -1,12 +1,12 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Traits;
+namespace Instagram\SDK\Requests\Traits;
 
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\DTO\Messages\Direct\DirectSendItemMessage;
-use NicklasW\Instagram\DTO\Messages\Direct\InboxMessage;
-use NicklasW\Instagram\DTO\Messages\Direct\ThreadMessage;
+use Instagram\SDK\Client\Client;
+use Instagram\SDK\DTO\Messages\Direct\DirectSendItemMessage;
+use Instagram\SDK\DTO\Messages\Direct\InboxMessage;
+use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
 
 trait MakeDirectRequestAccessible
 {

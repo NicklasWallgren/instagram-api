@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Cursor;
+namespace Instagram\SDK\DTO\Cursor;
 
-use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\Requests\Traits\MakeRequestsAccessible;
-use NicklasW\Instagram\Responses\Interfaces\IteratorInterface;
+use Instagram\SDK\Client\Client;
+use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
+use Instagram\SDK\Responses\Interfaces\IteratorInterface;
 
 abstract class RequestIterator implements IteratorInterface
 {

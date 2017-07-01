@@ -1,12 +1,12 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Serializers\Direct;
+namespace Instagram\SDK\Responses\Serializers\Direct;
 
-use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\DTO\Messages\Direct\ThreadMessage;
-use NicklasW\Instagram\Responses\Serializers\AbstractSerializer;
-use NicklasW\Instagram\Responses\Serializers\Interfaces\OnDecodeInterface;
+use Instagram\SDK\Client\Client;
+use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
+use Instagram\SDK\Responses\Serializers\AbstractSerializer;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 
 class ThreadSerializer extends AbstractSerializer implements OnDecodeInterface
 {

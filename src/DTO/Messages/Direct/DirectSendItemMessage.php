@@ -1,9 +1,9 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Messages\Direct;
+namespace Instagram\SDK\DTO\Messages\Direct;
 
-use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Traits\MappableTrait;
 
 class DirectSendItemMessage extends Envelope
@@ -24,7 +24,7 @@ class DirectSendItemMessage extends Envelope
     protected $statusCode;
 
     /**
-     * @var \NicklasW\Instagram\DTO\Direct\DirectSendItemPayload
+     * @var \Instagram\SDK\DTO\Direct\DirectSendItemPayload
      */
     protected $payload;
 
@@ -45,9 +45,9 @@ class DirectSendItemMessage extends Envelope
     }
 
     /**
-     * @return \NicklasW\Instagram\DTO\Direct\DirectSendItemPayload
+     * @return \Instagram\SDK\DTO\Direct\DirectSendItemPayload
      */
-    public function getPayload(): \NicklasW\Instagram\DTO\Direct\DirectSendItemPayload
+    public function getPayload(): \Instagram\SDK\DTO\Direct\DirectSendItemPayload
     {
         return $this->payload;
     }

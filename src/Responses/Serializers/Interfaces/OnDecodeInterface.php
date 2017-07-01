@@ -1,8 +1,8 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Serializers\Interfaces;
+namespace Instagram\SDK\Responses\Serializers\Interfaces;
 
-use NicklasW\Instagram\DTO\Envelope;
+use Instagram\SDK\DTO\Envelope;
 
 interface OnDecodeInterface
 {

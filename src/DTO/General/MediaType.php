@@ -1,7 +1,7 @@
 <?php
 
 
-namespace NicklasW\Instagram\DTO\General;
+namespace Instagram\SDK\DTO\General;
 
 class MediaType
 {

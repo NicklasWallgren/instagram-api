@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Client\Adapters;
+namespace Instagram\SDK\Client\Adapters;
 
 use Exception;
 use GuzzleHttp\Promise\Promise;

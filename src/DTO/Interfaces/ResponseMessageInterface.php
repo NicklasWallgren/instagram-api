@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Interfaces;
+namespace Instagram\SDK\DTO\Interfaces;
 
 interface ResponseMessageInterface
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Direct;
+namespace Instagram\SDK\DTO\Direct;
 
-use NicklasW\Instagram\DTO\DTO;
-use NicklasW\Instagram\DTO\Interfaces\UserDetailsInterface;
-use NicklasW\Instagram\DTO\Interfaces\UserInterface;
-use NicklasW\Instagram\Responses\Serializers\Interfaces\OnDecodeRequirementsInterface;
-use NicklasW\Instagram\Responses\Serializers\Interfaces\OnItemDecodeInterface;
+use Instagram\SDK\DTO\DTO;
+use Instagram\SDK\DTO\Interfaces\UserDetailsInterface;
+use Instagram\SDK\DTO\Interfaces\UserInterface;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeRequirementsInterface;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 
 class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequirementsInterface
 {
@@ -118,7 +118,7 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
     /**
      * Returns true if the provided type matches the item type.
      *
-     * @see \NicklasW\Instagram\DTO\General\ItemType
+     * @see \Instagram\SDK\DTO\General\ItemType
      * @param string $type
      * @return bool
      */

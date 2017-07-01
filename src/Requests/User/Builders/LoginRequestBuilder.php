@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\User\Builders;
+namespace Instagram\SDK\Requests\User\Builders;
 
-use NicklasW\Instagram\Requests\Http\Builders\AbstractPayloadRequestBuilder;
-use NicklasW\Instagram\Requests\Http\Traits\SignedPayloadSerializerTrait;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Requests\Http\Builders\AbstractPayloadRequestBuilder;
+use Instagram\SDK\Requests\Http\Traits\SignedPayloadSerializerTrait;
+use Instagram\SDK\Session\Session;
 
 class LoginRequestBuilder extends AbstractPayloadRequestBuilder
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Messages;
+namespace Instagram\SDK\DTO\Messages;
 
-use NicklasW\Instagram\DTO\CsrfToken;
-use NicklasW\Instagram\DTO\Envelope;
+use Instagram\SDK\DTO\CsrfToken;
+use Instagram\SDK\DTO\Envelope;
 
 class HeaderMessage extends Envelope
 {

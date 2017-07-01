@@ -1,13 +1,13 @@
 <?php
 
-namespace NicklasW\Instagram\Client\Features;
+namespace Instagram\SDK\Client\Features;
 
 use Exception;
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\Requests\General\HeaderRequest;
-use NicklasW\Instagram\Requests\Support\SignatureSupport;
+use Instagram\SDK\Requests\General\HeaderRequest;
+use Instagram\SDK\Requests\Support\SignatureSupport;
 use function GuzzleHttp\Promise\task;
-use function NicklasW\Instagram\Support\uuid;
+use function Instagram\SDK\Support\uuid;
 
 trait GeneralFeaturesTrait
 {

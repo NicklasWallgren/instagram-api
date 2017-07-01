@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "NicklasW\\Instagram\\": "src/"
+      "Instagram\\SDK\\": "src/"
     },
     "files": [
       "src/Support/functions.php"

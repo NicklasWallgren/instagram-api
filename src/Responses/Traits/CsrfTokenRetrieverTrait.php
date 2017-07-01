@@ -1,9 +1,9 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Traits;
+namespace Instagram\SDK\Responses\Traits;
 
-use NicklasW\Instagram\DTO\CsrfToken;
-use NicklasW\Instagram\Responses\Exceptions\InvalidResponseException;
+use Instagram\SDK\DTO\CsrfToken;
+use Instagram\SDK\Responses\Exceptions\InvalidResponseException;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 trait CsrfTokenRetrieverTrait

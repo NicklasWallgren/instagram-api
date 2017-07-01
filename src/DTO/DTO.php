@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\DTO;
+namespace Instagram\SDK\DTO;
 
-use NicklasW\Instagram\DTO\Interfaces\PropertiesInterface;
-use NicklasW\Instagram\DTO\Traits\Inflatable;
-use NicklasW\Instagram\DTO\Traits\PropertiesTrait;
+use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
+use Instagram\SDK\DTO\Traits\Inflatable;
+use Instagram\SDK\DTO\Traits\PropertiesTrait;
 
 abstract class DTO implements PropertiesInterface
 {

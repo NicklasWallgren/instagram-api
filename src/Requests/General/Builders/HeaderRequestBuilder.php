@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\General\Builders;
+namespace Instagram\SDK\Requests\General\Builders;
 
-use NicklasW\Instagram\Requests\Http\Builders\AbstractPayloadRequestBuilder;
-use NicklasW\Instagram\Requests\Http\Traits\UrlEncodedSerializerTrait;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Requests\Http\Builders\AbstractPayloadRequestBuilder;
+use Instagram\SDK\Requests\Http\Traits\UrlEncodedSerializerTrait;
+use Instagram\SDK\Session\Session;
 
 class HeaderRequestBuilder extends AbstractPayloadRequestBuilder
 {

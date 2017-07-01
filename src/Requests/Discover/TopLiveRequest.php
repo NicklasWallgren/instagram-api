@@ -1,16 +1,16 @@
 <?php
 
 
-namespace NicklasW\Instagram\Requests\Discover;
+namespace Instagram\SDK\Requests\Discover;
 
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\Http\Client as HttpClient;
-use NicklasW\Instagram\Requests\Discover\Builders\TopLiveRequestBuilder;
-use NicklasW\Instagram\Requests\Request;
-use NicklasW\Instagram\Requests\Traits\RequestMethods;
-use NicklasW\Instagram\Responses\Serializers\Discover\TopLiveSerializer;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Client\Client;
+use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Requests\Discover\Builders\TopLiveRequestBuilder;
+use Instagram\SDK\Requests\Request;
+use Instagram\SDK\Requests\Traits\RequestMethods;
+use Instagram\SDK\Responses\Serializers\Discover\TopLiveSerializer;
+use Instagram\SDK\Session\Session;
 
 class TopLiveRequest extends Request
 {

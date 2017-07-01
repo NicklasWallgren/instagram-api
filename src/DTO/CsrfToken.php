@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\DTO;
+namespace Instagram\SDK\DTO;
 
 class CsrfToken
 {

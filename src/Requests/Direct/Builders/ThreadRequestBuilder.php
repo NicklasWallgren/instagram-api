@@ -1,9 +1,9 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Direct\Builders;
+namespace Instagram\SDK\Requests\Direct\Builders;
 
-use NicklasW\Instagram\Requests\Http\Builders\AbstractQueryRequestBuilder;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Requests\Http\Builders\AbstractQueryRequestBuilder;
+use Instagram\SDK\Session\Session;
 
 class ThreadRequestBuilder extends AbstractQueryRequestBuilder
 {

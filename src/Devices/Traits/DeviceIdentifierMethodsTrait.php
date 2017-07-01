@@ -1,8 +1,8 @@
 <?php
 
-namespace NicklasW\Instagram\Devices\Traits;
+namespace Instagram\SDK\Devices\Traits;
 
-use NicklasW\Instagram\Devices\Interfaces\DeviceInterface;
+use Instagram\SDK\Devices\Interfaces\DeviceInterface;
 
 trait DeviceIdentifierMethodsTrait
 {

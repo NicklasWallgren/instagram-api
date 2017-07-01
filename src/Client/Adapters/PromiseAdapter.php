@@ -1,9 +1,9 @@
 <?php
 
-namespace NicklasW\Instagram\Client\Adapters;
+namespace Instagram\SDK\Client\Adapters;
 
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\Client\Adapters\Interfaces\AdapterInterface;
+use Instagram\SDK\Client\Adapters\Interfaces\AdapterInterface;
 use function GuzzleHttp\Promise\task;
 
 class PromiseAdapter implements AdapterInterface

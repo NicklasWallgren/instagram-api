@@ -1,8 +1,8 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Direct;
+namespace Instagram\SDK\DTO\Direct;
 
-use NicklasW\Instagram\DTO\General\MediaType;
+use Instagram\SDK\DTO\General\MediaType;
 
 class ThreadMediaItem
 {
@@ -14,7 +14,7 @@ class ThreadMediaItem
     protected $mediaType;
 
     /**
-     * @var \NicklasW\Instagram\DTO\General\Media\ImageVersions2
+     * @var \Instagram\SDK\DTO\General\Media\ImageVersions2
      * @name image_versions2
      */
     protected $images;
@@ -62,7 +62,7 @@ class ThreadMediaItem
     }
 
     /**
-     * @return \NicklasW\Instagram\DTO\General\Media\ImageVersions2
+     * @return \Instagram\SDK\DTO\General\Media\ImageVersions2
      */
     public function getImages()
     {

@@ -1,15 +1,15 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Serializers\User;
+namespace Instagram\SDK\Responses\Serializers\User;
 
-use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\DTO\Interfaces\ResponseMessageInterface;
-use NicklasW\Instagram\DTO\Messages\SessionMessage;
-use NicklasW\Instagram\Http\Client as HttpClient;
-use NicklasW\Instagram\Responses\Serializers\AbstractSerializer;
-use NicklasW\Instagram\Responses\Traits\CsrfTokenRetrieverTrait;
-use NicklasW\Instagram\Responses\Traits\SessionIdRetrieverTrait;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
+use Instagram\SDK\DTO\Messages\SessionMessage;
+use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Responses\Serializers\AbstractSerializer;
+use Instagram\SDK\Responses\Traits\CsrfTokenRetrieverTrait;
+use Instagram\SDK\Responses\Traits\SessionIdRetrieverTrait;
+use Instagram\SDK\Session\Session;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 class LoginSerializer extends AbstractSerializer

@@ -1,13 +1,13 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Serializers;
+namespace Instagram\SDK\Responses\Serializers;
 
-use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\DTO\Interfaces\ResponseMessageInterface;
-use NicklasW\Instagram\Responses\Exceptions\ApiResponseException;
-use NicklasW\Instagram\Responses\Interfaces\SerializerInterface;
-use NicklasW\Instagram\Responses\Serializers\Interfaces\OnDecodeInterface;
-use NicklasW\Instagram\Responses\Traits\ErrorTypeMethodsTrait;
+use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
+use Instagram\SDK\Responses\Exceptions\ApiResponseException;
+use Instagram\SDK\Responses\Interfaces\SerializerInterface;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
+use Instagram\SDK\Responses\Traits\ErrorTypeMethodsTrait;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 abstract class AbstractSerializer implements SerializerInterface

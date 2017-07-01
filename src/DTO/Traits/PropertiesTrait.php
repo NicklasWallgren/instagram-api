@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Traits;
+namespace Instagram\SDK\DTO\Traits;
 
 trait PropertiesTrait
 {

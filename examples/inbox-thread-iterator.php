@@ -1,7 +1,7 @@
 <?php
 
-use NicklasW\Instagram\DTO\General\ItemType;
-use NicklasW\Instagram\Instagram;
+use Instagram\SDK\DTO\General\ItemType;
+use Instagram\SDK\Instagram;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

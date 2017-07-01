@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Http;
+namespace Instagram\SDK\Http;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface;

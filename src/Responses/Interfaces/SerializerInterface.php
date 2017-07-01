@@ -1,8 +1,8 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Interfaces;
+namespace Instagram\SDK\Responses\Interfaces;
 
-use NicklasW\Instagram\DTO\Interfaces\ResponseMessageInterface;
+use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 interface SerializerInterface

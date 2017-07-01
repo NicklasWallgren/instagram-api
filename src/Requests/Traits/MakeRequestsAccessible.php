@@ -1,8 +1,8 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Traits;
+namespace Instagram\SDK\Requests\Traits;
 
-use NicklasW\Instagram\Client\Client;
+use Instagram\SDK\Client\Client;
 
 trait MakeRequestsAccessible
 {

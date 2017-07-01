@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Serializers;
+namespace Instagram\SDK\Responses\Serializers;
 
-use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\Responses\Serializers\Interfaces\OnDecodeInterface;
+use Instagram\SDK\Client\Client;
+use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 
 class GenericSerializer extends AbstractSerializer implements OnDecodeInterface
 {

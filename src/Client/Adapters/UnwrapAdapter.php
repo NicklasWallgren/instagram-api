@@ -1,8 +1,8 @@
 <?php
 
-namespace NicklasW\Instagram\Client\Adapters;
+namespace Instagram\SDK\Client\Adapters;
 
-use NicklasW\Instagram\Client\Adapters\Interfaces\AdapterInterface;
+use Instagram\SDK\Client\Adapters\Interfaces\AdapterInterface;
 
 class UnwrapAdapter implements AdapterInterface
 {

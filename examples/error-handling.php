@@ -1,8 +1,8 @@
 <?php
 
-use NicklasW\Instagram\Client\Adapters\PromiseAdapter;
-use NicklasW\Instagram\DTO\Messages\SessionMessage;
-use NicklasW\Instagram\Instagram;
+use Instagram\SDK\Client\Adapters\PromiseAdapter;
+use Instagram\SDK\DTO\Messages\SessionMessage;
+use Instagram\SDK\Instagram;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

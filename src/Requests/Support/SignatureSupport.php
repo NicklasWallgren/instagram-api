@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Support;
+namespace Instagram\SDK\Requests\Support;
 
 class SignatureSupport
 {

@@ -1,13 +1,13 @@
 <?php
 
 
-namespace NicklasW\Instagram\Responses\Serializers\Discover;
+namespace Instagram\SDK\Responses\Serializers\Discover;
 
-use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\DTO\Messages\Discover\ChannelsMessage;
-use NicklasW\Instagram\Responses\Serializers\AbstractSerializer;
-use NicklasW\Instagram\Responses\Serializers\Interfaces\OnDecodeInterface;
+use Instagram\SDK\Client\Client;
+use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\DTO\Messages\Discover\ChannelsMessage;
+use Instagram\SDK\Responses\Serializers\AbstractSerializer;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 
 class ChannelsSerializer extends AbstractSerializer implements OnDecodeInterface
 {

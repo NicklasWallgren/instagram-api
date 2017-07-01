@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Http\Builders;
+namespace Instagram\SDK\Requests\Http\Builders;
 
-use NicklasW\Instagram\Requests\Http\Traits\CommonSerializerTrait;
-use NicklasW\Instagram\Requests\Http\Traits\RequestBuilderQueryMethodsTrait;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Requests\Http\Traits\CommonSerializerTrait;
+use Instagram\SDK\Requests\Http\Traits\RequestBuilderQueryMethodsTrait;
+use Instagram\SDK\Session\Session;
 
 class GenericRequestBuilder extends AbstractPayloadRequestBuilder
 {

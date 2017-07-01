@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Serializers\Traits;
+namespace Instagram\SDK\Responses\Serializers\Traits;
 
 trait RequirementsParserMethodsTrait
 {

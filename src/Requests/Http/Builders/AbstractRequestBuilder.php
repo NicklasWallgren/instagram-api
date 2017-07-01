@@ -1,9 +1,9 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Http\Builders;
+namespace Instagram\SDK\Requests\Http\Builders;
 
 use GuzzleHttp\Psr7\Request;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Session\Session;
 
 abstract class AbstractRequestBuilder
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace NicklasW\Instagram\Client\Features;
+namespace Instagram\SDK\Client\Features;
 
 use Exception;
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\DTO\Messages\Direct\DirectSendItemMessage;
-use NicklasW\Instagram\DTO\Messages\Direct\InboxMessage;
-use NicklasW\Instagram\DTO\Messages\Direct\ThreadMessage;
-use NicklasW\Instagram\Requests\Direct\InboxRequest;
-use NicklasW\Instagram\Requests\Direct\ThreadRequest;
-use function NicklasW\Instagram\Support\request;
+use Instagram\SDK\DTO\Messages\Direct\DirectSendItemMessage;
+use Instagram\SDK\DTO\Messages\Direct\InboxMessage;
+use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
+use Instagram\SDK\Requests\Direct\InboxRequest;
+use Instagram\SDK\Requests\Direct\ThreadRequest;
+use function Instagram\SDK\Support\request;
 
 trait DirectFeaturesTrait
 {

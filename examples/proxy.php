@@ -1,7 +1,7 @@
 <?php
 
-use NicklasW\Instagram\Client\Adapters\PromiseAdapter;
-use NicklasW\Instagram\Instagram;
+use Instagram\SDK\Client\Adapters\PromiseAdapter;
+use Instagram\SDK\Instagram;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

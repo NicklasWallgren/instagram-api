@@ -1,13 +1,13 @@
 <?php
 
-namespace NicklasW\Instagram\Client\Features;
+namespace Instagram\SDK\Client\Features;
 
 use Exception;
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\DTO\Messages\HeaderMessage;
-use NicklasW\Instagram\DTO\Messages\SessionMessage;
-use NicklasW\Instagram\Requests\User\LoginRequest;
-use NicklasW\Instagram\Session\Builders\SessionBuilder;
+use Instagram\SDK\DTO\Messages\HeaderMessage;
+use Instagram\SDK\DTO\Messages\SessionMessage;
+use Instagram\SDK\Requests\User\LoginRequest;
+use Instagram\SDK\Session\Builders\SessionBuilder;
 
 trait UserFeaturesTrait
 {

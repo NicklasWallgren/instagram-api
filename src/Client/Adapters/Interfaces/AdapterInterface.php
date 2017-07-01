@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Client\Adapters\Interfaces;
+namespace Instagram\SDK\Client\Adapters\Interfaces;
 
 interface AdapterInterface
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\DTO;
+namespace Instagram\SDK\DTO;
 
-use NicklasW\Instagram\DTO\Interfaces\PropertiesInterface;
-use NicklasW\Instagram\DTO\Interfaces\ResponseMessageInterface;
-use NicklasW\Instagram\DTO\Traits\PropertiesTrait;
+use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
+use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
+use Instagram\SDK\DTO\Traits\PropertiesTrait;
 use Traits\MappableTrait;
 
 class Envelope implements ResponseMessageInterface, PropertiesInterface

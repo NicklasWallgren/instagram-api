@@ -1,9 +1,9 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Messages\Discover;
+namespace Instagram\SDK\DTO\Messages\Discover;
 
-use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Traits\MappableTrait;
 
 class ChannelsMessage extends Envelope

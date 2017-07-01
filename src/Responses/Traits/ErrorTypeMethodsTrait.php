@@ -1,14 +1,14 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Traits;
+namespace Instagram\SDK\Responses\Traits;
 
 use Exception;
-use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\DTO\General\ResponseErrorTypes;
-use NicklasW\Instagram\Responses\Exceptions\BadPasswordException;
-use NicklasW\Instagram\Responses\Exceptions\ApiResponseException;
-use NicklasW\Instagram\Responses\Exceptions\InvalidUserException;
-use NicklasW\Instagram\Responses\Exceptions\RateLimitException;
+use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\DTO\General\ResponseErrorTypes;
+use Instagram\SDK\Responses\Exceptions\BadPasswordException;
+use Instagram\SDK\Responses\Exceptions\ApiResponseException;
+use Instagram\SDK\Responses\Exceptions\InvalidUserException;
+use Instagram\SDK\Responses\Exceptions\RateLimitException;
 
 trait ErrorTypeMethodsTrait
 {

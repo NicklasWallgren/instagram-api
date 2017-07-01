@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Messages\Direct;
+namespace Instagram\SDK\DTO\Messages\Direct;
 
-use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\Responses\Serializers\Interfaces\OnItemDecodeInterface;
-use NicklasW\Instagram\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
+use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Traits\MappableTrait;
 
 class ThreadMessage extends Envelope implements OnItemDecodeInterface
@@ -16,14 +16,14 @@ class ThreadMessage extends Envelope implements OnItemDecodeInterface
     /**
      * The logged in user property.
      *
-     * @var \NicklasW\Instagram\DTO\Direct\Thread
+     * @var \Instagram\SDK\DTO\Direct\Thread
      */
     protected $thread;
 
     /**
-     * @return \NicklasW\Instagram\DTO\Direct\Thread
+     * @return \Instagram\SDK\DTO\Direct\Thread
      */
-    public function getThread(): \NicklasW\Instagram\DTO\Direct\Thread
+    public function getThread(): \Instagram\SDK\DTO\Direct\Thread
     {
         return $this->thread;
     }

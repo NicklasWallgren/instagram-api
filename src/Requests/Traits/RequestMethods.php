@@ -1,13 +1,13 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Traits;
+namespace Instagram\SDK\Requests\Traits;
 
-use NicklasW\Instagram\Requests\GenericRequest;
-use NicklasW\Instagram\Responses\Interfaces\SerializerInterface;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Requests\GenericRequest;
+use Instagram\SDK\Responses\Interfaces\SerializerInterface;
+use Instagram\SDK\Session\Session;
 use Psr\Http\Message\RequestInterface;
 use function GuzzleHttp\Promise\task;
-use function NicklasW\Instagram\Support\uuid;
+use function Instagram\SDK\Support\uuid;
 
 trait RequestMethods
 {

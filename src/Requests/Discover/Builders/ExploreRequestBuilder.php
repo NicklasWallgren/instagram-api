@@ -1,8 +1,8 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Discover\Builders;
+namespace Instagram\SDK\Requests\Discover\Builders;
 
-use NicklasW\Instagram\Requests\Http\Builders\AbstractQueryRequestBuilder;
+use Instagram\SDK\Requests\Http\Builders\AbstractQueryRequestBuilder;
 
 class ExploreRequestBuilder extends AbstractQueryRequestBuilder
 {

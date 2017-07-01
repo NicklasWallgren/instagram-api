@@ -1,8 +1,8 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Traits;
+namespace Instagram\SDK\DTO\Traits;
 
-use NicklasW\Instagram\DTO\Interfaces\PropertiesInterface;
+use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
 
 trait Inflatable
 {

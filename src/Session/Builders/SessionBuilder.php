@@ -1,11 +1,11 @@
 <?php
 
-namespace NicklasW\Instagram\Session\Builders;
+namespace Instagram\SDK\Session\Builders;
 
-use NicklasW\Instagram\Devices\Interfaces\DeviceBuilderInterface;
-use NicklasW\Instagram\DTO\CsrfTokenMessage;
-use NicklasW\Instagram\Requests\Support\SignatureSupport;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
+use Instagram\SDK\DTO\CsrfTokenMessage;
+use Instagram\SDK\Requests\Support\SignatureSupport;
+use Instagram\SDK\Session\Session;
 
 class SessionBuilder
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Messages\Direct;
+namespace Instagram\SDK\DTO\Messages\Direct;
 
-use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Traits\MappableTrait;
 
 class InboxMessage extends Envelope
@@ -15,7 +15,7 @@ class InboxMessage extends Envelope
     /**
      * The logged in user property.
      *
-     * @var \NicklasW\Instagram\DTO\Direct\Inbox
+     * @var \Instagram\SDK\DTO\Direct\Inbox
      */
     protected $inbox;
 
@@ -43,9 +43,9 @@ class InboxMessage extends Envelope
     protected $pendingRequestsUsers;
 
     /**
-     * @return \NicklasW\Instagram\DTO\Direct\Inbox
+     * @return \Instagram\SDK\DTO\Direct\Inbox
      */
-    public function getInbox(): \NicklasW\Instagram\DTO\Direct\Inbox
+    public function getInbox(): \Instagram\SDK\DTO\Direct\Inbox
     {
         return $this->inbox;
     }

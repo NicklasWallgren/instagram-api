@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Devices\Interfaces;
+namespace Instagram\SDK\Devices\Interfaces;
 
 interface DeviceBuilderInterface
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Messages;
+namespace Instagram\SDK\DTO\Messages;
 
-use NicklasW\Instagram\DTO\Envelope;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\Session\Session;
 use Traits\MappableTrait;
 
 class SessionMessage extends Envelope
@@ -14,7 +14,7 @@ class SessionMessage extends Envelope
     /**
      * The logged in user property.
      *
-     * @var \NicklasW\Instagram\DTO\Session\User
+     * @var \Instagram\SDK\DTO\Session\User
      * @name logged_in_user
      */
     protected $loggedInUser;
@@ -27,7 +27,7 @@ class SessionMessage extends Envelope
     /**
      * Returns the logged in user.
      *
-     * @return \NicklasW\Instagram\DTO\Session\User
+     * @return \Instagram\SDK\DTO\Session\User
      */
     public function getLoggedInUser()
     {

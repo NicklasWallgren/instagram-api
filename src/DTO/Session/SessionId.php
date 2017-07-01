@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\DTO\Session;
+namespace Instagram\SDK\DTO\Session;
 
 class SessionId
 {

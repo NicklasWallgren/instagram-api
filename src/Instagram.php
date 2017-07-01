@@ -1,13 +1,13 @@
 <?php
 
-namespace NicklasW\Instagram;
+namespace Instagram\SDK;
 
 use GuzzleHttp\ClientInterface;
-use NicklasW\Instagram\Client\Adapters\Interfaces\AdapterInterface;
-use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\Devices\DeviceBuilderInterface;
-use NicklasW\Instagram\Requests\Traits\MakeRequestsAccessible;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Client\Adapters\Interfaces\AdapterInterface;
+use Instagram\SDK\Client\Client;
+use Instagram\SDK\Devices\DeviceBuilderInterface;
+use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
+use Instagram\SDK\Session\Session;
 
 class Instagram
 {

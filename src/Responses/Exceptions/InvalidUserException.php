@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Exceptions;
+namespace Instagram\SDK\Responses\Exceptions;
 
 class InvalidUserException extends ApiResponseException
 {

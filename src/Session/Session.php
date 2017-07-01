@@ -1,12 +1,12 @@
 <?php
 
-namespace NicklasW\Instagram\Session;
+namespace Instagram\SDK\Session;
 
 use GuzzleHttp\Cookie\CookieJar;
-use NicklasW\Instagram\Devices\Interfaces\DeviceInterface;
-use NicklasW\Instagram\DTO\CsrfToken;
-use NicklasW\Instagram\DTO\Session\SessionId;
-use NicklasW\Instagram\DTO\Session\User;
+use Instagram\SDK\Devices\Interfaces\DeviceInterface;
+use Instagram\SDK\DTO\CsrfToken;
+use Instagram\SDK\DTO\Session\SessionId;
+use Instagram\SDK\DTO\Session\User;
 
 class Session
 {

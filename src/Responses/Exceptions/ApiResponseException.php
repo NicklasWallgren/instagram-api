@@ -1,9 +1,9 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Exceptions;
+namespace Instagram\SDK\Responses\Exceptions;
 
 use Exception;
-use NicklasW\Instagram\DTO\Envelope;
+use Instagram\SDK\DTO\Envelope;
 
 class ApiResponseException extends Exception
 {

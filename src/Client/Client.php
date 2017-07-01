@@ -1,21 +1,21 @@
 <?php
 
-namespace NicklasW\Instagram\Client;
+namespace Instagram\SDK\Client;
 
 use Exception;
 use GuzzleHttp\ClientInterface;
-use NicklasW\Instagram\Client\Adapters\Interfaces\AdapterInterface;
-use NicklasW\Instagram\Client\Adapters\UnwrapAdapter;
-use NicklasW\Instagram\Client\Features\DirectFeaturesTrait;
-use NicklasW\Instagram\Client\Features\DiscoverFeatures;
-use NicklasW\Instagram\Client\Features\DiscoverFeaturesTrait;
-use NicklasW\Instagram\Client\Features\GeneralFeaturesTrait;
-use NicklasW\Instagram\Client\Features\UserFeaturesTrait;
-use NicklasW\Instagram\Devices\Builders\DeviceBuilder;
-use NicklasW\Instagram\Devices\Interfaces\DeviceBuilderInterface;
-use NicklasW\Instagram\DTO\CsrfTokenMessage;
-use NicklasW\Instagram\Http\Client as HttpClient;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Client\Adapters\Interfaces\AdapterInterface;
+use Instagram\SDK\Client\Adapters\UnwrapAdapter;
+use Instagram\SDK\Client\Features\DirectFeaturesTrait;
+use Instagram\SDK\Client\Features\DiscoverFeatures;
+use Instagram\SDK\Client\Features\DiscoverFeaturesTrait;
+use Instagram\SDK\Client\Features\GeneralFeaturesTrait;
+use Instagram\SDK\Client\Features\UserFeaturesTrait;
+use Instagram\SDK\Devices\Builders\DeviceBuilder;
+use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
+use Instagram\SDK\DTO\CsrfTokenMessage;
+use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Session\Session;
 
 class Client
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Http\Traits;
+namespace Instagram\SDK\Requests\Http\Traits;
 
-use NicklasW\Instagram\Requests\Traits\RequestBuilderMethodsTrait;
+use Instagram\SDK\Requests\Traits\RequestBuilderMethodsTrait;
 
 trait RequestBuilderQueryMethodsTrait
 {

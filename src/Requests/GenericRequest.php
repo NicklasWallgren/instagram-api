@@ -1,13 +1,13 @@
 <?php
 
-namespace NicklasW\Instagram\Requests;
+namespace Instagram\SDK\Requests;
 
-use NicklasW\Instagram\Http\Client as HttpClient;
-use NicklasW\Instagram\Requests\Http\Builders\AbstractQueryRequestBuilder;
-use NicklasW\Instagram\Requests\Http\Builders\GenericRequestBuilder;
-use NicklasW\Instagram\Requests\Traits\RequestMethods;
-use NicklasW\Instagram\Responses\Serializers\AbstractSerializer;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Requests\Http\Builders\AbstractQueryRequestBuilder;
+use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
+use Instagram\SDK\Requests\Traits\RequestMethods;
+use Instagram\SDK\Responses\Serializers\AbstractSerializer;
+use Instagram\SDK\Session\Session;
 use GuzzleHttp\Promise\Promise;
 
 class GenericRequest extends Request

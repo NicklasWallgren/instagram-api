@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Traits;
+namespace Instagram\SDK\Requests\Traits;
 
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\DTO\Messages\SessionMessage;
+use Instagram\SDK\Client\Client;
+use Instagram\SDK\DTO\Messages\SessionMessage;
 
 trait MakeGeneralRequestAccessible
 {

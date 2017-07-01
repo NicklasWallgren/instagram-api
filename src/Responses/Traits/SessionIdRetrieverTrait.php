@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Traits;
+namespace Instagram\SDK\Responses\Traits;
 
-use NicklasW\Instagram\DTO\CsrfTokenMessage;
-use NicklasW\Instagram\DTO\Session\SessionId;
-use NicklasW\Instagram\Responses\Exceptions\InvalidResponseException;
+use Instagram\SDK\DTO\CsrfTokenMessage;
+use Instagram\SDK\DTO\Session\SessionId;
+use Instagram\SDK\Responses\Exceptions\InvalidResponseException;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 trait SessionIdRetrieverTrait

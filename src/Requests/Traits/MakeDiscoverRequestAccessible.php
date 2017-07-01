@@ -1,12 +1,12 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Traits;
+namespace Instagram\SDK\Requests\Traits;
 
 use GuzzleHttp\Promise\Promise;
-use NicklasW\Instagram\Client\Client;
-use NicklasW\Instagram\DTO\Messages\Discover\ChannelsMessage;
-use NicklasW\Instagram\DTO\Messages\Discover\ExploreMessage;
-use NicklasW\Instagram\DTO\Messages\Discover\TopLiveMessage;
+use Instagram\SDK\Client\Client;
+use Instagram\SDK\DTO\Messages\Discover\ChannelsMessage;
+use Instagram\SDK\DTO\Messages\Discover\ExploreMessage;
+use Instagram\SDK\DTO\Messages\Discover\TopLiveMessage;
 
 trait MakeDiscoverRequestAccessible
 {

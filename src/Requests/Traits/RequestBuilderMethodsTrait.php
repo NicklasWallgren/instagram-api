@@ -1,10 +1,10 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Traits;
+namespace Instagram\SDK\Requests\Traits;
 
-use NicklasW\Instagram\Http\Client;
-use NicklasW\Instagram\Requests\Http\HeadersBuilder;
-use NicklasW\Instagram\Session\Session;
+use Instagram\SDK\Http\Client;
+use Instagram\SDK\Requests\Http\HeadersBuilder;
+use Instagram\SDK\Session\Session;
 
 trait RequestBuilderMethodsTrait
 {

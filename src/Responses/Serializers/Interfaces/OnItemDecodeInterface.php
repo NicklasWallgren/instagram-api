@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Responses\Serializers\Interfaces;
+namespace Instagram\SDK\Responses\Serializers\Interfaces;
 
 interface OnItemDecodeInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Http;
+namespace Instagram\SDK\Requests\Http;
 
 class HeadersBuilder
 {

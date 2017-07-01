@@ -1,6 +1,6 @@
 <?php
 
-namespace NicklasW\Instagram\Requests\Http\Interfaces;
+namespace Instagram\SDK\Requests\Http\Interfaces;
 
 interface RequestBuilderInterface
 {
