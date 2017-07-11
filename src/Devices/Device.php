@@ -13,27 +13,12 @@ class Device implements DeviceInterface
     /**
      * @var string The device version
      */
-    protected const DEVICE_VERSION = '10.3.2';
+    protected const DEVICE_VERSION = '10.28.0';
 
     /**
-     * @var string The locale
+     * @var string The language
      */
-    protected const LOCALE = 'en_US';
-
-    /**
-     * @var string
-     */
-    protected $dpi;
-
-    /**
-     * @var string
-     */
-    protected $resolution;
-
-    /**
-     * @var string
-     */
-    protected $vendor;
+    protected const LANGUAGE = 'en-US';
 
     /**
      * @var string
@@ -43,12 +28,27 @@ class Device implements DeviceInterface
     /**
      * @var string
      */
-    protected $device;
+    protected $os;
 
     /**
      * @var string
      */
-    protected $cpu;
+    protected $locale;
+
+    /**
+     * @var string
+     */
+    protected $scale;
+
+    /**
+     * @var string
+     */
+    protected $gamut;
+
+    /**
+     * @var string
+     */
+    protected $resolution;
 
     /**
      * @var string
@@ -61,88 +61,38 @@ class Device implements DeviceInterface
     protected $deviceId;
 
     /**
-     * @var string
-     */
-    private $version;
-
-    /**
      * Device constructor.
      *
-     * @param string $version
-     * @param string $dpi
-     * @param string $resolution
-     * @param string $vendor
      * @param string $model
-     * @param string $device
-     * @param string $cpu
-     * @param string $id
+     * @param string $os
+     * @param string $locale
+     * @param string $scale
+     * @param string $gamut
+     * @param string $resolution
+     * @param string $phoneId
      * @param string $deviceId
      */
     public function __construct(
-        string $version,
-        string $dpi,
-        string $resolution,
-        string $vendor,
-        string $model,
-        string $device,
-        string $cpu,
-        string $id,
-        string $deviceId
+        $model,
+        $os,
+        $locale,
+        $scale,
+        $gamut,
+        $resolution,
+        $phoneId,
+        $deviceId
     ) {
-        $this->version = $version;
-        $this->dpi = $dpi;
-        $this->resolution = $resolution;
-        $this->vendor = $vendor;
         $this->model = $model;
-        $this->device = $device;
-        $this->cpu = $cpu;
-        $this->phoneId = $id;
+        $this->os = $os;
+        $this->locale = $locale;
+        $this->scale = $scale;
+        $this->gamut = $gamut;
+        $this->resolution = $resolution;
+        $this->phoneId = $phoneId;
         $this->deviceId = $deviceId;
     }
 
     /**
-     * Returns the version.
-     *
-     * @return string
-     */
-    public function version(): string
-    {
-        return $this->version;
-    }
-
-    /**
-     * Returns the DPI.
-     *
-     * @return string
-     */
-    public function dpi(): string
-    {
-        return $this->dpi;
-    }
-
-    /**
-     * Returns the resolution.
-     *
-     * @return string
-     */
-    public function resolution(): string
-    {
-        return $this->resolution;
-    }
-
-    /**
-     * Returns the vendor.
-     *
-     * @return string
-     */
-    public function vendor(): string
-    {
-        return $this->vendor;
-    }
-
-    /**
-     * Returns the model.
-     *
      * @return string
      */
     public function model(): string
@@ -151,28 +101,46 @@ class Device implements DeviceInterface
     }
 
     /**
-     * Returns the device.
-     *
      * @return string
      */
-    public function device(): string
+    public function os(): string
     {
-        return $this->device;
+        return $this->os;
     }
 
     /**
-     * Returns the CPU.
-     *
      * @return string
      */
-    public function cpu(): string
+    public function locale(): string
     {
-        return $this->cpu;
+        return $this->locale;
     }
 
     /**
-     * Returns the phone id.
-     *
+     * @return string
+     */
+    public function scale(): string
+    {
+        return $this->scale;
+    }
+
+    /**
+     * @return string
+     */
+    public function gamut(): string
+    {
+        return $this->gamut;
+    }
+
+    /**
+     * @return string
+     */
+    public function resolution(): string
+    {
+        return $this->resolution;
+    }
+
+    /**
      * @return string
      */
     public function phoneId(): string
@@ -181,8 +149,6 @@ class Device implements DeviceInterface
     }
 
     /**
-     * Returns the device id.
-     *
      * @return string
      */
     public function deviceId(): string
@@ -197,6 +163,6 @@ class Device implements DeviceInterface
      */
     public function identifier(): string
     {
-        return $this->compose($this, self::DEVICE_VERSION, self::LOCALE);
+        return $this->compose($this, self::DEVICE_VERSION, self::LANGUAGE);
     }
 }

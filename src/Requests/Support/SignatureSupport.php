@@ -18,7 +18,7 @@ class SignatureSupport
     /**
      * @var string The signature key
      */
-    protected const SIGNATURE_KEY = '5ad7d6f013666cc93c88fc8af940348bd067b68f0dce3c85122a923f4f74b251';
+    protected const SIGNATURE_KEY = '5b39482c3a00d6c525f3722aba347fe9ecc626ae754b59c1e70c43a1f0ffdcce';
 
     /**
      * Generates a device id.
@@ -43,7 +43,7 @@ class SignatureSupport
     {
         $hash = hash_hmac('sha256', $data, self::SIGNATURE_KEY);
 
-        return 'ig_sig_key_version=' . 4 . '&signed_body=' . $hash . '.' . urlencode($data);
+        return 'ig_sig_key_version=' . 5 . '&signed_body=' . $hash . '.' . urlencode($data);
     }
 
     /**

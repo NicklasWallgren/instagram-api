@@ -67,9 +67,7 @@ class LoginRequestBuilder extends AbstractPayloadRequestBuilder
     {
         return $parameters = array_merge([
             'phone_id'   => $this->session->getDevice()->phoneId(),
-            'guid'       => $this->session->getUuid(),
             'device_id'  => $this->session->getDevice()->deviceId(),
-            '_csrftoken' => sprintf('Set-Cookie: csrftoken=%s', $this->session->getCsrfToken()->getToken()),
         ], $parameters);
     }
 }

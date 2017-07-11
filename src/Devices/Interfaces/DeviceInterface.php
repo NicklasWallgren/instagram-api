@@ -6,11 +6,39 @@ interface DeviceInterface
 {
 
     /**
-     * Returns the DPI.
+     * Returns the model.
      *
      * @return string
      */
-    public function dpi(): string;
+    public function model(): string;
+
+    /**
+     * Returns the os.
+     *
+     * @return string
+     */
+    public function os(): string;
+
+    /**
+     * Returns the locale.
+     *
+     * @return string
+     */
+    public function locale(): string;
+
+    /**
+     * Returns the scale.
+     *
+     * @return string
+     */
+    public function scale(): string;
+
+    /**
+     * Returns the gamut.
+     *
+     * @return string
+     */
+    public function gamut(): string;
 
     /**
      * Returns the resolution.
@@ -20,32 +48,11 @@ interface DeviceInterface
     public function resolution(): string;
 
     /**
-     * Returns the vendor.
+     * Returns the device identifier.
      *
      * @return string
      */
-    public function vendor(): string;
-
-    /**
-     * Returns the model.
-     *
-     * @return string
-     */
-    public function model(): string;
-
-    /**
-     * Returns the device.
-     *
-     * @return string
-     */
-    public function device(): string;
-
-    /**
-     * Returns the CPU.
-     *
-     * @return string
-     */
-    public function cpu(): string;
+    public function identifier(): string;
 
     /**
      * Returns the phone id.
@@ -55,16 +62,10 @@ interface DeviceInterface
     public function phoneId(): string;
 
     /**
-     * Returns the device id.
+     * Returns device id.
      *
      * @return string
      */
     public function deviceId(): string;
 
-    /**
-     * Returns the device identifier.
-     *
-     * @return string
-     */
-    public function identifier(): string;
 }

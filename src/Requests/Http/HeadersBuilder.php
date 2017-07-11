@@ -44,13 +44,12 @@ class HeadersBuilder
 
         return array_merge([
             self::USER_AGENT       => $device->identifier(),
-            self::CAPABILITIES     => '3ToAAA==',
+            self::CAPABILITIES     => '36oD',
             self::CONNECTION_TYPE  => 'WIFI',
             self::CONNECTION_SPEED => $this->getConnectionSpeed(),
-            self::HTTP_ENGINE      => 'Liger',
             'Connection'           => 'keep-alive',
             'Content-Type'         => 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Accept-Language'      => 'en-US',
+            'Accept-Language'      => 'en-en;q=1',
             'Accept'               => '*/*',
         ], []);
     }
