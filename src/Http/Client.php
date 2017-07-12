@@ -25,11 +25,6 @@ class Client
     public const METHOD_POST = 'POST';
 
     /**
-     * @var string The endpoint url
-     */
-    protected const ENDPOINT_URL = '';
-
-    /**
      * @var ClientInterface
      */
     protected $client;
