@@ -2,10 +2,13 @@
 
 namespace Instagram\SDK\Requests\Traits;
 
+use GuzzleHttp\Exception\RequestException;
 use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Responses\Interfaces\SerializerInterface;
 use Instagram\SDK\Session\Session;
 use Psr\Http\Message\RequestInterface;
+use Throwable;
+use function GuzzleHttp\Promise\rejection_for;
 use function GuzzleHttp\Promise\task;
 use function Instagram\SDK\Support\uuid;
 
@@ -25,7 +28,7 @@ trait RequestMethods
      */
     public function addUniqueContext(?GenericRequest $request = null): GenericRequest
     {
-        $request = $request?: $this;
+        $request = $request ?: $this;
 
         $request->setPost('client_context', uuid(true));
 
@@ -40,7 +43,7 @@ trait RequestMethods
      */
     public function addCSRFTokenAndUserId(?GenericRequest $request = null): GenericRequest
     {
-        $request = $request?: $this;
+        $request = $request ?: $this;
 
         $request->setPost('_csrftoken', $this->session->getCsrfToken()->getToken());
         $request->setPost('_uid', $this->session->getUser()->getId());
@@ -68,6 +71,9 @@ trait RequestMethods
                 return $serializer->decode($response->wait());
             });
         })->otherwise(function ($exception) use ($serializer) {
+            if (!$this->isRequestException($exception)) {
+                return rejection_for($exception);
+            }
             // Retrieve the response
             $response = $exception->getResponse();
 
@@ -78,4 +84,16 @@ trait RequestMethods
             });
         });
     }
+
+    /**
+     * Returns true if the exception is of request exception, false otherwise.
+     *
+     * @param Throwable $exception
+     * @return bool
+     */
+    protected function isRequestException(Throwable $exception)
+    {
+        return $exception instanceof RequestException;
+    }
+
 }
