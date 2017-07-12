@@ -32,8 +32,11 @@ class DeviceBuilder implements DeviceBuilderInterface
     {
         $metadata = static::DEVICES[rand(0, sizeof(static::DEVICES) - 1)];
 
-        $this->addPhoneId($metadata);
-        $this->addDeviceId($metadata);
+        // Compose a unique device id
+        $uniqueDeviceId = $this->getUniqueSignatureId();
+
+        $this->addPhoneId($metadata, $uniqueDeviceId);
+        $this->addDeviceId($metadata, $uniqueDeviceId);
 
         return (new Device(...$metadata));
     }
@@ -41,20 +44,33 @@ class DeviceBuilder implements DeviceBuilderInterface
     /**
      * Add phone id.
      *
-     * @param array $metadata
+     * @param array  $metadata
+     * @param string $id
      */
-    protected function addPhoneId(array &$metadata): void
+    protected function addPhoneId(array &$metadata, string $id): void
     {
-        $metadata[] = SignatureSupport::uuid();
+        $metadata[] = $id;
     }
 
     /**
      * Adds device id.
      *
-     * @param array $metadata
+     * @param array  $metadata
+     * @param string $id
      */
-    protected function addDeviceId(array &$metadata): void
+    protected function addDeviceId(array &$metadata, string $id): void
     {
-        $metadata[] = SignatureSupport::deviceId(md5('test'));
+        $metadata[] = $id;
     }
+
+    /**
+     * Returns a unique signature id.
+     *
+     * @return string
+     */
+    protected function getUniqueSignatureId()
+    {
+        return strtoupper(SignatureSupport::uuid());
+    }
+
 }

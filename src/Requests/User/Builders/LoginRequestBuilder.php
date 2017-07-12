@@ -66,7 +66,6 @@ class LoginRequestBuilder extends AbstractPayloadRequestBuilder
     protected function addSessionParameters(&$parameters)
     {
         return $parameters = array_merge([
-            'phone_id'   => $this->session->getDevice()->phoneId(),
             'device_id'  => $this->session->getDevice()->deviceId(),
         ], $parameters);
     }
