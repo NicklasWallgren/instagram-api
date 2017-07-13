@@ -34,7 +34,7 @@ trait UserFeaturesTrait
             return $this->headers()->then(function (HeaderMessage $message) use ($username, $password) {
                 return (new LoginRequest($username, $password, $this->session, $this->client))->fire();
             });
-        })($this->mode);
+        })($this->getMode());
     }
 
     /**

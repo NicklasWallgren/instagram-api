@@ -29,7 +29,7 @@ trait GeneralFeaturesTrait
             }
 
             return (new HeaderRequest(uuid(SignatureSupport::TYPE_COMBINED), $this->session, $this->client))->fire();
-        })($this->mode);
+        })($this->getMode());
     }
 
     /**

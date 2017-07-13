@@ -4,9 +4,8 @@ namespace Instagram\SDK\Client\Features;
 
 use Exception;
 use Instagram\SDK\Client\Adapters\Interfaces\AdapterInterface;
-use Instagram\SDK\Http\RequestClient as HttpClient;
-use Instagram\SDK\Instagram;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Instagram\SDK\Http\RequestClient;
+use Instagram\SDK\Session\Session;
 
 trait DefaultFeaturesTrait
 {
@@ -17,7 +16,7 @@ trait DefaultFeaturesTrait
     protected $adapter;
 
     /**
-     * @var HttpClient The Http client
+     * @var RequestClient The request client
      */
     protected $client;
 
@@ -25,11 +24,11 @@ trait DefaultFeaturesTrait
      * @var Session
      */
     protected $session;
-
+ 
     /**
-     * @var bool
+     * @return bool
      */
-    protected $mode = Instagram::MODE_UNWRAP;
+    abstract protected function getMode():bool;
 
     /**
      * Validate the state.

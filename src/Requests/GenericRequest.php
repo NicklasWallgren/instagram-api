@@ -8,7 +8,7 @@ use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
 use Instagram\SDK\Requests\Traits\RequestMethods;
 use Instagram\SDK\Responses\Serializers\AbstractSerializer;
 use Instagram\SDK\Session\Session;
-use GuzzleHttp\Promise\Promise;
+use Instagram\SDK\Support\Promise;
 
 class GenericRequest extends Request
 {

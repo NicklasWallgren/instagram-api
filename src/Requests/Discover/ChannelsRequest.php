@@ -3,7 +3,6 @@
 
 namespace Instagram\SDK\Requests\Discover;
 
-use GuzzleHttp\Promise\Promise;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\Http\RequestClient as HttpClient;
 use Instagram\SDK\Requests\Discover\Builders\ChannelsRequestBuilder;
@@ -11,6 +10,7 @@ use Instagram\SDK\Requests\Request;
 use Instagram\SDK\Requests\Traits\RequestMethods;
 use Instagram\SDK\Responses\Serializers\Discover\ChannelsSerializer;
 use Instagram\SDK\Session\Session;
+use Instagram\SDK\Support\Promise;
 
 class ChannelsRequest extends Request
 {

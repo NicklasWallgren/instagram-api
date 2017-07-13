@@ -40,24 +40,7 @@ class RequestClient
      */
     public function __construct()
     {
-
-
-        // RequestClient?
-        // InvocationClient
-
-
-
         $this->client = new HttpClient(['handler' => HandlerStack::create()]);
-
-        // Decorate client
-
-        // HandlerStack
-        // choose_handler
-        // CurlMultiHandler
-
-//        $stack = HandlerStack::create();
-//        $this->_guzzleClient = new GuzzleClient([
-//            'handler'         => $stack,
     }
 
     /**

@@ -34,7 +34,7 @@ trait DirectFeaturesTrait
             $this->checkPrerequisites();
 
             return (new InboxRequest($this, $this->session, $this->client))->fire();
-        })($this->mode);
+        })($this->getMode());
     }
 
     /**
@@ -51,7 +51,7 @@ trait DirectFeaturesTrait
             $this->checkPrerequisites();
 
             return (new ThreadRequest($this, $this->session, $this->client, $id, $cursor))->fire();
-        })($this->mode);
+        })($this->getMode());
     }
 
     /**
@@ -79,6 +79,6 @@ trait DirectFeaturesTrait
 
             // Invoke the request
             return $request->fire();
-        })($this->mode);
+        })($this->getMode());
     }
 }

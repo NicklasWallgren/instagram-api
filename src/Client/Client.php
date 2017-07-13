@@ -50,8 +50,6 @@ class Client
      */
     public function __construct(?DeviceBuilderInterface $builder = null)
     {
-        // Add option to set proxy, option to request
-
         $this->client = new RequestClient();
         $this->builder = $builder ?: new DeviceBuilder();
     }

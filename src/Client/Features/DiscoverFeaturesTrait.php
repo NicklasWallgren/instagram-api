@@ -27,7 +27,7 @@ trait DiscoverFeaturesTrait
             $this->checkPrerequisites();
 
             return (new ExploreRequest($this, $this->session, $this->client))->fire();
-        })($this->mode);
+        })($this->getMode());
     }
 
     /**
@@ -41,7 +41,7 @@ trait DiscoverFeaturesTrait
             $this->checkPrerequisites();
 
             return (new TopLiveRequest($this, $this->session, $this->client))->fire();
-        })($this->mode);
+        })($this->getMode());
     }
 
     /**
@@ -51,10 +51,10 @@ trait DiscoverFeaturesTrait
      */
     public function channels()
     {
-        return $this->adapter->run(function () {
+        return task(function () {
             $this->checkPrerequisites();
 
             return (new ChannelsRequest($this, $this->session, $this->client))->fire();
-        });
+        })($this->getMode());
     }
 }
