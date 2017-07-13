@@ -29,7 +29,7 @@ trait UserFeaturesTrait
         // Initialize a new session
         $this->session = (new SessionBuilder())->build($this->builder, $this->client);
 
-        return $this->chain(function () use($username, $password) {
+        return $this->chain(function () use ($username, $password) {
             // Retrieve the header message
             return $this->headers()->then(function (HeaderMessage $message) use ($username, $password) {
                 return (new LoginRequest($username, $password, $this->session, $this->client))->fire();
@@ -58,5 +58,4 @@ trait UserFeaturesTrait
             $this->mode = $mode;
         }
     }
-
 }

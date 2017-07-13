@@ -162,6 +162,3 @@ function promise_for($value)
 
 
 // EachPromise
-
-
-

@@ -72,5 +72,4 @@ class DeviceBuilder implements DeviceBuilderInterface
     {
         return strtoupper(SignatureSupport::uuid());
     }
-
 }

@@ -71,5 +71,4 @@ class HandlerStack extends \GuzzleHttp\HandlerStack
 
         return $handler;
     }
-
 }

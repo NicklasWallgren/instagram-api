@@ -51,5 +51,4 @@ trait CookieMethodsTrait
 
         return $cookie->getValue();
     }
-
 }

@@ -67,5 +67,4 @@ interface DeviceInterface
      * @return string
      */
     public function deviceId(): string;
-
 }

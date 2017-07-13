@@ -67,7 +67,9 @@ class CurlMultiHandler
 
         $promise = new Promise(
             [$this, 'execute'],
-            function () use ($id) { return $this->cancel($id); }
+            function () use ($id) {
+                return $this->cancel($id);
+            }
         );
 
         $this->addRequest(['easy' => $easy, 'deferred' => $promise]);
@@ -105,7 +107,8 @@ class CurlMultiHandler
             usleep(250);
         }
 
-        while (curl_multi_exec($this->_mh, $this->active) === CURLM_CALL_MULTI_PERFORM);
+        while (curl_multi_exec($this->_mh, $this->active) === CURLM_CALL_MULTI_PERFORM) {
+        }
 
         $this->processMessages();
     }

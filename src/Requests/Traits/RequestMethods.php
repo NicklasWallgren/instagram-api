@@ -106,5 +106,4 @@ trait RequestMethods
     {
         return $exception instanceof RequestException;
     }
-
 }

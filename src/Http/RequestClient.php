@@ -58,8 +58,6 @@ class RequestClient
 //        $stack = HandlerStack::create();
 //        $this->_guzzleClient = new GuzzleClient([
 //            'handler'         => $stack,
-
-
     }
 
     /**
@@ -139,5 +137,4 @@ class RequestClient
     {
         $this->cookies = $cookies;
     }
-
 }
