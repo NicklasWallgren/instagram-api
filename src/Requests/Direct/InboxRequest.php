@@ -2,15 +2,15 @@
 
 namespace Instagram\SDK\Requests\Direct;
 
-use GuzzleHttp\Promise\Promise;
 use Instagram\SDK\Client\Client;
-use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Http\RequestClient as HttpClient;
 use Instagram\SDK\Requests\Direct\Builders\InboxRequestBuilder;
 use Instagram\SDK\Requests\Request;
 use Instagram\SDK\Requests\Traits\RequestMethods;
 use Instagram\SDK\Responses\LoginResponseMessage;
 use Instagram\SDK\Responses\Serializers\Direct\InboxSerializer;
 use Instagram\SDK\Session\Session;
+use Instagram\SDK\Support\Promise;
 
 class InboxRequest extends Request
 {

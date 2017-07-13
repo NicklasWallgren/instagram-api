@@ -5,7 +5,7 @@ namespace Instagram\SDK\Requests\Discover;
 
 use GuzzleHttp\Promise\Promise;
 use Instagram\SDK\Client\Client;
-use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Http\RequestClient as HttpClient;
 use Instagram\SDK\Requests\Discover\Builders\TopLiveRequestBuilder;
 use Instagram\SDK\Requests\Request;
 use Instagram\SDK\Requests\Traits\RequestMethods;

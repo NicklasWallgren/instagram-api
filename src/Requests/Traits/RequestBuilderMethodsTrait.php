@@ -2,7 +2,7 @@
 
 namespace Instagram\SDK\Requests\Traits;
 
-use Instagram\SDK\Http\Client;
+use Instagram\SDK\Http\RequestClient;
 use Instagram\SDK\Requests\Http\HeadersBuilder;
 use Instagram\SDK\Session\Session;
 
@@ -21,7 +21,7 @@ trait RequestBuilderMethodsTrait
      */
     protected function getType(): string
     {
-        return Client::METHOD_POST;
+        return RequestClient::METHOD_POST;
     }
 
     /**

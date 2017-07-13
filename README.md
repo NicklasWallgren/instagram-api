@@ -24,7 +24,9 @@ composer require nicklasw/instagram-api
 
 # Usage
 
-Promise adapter
+## Promise pattern
+
+### Basic example
 ```php
 use Instagram\SDK\Responses\Exceptions\ApiResponseException;
 use Instagram\SDK\DTO\Messages\InboxMessage;
@@ -33,7 +35,10 @@ use Instagram\SDK\Instagram;
 
 require_once 'vendor/autoload.php';
 
-$instagram = new Instagram(null, null, new PromiseAdapter());
+$instagram = new Instagram();
+
+// Set result mode
+$instagram->setMode(Instagram::MODE_PROMISE);
 
 $instagram
     ->login('INSERT_USERNAME', 'INSERT_PASSWORD')
@@ -49,7 +54,38 @@ $instagram
     ->wait();
 ```
 
-Unwrap adapter
+### Flat promise example
+
+
+```php
+use Instagram\SDK\Responses\Exceptions\ApiResponseException;
+use Instagram\SDK\DTO\Messages\InboxMessage;
+use Instagram\SDK\DTO\Messages\SessionMessage;
+use Instagram\SDK\Instagram;
+
+require_once 'vendor/autoload.php';
+
+$instagram = new Instagram();
+
+// Set result mode
+$instagram->setMode(Instagram::MODE_PROMISE);
+
+$instagram
+    ->login('INSERT_USERNAME', 'INSERT_PASSWORD')
+    ->wait();
+
+// Flat promise chain
+$threads = $instagram
+    ->inbox()
+    ->getInbox()
+    ->getThreads()
+    ->wait();
+
+```
+
+## Unwrap pattern
+
+### Basic example
 ```php
 use Instagram\SDK\DTO\General\ItemType;
 use Instagram\SDK\Instagram;
@@ -103,6 +139,9 @@ foreach ($thread->getItems() as $item) {
 
 
 ## Proxy
+
+### To be updated
+
 ```php
 require_once '/vendor/autoload.php';
 

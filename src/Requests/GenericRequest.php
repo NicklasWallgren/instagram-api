@@ -2,7 +2,7 @@
 
 namespace Instagram\SDK\Requests;
 
-use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Http\RequestClient as HttpClient;
 use Instagram\SDK\Requests\Http\Builders\AbstractQueryRequestBuilder;
 use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
 use Instagram\SDK\Requests\Traits\RequestMethods;

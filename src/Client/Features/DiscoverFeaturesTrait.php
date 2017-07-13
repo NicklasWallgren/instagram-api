@@ -9,6 +9,7 @@ use Instagram\SDK\DTO\Messages\Discover\TopLiveMessage;
 use Instagram\SDK\Requests\Discover\ChannelsRequest;
 use Instagram\SDK\Requests\Discover\ExploreRequest;
 use Instagram\SDK\Requests\Discover\TopLiveRequest;
+use function Instagram\SDK\Support\task;
 
 trait DiscoverFeaturesTrait
 {
@@ -22,11 +23,11 @@ trait DiscoverFeaturesTrait
      */
     public function explore()
     {
-        return $this->adapter->run(function () {
+        return task(function () {
             $this->checkPrerequisites();
 
             return (new ExploreRequest($this, $this->session, $this->client))->fire();
-        });
+        })($this->mode);
     }
 
     /**
@@ -36,11 +37,11 @@ trait DiscoverFeaturesTrait
      */
     public function topLives()
     {
-        return $this->adapter->run(function () {
+        return task(function () {
             $this->checkPrerequisites();
 
             return (new TopLiveRequest($this, $this->session, $this->client))->fire();
-        });
+        })($this->mode);
     }
 
     /**

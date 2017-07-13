@@ -3,15 +3,15 @@
 
 namespace Instagram\SDK\Requests;
 
-use GuzzleHttp\Promise\Promise;
-use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Http\RequestClient;
 use Instagram\SDK\Session\Session;
+use Instagram\SDK\Support\Promise;
 
 abstract class Request
 {
 
     /**
-     * @var HttpClient
+     * @var RequestClient
      */
     protected $httpClient;
 
@@ -24,9 +24,9 @@ abstract class Request
      * Request constructor.
      *
      * @param Session    $session
-     * @param HttpClient $client
+     * @param RequestClient $client
      */
-    public function __construct(Session $session, HttpClient $client)
+    public function __construct(Session $session, RequestClient $client)
     {
         $this->session = $session;
         $this->httpClient = $client;

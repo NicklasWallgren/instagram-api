@@ -7,24 +7,17 @@ use Instagram\SDK\Devices\Interfaces\DeviceInterface;
 use Instagram\SDK\DTO\CsrfToken;
 use Instagram\SDK\DTO\Session\SessionId;
 use Instagram\SDK\DTO\Session\User;
+use Instagram\SDK\Http\Traits\CookieMethodsTrait;
 
 class Session
 {
 
-    /**
-     * @var SessionId
-     */
-    protected $id;
+    use CookieMethodsTrait;
 
     /**
      * @var string The unique id
      */
     protected $uuid;
-
-    /**
-     * @var CsrfToken The csrf token
-     */
-    protected $csrfToken;
 
     /**
      * @var User
@@ -46,15 +39,7 @@ class Session
      */
     public function getId(): SessionId
     {
-        return $this->id;
-    }
-
-    /**
-     * @param SessionId $id
-     */
-    public function setId(SessionId $id)
-    {
-        $this->id = $id;
+        return $this->getSessionId();
     }
 
     /**
@@ -67,30 +52,11 @@ class Session
 
     /**
      * @param string $uuid
-     * @return $this
+     * @return static
      */
     public function setUuid(string $uuid)
     {
         $this->uuid = $uuid;
-
-        return $this;
-    }
-
-    /**
-     * @return CsrfToken
-     */
-    public function getCsrfToken(): CsrfToken
-    {
-        return $this->csrfToken;
-    }
-
-    /**
-     * @param CsrfToken $csrfToken
-     * @return $this
-     */
-    public function setCsrfToken(CsrfToken $csrfToken)
-    {
-        $this->csrfToken = $csrfToken;
 
         return $this;
     }
@@ -105,10 +71,13 @@ class Session
 
     /**
      * @param User $user
+     * @return static
      */
     public function setUser(User $user)
     {
         $this->user = $user;
+
+        return $this;
     }
 
     /**
@@ -121,7 +90,7 @@ class Session
 
     /**
      * @param DeviceInterface $device
-     * @return $this
+     * @return static
      */
     public function setDevice(DeviceInterface $device)
     {
@@ -140,9 +109,22 @@ class Session
 
     /**
      * @param CookieJar $cookies
+     * @return static
      */
     public function setCookies(CookieJar $cookies)
     {
         $this->cookies = $cookies;
+
+        return $this;
+    }
+
+    /**
+     * Returns the cookie jar.
+     *
+     * @return CookieJar
+     */
+    protected function getCookieJar(): CookieJar
+    {
+        return $this->cookies;
     }
 }

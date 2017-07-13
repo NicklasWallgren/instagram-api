@@ -2,14 +2,14 @@
 
 namespace Instagram\SDK\Requests\User;
 
-use GuzzleHttp\Promise\Promise;
-use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Http\RequestClient as HttpClient;
 use Instagram\SDK\Requests\Request;
 use Instagram\SDK\Requests\Traits\RequestMethods;
 use Instagram\SDK\Requests\User\Builders\LoginRequestBuilder;
 use Instagram\SDK\Responses\LoginResponseMessage;
 use Instagram\SDK\Responses\Serializers\User\LoginSerializer;
 use Instagram\SDK\Session\Session;
+use Instagram\SDK\Support\Promise;
 
 class LoginRequest extends Request
 {

@@ -7,7 +7,7 @@ use Instagram\SDK\DTO\Cursor\RequestIterator;
 use Instagram\SDK\DTO\General\ItemType;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
-use function GuzzleHttp\Promise\task;
+use function Instagram\SDK\Support\task;
 use function Instagram\SDK\Support\unwrap;
 
 class Thread extends RequestIterator implements OnItemDecodeInterface
@@ -418,9 +418,9 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      */
     public function whole()
     {
-        return $this->client->getAdapter()->run(function () {
+        return task(function () {
             return $this->retrieve();
-        });
+        })($this->getMode());
     }
 
     /**
@@ -430,14 +430,14 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      */
     public function next()
     {
-        // Check whether there are any older posts
-        if (!$this->getHasOlder()) {
-            return false;
-        }
+        return task(function () {
+            // Check whether there are any older posts
+            if (!$this->getHasOlder()) {
+                return false;
+            }
 
-        return $this->client->getAdapter()->run(function () {
             return $this->retrieve($this->oldestCursor);
-        });
+        })($this->getMode());
     }
 
     /**
@@ -447,14 +447,14 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      */
     public function rewind()
     {
-        // Check whether there are any newer posts
-        if (!$this->getHasNewer()) {
-            return false;
-        }
+        return task(function () {
+            // Check whether there are any newer posts
+            if (!$this->getHasNewer()) {
+                return false;
+            }
 
-        return $this->client->getAdapter()->run(function () {
             return $this->retrieve($this->newestCursor);
-        });
+        })($this->getMode());
     }
 
     /**
@@ -488,7 +488,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
             $this->items[] = $item;
 
             return true;
-        });
+        })($this->getMode());
     }
 
     /**
@@ -522,7 +522,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
                  ->setHasNewer($thread->getHasNewer());
 
             return true;
-        });
+        })($this->getMode());
     }
 
     /**

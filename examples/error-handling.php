@@ -7,7 +7,10 @@ use Instagram\SDK\Instagram;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // Initialize the Instagram library
-$instagram = new Instagram(null, null, new PromiseAdapter());
+$instagram = new Instagram();
+
+// Set result mode
+$instagram->setMode(Instagram::MODE_PROMISE);
 
 // Authenticate using username and password
 $promise = $instagram->login('username', 'password');
@@ -16,7 +19,6 @@ $promise->then(function (SessionMessage $envelope) {
     // The on success callback
 })->otherwise(function ($exception) {
     // The on error callback
-
     // Retrieve the response evelope
     $envelope = $exception->getEnvelope();
 

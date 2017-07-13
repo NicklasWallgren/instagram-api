@@ -3,13 +3,15 @@
 namespace Instagram\SDK\Requests\Traits;
 
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Responses\Interfaces\SerializerInterface;
 use Instagram\SDK\Session\Session;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use Throwable;
 use function GuzzleHttp\Promise\rejection_for;
-use function GuzzleHttp\Promise\task;
+use function Instagram\SDK\Promises\task;
 use function Instagram\SDK\Support\uuid;
 
 trait RequestMethods
@@ -61,27 +63,36 @@ trait RequestMethods
     protected function request(RequestInterface $request, SerializerInterface $serializer)
     {
         // Execute the asynchronous request
-        $response = $this->httpClient->requestAsync($request);
+        $promise = $this->httpClient->requestAsync($request);
 
         // Return a promise chain
-        return $response->then(function () use ($response, $serializer) {
-            // Compose a task, reject promise on failure
-            return task(function () use ($response, $serializer) {
-                // Queue the serialization
-                return $serializer->decode($response->wait());
-            });
+        return $promise->then(function ($response) use ($serializer) {
+            return $this->decode($response, $serializer);
         })->otherwise(function ($exception) use ($serializer) {
+
+            // Use internal rejection_for
+
             if (!$this->isRequestException($exception)) {
                 return rejection_for($exception);
             }
-            // Retrieve the response
-            $response = $exception->getResponse();
 
-            // Compose a task, reject promise on failure
-            return task(function () use ($response, $serializer) {
-                // Queue the serialization
-                return $serializer->decode($response);
-            });
+            return $this->decode($exception->getResponse(), $serializer);
+        });
+    }
+
+    /**
+     * Decode the response.
+     *
+     * @param HttpResponseInterface $response
+     * @param SerializerInterface   $serializer
+     * @return PromiseInterface
+     */
+    protected function decode(HttpResponseInterface $response, SerializerInterface $serializer)
+    {
+        // Compose a task, reject promise on failure
+        return task(function () use ($response, $serializer) {
+            // Queue the serialization
+            return $serializer->decode($response);
         });
     }
 

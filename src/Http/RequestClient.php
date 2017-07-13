@@ -6,12 +6,12 @@ use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Psr7\Request;
+use Instagram\SDK\Http\Handlers\HandlerStack;
+use Instagram\SDK\Support\Promise;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 
-class Client
+class RequestClient
 {
 
     /**
@@ -37,36 +37,29 @@ class Client
     /**
      * Client constructor.
      *
-     * @param ClientInterface $client
      */
-    public function __construct(?ClientInterface $client = null)
+    public function __construct()
     {
-        $this->client = $client ?: new HttpClient();
-    }
 
-    /**
-     * Sends a GET HTTP request.
-     *
-     * @param string $uri
-     * @param array  $query
-     * @return ResponseInterface
-     */
-    public function get(string $uri, ?array $query = []): ResponseInterface
-    {
-        return $this->send(self::METHOD_GET, $uri, null, $query);
-    }
 
-    /**
-     * Sends a POST HTTP request.
-     *
-     * @param string      $uri
-     * @param array       $query
-     * @param string|null $body
-     * @return ResponseInterface
-     */
-    public function post(string $uri, array $query = [], ?string $body = null): ResponseInterface
-    {
-        return $this->send(self::METHOD_POST, $uri, $body, $query);
+        // RequestClient?
+        // InvocationClient
+
+
+
+        $this->client = new HttpClient(['handler' => HandlerStack::create()]);
+
+        // Decorate client
+
+        // HandlerStack
+        // choose_handler
+        // CurlMultiHandler
+
+//        $stack = HandlerStack::create();
+//        $this->_guzzleClient = new GuzzleClient([
+//            'handler'         => $stack,
+
+
     }
 
     /**
@@ -124,21 +117,6 @@ class Client
     }
 
     /**
-     * Send a HTTP request.
-     *
-     * @param string                               $method
-     * @param string                               $uri
-     * @param string|null|resource|StreamInterface $body
-     * @param array                                $query
-     * @param array                                $headers
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     */
-    public function send($method, $uri, $body = null, $query = [], $headers = []): ResponseInterface
-    {
-        return $this->client->send(new Request($method, $uri, $headers, $body));
-    }
-
-    /**
      * Returns the cookies.
      *
      * @return CookieJar
@@ -161,4 +139,5 @@ class Client
     {
         $this->cookies = $cookies;
     }
+
 }

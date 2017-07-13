@@ -1,31 +1,11 @@
 <?php
 
-namespace Instagram\SDK\Support;
+namespace Instagram\SDK\Promises;
 
-use Closure;
 use GuzzleHttp\Promise\PromiseInterface;
-use Instagram\SDK\Client\Client;
-use Instagram\SDK\DTO\Envelope;
-use Instagram\SDK\Http\RequestClient as HttpClient;
-use Instagram\SDK\Requests\GenericRequest;
-use Instagram\SDK\Requests\Http\Builders\AbstractRequestBuilder;
-use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
-use Instagram\SDK\Requests\Support\SignatureSupport;
-use Instagram\SDK\Responses\Serializers\AbstractSerializer;
-use Instagram\SDK\Responses\Serializers\GenericSerializer;
-use Instagram\SDK\Session\Session;
+use GuzzleHttp\Promise\RejectedPromise;
+use Instagram\SDK\Support\Promise;
 use function GuzzleHttp\Promise\queue;
-
-/**
- * Generates a universal unique identifier.
- *
- * @param bool $type The identifier type
- * @return string
- */
-function uuid(bool $type = SignatureSupport::TYPE_DEFAULT): string
-{
-    return SignatureSupport::uuid($type);
-}
 
 /**
  * Unwrap promise.
@@ -36,30 +16,6 @@ function uuid(bool $type = SignatureSupport::TYPE_DEFAULT): string
 function unwrap($value)
 {
     return $value instanceof Promise ? $value->wait() : $value;
-}
-
-/**
- * Generates a generic request instance.
- *
- * @param string|AbstractRequestBuilder $uri The request uri or request builder
- * @param Envelope|AbstractSerializer   $serializer The response envelope or serializer
- * @return Closure
- */
-function request($uri, $serializer)
-{
-    return function (Client $client, Session $session, HttpClient $httpClient) use ($uri, $serializer) {
-        // Check whether uri corresponds to a request builder
-        if (!($uri instanceof AbstractRequestBuilder)) {
-            $uri = new GenericRequestBuilder($uri, $session);
-        }
-
-        // Check whether serializer corresponds to a abstract serializer
-        if (!($serializer instanceof AbstractSerializer)) {
-            $serializer = new GenericSerializer($client, $serializer);
-        }
-
-        return new GenericRequest($session, $httpClient, $uri, $serializer);
-    };
 }
 
 /**
@@ -157,11 +113,3 @@ function promise_for($value)
 
     return new FulfilledPromise($value);
 }
-
-
-
-
-// EachPromise
-
-
-

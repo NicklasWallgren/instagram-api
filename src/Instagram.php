@@ -15,29 +15,29 @@ class Instagram
     use MakeRequestsAccessible;
 
     /**
+     * @var bool The promise mode flag
+     */
+    public const MODE_PROMISE = false;
+
+    /**
+     * @var bool The unwrap mode flag
+     */
+    public const MODE_UNWRAP = true;
+
+    /**
      * @var Client The Instagram API client
      */
     protected $client;
 
     /**
-     * @var ClientInterface|null
-     */
-    protected $httpClient;
-
-    /**
      * Instagram constructor.
      *
-     * @param ClientInterface|null        $httpClient
      * @param DeviceBuilderInterface|null $builder
      * @param AdapterInterface|null       $adapter
      */
-    public function __construct(
-        ?ClientInterface $httpClient = null,
-        ?DeviceBuilderInterface $builder = null,
-        ?AdapterInterface $adapter = null
-    ) {
-        $this->client = new Client($httpClient, $builder, $adapter);
-        $this->httpClient = $httpClient;
+    public function __construct(?DeviceBuilderInterface $builder = null, ?AdapterInterface $adapter = null)
+    {
+        $this->client = new Client($builder, $adapter);
     }
 
     /**
@@ -48,6 +48,19 @@ class Instagram
     public function setSession(Session $session)
     {
         $this->client->setSession($session);
+    }
+
+    /**
+     * Sets the result mode.
+     *
+     * @param bool $mode
+     * @return self
+     */
+    public function setMode(bool $mode): self
+    {
+        $this->client->setMode($mode);
+
+        return $this;
     }
 
     /**

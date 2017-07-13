@@ -6,7 +6,10 @@ use Instagram\SDK\Instagram;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // Initialize the Instagram library
-$instagram = new Instagram(null, null, new PromiseAdapter());
+$instagram = new Instagram();
+
+// Set result mode
+$instagram->setMode(Instagram::MODE_PROMISE);
 
 // Authenticate using username and password
 $instagram->login('INSERT_USERNAME', 'INSERT_PASSWORD')->wait();

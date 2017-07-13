@@ -6,7 +6,7 @@ use Exception;
 use GuzzleHttp\Promise\Promise;
 use Instagram\SDK\Requests\General\HeaderRequest;
 use Instagram\SDK\Requests\Support\SignatureSupport;
-use function GuzzleHttp\Promise\task;
+use function Instagram\SDK\Support\task;
 use function Instagram\SDK\Support\uuid;
 
 trait GeneralFeaturesTrait
@@ -29,7 +29,7 @@ trait GeneralFeaturesTrait
             }
 
             return (new HeaderRequest(uuid(SignatureSupport::TYPE_COMBINED), $this->session, $this->client))->fire();
-        });
+        })($this->mode);
     }
 
     /**

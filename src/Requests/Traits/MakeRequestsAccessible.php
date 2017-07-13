@@ -12,9 +12,20 @@ trait MakeRequestsAccessible
     use MakeDiscoverRequestAccessible;
 
     /**
+     * Returns the result mode.
+     *
+     * @return bool
+     */
+    protected function getMode(): bool
+    {
+        return $this->getClient()->getMode();
+    }
+
+    /**
      * Returns the client.
      *
      * @return Client
      */
     abstract protected function getClient(): Client;
+
 }

@@ -2,13 +2,13 @@
 
 namespace Instagram\SDK\Requests\General;
 
-use GuzzleHttp\Promise\Promise;
-use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Http\RequestClient as HttpClient;
 use Instagram\SDK\Requests\General\Builders\HeaderRequestBuilder;
 use Instagram\SDK\Requests\Request;
 use Instagram\SDK\Requests\Traits\RequestMethods;
 use Instagram\SDK\Responses\Serializers\General\HeaderSerializer;
 use Instagram\SDK\Session\Session;
+use Instagram\SDK\Support\Promise;
 
 class HeaderRequest extends Request
 {
@@ -45,6 +45,6 @@ class HeaderRequest extends Request
         $request = new HeaderRequestBuilder($this->signature, $this->session);
 
         // Return a promise chain
-        return $this->request($request->build(), new HeaderSerializer());
+        return $this->request($request->build(), new HeaderSerializer($this->httpClient));
     }
 }

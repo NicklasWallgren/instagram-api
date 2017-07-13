@@ -2,6 +2,7 @@
 
 namespace Instagram\SDK\DTO\Direct;
 
+use GuzzleHttp\Promise\Promise;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
@@ -84,9 +85,9 @@ class Inbox implements OnItemDecodeInterface
      *
      * @param string $id
      * @param bool   $whole
-     * @return Thread|null
+     * @return Thread|Promise<Thread>|null
      */
-    public function getThreadById(string $id, bool $whole = false): Thread
+    public function getThreadById(string $id, bool $whole = false)
     {
         foreach ($this->threads as $thread) {
             if ($thread->getThreadId() === $id) {
@@ -102,9 +103,9 @@ class Inbox implements OnItemDecodeInterface
      *
      * @param string $title
      * @param bool   $whole
-     * @return Thread|null
+     * @return Thread|Promise<Thread>|null
      */
-    public function getThreadByTitle(string $title, bool $whole = false): Thread
+    public function getThreadByTitle(string $title, bool $whole = false)
     {
         foreach ($this->threads as $thread) {
             if ($thread->getThreadTitle() === $title) {

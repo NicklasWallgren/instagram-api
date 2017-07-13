@@ -10,6 +10,7 @@ use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
 use Instagram\SDK\Requests\Direct\InboxRequest;
 use Instagram\SDK\Requests\Direct\ThreadRequest;
 use function Instagram\SDK\Support\request;
+use function Instagram\SDK\Support\task;
 
 trait DirectFeaturesTrait
 {
@@ -29,11 +30,11 @@ trait DirectFeaturesTrait
      */
     public function inbox()
     {
-        return $this->adapter->run(function () {
+        return task(function () {
             $this->checkPrerequisites();
 
             return (new InboxRequest($this, $this->session, $this->client))->fire();
-        });
+        })($this->mode);
     }
 
     /**
@@ -46,11 +47,11 @@ trait DirectFeaturesTrait
      */
     public function thread(string $id, ?string $cursor = null)
     {
-        return $this->adapter->run(function () use ($id, $cursor) {
+        return task(function () use ($id, $cursor) {
             $this->checkPrerequisites();
 
             return (new ThreadRequest($this, $this->session, $this->client, $id, $cursor))->fire();
-        });
+        })($this->mode);
     }
 
     /**
@@ -62,7 +63,7 @@ trait DirectFeaturesTrait
      */
     public function sendThreadMessage(string $text, string $threadId)
     {
-        return $this->adapter->run(function () use ($text, $threadId) {
+        return task(function () use ($text, $threadId) {
             $this->checkPrerequisites();
 
             // Build the request instance
@@ -78,6 +79,6 @@ trait DirectFeaturesTrait
 
             // Invoke the request
             return $request->fire();
-        });
+        })($this->mode);
     }
 }

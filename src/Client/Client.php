@@ -3,9 +3,6 @@
 namespace Instagram\SDK\Client;
 
 use Exception;
-use GuzzleHttp\ClientInterface;
-use Instagram\SDK\Client\Adapters\Interfaces\AdapterInterface;
-use Instagram\SDK\Client\Adapters\UnwrapAdapter;
 use Instagram\SDK\Client\Features\DirectFeaturesTrait;
 use Instagram\SDK\Client\Features\DiscoverFeatures;
 use Instagram\SDK\Client\Features\DiscoverFeaturesTrait;
@@ -14,7 +11,8 @@ use Instagram\SDK\Client\Features\UserFeaturesTrait;
 use Instagram\SDK\Devices\Builders\DeviceBuilder;
 use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
 use Instagram\SDK\DTO\CsrfTokenMessage;
-use Instagram\SDK\Http\Client as HttpClient;
+use Instagram\SDK\Http\RequestClient;
+use Instagram\SDK\Instagram;
 use Instagram\SDK\Session\Session;
 
 class Client
@@ -26,7 +24,7 @@ class Client
     use DirectFeaturesTrait;
 
     /**
-     * @var HttpClient The Http client
+     * @var RequestClient The Http client
      */
     protected $client;
 
@@ -41,25 +39,21 @@ class Client
     protected $builder;
 
     /**
-     * @var AdapterInterface
+     * @var bool The result mode
      */
-    protected $adapter;
+    protected $mode = Instagram::MODE_UNWRAP;
 
     /**
      * Client constructor.
      *
-     * @param ClientInterface        $client
      * @param DeviceBuilderInterface $builder
-     * @param AdapterInterface|null  $adapter
      */
-    public function __construct(
-        ?ClientInterface $client = null,
-        ?DeviceBuilderInterface $builder = null,
-        ?AdapterInterface $adapter = null
-    ) {
-        $this->client = new HttpClient($client);
+    public function __construct(?DeviceBuilderInterface $builder = null)
+    {
+        // Add option to set proxy, option to request
+
+        $this->client = new RequestClient();
         $this->builder = $builder ?: new DeviceBuilder();
-        $this->adapter = $adapter ?: new UnwrapAdapter();
     }
 
     /**
@@ -76,30 +70,38 @@ class Client
      * Sets the current session.
      *
      * @param Session $session
+     * @return self
      */
-    public function setSession(Session $session)
+    public function setSession(Session $session): self
     {
         $this->session = $session;
 
         $this->client->setCookies($session->getCookies());
+
+        return $this;
     }
 
     /**
-     * Sets the adapter.
+     * Sets the result mode.
      *
-     * @param AdapterInterface $adapter
+     * @param bool $mode
+     * @return self
      */
-    public function setAdapter(AdapterInterface $adapter): void
+    public function setMode(bool $mode): self
     {
-        $this->adapter = $adapter;
+        $this->mode = $mode;
+
+        return $this;
     }
 
     /**
-     * @return AdapterInterface
+     * Returns the result mode.
+     *
+     * @return bool
      */
-    public function getAdapter(): AdapterInterface
+    public function getMode(): bool
     {
-        return $this->adapter;
+        return $this->mode;
     }
 
     /**
