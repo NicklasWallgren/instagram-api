@@ -2,12 +2,12 @@
 
 namespace Instagram\SDK\Http;
 
-use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
-use Instagram\SDK\Http\Handlers\HandlerStack;
+use Instagram\SDK\Http\Guzzle\Client;
+use Instagram\SDK\Http\Guzzle\Handlers\HandlerStack;
 use Instagram\SDK\Support\Promise;
 use Psr\Http\Message\ResponseInterface;
 
@@ -44,7 +44,7 @@ class RequestClient
      */
     public function __construct()
     {
-        $this->client = new HttpClient(['handler' => HandlerStack::create()]);
+        $this->client = new Client(['handler' => HandlerStack::create()]);
         $this->options = new Options();
     }
 
@@ -152,5 +152,4 @@ class RequestClient
     {
         return array_merge($options, $this->options !== null ? $this->options->get() : []);
     }
-
 }

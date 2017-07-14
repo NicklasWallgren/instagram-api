@@ -21,19 +21,6 @@ class SignatureSupport
     protected const SIGNATURE_KEY = '5b39482c3a00d6c525f3722aba347fe9ecc626ae754b59c1e70c43a1f0ffdcce';
 
     /**
-     * Generates a device id.
-     *
-     * @param string $seed
-     * @return string
-     */
-    public static function deviceId(string $seed): string
-    {
-        $volatile_seed = filemtime(__DIR__);
-
-        return 'android-' . substr(md5($seed . $volatile_seed), 16);
-    }
-
-    /**
      * Generate a signature.
      *
      * @param string $data

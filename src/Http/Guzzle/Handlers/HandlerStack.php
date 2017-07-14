@@ -1,6 +1,6 @@
 <?php
 
-namespace Instagram\SDK\Http\Handlers;
+namespace Instagram\SDK\Http\Guzzle\Handlers;
 
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\Handler\Proxy;
@@ -47,8 +47,8 @@ class HandlerStack extends \GuzzleHttp\HandlerStack
     protected static function createHandler()
     {
 
+        // TODO
         // CurlFactory, \GuzzleHttp\Promise\rejection_for($error);
-        // CurlMultiHandler, new \Instagram\SDK\Support\Promise(
 
 
         $handler = null;

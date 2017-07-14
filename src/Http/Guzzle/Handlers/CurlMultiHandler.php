@@ -1,6 +1,6 @@
 <?php
 
-namespace Instagram\SDK\Http\Handlers;
+namespace Instagram\SDK\Http\Guzzle\Handlers;
 
 use BadMethodCallException;
 use GuzzleHttp\Handler\CurlFactory;
