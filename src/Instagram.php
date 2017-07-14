@@ -63,6 +63,19 @@ class Instagram
     }
 
     /**
+     * Sets the proxy uri.
+     *
+     * @param string $uri
+     * @return self
+     */
+    public function setProxyUri(string $uri): self
+    {
+        $this->client->setProxyUri($uri);
+
+        return $this;
+    }
+
+    /**
      * Returns the client.
      *
      * @return Client

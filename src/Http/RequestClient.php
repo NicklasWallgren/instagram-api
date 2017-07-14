@@ -35,12 +35,17 @@ class RequestClient
     protected $cookies;
 
     /**
+     * @var Options
+     */
+    protected $options;
+
+    /**
      * Client constructor.
-     *
      */
     public function __construct()
     {
         $this->client = new HttpClient(['handler' => HandlerStack::create()]);
+        $this->options = new Options();
     }
 
     /**
@@ -54,7 +59,7 @@ class RequestClient
         $response = null;
 
         try {
-            $response = $this->client->send($request, ['cookies' => $this->getCookies()]);
+            $response = $this->client->send($request, $this->options(['cookies' => $this->getCookies()]));
         } catch (ClientException $e) {
             $response = $e->getResponse();
 
@@ -81,7 +86,7 @@ class RequestClient
         $response = null;
 
         try {
-            $response = $this->client->sendAsync($request, ['cookies' => $this->getCookies()]);
+            $response = $this->client->sendAsync($request, $this->options(['cookies' => $this->getCookies()]));
         } catch (ClientException $e) {
             $response = $e->getResponse();
 
@@ -120,4 +125,32 @@ class RequestClient
     {
         $this->cookies = $cookies;
     }
+
+    /**
+     * @return Options
+     */
+    public function getOptions(): Options
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param Options $options
+     */
+    public function setOptions(Options $options)
+    {
+        $this->options = $options;
+    }
+
+    /**
+     * Compose the options list.
+     *
+     * @param array $options
+     * @return array
+     */
+    protected function options(array $options = []): array
+    {
+        return array_merge($options, $this->options !== null ? $this->options->get() : []);
+    }
+
 }

@@ -103,6 +103,19 @@ class Client
     }
 
     /**
+     * Sets the proxy uri.
+     *
+     * @param string $uri
+     * @return self
+     */
+    public function setProxyUri(string $uri): self
+    {
+        $this->client->getOptions()->addProxyUri($uri);
+
+        return $this;
+    }
+
+    /**
      * Validate the state.
      *
      * @throws Exception
