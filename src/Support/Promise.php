@@ -1,5 +1,4 @@
 <?php
-
 namespace Instagram\SDK\Support;
 
 use Exception;
@@ -217,14 +216,14 @@ class Promise implements PromiseInterface
             // Resolve the handlers when the forwarded promise is resolved.
             $value->then(
                 static function ($value) use ($handlers) {
-                foreach ($handlers as $handler) {
-                    self::callHandler(1, $value, $handler);
-                }
+                    foreach ($handlers as $handler) {
+                        self::callHandler(1, $value, $handler);
+                    }
                 },
                 static function ($reason) use ($handlers) {
-                foreach ($handlers as $handler) {
-                    self::callHandler(2, $reason, $handler);
-                }
+                    foreach ($handlers as $handler) {
+                        self::callHandler(2, $reason, $handler);
+                    }
                 }
             );
         }
