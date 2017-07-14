@@ -33,11 +33,10 @@ class Instagram
      * Instagram constructor.
      *
      * @param DeviceBuilderInterface|null $builder
-     * @param AdapterInterface|null       $adapter
      */
-    public function __construct(?DeviceBuilderInterface $builder = null, ?AdapterInterface $adapter = null)
+    public function __construct(?DeviceBuilderInterface $builder = null)
     {
-        $this->client = new Client($builder, $adapter);
+        $this->client = new Client($builder);
     }
 
     /**
