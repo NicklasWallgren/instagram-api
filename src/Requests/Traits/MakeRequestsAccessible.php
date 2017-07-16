@@ -10,6 +10,7 @@ trait MakeRequestsAccessible
     use MakeGeneralRequestAccessible;
     use MakeDirectRequestAccessible;
     use MakeDiscoverRequestAccessible;
+    use MakeUserRequestAccessible;
 
     /**
      * Returns the result mode.

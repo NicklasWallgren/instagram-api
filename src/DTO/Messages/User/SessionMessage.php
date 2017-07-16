@@ -1,6 +1,6 @@
 <?php
 
-namespace Instagram\SDK\DTO\Messages;
+namespace Instagram\SDK\DTO\Messages\User;
 
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Session\Session;
@@ -8,8 +8,6 @@ use Traits\MappableTrait;
 
 class SessionMessage extends Envelope
 {
-
-    use MappableTrait;
 
     /**
      * The logged in user property.

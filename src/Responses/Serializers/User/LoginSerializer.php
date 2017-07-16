@@ -4,7 +4,7 @@ namespace Instagram\SDK\Responses\Serializers\User;
 
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
-use Instagram\SDK\DTO\Messages\SessionMessage;
+use Instagram\SDK\DTO\Messages\User\SessionMessage;
 use Instagram\SDK\Http\RequestClient;
 use Instagram\SDK\Responses\Serializers\AbstractSerializer;
 use Instagram\SDK\Session\Session;
