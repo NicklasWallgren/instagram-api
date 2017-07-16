@@ -49,7 +49,8 @@ class HeadersBuilder
             self::CONNECTION_SPEED => $this->getConnectionSpeed(),
             'Connection'           => 'keep-alive',
             'Content-Type'         => 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Accept-Language'      => 'en-en;q=1',
+            'Accept-Language'      => 'en;q=1',
+            'Accept-Encoding'      => 'gzip, deflate',
             'Accept'               => '*/*',
         ], []);
     }
