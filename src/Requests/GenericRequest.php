@@ -60,7 +60,7 @@ class GenericRequest extends Request
     }
 
     /**
-     * Sets a post payload.
+     * Sets a post payload parameter.
      *
      * @param string $parameter
      * @param mixed  $value
@@ -69,6 +69,19 @@ class GenericRequest extends Request
     public function setPost(string $parameter, $value): GenericRequest
     {
         $this->requestBuilder->setPost($parameter, $value);
+
+        return $this;
+    }
+
+    /**
+     * Sets the post payload.
+     *
+     * @param array $payload
+     * @return GenericRequest
+     */
+    public function setPayload(array $payload): GenericRequest
+    {
+        $this->requestBuilder->setPayload($payload);
 
         return $this;
     }

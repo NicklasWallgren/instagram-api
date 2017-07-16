@@ -9,6 +9,8 @@ use Instagram\SDK\DTO\Messages\HeaderMessage;
 use Instagram\SDK\DTO\Messages\User\LogoutMessage;
 use Instagram\SDK\DTO\Messages\User\SessionMessage;
 use Instagram\SDK\Instagram;
+use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
+use Instagram\SDK\Requests\Support\SignatureSupport;
 use Instagram\SDK\Requests\User\LoginRequest;
 use Instagram\SDK\Session\Builders\SessionBuilder;
 use function Instagram\SDK\Support\request;
@@ -20,7 +22,12 @@ trait UserFeaturesTrait
     use DefaultFeaturesTrait;
 
     /**
-     * @var string The message broadcast uri
+     * @var string The login nonce uri
+     */
+    private static $URI_LOGIN_NONCE = 'accounts/one_tap_app_login/';
+
+    /**
+     * @var string The logout uri
      */
     private static $URI_LOGOUT = 'accounts/logout/';
 
@@ -42,6 +49,37 @@ trait UserFeaturesTrait
             return $this->headers()->then(function (HeaderMessage $message) use ($username, $password) {
                 return (new LoginRequest($username, $password, $this->session, $this->client))->fire();
             });
+        })($this->getMode());
+    }
+
+    /**
+     * Authenticates a user using nonce.
+     *
+     * @param string $nonce
+     * @return SessionMessage|Promise<InboxMessage>
+     */
+    public function loginUsingNonce(string $nonce)
+    {
+        return task(function () use ($nonce) {
+            $this->checkPrerequisites();
+
+            // Build the request instance
+            $request = request(self::$URI_LOGIN_NONCE, new SessionMessage())($this, $this->session,
+                $this->client);
+
+            // Prepare the payload
+            $body = [
+                'device_id'   => $this->session->getDevice()->deviceId(),
+                'user_id'     => $this->session->getUser()->getId(),
+                'login_nonce' => $nonce,
+                'adid'        => SignatureSupport::uuid(),
+            ];
+
+            $request->setPayload($body)
+                    ->setMode(GenericRequestBuilder::$MODE_SIGNED);
+
+            // Invoke the request
+            return $request->fire();
         })($this->getMode());
     }
 

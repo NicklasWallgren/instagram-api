@@ -5,6 +5,7 @@ namespace Instagram\SDK\DTO;
 use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
 use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
 use Instagram\SDK\DTO\Traits\PropertiesTrait;
+use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Traits\MappableTrait;
 
 class Envelope implements ResponseMessageInterface, PropertiesInterface
@@ -12,6 +13,7 @@ class Envelope implements ResponseMessageInterface, PropertiesInterface
 
     use MappableTrait;
     use PropertiesTrait;
+    use OnPropagateDecodeEventTrait;
 
     /**
      * @var string The success status

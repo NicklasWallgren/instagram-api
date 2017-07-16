@@ -48,10 +48,6 @@ class GenericSerializer extends AbstractSerializer implements OnDecodeInterface
      */
     public function onDecode(Envelope &$message): void
     {
-
-        var_dump($message);
-
-
         $message->onDecode(['client' => $this->client]);
     }
 }

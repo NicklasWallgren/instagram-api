@@ -69,6 +69,19 @@ class GenericRequestBuilder extends AbstractPayloadRequestBuilder
     }
 
     /**
+     * Sets the payload.
+     *
+     * @param array $payload
+     * @return GenericRequestBuilder
+     */
+    public function setPayload(array $payload): GenericRequestBuilder
+    {
+        $this->payload = $payload;
+
+        return $this;
+    }
+
+    /**
      * Returns the body parameters.
      *
      * @return array

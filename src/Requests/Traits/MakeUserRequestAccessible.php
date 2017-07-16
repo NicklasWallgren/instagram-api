@@ -11,7 +11,7 @@ trait MakeUserRequestAccessible
 {
 
     /**
-     * Login a user
+     * Login a user.
      *
      * @param string $username
      * @param string $password
@@ -20,6 +20,17 @@ trait MakeUserRequestAccessible
     public function login(string $username, string $password)
     {
         return $this->getClient()->login($username, $password);
+    }
+
+    /**
+     * Login a user using nonce.
+     *
+     * @param string $nonce
+     * @return SessionMessage|Promise<InboxMessage>
+     */
+    public function loginUsingNonce(string $nonce)
+    {
+        return $this->getClient()->loginUsingNonce($nonce);
     }
 
     /**

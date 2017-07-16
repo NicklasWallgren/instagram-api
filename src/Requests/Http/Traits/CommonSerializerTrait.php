@@ -2,6 +2,7 @@
 
 namespace Instagram\SDK\Requests\Http\Traits;
 
+use Instagram\SDK\Requests\Http\Serializers\HashSerializer;
 use Instagram\SDK\Requests\Http\Serializers\SerializerInterface;
 use Instagram\SDK\Requests\Http\Serializers\SignSerializer;
 use Instagram\SDK\Requests\Http\Serializers\UrlEncodeSerializer;
@@ -34,9 +35,9 @@ trait CommonSerializerTrait
      * Sets the mode.
      *
      * @param int $mode
-     * @return GenericRequest
+     * @return CommonSerializerTrait
      */
-    public function setMode(int $mode): SerializerInterface
+    public function setMode(int $mode): self
     {
         $this->mode = $mode;
 
@@ -54,7 +55,7 @@ trait CommonSerializerTrait
 
         switch ($this->mode) {
             case self::$MODE_SIGNED:
-                $serializer = new SignSerializer();
+                $serializer = new HashSerializer();
 
                 break;
 

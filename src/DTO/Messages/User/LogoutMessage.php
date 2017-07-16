@@ -23,5 +23,4 @@ class LogoutMessage extends Envelope
     {
         return $this->loginNonce;
     }
-
 }
