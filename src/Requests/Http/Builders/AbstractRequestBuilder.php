@@ -40,6 +40,11 @@ abstract class AbstractRequestBuilder
      */
     public function build(): Request
     {
+
+        var_dump($this->getUri());
+
+
+
         return new Request(
             $this->getType(),
             $this->getUri(),

@@ -27,7 +27,7 @@ class Instagram
     /**
      * @var Client The Instagram API client
      */
-    protected $client;
+    public $client;
 
     /**
      * Instagram constructor.

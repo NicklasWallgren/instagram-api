@@ -7,6 +7,7 @@ use Instagram\SDK\Client\Features\DirectFeaturesTrait;
 use Instagram\SDK\Client\Features\DiscoverFeatures;
 use Instagram\SDK\Client\Features\DiscoverFeaturesTrait;
 use Instagram\SDK\Client\Features\GeneralFeaturesTrait;
+use Instagram\SDK\Client\Features\HashtagFeaturesTrait;
 use Instagram\SDK\Client\Features\UserFeaturesTrait;
 use Instagram\SDK\Devices\Builders\DeviceBuilder;
 use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
@@ -22,6 +23,7 @@ class Client
     use GeneralFeaturesTrait;
     use UserFeaturesTrait;
     use DirectFeaturesTrait;
+    use HashtagFeaturesTrait;
 
     /**
      * @var RequestClient The Http client

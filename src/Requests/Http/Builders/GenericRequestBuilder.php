@@ -82,6 +82,23 @@ class GenericRequestBuilder extends AbstractPayloadRequestBuilder
     }
 
     /**
+     * Sets the query parameter if defined.
+     *
+     * @param string $name
+     * @param string $value
+     * @return GenericRequestBuilder
+     */
+    public function addParam(string $name, ?string $value): GenericRequestBuilder
+    {
+        // Check whether the value is defined
+        if ($value !== null) {
+            return $this;
+        }
+
+        return $this->setParam($name, $value);
+    }
+
+    /**
      * Returns the body parameters.
      *
      * @return array

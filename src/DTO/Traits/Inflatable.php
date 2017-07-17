@@ -43,7 +43,7 @@ trait Inflatable
         }
 
         // Check whether a setter method is defined
-        if (!$this->hasSetterMethod($property)) {
+        if (!$this->hasSubjectSetterMethod($property)) {
             return;
         }
 
@@ -56,7 +56,7 @@ trait Inflatable
      * @param string $property
      * @return bool
      */
-    protected function hasSetterMethod($property): bool
+    protected function hasSubjectSetterMethod($property): bool
     {
         // Compose the method name
         $method = 'set' . ucfirst($property);

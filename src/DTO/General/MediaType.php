@@ -15,4 +15,9 @@ class MediaType
      *
      */
     const VIDEO = 2;
+
+    /**
+     *
+     */
+    const ALBUM = 8;
 }
