@@ -13,7 +13,7 @@ use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Promises\task;
 use function Instagram\SDK\Promises\unwrap;
 
-class FeedMessage extends Envelope implements IteratorInterface, PropertiesInterface
+class SearchResultMessage extends Envelope implements IteratorInterface, PropertiesInterface
 {
 
     use MakeRequestsAccessible;
@@ -26,152 +26,81 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
     protected $client;
 
     /**
-     * @var \Instagram\SDK\DTO\Hashtag\Item[]
-     * @name ranked_items
-     */
-    protected $rankedItems;
-
-    /**
-     * @var \Instagram\SDK\DTO\Hashtag\Item[]
-     */
-    protected $items;
-
-    /**
-     * @var int
-     * @name num_results
-     */
-    protected $numResults;
-
-    /**
-     * @var string[]
-     */
-    protected $previousMaxIds = [];
-
-    /**
-     * @var string
-     * @name next_max_id
-     */
-    protected $nextMaxId;
-
-    /**
-     * @var bool
-     * @name more_available
-     */
-    protected $moreAvailable;
-
-    /**
-     * @var bool
-     * @name auto_load_more_enabled
-     */
-    protected $autoLoadMoreEnabled;
-
-    /**
      * @var string
      */
     protected $query;
 
     /**
-     * @return \Instagram\SDK\DTO\Hashtag\Item[]
+     * @var \Instagram\SDK\DTO\Hashtag\ResultItem[]
      */
-    public function getRankedItems(): array
+    protected $results;
+
+    /**
+     * @var bool
+     * @name has_more
+     */
+    protected $hasMore;
+
+    /**
+     * @var string
+     * @name rank_token
+     */
+    protected $rankToken;
+
+    /**
+     * @return \Instagram\SDK\DTO\Hashtag\ResultItem[]
+     */
+    public function getResults()
     {
-        return $this->rankedItems;
+        return $this->results;
     }
 
     /**
-     * @return \Instagram\SDK\DTO\Hashtag\Item[]
+     * @param \Instagram\SDK\DTO\Hashtag\ResultItem[] $results
      */
-    public function getItems(): array
+    public function setResults($results)
     {
-        return $this->items;
+        $this->results = $results;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getNumResults(): int
+    public function getHasMore()
     {
-        return $this->numResults;
+        return $this->hasMore;
     }
 
     /**
-     * @return string
+     * @param mixed $hasMore
      */
-    public function getNextMaxId(): string
+    public function setHasMore($hasMore)
     {
-        return $this->nextMaxId;
+        $this->hasMore = $hasMore;
     }
 
     /**
-     * @return bool
+     * @return mixed
      */
-    public function getMoreAvailable(): bool
+    public function getRankToken()
     {
-        return $this->moreAvailable;
+        return $this->rankToken;
     }
 
     /**
-     * @return bool
+     * @param mixed $rankToken
      */
-    public function getAutoLoadMoreEnabled(): bool
+    public function setRankToken($rankToken)
     {
-        return $this->autoLoadMoreEnabled;
+        $this->rankToken = $rankToken;
     }
 
     /**
-     * @param mixed $rankedItems
+     * @param Client $client
      */
-    public function setRankedItems($rankedItems)
+    public function setClient(Client $client)
     {
-        $this->rankedItems = $rankedItems;
-    }
-
-    /**
-     * @param \Instagram\SDK\DTO\Hashtag\Item[] $items
-     */
-    public function setItems(array $items)
-    {
-        $this->items = $items;
-    }
-
-    /**
-     * @param mixed $numResults
-     */
-    public function setNumResults($numResults)
-    {
-        $this->numResults = $numResults;
-    }
-
-    /**
-     * @param \string[] $previousMaxIds
-     */
-    public function setPreviousMaxIds(array $previousMaxIds)
-    {
-        $this->previousMaxIds = $previousMaxIds;
-    }
-
-    /**
-     * @param mixed $nextMaxId
-     */
-    public function setNextMaxId($nextMaxId)
-    {
-        $this->nextMaxId = $nextMaxId;
-    }
-
-    /**
-     * @param mixed $moreAvailable
-     */
-    public function setMoreAvailable($moreAvailable)
-    {
-        $this->moreAvailable = $moreAvailable;
-    }
-
-    /**
-     * @param mixed $autoLoadMoreEnabled
-     */
-    public function setAutoLoadMoreEnabled($autoLoadMoreEnabled)
-    {
-        $this->autoLoadMoreEnabled = $autoLoadMoreEnabled;
+        $this->client = $client;
     }
 
     /**

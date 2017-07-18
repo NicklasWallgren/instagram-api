@@ -192,7 +192,7 @@ class Item implements OnItemDecodeInterface
      */
     public function onDecode(array $container, $requirements = []): void
     {
-//        $this->client = $container['client'];
+        $this->client = $container['client'];
 
         $this->propagate($container);
     }

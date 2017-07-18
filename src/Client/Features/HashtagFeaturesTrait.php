@@ -3,6 +3,7 @@
 namespace Instagram\SDK\Client\Features;
 
 use Instagram\SDK\DTO\Messages\Hashtag\FeedMessage;
+use Instagram\SDK\DTO\Messages\Hashtag\SearchResultMessage;
 use function Instagram\SDK\Promises\task;
 use function Instagram\SDK\Support\request;
 
@@ -24,14 +25,31 @@ trait HashtagFeaturesTrait
     /**
      * Search for hashtag.
      *
-     * @param string $tag
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @param string $query
+     * @return SearchResultMessage|Promise<SearchResultMessage>
      */
-    public function search(string $tag)
+    public function search(string $query)
     {
-        return task(function () use ($tag) {
-            throw new Exception('To be implemented.');
-        });
+        // Prepare the tag query
+        $query = rawurlencode($query);
+
+        return task(function () use ($query) {
+            $message = new SearchResultMessage();
+            $message->setQuery($query);
+
+            // Build the request instance
+            $request = request(self::$ENDPOINT_TAG_SEARCH, $message)($this, $this->session,
+                $this->client);
+
+            // Prepare the request parameters
+            $request
+                ->addRankedToken()
+                ->setParam('q', $query)
+                ->setParam('is_typeahead', true);
+
+            // Invoke the request
+            return $request->fire();
+        })($this->getMode());
     }
 
     /**
@@ -39,12 +57,12 @@ trait HashtagFeaturesTrait
      *
      * @param string      $tag
      * @param string|null $maxId
-     * @return SessionMessage|Promise<InboxMessage>
+     * @return FeedMessage|Promise<FeedMessage>
      */
     public function feed(string $tag, ?string $maxId = null)
     {
         // Prepare the tag query
-        $tag = urlencode($tag);
+        $tag = rawurlencode($tag);
 
         return task(function () use ($tag, $maxId) {
             $message = new FeedMessage();

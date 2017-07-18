@@ -2,8 +2,6 @@
 
 namespace Instagram\SDK;
 
-use GuzzleHttp\ClientInterface;
-use Instagram\SDK\Client\Adapters\Interfaces\AdapterInterface;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\Devices\DeviceBuilderInterface;
 use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;

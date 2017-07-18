@@ -4,8 +4,6 @@ namespace Instagram\SDK\Session;
 
 use GuzzleHttp\Cookie\CookieJar;
 use Instagram\SDK\Devices\Interfaces\DeviceInterface;
-use Instagram\SDK\DTO\CsrfToken;
-use Instagram\SDK\DTO\Session\SessionId;
 use Instagram\SDK\DTO\Session\User;
 use Instagram\SDK\Http\Traits\CookieMethodsTrait;
 
@@ -13,6 +11,7 @@ class Session
 {
 
     use CookieMethodsTrait;
+    use SessionMethodsTrait;
 
     /**
      * @var string The unique id
@@ -35,11 +34,11 @@ class Session
     protected $cookies;
 
     /**
-     * @return SessionId
+     * @return string
      */
-    public function getId(): SessionId
+    public function getId(): string
     {
-        return $this->getSessionId();
+        return $this->getSessionId()->getId();
     }
 
     /**
@@ -126,5 +125,13 @@ class Session
     protected function getCookieJar(): CookieJar
     {
         return $this->cookies;
+    }
+
+    /**
+     * @return Session
+     */
+    public function getSession(): Session
+    {
+        return $this;
     }
 }
