@@ -23,7 +23,10 @@ class Client
     use GeneralFeaturesTrait;
     use UserFeaturesTrait;
     use DirectFeaturesTrait;
-    use HashtagFeaturesTrait;
+    use HashtagFeaturesTrait {
+        search as searchByHashtag;
+        feed as hashtagFeed;
+    }
 
     /**
      * @var RequestClient The Http client

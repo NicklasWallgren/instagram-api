@@ -54,6 +54,18 @@ trait RequestMethods
     }
 
     /**
+     * Adds the ranked token as a query parameter.
+     *
+     * @return GenericRequest
+     */
+    public function addRankedToken(): GenericRequest
+    {
+        $this->setParam('ranked_token', $this->session->getRankedToken());
+
+        return $this;
+    }
+
+    /**
      * Asynchronous request.
      *
      * @param RequestInterface    $request

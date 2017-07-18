@@ -4,6 +4,7 @@ namespace Instagram\SDK\Support;
 
 use Closure;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\RejectedPromise;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Http\RequestClient as HttpClient;

@@ -11,6 +11,7 @@ trait MakeRequestsAccessible
     use MakeDirectRequestAccessible;
     use MakeDiscoverRequestAccessible;
     use MakeUserRequestAccessible;
+    use MakeFeedRequestsAccessible;
 
     /**
      * Returns the result mode.
