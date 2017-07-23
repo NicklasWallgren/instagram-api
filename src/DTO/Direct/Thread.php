@@ -492,6 +492,18 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     }
 
     /**
+     * Refresh the thread with the latest updates.
+     *
+     * @return bool|Promise<bool>
+     */
+    public function refresh()
+    {
+        return task(function () {
+            return $this->retrieve();
+        })($this->getMode());
+    }
+
+    /**
      * Retrieve thread items by cursor.
      *
      * @param string $cursor
