@@ -46,7 +46,7 @@ class User implements UserInterface
      * @var bool
      * @name is_verified
      */
-    protected $isVerified;
+    protected $verified;
 
     /**
      * @var bool
@@ -85,17 +85,17 @@ class User implements UserInterface
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getPrivate()
+    public function isPrivate(): bool
     {
         return $this->private;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPictureUrl()
+    public function getProfilePictureUrl(): string
     {
         return $this->pictureUrl;
     }
@@ -111,15 +111,15 @@ class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getIsVerified()
+    public function isVerified(): bool
     {
-        return $this->isVerified;
+        return $this->verified;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getHasAnonymousProfilePicture()
+    public function hasAnonymousProfilePicture(): bool
     {
         return $this->hasAnonymousProfilePicture;
     }

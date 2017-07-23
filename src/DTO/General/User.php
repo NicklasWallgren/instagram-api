@@ -28,13 +28,13 @@ class User implements UserInterface
      * @var bool
      * @name is_private
      */
-    protected $isPrivate;
+    protected $private;
 
     /**
      * @var string
      * @name profile_pic_url
      */
-    protected $profilePicUrl;
+    protected $profilePictureUrl;
 
     /**
      * @var object
@@ -46,7 +46,7 @@ class User implements UserInterface
      * @var bool
      * @name is_verified
      */
-    protected $isVerified;
+    protected $verified;
 
     /**
      * @var bool
@@ -81,17 +81,17 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function isIsPrivate(): bool
+    public function isPrivate(): bool
     {
-        return $this->isPrivate;
+        return $this->private;
     }
 
     /**
      * @return string
      */
-    public function getProfilePicUrl(): string
+    public function getProfilePictureUrl(): string
     {
-        return $this->profilePicUrl;
+        return $this->profilePictureUrl;
     }
 
     /**
@@ -105,15 +105,15 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function isIsVerified(): bool
+    public function isVerified(): bool
     {
-        return $this->isVerified;
+        return $this->verified;
     }
 
     /**
      * @return bool
      */
-    public function isHasAnonymousProfilePicture(): bool
+    public function hasAnonymousProfilePicture(): bool
     {
         return $this->hasAnonymousProfilePicture;
     }
