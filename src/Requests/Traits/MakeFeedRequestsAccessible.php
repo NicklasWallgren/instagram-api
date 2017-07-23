@@ -8,7 +8,7 @@ use Instagram\SDK\DTO\Messages\Hashtag\FeedMessage;
 use Instagram\SDK\DTO\Messages\Hashtag\SearchResultMessage;
 use Instagram\SDK\Instagram;
 use Instagram\SDK\Support\Promise;
-use function Instagram\SDK\Support\rejection_for;
+use function Instagram\SDK\Support\Promises\rejection_for;
 
 trait MakeFeedRequestsAccessible
 {

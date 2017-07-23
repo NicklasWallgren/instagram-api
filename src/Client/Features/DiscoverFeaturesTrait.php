@@ -9,7 +9,7 @@ use Instagram\SDK\DTO\Messages\Discover\TopLiveMessage;
 use Instagram\SDK\Requests\Discover\ChannelsRequest;
 use Instagram\SDK\Requests\Discover\ExploreRequest;
 use Instagram\SDK\Requests\Discover\TopLiveRequest;
-use function Instagram\SDK\Support\task;
+use function Instagram\SDK\Support\Promises\task;
 
 trait DiscoverFeaturesTrait
 {

@@ -10,8 +10,8 @@ use Instagram\SDK\DTO\Traits\PropertiesTrait;
 use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
 use Instagram\SDK\Responses\Interfaces\IteratorInterface;
 use Instagram\SDK\Support\Promise;
-use function Instagram\SDK\Promises\task;
-use function Instagram\SDK\Promises\unwrap;
+use function Instagram\SDK\Support\Promises\task;
+use function Instagram\SDK\Support\Promises\unwrap;
 
 class FeedMessage extends Envelope implements IteratorInterface, PropertiesInterface
 {

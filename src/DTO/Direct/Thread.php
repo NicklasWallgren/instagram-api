@@ -7,8 +7,8 @@ use Instagram\SDK\DTO\Cursor\RequestIterator;
 use Instagram\SDK\DTO\General\ItemType;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
-use function Instagram\SDK\Support\task;
-use function Instagram\SDK\Support\unwrap;
+use function Instagram\SDK\Support\Promises\task;
+use function Instagram\SDK\Support\Promises\unwrap;
 
 class Thread extends RequestIterator implements OnItemDecodeInterface
 {

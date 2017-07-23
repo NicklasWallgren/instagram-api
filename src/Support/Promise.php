@@ -5,8 +5,8 @@ use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
 use function GuzzleHttp\Promise\exception_for;
 use function GuzzleHttp\Promise\queue;
-use function Instagram\SDK\Promises\promise_for;
-use function Instagram\SDK\Promises\rejection_for;
+use function Instagram\SDK\Support\Promises\promise_for;
+use function Instagram\SDK\Support\Promises\rejection_for;
 use Throwable;
 
 class Promise implements PromiseInterface

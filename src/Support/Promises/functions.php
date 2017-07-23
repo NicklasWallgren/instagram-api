@@ -1,7 +1,8 @@
 <?php
 
-namespace Instagram\SDK\Promises;
+namespace Instagram\SDK\Support\Promises;
 
+use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 use Instagram\SDK\Support\Promise;

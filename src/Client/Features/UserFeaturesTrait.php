@@ -13,8 +13,8 @@ use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
 use Instagram\SDK\Requests\Support\SignatureSupport;
 use Instagram\SDK\Requests\User\LoginRequest;
 use Instagram\SDK\Session\Builders\SessionBuilder;
+use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
-use function Instagram\SDK\Support\task;
 
 trait UserFeaturesTrait
 {

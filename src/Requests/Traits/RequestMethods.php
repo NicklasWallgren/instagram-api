@@ -11,7 +11,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use Throwable;
 use function GuzzleHttp\Promise\rejection_for;
-use function Instagram\SDK\Promises\task;
+use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\uuid;
 
 trait RequestMethods

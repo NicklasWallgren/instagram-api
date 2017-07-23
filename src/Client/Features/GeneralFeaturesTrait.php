@@ -6,7 +6,7 @@ use Exception;
 use GuzzleHttp\Promise\Promise;
 use Instagram\SDK\Requests\General\HeaderRequest;
 use Instagram\SDK\Requests\Support\SignatureSupport;
-use function Instagram\SDK\Support\task;
+use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\uuid;
 
 trait GeneralFeaturesTrait

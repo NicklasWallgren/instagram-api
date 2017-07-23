@@ -4,8 +4,8 @@ namespace Instagram\SDK\Http\Guzzle;
 
 use Guzzle\Http\Message\RequestInterface;
 use GuzzleHttp\Promise\PromiseInterface;
-use function Instagram\SDK\Support\promise_for;
-use function Instagram\SDK\Support\rejection_for;
+use function Instagram\SDK\Support\Promises\promise_for;
+use function Instagram\SDK\Support\Promises\rejection_for;
 
 class Client extends \GuzzleHttp\Client
 {

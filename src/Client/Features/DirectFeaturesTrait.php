@@ -10,7 +10,7 @@ use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
 use Instagram\SDK\Requests\Direct\InboxRequest;
 use Instagram\SDK\Requests\Direct\ThreadRequest;
 use function Instagram\SDK\Support\request;
-use function Instagram\SDK\Support\task;
+use function Instagram\SDK\Support\Promises\task;
 
 trait DirectFeaturesTrait
 {

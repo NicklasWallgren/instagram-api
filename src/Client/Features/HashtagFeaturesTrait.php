@@ -4,7 +4,7 @@ namespace Instagram\SDK\Client\Features;
 
 use Instagram\SDK\DTO\Messages\Hashtag\FeedMessage;
 use Instagram\SDK\DTO\Messages\Hashtag\SearchResultMessage;
-use function Instagram\SDK\Promises\task;
+use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
 
 trait HashtagFeaturesTrait
