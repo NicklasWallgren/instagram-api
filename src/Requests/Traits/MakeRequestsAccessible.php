@@ -12,6 +12,7 @@ trait MakeRequestsAccessible
     use MakeDiscoverRequestAccessible;
     use MakeUserRequestAccessible;
     use MakeFeedRequestsAccessible;
+    use MakeSearchRequestsAccessible;
 
     /**
      * Returns the result mode.

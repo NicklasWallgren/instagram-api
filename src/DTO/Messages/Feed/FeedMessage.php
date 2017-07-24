@@ -1,6 +1,6 @@
 <?php
 
-namespace Instagram\SDK\DTO\Messages\Hashtag;
+namespace Instagram\SDK\DTO\Messages\Feed;
 
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
@@ -29,12 +29,12 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
      * @var \Instagram\SDK\DTO\Hashtag\Item[]
      * @name ranked_items
      */
-    protected $rankedItems;
+    protected $rankedItems = [];
 
     /**
      * @var \Instagram\SDK\DTO\Hashtag\Item[]
      */
-    protected $items;
+    protected $items = [];
 
     /**
      * @var int
@@ -69,6 +69,11 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
      * @var string
      */
     protected $query;
+
+    /**
+     * @var int
+     */
+    protected $type;
 
     /**
      * @return \Instagram\SDK\DTO\Hashtag\Item[]
@@ -188,6 +193,22 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
     public function setQuery(string $query)
     {
         $this->query = $query;
+    }
+
+    /**
+     * @return int
+     */
+    public function getType(): int
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param int $type
+     */
+    public function setType(int $type)
+    {
+        $this->type = $type;
     }
 
     /**

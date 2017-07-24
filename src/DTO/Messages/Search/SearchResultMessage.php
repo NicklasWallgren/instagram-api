@@ -1,6 +1,6 @@
 <?php
 
-namespace Instagram\SDK\DTO\Messages\Hashtag;
+namespace Instagram\SDK\DTO\Messages\Search;
 
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
@@ -13,7 +13,7 @@ use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\Promises\unwrap;
 
-class SearchResultMessage extends Envelope implements IteratorInterface, PropertiesInterface
+abstract class SearchResultMessage extends Envelope implements PropertiesInterface
 {
 
     use MakeRequestsAccessible;
@@ -31,11 +31,6 @@ class SearchResultMessage extends Envelope implements IteratorInterface, Propert
     protected $query;
 
     /**
-     * @var \Instagram\SDK\DTO\Hashtag\ResultItem[]
-     */
-    protected $results;
-
-    /**
      * @var bool
      * @name has_more
      */
@@ -46,22 +41,6 @@ class SearchResultMessage extends Envelope implements IteratorInterface, Propert
      * @name rank_token
      */
     protected $rankToken;
-
-    /**
-     * @return \Instagram\SDK\DTO\Hashtag\ResultItem[]
-     */
-    public function getResults()
-    {
-        return $this->results;
-    }
-
-    /**
-     * @param \Instagram\SDK\DTO\Hashtag\ResultItem[] $results
-     */
-    public function setResults($results)
-    {
-        $this->results = $results;
-    }
 
     /**
      * @return mixed
@@ -117,47 +96,6 @@ class SearchResultMessage extends Envelope implements IteratorInterface, Propert
     public function setQuery(string $query)
     {
         $this->query = $query;
-    }
-
-    /**
-     * Retrieves the next items in the collection.
-     *
-     * @return bool|Promise<bool>
-     */
-    public function next()
-    {
-        $promise = task(function () {
-            // Check whether the are any more items to be fetched
-            if (!$this->moreAvailable) {
-                return false;
-            }
-
-            return $this->client->feed($this->query, $this->nextMaxId);
-        });
-
-        return $promise->then(function ($promise) {
-            $message = unwrap($promise);
-
-            // Check if the message was successful
-            if (!$message->isSuccess()) {
-                return false;
-            }
-
-            // Update the feed message
-            $this->inflate($message);
-
-            return true;
-        })($this->getMode());
-    }
-
-    /**
-     * @return bool
-     */
-    public function rewind()
-    {
-        // TODO
-
-        return false;
     }
 
     /**
