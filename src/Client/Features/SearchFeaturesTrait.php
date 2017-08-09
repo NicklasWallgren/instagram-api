@@ -19,14 +19,14 @@ trait SearchFeaturesTrait
     use DefaultFeaturesTrait;
 
     /**
-     * @var int The hashtag search type
+     * @var int The hashtag type
      */
-    public static $TYPE_SEARCH_HASHTAG = 1;
+    public static $TYPE_HASHTAG = 1;
 
     /**
-     * @var int The user search type
+     * @var int The user type
      */
-    public static $TYPE_SEARCH_USER = 2;
+    public static $TYPE_USER = 2;
 
     /**
      * @var string The hashtag search endpoint
@@ -46,7 +46,7 @@ trait SearchFeaturesTrait
      */
     public function searchByHashtag(string $tag)
     {
-        return $this->search(self::$TYPE_SEARCH_HASHTAG, $tag);
+        return $this->search(self::$TYPE_HASHTAG, $tag);
     }
 
     /**
@@ -57,7 +57,7 @@ trait SearchFeaturesTrait
      */
     public function searchByUser(string $user)
     {
-        return $this->search(self::$TYPE_SEARCH_USER, $user);
+        return $this->search(self::$TYPE_USER, $user);
     }
 
     /**
@@ -72,11 +72,11 @@ trait SearchFeaturesTrait
         $result = null;
 
         switch ($type) {
-            case self::$TYPE_SEARCH_HASHTAG:
+            case self::$TYPE_HASHTAG:
                 $result = $this->querySearch(self::$ENDPOINT_HASHTAG_SEARCH, $query, HashtagMessage::class);
 
                 break;
-            case self::$TYPE_SEARCH_USER:
+            case self::$TYPE_USER:
                 $result = $this->querySearch(self::$ENDPOINT_USER_SEARCH, $query, UserMessage::class);
 
                 break;
@@ -110,7 +110,6 @@ trait SearchFeaturesTrait
             $request = request($uri, $message)($this, $this->session,
                 $this->client);
 
-            // Prepare the request parameters
             $request
                 ->addRankedToken()
                 ->setParam('q', $query)

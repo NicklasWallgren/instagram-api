@@ -17,12 +17,12 @@ trait FeedFeaturesTrait
     /**
      * @var int The hashtag feed type
      */
-    public static $TYPE_FEED_HASHTAG = 1;
+    public static $TYPE_HASHTAG = 1;
 
     /**
      * @var int The user feed type
      */
-    public static $TYPE_FEED_USER = 2;
+    public static $TYPE_USER = 2;
 
     /**
      * @var string The hashtag feed endpoint
@@ -42,7 +42,7 @@ trait FeedFeaturesTrait
      */
     public function feedByHashtag(string $tag)
     {
-        return $this->feed(self::$TYPE_FEED_HASHTAG, $tag);
+        return $this->feed(self::$TYPE_HASHTAG, $tag);
     }
 
     /**
@@ -53,7 +53,7 @@ trait FeedFeaturesTrait
      */
     public function feedByUser(string $user)
     {
-        return $this->feed(self::$TYPE_FEED_USER, $user);
+        return $this->feed(self::$TYPE_USER, $user);
     }
 
     /**
@@ -69,11 +69,11 @@ trait FeedFeaturesTrait
         $result = null;
 
         switch ($type) {
-            case self::$TYPE_SEARCH_HASHTAG:
+            case self::$TYPE_HASHTAG:
                 $result = $this->queryFeed($type, self::$ENDPOINT_HASHTAG_FEED, $query, FeedMessage::class, $maxId);
 
                 break;
-            case self::$TYPE_SEARCH_USER:
+            case self::$TYPE_USER:
                 $result = $this->queryFeed($type, self::$ENDPOINT_USER_FEED, $query, FeedMessage::class, $maxId);
 
                 break;
