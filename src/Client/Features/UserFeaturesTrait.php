@@ -64,8 +64,11 @@ trait UserFeaturesTrait
             $this->checkPrerequisites();
 
             // Build the request instance
-            $request = request(self::$URI_LOGIN_NONCE, new SessionMessage())($this, $this->session,
-                $this->client);
+            $request = request(self::$URI_LOGIN_NONCE, new SessionMessage())(
+                $this,
+                $this->session,
+                $this->client
+            );
 
             // Prepare the payload
             $body = [
@@ -94,8 +97,11 @@ trait UserFeaturesTrait
             $this->checkPrerequisites();
 
             // Build the request instance
-            $request = request(self::$URI_LOGOUT, new LogoutMessage())($this, $this->session,
-                $this->client);
+            $request = request(self::$URI_LOGOUT, new LogoutMessage())(
+                $this,
+                $this->session,
+                $this->client
+            );
 
             // Prepare the request payload
             $request->setPost('device_id', $this->session->getDevice()->deviceId())

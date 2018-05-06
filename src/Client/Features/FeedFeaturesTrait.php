@@ -107,8 +107,11 @@ trait FeedFeaturesTrait
             $message->setType($type);
 
             // Build the request instance
-            $request = request(sprintf($uri, $tag), $message)($this, $this->session,
-                $this->client);
+            $request = request(sprintf($uri, $tag), $message)(
+                $this,
+                $this->session,
+                $this->client
+            );
 
             // Prepare the request parameters
             $request->addParam('max_id', $maxId);

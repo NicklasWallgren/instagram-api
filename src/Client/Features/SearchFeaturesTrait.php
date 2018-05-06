@@ -107,8 +107,11 @@ trait SearchFeaturesTrait
             $message->setQuery($query);
 
             // Build the request instance
-            $request = request($uri, $message)($this, $this->session,
-                $this->client);
+            $request = request($uri, $message)(
+                $this,
+                $this->session,
+                $this->client
+            );
 
             $request
                 ->addRankedToken()

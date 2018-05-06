@@ -67,8 +67,11 @@ trait DirectFeaturesTrait
             $this->checkPrerequisites();
 
             // Build the request instance
-            $request = request(self::$URI_BROADCAST_MESSAGE, new DirectSendItemMessage())($this, $this->session,
-                $this->client);
+            $request = request(self::$URI_BROADCAST_MESSAGE, new DirectSendItemMessage())(
+                $this,
+                $this->session,
+                $this->client
+            );
 
             // Prepare the request payload
             $request->setPost('text', $text)

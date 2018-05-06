@@ -8,9 +8,9 @@ interface UserInterface
     /**
      * Returns the id.
      *
-     * @return int
+     * @return string
      */
-    public function getId(): int;
+    public function getId(): string;
 
     /**
      * Returns the username.

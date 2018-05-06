@@ -8,7 +8,7 @@ class User implements UserInterface
 {
 
     /**
-     * @var int
+     * @var string
      * @name pk
      */
     protected $id;
@@ -55,9 +55,9 @@ class User implements UserInterface
     protected $hasAnonymousProfilePicture;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
