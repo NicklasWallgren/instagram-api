@@ -27,5 +27,10 @@
       "src/Support/functions.php",
       "src/Support/Promises/functions.php"
     ]
+  },
+  "scripts": {
+    "test": "/vendor/bin/phpunit",
+    "lint": "vendor/bin/phpcs --standard=ruleset.xml ./src",
+    "lint-fix": "vendor/bin/phpcbf --standard=ruleset.xml ./src"
   }
 }
