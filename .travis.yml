@@ -1,7 +1,7 @@
 language: php
 
 php:
-    - 7.1
+  - 7.1
 
 cache:
   directories:
@@ -12,11 +12,12 @@ install:
   - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.0/coveralls.phar
 
 before_script:
-    - mkdir -p build/logs
+  - mkdir -p build/logs
 
 script:
   - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
   - vendor/bin/phpcs --standard=ruleset.xml ./src
+  - vendor/bin/phan -m checkstyle -o build/logs/checkstyle.cs
 
 after_script:
   - php coveralls.phar -v --exclude-no-stmt

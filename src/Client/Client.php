@@ -48,7 +48,7 @@ class Client
     /**
      * @var bool The result mode
      */
-    protected $mode = Instagram::MODE_UNWRAP;
+    protected $mode = true;
 
     /**
      * Client constructor.
