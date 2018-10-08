@@ -7,6 +7,11 @@ use Instagram\SDK\Devices\Interfaces\DeviceInterface;
 use Instagram\SDK\DTO\Session\User;
 use Instagram\SDK\Http\Traits\CookieMethodsTrait;
 
+/**
+ * Class Session
+ *
+ * @package Instagram\SDK\Session
+ */
 class Session
 {
 
@@ -35,6 +40,7 @@ class Session
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function getId(): string
     {

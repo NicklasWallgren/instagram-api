@@ -3,12 +3,18 @@
 namespace Instagram\SDK\DTO\Hashtag;
 
 use Instagram\SDK\Client\Client;
-use Instagram\SDK\DTO\Messages\Hashtag\FeedMessage;
+use Instagram\SDK\DTO\Interactive;
+use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Instagram\SDK\Support\Promise;
 
-class ResultItem implements OnItemDecodeInterface
+/**
+ * Class ResultItem
+ *
+ * @package Instagram\SDK\DTO\Hashtag
+ */
+class ResultItem extends Interactive implements OnItemDecodeInterface
 {
 
     use OnPropagateDecodeEventTrait;
@@ -61,17 +67,21 @@ class ResultItem implements OnItemDecodeInterface
      * Returns the hashtag feed.
      *
      * @return FeedMessage|Promise<FeedMessage>
+     * @throws \Exception
      */
     public function getFeed()
     {
-        return $this->client->hashtagFeed($this->name);
+        return $this->feed(self::$TYPE_FEED_HASHTAG, $this->name);
     }
 
     /**
      * On item decode method.
      *
+     * @suppress PhanUnusedPublicMethodParameter
+     * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array $container
      * @param array $requirements
+     * @throws \Exception
      */
     public function onDecode(array $container, $requirements = []): void
     {

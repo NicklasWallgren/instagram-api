@@ -6,6 +6,11 @@ use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Traits\MappableTrait;
 
+/**
+ * Class TopLiveMessage
+ *
+ * @package Instagram\SDK\DTO\Messages\Discover
+ */
 class TopLiveMessage extends Envelope
 {
 
@@ -19,7 +24,7 @@ class TopLiveMessage extends Envelope
     protected $autoLoadMoreEnabled;
 
     /**
-     * @var
+     * @var mixed
      */
     protected $broadcasts;
 

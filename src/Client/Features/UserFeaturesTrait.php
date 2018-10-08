@@ -3,9 +3,7 @@
 namespace Instagram\SDK\Client\Features;
 
 use Exception;
-use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
-use Instagram\SDK\DTO\Messages\HeaderMessage;
 use Instagram\SDK\DTO\Messages\User\LogoutMessage;
 use Instagram\SDK\DTO\Messages\User\SessionMessage;
 use Instagram\SDK\Instagram;
@@ -13,9 +11,15 @@ use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
 use Instagram\SDK\Requests\Support\SignatureSupport;
 use Instagram\SDK\Requests\User\LoginRequest;
 use Instagram\SDK\Session\Builders\SessionBuilder;
+use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
 
+/**
+ * Trait UserFeaturesTrait
+ *
+ * @package Instagram\SDK\Client\Features
+ */
 trait UserFeaturesTrait
 {
 
@@ -44,9 +48,10 @@ trait UserFeaturesTrait
         // Initialize a new session
         $this->session = (new SessionBuilder())->build($this->builder, $this->client);
 
-        return $this->chain(function () use ($username, $password) {
+        return $this->chain(function () use ($username, $password): Promise {
             // Retrieve the header message
-            return $this->headers()->then(function (HeaderMessage $message) use ($username, $password) {
+            // @phan-suppress-next-line PhanUndeclaredMethod
+            return $this->headers()->then(function () use ($username, $password): Promise {
                 return (new LoginRequest($username, $password, $this->session, $this->client))->fire();
             });
         })($this->getMode());
@@ -60,7 +65,7 @@ trait UserFeaturesTrait
      */
     public function loginUsingNonce(string $nonce)
     {
-        return task(function () use ($nonce) {
+        return task(function () use ($nonce): Promise {
             $this->checkPrerequisites();
 
             // Build the request instance
@@ -93,7 +98,7 @@ trait UserFeaturesTrait
      */
     public function logout()
     {
-        return task(function () {
+        return task(function (): Promise {
             $this->checkPrerequisites();
 
             // Build the request instance

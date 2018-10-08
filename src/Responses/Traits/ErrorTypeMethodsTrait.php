@@ -10,20 +10,23 @@ use Instagram\SDK\Responses\Exceptions\ApiResponseException;
 use Instagram\SDK\Responses\Exceptions\InvalidUserException;
 use Instagram\SDK\Responses\Exceptions\RateLimitException;
 
+/**
+ * Trait ErrorTypeMethodsTrait
+ *
+ * @package Instagram\SDK\Responses\Traits
+ */
 trait ErrorTypeMethodsTrait
 {
 
     /**
      * Creates a exception based on the error type.
      *
-     * @param string   $type
-     * @param Envelope $envelope
+     * @param string|null $type
+     * @param Envelope    $envelope
      * @return Exception
      */
     public function toException(?string $type, Envelope $envelope): Exception
     {
-        $exception = null;
-
         switch ($type) {
             case ResponseErrorTypes::BAD_PASSWORD:
                 $exception = new BadPasswordException($envelope);

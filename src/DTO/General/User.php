@@ -4,6 +4,11 @@ namespace Instagram\SDK\DTO\General;
 
 use Instagram\SDK\DTO\Interfaces\UserInterface;
 
+/**
+ * Class User
+ *
+ * @package Instagram\SDK\DTO\General
+ */
 class User implements UserInterface
 {
 

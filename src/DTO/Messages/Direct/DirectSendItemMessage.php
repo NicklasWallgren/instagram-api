@@ -6,6 +6,11 @@ use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Traits\MappableTrait;
 
+/**
+ * Class DirectSendItemMessage
+ *
+ * @package Instagram\SDK\DTO\Messages\Direct
+ */
 class DirectSendItemMessage extends Envelope
 {
 

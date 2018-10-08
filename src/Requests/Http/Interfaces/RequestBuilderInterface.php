@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\Requests\Http\Interfaces;
 
+/**
+ * Interface RequestBuilderInterface
+ *
+ * @package Instagram\SDK\Requests\Http\Interfaces
+ */
 interface RequestBuilderInterface
 {
 

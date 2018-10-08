@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\Devices\Interfaces;
 
+/**
+ * Interface DeviceInterface
+ *
+ * @package Instagram\SDK\Devices\Interfaces
+ */
 interface DeviceInterface
 {
 

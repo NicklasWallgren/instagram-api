@@ -4,6 +4,11 @@ namespace Instagram\SDK\Client\Adapters;
 
 use Instagram\SDK\Client\Adapters\Interfaces\AdapterInterface;
 
+/**
+ * Class UnwrapAdapter
+ *
+ * @package Instagram\SDK\Client\Adapters
+ */
 class UnwrapAdapter implements AdapterInterface
 {
 

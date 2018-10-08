@@ -5,6 +5,11 @@ namespace Instagram\SDK\Devices;
 use Instagram\SDK\Devices\Interfaces\DeviceInterface;
 use Instagram\SDK\Devices\Traits\DeviceIdentifierMethodsTrait;
 
+/**
+ * Class Device
+ *
+ * @package Instagram\SDK\Devices
+ */
 class Device implements DeviceInterface
 {
 

@@ -2,11 +2,13 @@
 
 namespace Instagram\SDK\Requests\Traits;
 
-use GuzzleHttp\Promise\Promise;
 use Instagram\SDK\Client\Client;
-use Instagram\SDK\DTO\Messages\User\LogoutMessage;
-use Instagram\SDK\DTO\Messages\User\SessionMessage;
 
+/**
+ * Trait MakeGeneralRequestAccessible
+ *
+ * @package Instagram\SDK\Requests\Traits
+ */
 trait MakeGeneralRequestAccessible
 {
 

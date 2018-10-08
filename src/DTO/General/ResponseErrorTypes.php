@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\DTO\General;
 
+/**
+ * Class ResponseErrorTypes
+ *
+ * @package Instagram\SDK\DTO\General
+ */
 class ResponseErrorTypes
 {
     /**

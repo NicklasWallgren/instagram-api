@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\Session;
 
+/**
+ * Trait SessionMethodsTrait
+ *
+ * @package Instagram\SDK\Session
+ */
 trait SessionMethodsTrait
 {
 

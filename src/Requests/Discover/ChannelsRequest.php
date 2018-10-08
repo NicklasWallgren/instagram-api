@@ -12,6 +12,11 @@ use Instagram\SDK\Responses\Serializers\Discover\ChannelsSerializer;
 use Instagram\SDK\Session\Session;
 use Instagram\SDK\Support\Promise;
 
+/**
+ * Class ChannelsRequest
+ *
+ * @package Instagram\SDK\Requests\Discover
+ */
 class ChannelsRequest extends Request
 {
 

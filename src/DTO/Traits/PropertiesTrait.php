@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\DTO\Traits;
 
+/**
+ * Trait PropertiesTrait
+ *
+ * @package Instagram\SDK\DTO\Traits
+ */
 trait PropertiesTrait
 {
 

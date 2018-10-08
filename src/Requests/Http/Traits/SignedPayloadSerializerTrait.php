@@ -2,15 +2,22 @@
 
 namespace Instagram\SDK\Requests\Http\Traits;
 
+use Instagram\SDK\Requests\Exceptions\EncodingException;
 use Instagram\SDK\Requests\Http\Serializers\SerializerInterface;
 use Instagram\SDK\Requests\Support\SignatureSupport;
 
+/**
+ * Trait SignedPayloadSerializerTrait
+ *
+ * @package Instagram\SDK\Requests\Http\Traits
+ */
 trait SignedPayloadSerializerTrait
 {
 
     /**
      * The request body serializer.
      *
+     * @suppress PhanPluginNoCommentOnClass
      * @return SerializerInterface
      */
     protected function serializer(): SerializerInterface
@@ -21,12 +28,17 @@ trait SignedPayloadSerializerTrait
             /**
              * Encodes the body.
              *
-             * @param string $body
-             * @return null|StreamInterface|resource|string
+             * @param array $body
+             * @return string
+             * @throws EncodingException
              */
             public function encode($body)
             {
-                return SignatureSupport::signature(json_encode($body));
+                if (($data = json_encode($body)) === false) {
+                    throw new EncodingException(json_last_error_msg());
+                }
+
+                return SignatureSupport::signature($data);
             }
         };
     }

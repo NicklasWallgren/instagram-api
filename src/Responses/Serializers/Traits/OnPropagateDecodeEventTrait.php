@@ -6,6 +6,11 @@ use Exception;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeRequirementsInterface;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 
+/**
+ * Trait OnPropagateDecodeEventTrait
+ *
+ * @package Instagram\SDK\Responses\Serializers\Traits
+ */
 trait OnPropagateDecodeEventTrait
 {
 
@@ -14,8 +19,10 @@ trait OnPropagateDecodeEventTrait
     /**
      * On item decode method.
      *
+     * @suppress PhanUnusedPublicMethodParameter
      * @param array $container
      * @param array $requirements
+     * @throws Exception
      */
     public function onDecode(array $container, $requirements = []): void
     {
@@ -25,9 +32,11 @@ trait OnPropagateDecodeEventTrait
     /**
      * Propagate the on decode event.
      *
+     * @suppress PhanPartialTypeMismatchArgument
      * @param array $container
+     * @throws Exception
      */
-    protected function propagate($container): void
+    protected function propagate(array $container): void
     {
         // Retrieve the defined properties
         $properties = get_object_vars($this);
@@ -54,8 +63,9 @@ trait OnPropagateDecodeEventTrait
      *
      * @param iterable $iterable
      * @param array    $container
+     * @throws Exception
      */
-    protected function invokeDecodeEventListener(iterable $iterable, array $container)
+    protected function invokeDecodeEventListener(iterable $iterable, array $container): void
     {
         foreach ($iterable as $item) {
             if ($item instanceof OnItemDecodeInterface) {
@@ -63,6 +73,7 @@ trait OnPropagateDecodeEventTrait
                 $requirements = [];
 
                 if ($this->hasRequirements($item)) {
+                    // @phan-suppress-next-line PhanTypeMismatchArgument
                     $requirements = $this->getRequirements($subject = $item);
 
                     $this->setRequirementsIfPossible($requirements, $subject);
@@ -79,7 +90,7 @@ trait OnPropagateDecodeEventTrait
      * @param array  $requirements
      * @param object $subject
      */
-    protected function setRequirementsIfPossible($requirements, $subject)
+    protected function setRequirementsIfPossible(array $requirements, $subject): void
     {
         foreach ($requirements as $property => $requirement) {
             if (!$this->hasSetterMethod($subject, $property)) {
@@ -135,6 +146,7 @@ trait OnPropagateDecodeEventTrait
      *
      * @param OnDecodeRequirementsInterface $subject
      * @return array
+     * @throws Exception
      */
     protected function getRequirements(OnDecodeRequirementsInterface $subject): array
     {
@@ -150,6 +162,7 @@ trait OnPropagateDecodeEventTrait
     /**
      * Returns the requirement
      *
+     * @suppress PhanPluginUnknownClosureReturnType
      * @param OnDecodeRequirementsInterface $subject
      * @param string                        $requirement
      * @return mixed
@@ -170,6 +183,7 @@ trait OnPropagateDecodeEventTrait
 
         // Retrieve the required parameter value
         $parameters = array_map(function (string $parameter) use ($subject) {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             return $this->getRequirementParameterValue($subject, $parameter);
         }, $parameters);
 

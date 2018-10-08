@@ -8,6 +8,11 @@ use Instagram\SDK\DTO\Messages\Direct\DirectSendItemMessage;
 use Instagram\SDK\DTO\Messages\Direct\InboxMessage;
 use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
 
+/**
+ * Trait MakeDirectRequestAccessible
+ *
+ * @package Instagram\SDK\Requests\Traits
+ */
 trait MakeDirectRequestAccessible
 {
 
@@ -15,6 +20,7 @@ trait MakeDirectRequestAccessible
      * Returns the inbox.
      *
      * @return InboxMessage|Promise<InboxMessage>
+     * @throws \Exception
      */
     public function inbox()
     {

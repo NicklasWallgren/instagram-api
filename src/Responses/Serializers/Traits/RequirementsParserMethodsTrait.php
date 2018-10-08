@@ -2,12 +2,18 @@
 
 namespace Instagram\SDK\Responses\Serializers\Traits;
 
+/**
+ * Trait RequirementsParserMethodsTrait
+ *
+ * @package Instagram\SDK\Responses\Serializers\Traits
+ */
 trait RequirementsParserMethodsTrait
 {
 
     /**
      * Parses the requirements.
      *
+     * @suppress PhanUnusedVariable
      * @param string $requirement
      * @return array
      */

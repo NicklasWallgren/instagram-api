@@ -6,6 +6,11 @@ use Instagram\SDK\Requests\Http\Builders\AbstractPayloadRequestBuilder;
 use Instagram\SDK\Requests\Http\Traits\UrlEncodedSerializerTrait;
 use Instagram\SDK\Session\Session;
 
+/**
+ * Class HeaderRequestBuilder
+ *
+ * @package Instagram\SDK\Requests\General\Builders
+ */
 class HeaderRequestBuilder extends AbstractPayloadRequestBuilder
 {
 

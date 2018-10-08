@@ -6,6 +6,11 @@ use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
 use Instagram\SDK\Support\Promise;
 
+/**
+ * Trait MakeFeedRequestsAccessible
+ *
+ * @package Instagram\SDK\Requests\Traits
+ */
 trait MakeFeedRequestsAccessible
 {
 
@@ -24,6 +29,7 @@ trait MakeFeedRequestsAccessible
      *
      * @param string $tag
      * @return FeedMessage|Promise
+     * @throws \Exception
      */
     public function feedByHashtag(string $tag)
     {
@@ -35,6 +41,7 @@ trait MakeFeedRequestsAccessible
      *
      * @param string $user
      * @return FeedMessage|Promise
+     * @throws \Exception
      */
     public function feedByUser(string $user)
     {
@@ -48,6 +55,7 @@ trait MakeFeedRequestsAccessible
      * @param string      $query
      * @param string|null $maxId
      * @return FeedMessage|Promise<FeedMessage>
+     * @throws \Exception
      */
     public function feed($type, string $query, ?string $maxId = null)
     {

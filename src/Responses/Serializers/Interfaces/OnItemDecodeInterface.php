@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\Responses\Serializers\Interfaces;
 
+/**
+ * Interface OnItemDecodeInterface
+ *
+ * @package Instagram\SDK\Responses\Serializers\Interfaces
+ */
 interface OnItemDecodeInterface
 {
 

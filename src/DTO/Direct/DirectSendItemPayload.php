@@ -4,6 +4,11 @@ namespace Instagram\SDK\DTO\Direct;
 
 use Instagram\SDK\DTO\DTO;
 
+/**
+ * Class DirectSendItemPayload
+ *
+ * @package Instagram\SDK\DTO\Direct
+ */
 class DirectSendItemPayload extends DTO
 {
 

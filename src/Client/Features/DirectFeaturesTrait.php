@@ -3,15 +3,20 @@
 namespace Instagram\SDK\Client\Features;
 
 use Exception;
-use GuzzleHttp\Promise\Promise;
 use Instagram\SDK\DTO\Messages\Direct\DirectSendItemMessage;
 use Instagram\SDK\DTO\Messages\Direct\InboxMessage;
 use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
 use Instagram\SDK\Requests\Direct\InboxRequest;
 use Instagram\SDK\Requests\Direct\ThreadRequest;
+use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\request;
 use function Instagram\SDK\Support\Promises\task;
 
+/**
+ * Trait DirectFeaturesTrait
+ *
+ * @package Instagram\SDK\Client\Features
+ */
 trait DirectFeaturesTrait
 {
 
@@ -30,10 +35,10 @@ trait DirectFeaturesTrait
      */
     public function inbox()
     {
-        return task(function () {
+        return task(function (): Promise {
             $this->checkPrerequisites();
 
-            return (new InboxRequest($this, $this->session, $this->client))->fire();
+            return (new InboxRequest($this->getSubject(), $this->session, $this->client))->fire();
         })($this->getMode());
     }
 
@@ -42,15 +47,14 @@ trait DirectFeaturesTrait
      *
      * @param string      $id     The thread id
      * @param string|null $cursor The cursor id
-     * @throws Exception
      * @return ThreadMessage|Promise<ThreadMessage>
      */
     public function thread(string $id, ?string $cursor = null)
     {
-        return task(function () use ($id, $cursor) {
+        return task(function () use ($id, $cursor): Promise {
             $this->checkPrerequisites();
 
-            return (new ThreadRequest($this, $this->session, $this->client, $id, $cursor))->fire();
+            return (new ThreadRequest($this->getSubject(), $this->session, $this->client, $id, $cursor))->fire();
         })($this->getMode());
     }
 
@@ -63,7 +67,7 @@ trait DirectFeaturesTrait
      */
     public function sendThreadMessage(string $text, string $threadId)
     {
-        return task(function () use ($text, $threadId) {
+        return task(function () use ($text, $threadId): Promise {
             $this->checkPrerequisites();
 
             // Build the request instance

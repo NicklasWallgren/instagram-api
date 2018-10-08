@@ -6,6 +6,11 @@ use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Messages\Search\SearchResultMessage;
 use Instagram\SDK\Support\Promise;
 
+/**
+ * Trait MakeSearchRequestsAccessible
+ *
+ * @package Instagram\SDK\Requests\Traits
+ */
 trait MakeSearchRequestsAccessible
 {
 
@@ -24,6 +29,7 @@ trait MakeSearchRequestsAccessible
      *
      * @param string $tag
      * @return SearchResultMessage|Promise
+     * @throws \Exception
      */
     public function searchByHashtag(string $tag)
     {
@@ -35,6 +41,7 @@ trait MakeSearchRequestsAccessible
      *
      * @param string $user
      * @return SearchResultMessage|Promise
+     * @throws \Exception
      */
     public function searchByUser(string $user)
     {
@@ -44,9 +51,10 @@ trait MakeSearchRequestsAccessible
     /**
      * Search the feed by query and type.
      *
-     * @param string $query
      * @param int    $type
+     * @param string $query
      * @return SearchResultMessage|Promise<SearchResultMessage>
+     * @throws \Exception
      */
     public function search(int $type, string $query)
     {

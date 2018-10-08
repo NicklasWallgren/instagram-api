@@ -4,6 +4,11 @@ namespace Instagram\SDK\Requests\Traits;
 
 use Instagram\SDK\Client\Client;
 
+/**
+ * Trait MakeRequestsAccessible
+ *
+ * @package Instagram\SDK\Requests\Traits
+ */
 trait MakeRequestsAccessible
 {
 

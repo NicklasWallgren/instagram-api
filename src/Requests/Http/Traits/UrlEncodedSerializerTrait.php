@@ -5,6 +5,11 @@ namespace Instagram\SDK\Requests\Http\Traits;
 use Instagram\SDK\Requests\Http\Serializers\SerializerInterface;
 use Instagram\SDK\Requests\Http\Serializers\UrlEncodeSerializer;
 
+/**
+ * Trait UrlEncodedSerializerTrait
+ *
+ * @package Instagram\SDK\Requests\Http\Traits
+ */
 trait UrlEncodedSerializerTrait
 {
 

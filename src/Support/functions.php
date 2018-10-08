@@ -34,9 +34,9 @@ function uuid(bool $type = SignatureSupport::TYPE_DEFAULT): string
  */
 function request($uri, $serializer)
 {
-    return function (Client $client, Session $session, HttpClient $httpClient) use ($uri, $serializer) {
+    return function (Client $client, Session $session, HttpClient $httpClient) use ($uri, $serializer): GenericRequest {
         // Check whether uri corresponds to a request builder
-        if (!($uri instanceof AbstractRequestBuilder)) {
+        if (!($uri instanceof GenericRequestBuilder)) {
             $uri = new GenericRequestBuilder($uri, $session);
         }
 

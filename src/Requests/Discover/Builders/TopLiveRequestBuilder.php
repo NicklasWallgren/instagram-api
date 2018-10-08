@@ -4,6 +4,11 @@ namespace Instagram\SDK\Requests\Discover\Builders;
 
 use Instagram\SDK\Requests\Http\Builders\AbstractQueryRequestBuilder;
 
+/**
+ * Class TopLiveRequestBuilder
+ *
+ * @package Instagram\SDK\Requests\Discover\Builders
+ */
 class TopLiveRequestBuilder extends AbstractQueryRequestBuilder
 {
 

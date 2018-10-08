@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\Requests\Support;
 
+/**
+ * Class SignatureSupport
+ *
+ * @package Instagram\SDK\Requests\Support
+ */
 class SignatureSupport
 {
 

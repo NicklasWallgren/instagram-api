@@ -7,6 +7,11 @@ use Instagram\SDK\Client\Client;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 
+/**
+ * Class Inbox
+ *
+ * @package Instagram\SDK\DTO\Direct
+ */
 class Inbox implements OnItemDecodeInterface
 {
 
@@ -85,7 +90,7 @@ class Inbox implements OnItemDecodeInterface
      *
      * @param string $id
      * @param bool   $whole
-     * @return Thread|Promise<Thread>|null
+     * @return Thread|Promise<Thread|null>|null
      */
     public function getThreadById(string $id, bool $whole = false)
     {
@@ -103,7 +108,7 @@ class Inbox implements OnItemDecodeInterface
      *
      * @param string $title
      * @param bool   $whole
-     * @return Thread|Promise<Thread>|null
+     * @return Thread|Promise<Thread|null>|null
      */
     public function getThreadByTitle(string $title, bool $whole = false)
     {
@@ -119,6 +124,8 @@ class Inbox implements OnItemDecodeInterface
     /**
      * On item decode method.
      *
+     * @suppress PhanUnusedPublicMethodParameter
+     * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array $container
      * @param array $requirements
      */

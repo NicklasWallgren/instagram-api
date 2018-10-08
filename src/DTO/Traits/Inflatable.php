@@ -4,6 +4,11 @@ namespace Instagram\SDK\DTO\Traits;
 
 use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
 
+/**
+ * Trait Inflatable
+ *
+ * @package Instagram\SDK\DTO\Traits
+ */
 trait Inflatable
 {
 
@@ -67,7 +72,7 @@ trait Inflatable
     /**
      * Returns the properties.
      *
-     * @param $subject
+     * @param array|PropertiesInterface $subject
      * @return array
      */
     protected function properties($subject): array

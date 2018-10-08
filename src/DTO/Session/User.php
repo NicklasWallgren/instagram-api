@@ -4,6 +4,11 @@ namespace Instagram\SDK\DTO\Session;
 
 use Instagram\SDK\DTO\Interfaces\UserInterface;
 
+/**
+ * Class User
+ *
+ * @package Instagram\SDK\DTO\Session
+ */
 class User implements UserInterface
 {
 
@@ -109,7 +114,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function isVerified(): bool
     {

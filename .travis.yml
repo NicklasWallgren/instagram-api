@@ -1,7 +1,10 @@
 language: php
 
 php:
-    - 7.1
+  - 7.1
+
+dist: xenial
+sudo: required
 
 cache:
   directories:
@@ -12,11 +15,15 @@ install:
   - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.0/coveralls.phar
 
 before_script:
-    - mkdir -p build/logs
+  - sudo apt-get update -y
+  - sudo apt-get install -y libzip4
+  - mkdir -p build/logs
+  - .travis/setup.sh
 
 script:
   - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
   - vendor/bin/phpcs --standard=ruleset.xml ./src
+  - vendor/bin/phan -m checkstyle -o build/logs/checkstyle.cs
 
 after_script:
   - php coveralls.phar -v --exclude-no-stmt

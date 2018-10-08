@@ -4,6 +4,11 @@ namespace Instagram\SDK\Requests\Http\Traits;
 
 use Instagram\SDK\Requests\Traits\RequestBuilderMethodsTrait;
 
+/**
+ * Trait RequestBuilderQueryMethodsTrait
+ *
+ * @package Instagram\SDK\Requests\Http\Traits
+ */
 trait RequestBuilderQueryMethodsTrait
 {
 
@@ -23,7 +28,7 @@ trait RequestBuilderQueryMethodsTrait
      */
     protected function getQueryParameters(): array
     {
-        return $parameters = [];
+        return [];
     }
 
     /**
@@ -33,7 +38,7 @@ trait RequestBuilderQueryMethodsTrait
      */
     protected function getMethodUriParameters(): array
     {
-        return $parameters = [];
+        return [];
     }
 
     /**

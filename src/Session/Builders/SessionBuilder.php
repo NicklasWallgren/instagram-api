@@ -3,11 +3,15 @@
 namespace Instagram\SDK\Session\Builders;
 
 use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
-use Instagram\SDK\DTO\CsrfTokenMessage;
 use Instagram\SDK\Http\RequestClient;
 use Instagram\SDK\Requests\Support\SignatureSupport;
 use Instagram\SDK\Session\Session;
 
+/**
+ * Class SessionBuilder
+ *
+ * @package Instagram\SDK\Session\Builders
+ */
 class SessionBuilder
 {
 

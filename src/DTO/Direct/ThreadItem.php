@@ -3,11 +3,15 @@
 namespace Instagram\SDK\DTO\Direct;
 
 use Instagram\SDK\DTO\DTO;
-use Instagram\SDK\DTO\Interfaces\UserDetailsInterface;
 use Instagram\SDK\DTO\Interfaces\UserInterface;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeRequirementsInterface;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 
+/**
+ * Class ThreadItem
+ *
+ * @package Instagram\SDK\DTO\Direct
+ */
 class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequirementsInterface
 {
 
@@ -29,7 +33,7 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
     protected $userId;
 
     /**
-     * @var UserDetailsInterface
+     * @var UserInterface
      */
     protected $user;
 
@@ -82,7 +86,7 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
      *
      * @return UserInterface
      */
-    public function getUser(): ?UserInterface
+    public function getUser(): UserInterface
     {
         return $this->user;
     }
@@ -91,10 +95,13 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
      * Sets the user.
      *
      * @param UserInterface $user
+     * @return $this
      */
-    public function setUser(?UserInterface $user)
+    public function setUser(UserInterface $user): self
     {
         $this->user = $user;
+
+        return $this;
     }
 
     /**
@@ -161,71 +168,96 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
 
     /**
      * @param Thread $parent
+     * @return static
      */
     public function setParent(Thread $parent)
     {
         $this->parent = $parent;
+
+        return $this;
     }
 
     /**
      * @param mixed $itemId
+     * @return static
      */
     public function setItemId($itemId)
     {
         $this->itemId = $itemId;
+
+        return $this;
     }
 
     /**
      * @param mixed $userId
+     * @return static
      */
     public function setUserId($userId)
     {
         $this->userId = $userId;
+
+        return $this;
     }
 
     /**
      * @param float $timestamp
+     * @return static
      */
     public function setTimestamp(float $timestamp)
     {
         $this->timestamp = $timestamp;
+
+        return $this;
     }
 
     /**
      * @param mixed $itemType
+     * @return static
      */
     public function setItemType($itemType)
     {
         $this->itemType = $itemType;
+
+        return $this;
     }
 
     /**
      * @param ThreadMediaItem $media
+     * @return static
      */
     public function setMedia(ThreadMediaItem $media)
     {
         $this->media = $media;
+
+        return $this;
     }
 
     /**
      * @param mixed $text
+     * @return static
      */
     public function setText($text)
     {
         $this->text = $text;
+
+        return $this;
     }
 
     /**
      * @param mixed $clientContext
+     * @return static
      */
     public function setClientContext($clientContext)
     {
         $this->clientContext = $clientContext;
+
+        return $this;
     }
 
     /**
      * On item decode method.
      *
+     * @suppress PhanUnusedPublicMethodParameter
      * @param array $container
      * @param array $requirements
      */
@@ -239,9 +271,9 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
     /**
      * Returns the requirements.
      *
-     * @return array
+     * @return string[]
      */
-    public function requirements()
+    public function requirements(): array
     {
         return ['user:userId', 'parent'];
     }

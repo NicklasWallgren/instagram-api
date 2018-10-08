@@ -6,6 +6,11 @@ use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 
+/**
+ * Class GenericSerializer
+ *
+ * @package Instagram\SDK\Responses\Serializers
+ */
 class GenericSerializer extends AbstractSerializer implements OnDecodeInterface
 {
 
@@ -36,7 +41,7 @@ class GenericSerializer extends AbstractSerializer implements OnDecodeInterface
      *
      * @return Envelope
      */
-    protected function message(): ?Envelope
+    protected function message(): Envelope
     {
         return $this->envelope;
     }
@@ -45,6 +50,7 @@ class GenericSerializer extends AbstractSerializer implements OnDecodeInterface
      * On decode method.
      *
      * @param Envelope $message
+     * @throws \Exception
      */
     public function onDecode(Envelope &$message): void
     {

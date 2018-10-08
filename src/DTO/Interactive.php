@@ -1,17 +1,16 @@
 <?php
 
-namespace Instagram\SDK\DTO\Cursor;
+namespace Instagram\SDK\DTO;
 
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
-use Instagram\SDK\Responses\Interfaces\IteratorInterface;
 
 /**
- * Class RequestIterator
+ * Class Interactive
  *
- * @package Instagram\SDK\DTO\Cursor
+ * @package Instagram\SDK\DTO
  */
-abstract class RequestIterator implements IteratorInterface
+abstract class Interactive
 {
 
     use MakeRequestsAccessible;

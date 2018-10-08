@@ -5,12 +5,18 @@ namespace Instagram\SDK\Http;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Request;
 use Instagram\SDK\Http\Guzzle\Client;
 use Instagram\SDK\Http\Guzzle\Handlers\HandlerStack;
-use Instagram\SDK\Support\Promise;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Class RequestClient
+ *
+ * @package Instagram\SDK\Http
+ */
 class RequestClient
 {
 
@@ -51,25 +57,23 @@ class RequestClient
     /**
      * Sends the HTTP request.
      *
+     * @suppress PhanTypeInvalidThrowsIsInterface
      * @param Request $request
      * @return ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function request(Request $request): ResponseInterface
     {
-        $response = null;
-
         try {
             $response = $this->client->send($request, $this->options(['cookies' => $this->getCookies()]));
         } catch (ClientException $e) {
+            // Retrieve the response envelope content
             $response = $e->getResponse();
 
             // Check whether we retrieved a standardalized API request error
-            if ($response->getStatusCode() !== 400) {
+            if ($response->getStatusCode() !== 400 || $response === null) {
                 throw $e;
             }
-
-            // Retrieve the response envelope content
-            $response = $e->getResponse();
         }
 
         return $response;
@@ -78,28 +82,12 @@ class RequestClient
     /**
      * Sends the HTTP request.
      *
-     * @param Request $request
-     * @return Promise
+     * @param RequestInterface $request
+     * @return PromiseInterface
      */
-    public function requestAsync(Request $request): Promise
+    public function requestAsync(RequestInterface $request): PromiseInterface
     {
-        $response = null;
-
-        try {
-            $response = $this->client->sendAsync($request, $this->options(['cookies' => $this->getCookies()]));
-        } catch (ClientException $e) {
-            $response = $e->getResponse();
-
-            // Check whether we retrieved a standardalized API request error
-            if ($response->getStatusCode() !== 400) {
-                throw $e;
-            }
-
-            // Retrieve the response envelope content
-            $response = $e->getResponse();
-        }
-
-        return $response;
+        return $this->client->sendAsync($request, $this->options(['cookies' => $this->getCookies()]));
     }
 
     /**
@@ -120,10 +108,13 @@ class RequestClient
      * Sets the cookies.
      *
      * @param CookieJar $cookies
+     * @return static
      */
     public function setCookies(CookieJar $cookies)
     {
         $this->cookies = $cookies;
+
+        return $this;
     }
 
     /**
@@ -136,10 +127,13 @@ class RequestClient
 
     /**
      * @param Options $options
+     * @return static
      */
     public function setOptions(Options $options)
     {
         $this->options = $options;
+
+        return $this;
     }
 
     /**

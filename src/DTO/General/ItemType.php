@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\DTO\General;
 
+/**
+ * Class ItemType
+ *
+ * @package Instagram\SDK\DTO\General
+ */
 class ItemType
 {
 

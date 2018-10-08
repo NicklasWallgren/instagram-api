@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\DTO\Session;
 
+/**
+ * Class SessionId
+ *
+ * @package Instagram\SDK\DTO\Session
+ */
 class SessionId
 {
 

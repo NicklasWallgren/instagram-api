@@ -9,6 +9,11 @@ use Instagram\SDK\DTO\Messages\Discover\TopLiveMessage;
 use Instagram\SDK\Responses\Serializers\AbstractSerializer;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 
+/**
+ * Class TopLiveSerializer
+ *
+ * @package Instagram\SDK\Responses\Serializers\Discover
+ */
 class TopLiveSerializer extends AbstractSerializer implements OnDecodeInterface
 {
 
@@ -32,7 +37,7 @@ class TopLiveSerializer extends AbstractSerializer implements OnDecodeInterface
      *
      * @return Envelope
      */
-    protected function message(): ?Envelope
+    protected function message(): Envelope
     {
         return new TopLiveMessage();
     }
@@ -41,6 +46,7 @@ class TopLiveSerializer extends AbstractSerializer implements OnDecodeInterface
      * On decode method.
      *
      * @param Envelope $message
+     * @throws \Exception
      */
     public function onDecode(Envelope &$message): void
     {

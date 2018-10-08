@@ -12,6 +12,11 @@ use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 use Instagram\SDK\Responses\Traits\ErrorTypeMethodsTrait;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
+/**
+ * Class AbstractSerializer
+ *
+ * @package Instagram\SDK\Responses\Serializers
+ */
 abstract class AbstractSerializer implements SerializerInterface
 {
 
@@ -37,7 +42,6 @@ abstract class AbstractSerializer implements SerializerInterface
      *
      * @param HttpResponseInterface $response
      * @return ResponseMessageInterface
-     * @throws ApiResponseException
      * @throws Exception
      */
     public function decode(HttpResponseInterface $response): ResponseMessageInterface
@@ -65,7 +69,7 @@ abstract class AbstractSerializer implements SerializerInterface
      *
      * @return Envelope
      */
-    abstract protected function message(): ?Envelope;
+    abstract protected function message(): Envelope;
 
     /**
      * Check whether we retrieved a successful HTTP response, false otherwise.
@@ -110,6 +114,7 @@ abstract class AbstractSerializer implements SerializerInterface
      * The finalize method.
      *
      * @param Envelope $message
+     * @return void
      */
     protected function finalize(Envelope $message)
     {

@@ -6,6 +6,11 @@ use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
 use Instagram\SDK\DTO\Traits\Inflatable;
 use Instagram\SDK\DTO\Traits\PropertiesTrait;
 
+/**
+ * Class DTO
+ *
+ * @package Instagram\SDK\DTO
+ */
 abstract class DTO implements PropertiesInterface
 {
 

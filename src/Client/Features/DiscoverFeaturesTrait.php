@@ -2,15 +2,20 @@
 
 namespace Instagram\SDK\Client\Features;
 
-use GuzzleHttp\Promise\Promise;
 use Instagram\SDK\DTO\Messages\Discover\ChannelsMessage;
 use Instagram\SDK\DTO\Messages\Discover\ExploreMessage;
 use Instagram\SDK\DTO\Messages\Discover\TopLiveMessage;
 use Instagram\SDK\Requests\Discover\ChannelsRequest;
 use Instagram\SDK\Requests\Discover\ExploreRequest;
 use Instagram\SDK\Requests\Discover\TopLiveRequest;
+use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\task;
 
+/**
+ * Trait DiscoverFeaturesTrait
+ *
+ * @package Instagram\SDK\Client\Features
+ */
 trait DiscoverFeaturesTrait
 {
 
@@ -23,10 +28,10 @@ trait DiscoverFeaturesTrait
      */
     public function explore()
     {
-        return task(function () {
+        return task(function (): Promise {
             $this->checkPrerequisites();
 
-            return (new ExploreRequest($this, $this->session, $this->client))->fire();
+            return (new ExploreRequest($this->getSubject(), $this->session, $this->client))->fire();
         })($this->getMode());
     }
 
@@ -37,10 +42,10 @@ trait DiscoverFeaturesTrait
      */
     public function topLives()
     {
-        return task(function () {
+        return task(function (): Promise {
             $this->checkPrerequisites();
 
-            return (new TopLiveRequest($this, $this->session, $this->client))->fire();
+            return (new TopLiveRequest($this->getSubject(), $this->session, $this->client))->fire();
         })($this->getMode());
     }
 
@@ -51,10 +56,10 @@ trait DiscoverFeaturesTrait
      */
     public function channels()
     {
-        return task(function () {
+        return task(function (): Promise {
             $this->checkPrerequisites();
 
-            return (new ChannelsRequest($this, $this->session, $this->client))->fire();
+            return (new ChannelsRequest($this->getSubject(), $this->session, $this->client))->fire();
         })($this->getMode());
     }
 }

@@ -2,8 +2,13 @@
 
 namespace Instagram\SDK\Requests\Http\Serializers;
 
-use Psr\Http\Message\StreamInterface;
+use Instagram\SDK\Requests\Exceptions\EncodingException;
 
+/**
+ * Interface SerializerInterface
+ *
+ * @package Instagram\SDK\Requests\Http\Serializers
+ */
 interface SerializerInterface
 {
 
@@ -11,7 +16,8 @@ interface SerializerInterface
      * Encodes the body.
      *
      * @param mixed $body
-     * @return null|StreamInterface|resource|string
+     * @return string
+     * @throws EncodingException
      */
     public function encode($body);
 }

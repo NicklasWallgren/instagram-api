@@ -6,6 +6,11 @@ use Instagram\SDK\Http\RequestClient;
 use Instagram\SDK\Requests\Http\HeadersBuilder;
 use Instagram\SDK\Session\Session;
 
+/**
+ * Trait RequestBuilderMethodsTrait
+ *
+ * @package Instagram\SDK\Requests\Traits
+ */
 trait RequestBuilderMethodsTrait
 {
 
@@ -13,6 +18,11 @@ trait RequestBuilderMethodsTrait
      * @var string The endpoint url
      */
     protected static $ENDPOINT_URL = 'https://i.instagram.com/api/v1';
+
+    /**
+     * @var Session
+     */
+    protected $session;
 
     /**
      * Returns the method type.

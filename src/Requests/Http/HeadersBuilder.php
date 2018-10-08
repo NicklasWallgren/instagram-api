@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\Requests\Http;
 
+/**
+ * Class HeadersBuilder
+ *
+ * @package Instagram\SDK\Requests\Http
+ */
 class HeadersBuilder
 {
 
