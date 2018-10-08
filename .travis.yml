@@ -19,6 +19,7 @@ before_script:
   - sudo apt-get install -y libzip4
   - mkdir -p build/logs
   - .travis/setup.sh
+  - composer validate
 
 script:
   - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
