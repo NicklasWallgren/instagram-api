@@ -5,6 +5,11 @@ namespace Instagram\SDK\Requests\Http\Builders;
 use GuzzleHttp\Psr7\Request;
 use Instagram\SDK\Session\Session;
 
+/**
+ * Class AbstractRequestBuilder
+ *
+ * @package Instagram\SDK\Requests\Http\Builders
+ */
 abstract class AbstractRequestBuilder
 {
 

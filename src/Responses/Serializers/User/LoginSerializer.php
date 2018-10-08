@@ -10,6 +10,11 @@ use Instagram\SDK\Responses\Serializers\AbstractSerializer;
 use Instagram\SDK\Session\Session;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
+/**
+ * Class LoginSerializer
+ *
+ * @package Instagram\SDK\Responses\Serializers\User
+ */
 class LoginSerializer extends AbstractSerializer
 {
 
@@ -38,14 +43,20 @@ class LoginSerializer extends AbstractSerializer
     /**
      * Decodes the response message.
      *
+     * @suppress PhanTypeMismatchArgument
+     * @suppress PhanUndeclaredMethod
      * @param HttpResponseInterface $response
      * @return ResponseMessageInterface
+     * @throws \Exception
      */
     public function decode(HttpResponseInterface $response): ResponseMessageInterface
     {
+        /**
+         * @var SessionMessage $message
+         */
         $message = parent::decode($response);
 
-        $this->update($response, $message);
+        $this->update($message);
 
         $message->setSession($this->session);
 
@@ -55,10 +66,10 @@ class LoginSerializer extends AbstractSerializer
     /**
      * Update the session with id and token.
      *
-     * @param HttpResponseInterface $response
-     * @param SessionMessage        $message
+     * @param SessionMessage $message
+     * @return void
      */
-    protected function update(HttpResponseInterface $response, SessionMessage $message)
+    protected function update(SessionMessage $message)
     {
         $this->session->setUser($message->getLoggedInUser());
     }
@@ -68,7 +79,7 @@ class LoginSerializer extends AbstractSerializer
      *
      * @return Envelope
      */
-    protected function message(): ?Envelope
+    protected function message(): Envelope
     {
         return new SessionMessage();
     }

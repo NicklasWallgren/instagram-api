@@ -7,6 +7,11 @@ use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
 use Instagram\SDK\Devices\Interfaces\DeviceInterface;
 use Instagram\SDK\Requests\Support\SignatureSupport;
 
+/**
+ * Class DeviceBuilder
+ *
+ * @package Instagram\SDK\Devices\Builders
+ */
 class DeviceBuilder implements DeviceBuilderInterface
 {
 
@@ -38,6 +43,7 @@ class DeviceBuilder implements DeviceBuilderInterface
         $this->addPhoneId($metadata, $uniqueDeviceId);
         $this->addDeviceId($metadata, $uniqueDeviceId);
 
+        // @phan-suppress-next-line PhanPossiblyNullTypeArgument
         return (new Device(...$metadata));
     }
 

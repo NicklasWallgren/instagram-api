@@ -12,6 +12,11 @@ use Instagram\SDK\Responses\Serializers\Discover\ExploreSerializer;
 use Instagram\SDK\Session\Session;
 use Instagram\SDK\Support\Promise;
 
+/**
+ * Class ExploreRequest
+ *
+ * @package Instagram\SDK\Requests\Discover
+ */
 class ExploreRequest extends Request
 {
 

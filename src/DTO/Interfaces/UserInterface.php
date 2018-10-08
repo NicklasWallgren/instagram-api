@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\DTO\Interfaces;
 
+/**
+ * Interface UserInterface
+ *
+ * @package Instagram\SDK\DTO\Interfaces
+ */
 interface UserInterface
 {
 

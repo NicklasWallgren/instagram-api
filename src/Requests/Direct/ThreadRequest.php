@@ -7,11 +7,15 @@ use Instagram\SDK\Http\RequestClient as HttpClient;
 use Instagram\SDK\Requests\Direct\Builders\ThreadRequestBuilder;
 use Instagram\SDK\Requests\Request;
 use Instagram\SDK\Requests\Traits\RequestMethods;
-use Instagram\SDK\Responses\LoginResponseMessage;
 use Instagram\SDK\Responses\Serializers\Direct\ThreadSerializer;
 use Instagram\SDK\Session\Session;
 use Instagram\SDK\Support\Promise;
 
+/**
+ * Class ThreadRequest
+ *
+ * @package Instagram\SDK\Requests\Direct
+ */
 class ThreadRequest extends Request
 {
 

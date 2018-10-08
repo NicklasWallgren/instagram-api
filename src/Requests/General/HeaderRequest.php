@@ -10,6 +10,11 @@ use Instagram\SDK\Responses\Serializers\General\HeaderSerializer;
 use Instagram\SDK\Session\Session;
 use Instagram\SDK\Support\Promise;
 
+/**
+ * Class HeaderRequest
+ *
+ * @package Instagram\SDK\Requests\General
+ */
 class HeaderRequest extends Request
 {
 

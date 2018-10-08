@@ -3,8 +3,12 @@
 namespace Instagram\SDK\Responses\Exceptions;
 
 use Exception;
-use Instagram\SDK\DTO\Envelope;
 
+/**
+ * Class InvalidRequestException
+ *
+ * @package Instagram\SDK\Responses\Exceptions
+ */
 class InvalidRequestException extends Exception
 {
 

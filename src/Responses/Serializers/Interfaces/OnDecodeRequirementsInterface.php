@@ -2,13 +2,18 @@
 
 namespace Instagram\SDK\Responses\Serializers\Interfaces;
 
+/**
+ * Interface OnDecodeRequirementsInterface
+ *
+ * @package Instagram\SDK\Responses\Serializers\Interfaces
+ */
 interface OnDecodeRequirementsInterface
 {
 
     /**
      * Returns the requirements.
      *
-     * @return array
+     * @return string[]
      */
-    public function requirements();
+    public function requirements(): array;
 }

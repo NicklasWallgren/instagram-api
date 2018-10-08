@@ -3,12 +3,18 @@
 namespace Instagram\SDK\Client\Features;
 
 use Exception;
-use GuzzleHttp\Promise\Promise;
 use Instagram\SDK\Requests\General\HeaderRequest;
 use Instagram\SDK\Requests\Support\SignatureSupport;
+use Instagram\SDK\Support\Promise;
+use function Instagram\SDK\Support\Promises\rejection_for;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\uuid;
 
+/**
+ * Trait GeneralFeaturesTrait
+ *
+ * @package Instagram\SDK\Client\Features
+ */
 trait GeneralFeaturesTrait
 {
 
@@ -22,10 +28,10 @@ trait GeneralFeaturesTrait
      */
     protected function headers()
     {
-        return task(function () {
+        return task(function (): Promise {
             // Check whether the user is authenticated or not
             if (!$this->isSessionAvailable()) {
-                return new Exception('The session is not available. Please authenticate first');
+                return rejection_for('The session is not available. Please authenticate first');
             }
 
             return (new HeaderRequest(uuid(SignatureSupport::TYPE_COMBINED), $this->session, $this->client))->fire();

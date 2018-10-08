@@ -2,6 +2,11 @@
 
 namespace Requests\Http\Factory;
 
+/**
+ * Class ParameterFactory
+ *
+ * @package Requests\Http\Factory
+ */
 class ParameterFactory
 {
 

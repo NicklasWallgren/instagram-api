@@ -4,6 +4,11 @@ namespace Instagram\SDK\DTO\Direct;
 
 use Instagram\SDK\DTO\General\MediaType;
 
+/**
+ * Class ThreadMediaItem
+ *
+ * @package Instagram\SDK\DTO\Direct
+ */
 class ThreadMediaItem
 {
 
@@ -20,7 +25,7 @@ class ThreadMediaItem
     protected $images;
 
     /**
-     * @var
+     * @var mixed
      * @name video_versions
      */
     protected $videoVersions;
@@ -38,9 +43,9 @@ class ThreadMediaItem
     protected $originalHeight;
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getMediaType(): string
+    public function getMediaType(): int
     {
         return $this->mediaType;
     }

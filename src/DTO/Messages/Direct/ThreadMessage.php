@@ -7,6 +7,11 @@ use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Traits\MappableTrait;
 
+/**
+ * Class ThreadMessage
+ *
+ * @package Instagram\SDK\DTO\Messages\Direct
+ */
 class ThreadMessage extends Envelope implements OnItemDecodeInterface
 {
 

@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\DTO\General\Media;
 
+/**
+ * Class VideoVersion
+ *
+ * @package Instagram\SDK\DTO\General\Media
+ */
 class VideoVersion
 {
 

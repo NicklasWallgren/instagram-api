@@ -7,6 +7,11 @@ use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Messages\User\LogoutMessage;
 use Instagram\SDK\DTO\Messages\User\SessionMessage;
 
+/**
+ * Trait MakeUserRequestAccessible
+ *
+ * @package Instagram\SDK\Requests\Traits
+ */
 trait MakeUserRequestAccessible
 {
 
@@ -16,6 +21,7 @@ trait MakeUserRequestAccessible
      * @param string $username
      * @param string $password
      * @return SessionMessage|Promise<SessionMessage>
+     * @throws \Exception
      */
     public function login(string $username, string $password)
     {

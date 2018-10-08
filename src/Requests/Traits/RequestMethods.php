@@ -4,6 +4,8 @@ namespace Instagram\SDK\Requests\Traits;
 
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\PromiseInterface;
+use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
+use Instagram\SDK\Http\RequestClient;
 use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Responses\Interfaces\SerializerInterface;
 use Instagram\SDK\Session\Session;
@@ -14,8 +16,18 @@ use function GuzzleHttp\Promise\rejection_for;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\uuid;
 
+/**
+ * Trait RequestMethods
+ *
+ * @package Instagram\SDK\Requests\Traits
+ */
 trait RequestMethods
 {
+
+    /**
+     * @var RequestClient
+     */
+    protected $httpClient;
 
     /**
      * @var Session
@@ -26,9 +38,9 @@ trait RequestMethods
      * Adds a unique context to the payload.
      *
      * @param GenericRequest|null $request
-     * @return GenericRequest
+     * @return static
      */
-    public function addUniqueContext(?GenericRequest $request = null): GenericRequest
+    public function addUniqueContext(?GenericRequest $request = null): self
     {
         $request = $request ?: $this;
 
@@ -41,9 +53,10 @@ trait RequestMethods
      * Adds the CSRF token and User id to the payload.
      *
      * @param GenericRequest|null $request
-     * @return GenericRequest
+     * @return static
+     * @throws \Exception
      */
-    public function addCSRFTokenAndUserId(?GenericRequest $request = null): GenericRequest
+    public function addCSRFTokenAndUserId(?GenericRequest $request = null): self
     {
         $request = $request ?: $this;
 
@@ -56,13 +69,16 @@ trait RequestMethods
     /**
      * Adds the ranked token as a query parameter.
      *
-     * @return GenericRequest
+     * @param GenericRequest|null $request
+     * @return static
      */
-    public function addRankedToken(): GenericRequest
+    public function addRankedToken(?GenericRequest $request = null): self
     {
-        $this->setParam('ranked_token', $this->session->getRankedToken());
+        $request = $request ?: $this;
 
-        return $this;
+        $request->setParam('ranked_token', $this->session->getRankedToken());
+
+        return $request;
     }
 
     /**
@@ -78,16 +94,14 @@ trait RequestMethods
         $promise = $this->httpClient->requestAsync($request);
 
         // Return a promise chain
-        return $promise->then(function ($response) use ($serializer) {
+        return $promise->then(function (HttpResponseInterface $response) use ($serializer): PromiseInterface {
             return $this->decode($response, $serializer);
-        })->otherwise(function ($exception) use ($serializer) {
-
-            // Use internal rejection_for
-
+        })->otherwise(function (Throwable $exception) use ($serializer): PromiseInterface {
             if (!$this->isRequestException($exception)) {
                 return rejection_for($exception);
             }
 
+            // @phan-suppress-next-line PhanUndeclaredMethod
             return $this->decode($exception->getResponse(), $serializer);
         });
     }
@@ -102,7 +116,7 @@ trait RequestMethods
     protected function decode(HttpResponseInterface $response, SerializerInterface $serializer)
     {
         // Compose a task, reject promise on failure
-        return task(function () use ($response, $serializer) {
+        return task(function () use ($response, $serializer): ResponseMessageInterface {
             // Queue the serialization
             return $serializer->decode($response);
         });

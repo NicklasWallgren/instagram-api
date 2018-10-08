@@ -5,10 +5,17 @@ namespace Instagram\SDK\Client\Features;
 use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
+use Instagram\SDK\Instagram;
 use Instagram\SDK\Support\Promise;
+use function Instagram\SDK\Support\Promises\rejection_for;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
 
+/**
+ * Trait FeedFeaturesTrait
+ *
+ * @package Instagram\SDK\Client\Features
+ */
 trait FeedFeaturesTrait
 {
 
@@ -39,6 +46,7 @@ trait FeedFeaturesTrait
      *
      * @param string $tag
      * @return FeedMessage|Promise<FeedMessage>
+     * @throws Exception
      */
     public function feedByHashtag(string $tag)
     {
@@ -50,6 +58,7 @@ trait FeedFeaturesTrait
      *
      * @param string $user
      * @return FeedMessage|Promise<FeedMessage>
+     * @throws Exception
      */
     public function feedByUser(string $user)
     {
@@ -63,11 +72,10 @@ trait FeedFeaturesTrait
      * @param string      $query
      * @param string|null $maxId
      * @return FeedMessage|Promise<FeedMessage>
+     * @throws Exception
      */
     public function feed(int $type, string $query, ?string $maxId = null)
     {
-        $result = null;
-
         switch ($type) {
             case self::$TYPE_HASHTAG:
                 $result = $this->queryFeed($type, self::$ENDPOINT_HASHTAG_FEED, $query, FeedMessage::class, $maxId);
@@ -101,7 +109,7 @@ trait FeedFeaturesTrait
         // Prepare the tag query
         $tag = rawurlencode($query);
 
-        return task(function () use ($type, $uri, $tag, $maxId, $result) {
+        return task(function () use ($type, $uri, $tag, $maxId, $result): Promise {
             $message = new $result();
             $message->setQuery($tag);
             $message->setType($type);
@@ -127,7 +135,7 @@ trait FeedFeaturesTrait
      * @return PromiseInterface
      * @throws Exception
      */
-    protected function getInvalidFeedTypeError()
+    protected function getInvalidFeedTypeError(): PromiseInterface
     {
         if ($this->getMode() === Instagram::MODE_PROMISE) {
             return rejection_for('Invalid type provided');

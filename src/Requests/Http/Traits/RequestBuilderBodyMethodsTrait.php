@@ -2,9 +2,15 @@
 
 namespace Instagram\SDK\Requests\Http\Traits;
 
+use Instagram\SDK\Requests\Exceptions\EncodingException;
 use Instagram\SDK\Requests\Http\Serializers\SerializerInterface;
 use Instagram\SDK\Requests\Traits\RequestBuilderMethodsTrait;
 
+/**
+ * Trait RequestBuilderBodyMethodsTrait
+ *
+ * @package Instagram\SDK\Requests\Http\Traits
+ */
 trait RequestBuilderBodyMethodsTrait
 {
 
@@ -14,6 +20,7 @@ trait RequestBuilderBodyMethodsTrait
      * Returns the payload.
      *
      * @return string|null
+     * @throws EncodingException
      */
     protected function getBody(): ?string
     {

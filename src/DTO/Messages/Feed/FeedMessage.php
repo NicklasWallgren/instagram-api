@@ -13,6 +13,11 @@ use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\Promises\unwrap;
 
+/**
+ * Class FeedMessage
+ *
+ * @package Instagram\SDK\DTO\Messages\Feed
+ */
 class FeedMessage extends Envelope implements IteratorInterface, PropertiesInterface
 {
 
@@ -125,58 +130,79 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
 
     /**
      * @param mixed $rankedItems
+     * @return static
      */
     public function setRankedItems($rankedItems)
     {
         $this->rankedItems = $rankedItems;
+
+        return $this;
     }
 
     /**
      * @param \Instagram\SDK\DTO\Hashtag\Item[] $items
+     * @return static
      */
     public function setItems(array $items)
     {
         $this->items = $items;
+
+        return $this;
     }
 
     /**
      * @param mixed $numResults
+     * @return static
      */
     public function setNumResults($numResults)
     {
         $this->numResults = $numResults;
+
+        return $this;
     }
 
     /**
-     * @param \string[] $previousMaxIds
+     * @param string[] $previousMaxIds
+     * @return static
      */
     public function setPreviousMaxIds(array $previousMaxIds)
     {
         $this->previousMaxIds = $previousMaxIds;
+
+        return $this;
     }
 
     /**
      * @param mixed $nextMaxId
+     * @return static
      */
     public function setNextMaxId($nextMaxId)
     {
         $this->nextMaxId = $nextMaxId;
+
+        return $this;
     }
 
     /**
      * @param mixed $moreAvailable
+     * @return static
      */
     public function setMoreAvailable($moreAvailable)
     {
         $this->moreAvailable = $moreAvailable;
+
+        return $this;
     }
 
     /**
      * @param mixed $autoLoadMoreEnabled
+     * @return static
      */
     public function setAutoLoadMoreEnabled($autoLoadMoreEnabled)
     {
         $this->autoLoadMoreEnabled = $autoLoadMoreEnabled;
+
+        return $this;
     }
 
     /**
@@ -189,10 +215,13 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
 
     /**
      * @param string $query
+     * @return static
      */
     public function setQuery(string $query)
     {
         $this->query = $query;
+
+        return $this;
     }
 
     /**
@@ -205,15 +234,19 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
 
     /**
      * @param int $type
+     * @return static
      */
     public function setType(int $type)
     {
         $this->type = $type;
+
+        return $this;
     }
 
     /**
      * Retrieves the next items in the collection.
      *
+     * @suppress PhanPluginUnknownClosureReturnType
      * @return bool|Promise<bool>
      */
     public function next()
@@ -224,9 +257,11 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
                 return false;
             }
 
-            return $this->client->feed($this->query, $this->nextMaxId);
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+            return $this->client->feed($this->type, $this->query, $this->nextMaxId);
         });
 
+        // @phan-suppress-next-line PhanPluginUnknownClosureParamType
         return $promise->then(function ($promise) {
             $message = unwrap($promise);
 
@@ -265,6 +300,8 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
     /**
      * On item decode method.
      *
+     * @suppress PhanUnusedPublicMethodParameter
+     * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array $container
      * @param array $requirements
      */

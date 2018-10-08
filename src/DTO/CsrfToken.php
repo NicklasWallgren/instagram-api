@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\DTO;
 
+/**
+ * Class CsrfToken
+ *
+ * @package Instagram\SDK\DTO
+ */
 class CsrfToken
 {
 

@@ -8,11 +8,12 @@ use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
 use Instagram\SDK\DTO\Traits\Inflatable;
 use Instagram\SDK\DTO\Traits\PropertiesTrait;
 use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
-use Instagram\SDK\Responses\Interfaces\IteratorInterface;
-use Instagram\SDK\Support\Promise;
-use function Instagram\SDK\Support\Promises\task;
-use function Instagram\SDK\Support\Promises\unwrap;
 
+/**
+ * Class SearchResultMessage
+ *
+ * @package Instagram\SDK\DTO\Messages\Search
+ */
 abstract class SearchResultMessage extends Envelope implements PropertiesInterface
 {
 
@@ -52,10 +53,13 @@ abstract class SearchResultMessage extends Envelope implements PropertiesInterfa
 
     /**
      * @param mixed $hasMore
+     * @return static
      */
     public function setHasMore($hasMore)
     {
         $this->hasMore = $hasMore;
+
+        return $this;
     }
 
     /**
@@ -68,18 +72,24 @@ abstract class SearchResultMessage extends Envelope implements PropertiesInterfa
 
     /**
      * @param mixed $rankToken
+     * @return static
      */
     public function setRankToken($rankToken)
     {
         $this->rankToken = $rankToken;
+
+        return $this;
     }
 
     /**
      * @param Client $client
+     * @return static
      */
     public function setClient(Client $client)
     {
         $this->client = $client;
+
+        return $this;
     }
 
     /**
@@ -92,10 +102,13 @@ abstract class SearchResultMessage extends Envelope implements PropertiesInterfa
 
     /**
      * @param string $query
+     * @return static
      */
     public function setQuery(string $query)
     {
         $this->query = $query;
+
+        return $this;
     }
 
     /**
@@ -111,6 +124,8 @@ abstract class SearchResultMessage extends Envelope implements PropertiesInterfa
     /**
      * On item decode method.
      *
+     * @suppress PhanUnusedPublicMethodParameter
+     * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array $container
      * @param array $requirements
      */

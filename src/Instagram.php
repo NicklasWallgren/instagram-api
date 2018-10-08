@@ -3,10 +3,15 @@
 namespace Instagram\SDK;
 
 use Instagram\SDK\Client\Client;
-use Instagram\SDK\Devices\DeviceBuilderInterface;
+use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
 use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
 use Instagram\SDK\Session\Session;
 
+/**
+ * Class Instagram
+ *
+ * @package Instagram\SDK
+ */
 class Instagram
 {
 
@@ -41,17 +46,20 @@ class Instagram
      * Sets the current session.
      *
      * @param Session $session
+     * @return static
      */
     public function setSession(Session $session)
     {
         $this->client->setSession($session);
+
+        return $this;
     }
 
     /**
      * Sets the result mode.
      *
      * @param bool $mode
-     * @return self
+     * @return static
      */
     public function setMode(bool $mode): self
     {

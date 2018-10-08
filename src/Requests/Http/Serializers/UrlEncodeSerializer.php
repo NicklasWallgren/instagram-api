@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\Requests\Http\Serializers;
 
+/**
+ * Class UrlEncodeSerializer
+ *
+ * @package Instagram\SDK\Requests\Http\Serializers
+ */
 class UrlEncodeSerializer implements SerializerInterface
 {
 

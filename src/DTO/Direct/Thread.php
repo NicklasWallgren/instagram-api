@@ -10,6 +10,11 @@ use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\Promises\unwrap;
 
+/**
+ * Class Thread
+ *
+ * @package Instagram\SDK\DTO\Direct
+ */
 class Thread extends RequestIterator implements OnItemDecodeInterface
 {
 
@@ -414,6 +419,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Retrieves the whole thread with thread items.
      *
+     * @suppress PhanPluginUnknownClosureReturnType
      * @return bool|Promise<bool>
      */
     public function whole()
@@ -426,6 +432,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Step forward and get the next items in thread.
      *
+     * @suppress PhanPluginUnknownClosureReturnType
      * @return bool|Promise<bool>
      */
     public function next()
@@ -443,6 +450,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Step backward and get the previous items in thread.
      *
+     * @suppress PhanPluginUnknownClosureReturnType
      * @return bool|Promise<bool>
      */
     public function rewind()
@@ -460,6 +468,8 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Sends a message to the thread.
      *
+     * @suppress PhanPluginUnknownClosureReturnType
+     * @suppress PhanPluginUnknownClosureParamType
      * @param string $text
      * @return bool|Promise<bool>
      */
@@ -469,6 +479,9 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
             return $this->sendThreadMessage($text, $this->threadId);
         });
 
+        /**
+         * @suppress PhanPluginMixedKeyNoKey
+         */
         return $promise->then(function ($promise) use ($text) {
             $message = unwrap($promise);
 
@@ -494,6 +507,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Refresh the thread with the latest updates.
      *
+     * @suppress PhanPluginUnknownClosureReturnType
      * @return bool|Promise<bool>
      */
     public function refresh()
@@ -506,7 +520,9 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Retrieve thread items by cursor.
      *
-     * @param string $cursor
+     * @suppress PhanPluginUnknownClosureReturnType
+     * @suppress PhanPluginUnknownClosureParamType
+     * @param string|null $cursor
      * @return bool|Promise<bool>
      */
     protected function retrieve(?string $cursor = null)
@@ -515,6 +531,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
         $promise = task(function () use ($cursor) {
             return $this->thread($this->threadId, $cursor);
         });
+
 
         return $promise->then(function ($promise) {
             $message = unwrap($promise);
@@ -540,6 +557,8 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * On item decode method.
      *
+     * @suppress PhanUnusedPublicMethodParameter
+     * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array $container
      * @param array $requirements
      */
@@ -552,6 +571,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
 
     /**
      * On decode users.
+     * @return void
      */
     protected function onDecodeUsers()
     {
@@ -565,6 +585,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
 
     /**
      * On decode users.
+     * @return void
      */
     protected function onDecodeLeftUsers()
     {
@@ -590,7 +611,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      * Returns the user by id.
      *
      * @param int $userId
-     * @return \Instagram\SDK\DTO\General\User|null
+     * @return \Instagram\SDK\DTO\General\User|\Instagram\SDK\DTO\Session\User|null
      */
     protected function getUser(int $userId)
     {

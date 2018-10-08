@@ -8,6 +8,11 @@ use Instagram\SDK\DTO\Traits\PropertiesTrait;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Traits\MappableTrait;
 
+/**
+ * Class Envelope
+ *
+ * @package Instagram\SDK\DTO
+ */
 class Envelope implements ResponseMessageInterface, PropertiesInterface
 {
 
@@ -37,7 +42,7 @@ class Envelope implements ResponseMessageInterface, PropertiesInterface
     protected $errorType;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $message;
 
@@ -50,7 +55,7 @@ class Envelope implements ResponseMessageInterface, PropertiesInterface
     /**
      * Envelope constructor.
      *
-     * @param string $message
+     * @param string|null $message
      */
     public function __construct(?string $message = null)
     {

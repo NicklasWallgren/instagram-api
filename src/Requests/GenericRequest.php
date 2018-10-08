@@ -3,20 +3,24 @@
 namespace Instagram\SDK\Requests;
 
 use Instagram\SDK\Http\RequestClient as HttpClient;
-use Instagram\SDK\Requests\Http\Builders\AbstractQueryRequestBuilder;
 use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
 use Instagram\SDK\Requests\Traits\RequestMethods;
 use Instagram\SDK\Responses\Serializers\AbstractSerializer;
 use Instagram\SDK\Session\Session;
 use Instagram\SDK\Support\Promise;
 
+/**
+ * Class GenericRequest
+ *
+ * @package Instagram\SDK\Requests
+ */
 class GenericRequest extends Request
 {
 
     use RequestMethods;
 
     /**
-     * @var AbstractQueryRequestBuilder
+     * @var GenericRequestBuilder
      */
     protected $requestBuilder;
 
@@ -89,10 +93,10 @@ class GenericRequest extends Request
     /**
      * Sets the serializer mode.
      *
-     * @param string $mode
+     * @param int $mode
      * @return GenericRequest
      */
-    public function setMode(string $mode): GenericRequest
+    public function setMode(int $mode): GenericRequest
     {
         $this->requestBuilder->setMode($mode);
 
@@ -103,7 +107,7 @@ class GenericRequest extends Request
      * Sets the query parameter if defined.
      *
      * @param string $name
-     * @param string $value
+     * @param string|null $value
      * @return GenericRequest
      */
     public function addParam(string $name, ?string $value): GenericRequest

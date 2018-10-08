@@ -2,10 +2,16 @@
 
 namespace Instagram\SDK\Http\Traits;
 
+use Exception;
 use GuzzleHttp\Cookie\CookieJar;
 use Instagram\SDK\DTO\CsrfToken;
 use Instagram\SDK\DTO\Session\SessionId;
 
+/**
+ * Trait CookieMethodsTrait
+ *
+ * @package Instagram\SDK\Http\Traits
+ */
 trait CookieMethodsTrait
 {
 
@@ -13,6 +19,7 @@ trait CookieMethodsTrait
      * Returns the CSRF Token.
      *
      * @return CsrfToken
+     * @throws Exception
      */
     public function getCsrfToken(): CsrfToken
     {
@@ -23,6 +30,7 @@ trait CookieMethodsTrait
      * Returns the session id.
      *
      * @return SessionId
+     * @throws Exception
      */
     public function getSessionId(): SessionId
     {
@@ -33,9 +41,10 @@ trait CookieMethodsTrait
      * Returns the cookie value.
      *
      * @param string $name
-     * @return string|null
+     * @return string
+     * @throws Exception
      */
-    public function getCookieValue($name): ?string
+    public function getCookieValue($name): string
     {
         // Retrieve the cookie value by cookie name
         if (!$cookie = $this->getCookieJar()->getCookieByName($name)) {

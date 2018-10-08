@@ -6,6 +6,11 @@ use Instagram\SDK\Client\Client;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 
+/**
+ * Class Item
+ *
+ * @package Instagram\SDK\DTO\Hashtag
+ */
 class Item implements OnItemDecodeInterface
 {
 
@@ -187,6 +192,8 @@ class Item implements OnItemDecodeInterface
     /**
      * On item decode method.
      *
+     * @suppress PhanUnusedPublicMethodParameter
+     * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array $container
      * @param array $requirements
      */

@@ -6,6 +6,11 @@ use Instagram\SDK\Requests\Http\Traits\CommonSerializerTrait;
 use Instagram\SDK\Requests\Http\Traits\RequestBuilderQueryMethodsTrait;
 use Instagram\SDK\Session\Session;
 
+/**
+ * Class GenericRequestBuilder
+ *
+ * @package Instagram\SDK\Requests\Http\Builders
+ */
 class GenericRequestBuilder extends AbstractPayloadRequestBuilder
 {
 
@@ -85,7 +90,7 @@ class GenericRequestBuilder extends AbstractPayloadRequestBuilder
      * Sets the query parameter if defined.
      *
      * @param string $name
-     * @param string $value
+     * @param string|null $value
      * @return GenericRequestBuilder
      */
     public function addParam(string $name, ?string $value): GenericRequestBuilder

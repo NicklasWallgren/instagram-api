@@ -13,6 +13,11 @@ use function Instagram\SDK\Support\Promises\rejection_for;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
 
+/**
+ * Trait SearchFeaturesTrait
+ *
+ * @package Instagram\SDK\Client\Features
+ */
 trait SearchFeaturesTrait
 {
 
@@ -43,6 +48,7 @@ trait SearchFeaturesTrait
      *
      * @param string $tag
      * @return SearchResultMessage|Promise<SearchResultMessage>
+     * @throws Exception
      */
     public function searchByHashtag(string $tag)
     {
@@ -54,6 +60,7 @@ trait SearchFeaturesTrait
      *
      * @param string $user
      * @return SearchResultMessage|Promise<SearchResultMessage>
+     * @throws Exception
      */
     public function searchByUser(string $user)
     {
@@ -66,11 +73,10 @@ trait SearchFeaturesTrait
      * @param int    $type
      * @param string $query
      * @return SearchResultMessage|Promise<SearchResultMessage>
+     * @throws Exception
      */
     public function search(int $type, string $query)
     {
-        $result = null;
-
         switch ($type) {
             case self::$TYPE_HASHTAG:
                 $result = $this->querySearch(self::$ENDPOINT_HASHTAG_SEARCH, $query, HashtagMessage::class);
@@ -102,7 +108,7 @@ trait SearchFeaturesTrait
         // Prepare the tag query
         $query = rawurlencode($query);
 
-        return task(function () use ($uri, $query, $result) {
+        return task(function () use ($uri, $query, $result): Promise {
             $message = new $result();
             $message->setQuery($query);
 

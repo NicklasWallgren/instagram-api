@@ -12,6 +12,11 @@ use Instagram\SDK\Responses\Serializers\Discover\TopLiveSerializer;
 use Instagram\SDK\Session\Session;
 use Instagram\SDK\Support\Promise;
 
+/**
+ * Class TopLiveRequest
+ *
+ * @package Instagram\SDK\Requests\Discover
+ */
 class TopLiveRequest extends Request
 {
 

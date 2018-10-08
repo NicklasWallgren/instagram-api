@@ -2,6 +2,7 @@
 
 namespace Instagram\SDK\Responses\Serializers\General;
 
+use Exception;
 use GuzzleHttp\Cookie\CookieJar;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
@@ -12,6 +13,11 @@ use Instagram\SDK\Responses\Exceptions\InvalidResponseException;
 use Instagram\SDK\Responses\Serializers\AbstractSerializer;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
+/**
+ * Class HeaderSerializer
+ *
+ * @package Instagram\SDK\Responses\Serializers\General
+ */
 class HeaderSerializer extends AbstractSerializer
 {
 
@@ -35,9 +41,11 @@ class HeaderSerializer extends AbstractSerializer
     /**
      * Decodes the response message.
      *
+     * @suppress PhanUndeclaredMethod
      * @param HttpResponseInterface $response
      * @return ResponseMessageInterface
      * @throws InvalidResponseException
+     * @throws Exception
      */
     public function decode(HttpResponseInterface $response): ResponseMessageInterface
     {
@@ -45,7 +53,12 @@ class HeaderSerializer extends AbstractSerializer
             throw new InvalidResponseException();
         }
 
-        return (new HeaderMessage())->setToken($this->getCsrfToken($response));
+        /**
+         * @var HeaderMessage $message
+         */
+        $message = $this->message();
+
+        return $message->setToken($this->getCsrfToken());
     }
 
     /**
@@ -53,9 +66,9 @@ class HeaderSerializer extends AbstractSerializer
      *
      * @return Envelope
      */
-    protected function message(): ?Envelope
+    protected function message(): Envelope
     {
-        return null;
+        return new HeaderMessage();
     }
 
     /**

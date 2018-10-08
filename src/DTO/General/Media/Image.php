@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\DTO\General\Media;
 
+/**
+ * Class Image
+ *
+ * @package Instagram\SDK\DTO\General\Media
+ */
 class Image
 {
 

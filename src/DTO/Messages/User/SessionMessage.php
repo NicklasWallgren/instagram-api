@@ -3,10 +3,13 @@
 namespace Instagram\SDK\DTO\Messages\User;
 
 use Instagram\SDK\DTO\Envelope;
-use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Instagram\SDK\Session\Session;
-use Traits\MappableTrait;
 
+/**
+ * Class SessionMessage
+ *
+ * @package Instagram\SDK\DTO\Messages\User
+ */
 class SessionMessage extends Envelope
 {
 
@@ -43,9 +46,12 @@ class SessionMessage extends Envelope
 
     /**
      * @param Session $session
+     * @return static
      */
     public function setSession(Session $session)
     {
         $this->session = $session;
+
+        return $this;
     }
 }

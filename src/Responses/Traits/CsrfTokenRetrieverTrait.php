@@ -6,6 +6,11 @@ use Instagram\SDK\DTO\CsrfToken;
 use Instagram\SDK\Responses\Exceptions\InvalidResponseException;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
+/**
+ * Trait CsrfTokenRetrieverTrait
+ *
+ * @package Instagram\SDK\Responses\Traits
+ */
 trait CsrfTokenRetrieverTrait
 {
 
@@ -33,6 +38,7 @@ trait CsrfTokenRetrieverTrait
             throw new InvalidResponseException('Invalid response. Couldn\'t retrieve CSRF token');
         }
 
+        // @phan-suppress-next-line PhanPossiblyFalseTypeArgument
         return new CsrfToken(end($token));
     }
 }

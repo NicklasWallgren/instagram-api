@@ -8,6 +8,11 @@ use Instagram\SDK\DTO\Messages\Direct\InboxMessage;
 use Instagram\SDK\Responses\Serializers\AbstractSerializer;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 
+/**
+ * Class InboxSerializer
+ *
+ * @package Instagram\SDK\Responses\Serializers\Direct
+ */
 class InboxSerializer extends AbstractSerializer implements OnDecodeInterface
 {
 
@@ -31,7 +36,7 @@ class InboxSerializer extends AbstractSerializer implements OnDecodeInterface
      *
      * @return Envelope
      */
-    protected function message(): ?Envelope
+    protected function message(): Envelope
     {
         return new InboxMessage();
     }
@@ -40,6 +45,7 @@ class InboxSerializer extends AbstractSerializer implements OnDecodeInterface
      * On decode method.
      *
      * @param Envelope $message
+     * @throws \Exception
      */
     public function onDecode(Envelope &$message): void
     {

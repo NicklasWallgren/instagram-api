@@ -5,6 +5,11 @@ namespace Instagram\SDK\Requests\Direct\Builders;
 use Instagram\SDK\Requests\Http\Builders\AbstractQueryRequestBuilder;
 use Instagram\SDK\Session\Session;
 
+/**
+ * Class ThreadRequestBuilder
+ *
+ * @package Instagram\SDK\Requests\Direct\Builders
+ */
 class ThreadRequestBuilder extends AbstractQueryRequestBuilder
 {
 
@@ -72,6 +77,7 @@ class ThreadRequestBuilder extends AbstractQueryRequestBuilder
      * Adds the cursor query parameter
      *
      * @param $query
+     * @return void
      */
     protected function addCursorParameter(array &$query)
     {

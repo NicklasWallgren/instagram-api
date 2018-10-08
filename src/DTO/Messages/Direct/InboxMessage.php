@@ -6,6 +6,11 @@ use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Traits\MappableTrait;
 
+/**
+ * Class InboxMessage
+ *
+ * @package Instagram\SDK\DTO\Messages\Direct
+ */
 class InboxMessage extends Envelope
 {
 
@@ -26,7 +31,7 @@ class InboxMessage extends Envelope
     protected $seqId;
 
     /**
-     * @var
+     * @var mixed
      */
     protected $subscription;
 
@@ -37,7 +42,7 @@ class InboxMessage extends Envelope
     protected $pendingRequestsTotal;
 
     /**
-     * @var
+     * @var mixed
      * @name pending_requests_user
      */
     protected $pendingRequestsUsers;

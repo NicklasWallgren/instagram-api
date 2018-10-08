@@ -4,6 +4,11 @@ namespace Instagram\SDK\DTO\Messages\Search;
 
 use Instagram\SDK\DTO\General\User;
 
+/**
+ * Class UserMessage
+ *
+ * @package Instagram\SDK\DTO\Messages\Search
+ */
 class UserMessage extends SearchResultMessage
 {
 

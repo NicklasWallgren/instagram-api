@@ -4,12 +4,15 @@ namespace Instagram\SDK\Requests\Http\Traits;
 
 use Instagram\SDK\Requests\Http\Serializers\HashSerializer;
 use Instagram\SDK\Requests\Http\Serializers\SerializerInterface;
-use Instagram\SDK\Requests\Http\Serializers\SignSerializer;
 use Instagram\SDK\Requests\Http\Serializers\UrlEncodeSerializer;
 
+/**
+ * Trait CommonSerializerTrait
+ *
+ * @package Instagram\SDK\Requests\Http\Traits
+ */
 trait CommonSerializerTrait
 {
-
 
     /**
      * @var int The signed payload mode

@@ -7,6 +7,11 @@ use Instagram\SDK\Http\RequestClient;
 use Instagram\SDK\Session\Session;
 use Instagram\SDK\Support\Promise;
 
+/**
+ * Class Request
+ *
+ * @package Instagram\SDK\Requests
+ */
 abstract class Request
 {
 

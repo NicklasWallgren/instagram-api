@@ -9,6 +9,11 @@ use Instagram\SDK\DTO\Messages\Discover\ChannelsMessage;
 use Instagram\SDK\Responses\Serializers\AbstractSerializer;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 
+/**
+ * Class ChannelsSerializer
+ *
+ * @package Instagram\SDK\Responses\Serializers\Discover
+ */
 class ChannelsSerializer extends AbstractSerializer implements OnDecodeInterface
 {
 
@@ -32,7 +37,7 @@ class ChannelsSerializer extends AbstractSerializer implements OnDecodeInterface
      *
      * @return Envelope
      */
-    protected function message(): ?Envelope
+    protected function message(): Envelope
     {
         return new ChannelsMessage();
     }
@@ -41,6 +46,7 @@ class ChannelsSerializer extends AbstractSerializer implements OnDecodeInterface
      * On decode method.
      *
      * @param Envelope $message
+     * @throws \Exception
      */
     public function onDecode(Envelope &$message): void
     {

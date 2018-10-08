@@ -2,6 +2,11 @@
 
 namespace Instagram\SDK\Http;
 
+/**
+ * Class Options
+ *
+ * @package Instagram\SDK\Http
+ */
 class Options
 {
 

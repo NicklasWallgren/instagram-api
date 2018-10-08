@@ -6,6 +6,11 @@ use Instagram\SDK\Requests\Http\Builders\AbstractPayloadRequestBuilder;
 use Instagram\SDK\Requests\Http\Traits\SignedPayloadSerializerTrait;
 use Instagram\SDK\Session\Session;
 
+/**
+ * Class LoginRequestBuilder
+ *
+ * @package Instagram\SDK\Requests\User\Builders
+ */
 class LoginRequestBuilder extends AbstractPayloadRequestBuilder
 {
 

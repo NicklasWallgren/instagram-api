@@ -3,6 +3,11 @@
 
 namespace Instagram\SDK\DTO\General;
 
+/**
+ * Class MediaType
+ *
+ * @package Instagram\SDK\DTO\General
+ */
 class MediaType
 {
 

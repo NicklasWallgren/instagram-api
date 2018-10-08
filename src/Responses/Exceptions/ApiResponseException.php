@@ -5,6 +5,11 @@ namespace Instagram\SDK\Responses\Exceptions;
 use Exception;
 use Instagram\SDK\DTO\Envelope;
 
+/**
+ * Class ApiResponseException
+ *
+ * @package Instagram\SDK\Responses\Exceptions
+ */
 class ApiResponseException extends Exception
 {
 
@@ -21,13 +26,13 @@ class ApiResponseException extends Exception
     /**
      * InvalidResponseException constructor.
      *
-     * @param Envelope|null $envelope
+     * @param Envelope $envelope
      */
-    public function __construct(Envelope $envelope = null)
+    public function __construct(Envelope $envelope)
     {
         $this->envelope = $envelope;
 
-        parent::__construct($envelope? $envelope->getMessage() : self::DEFAULT_MESSAGE, 0, null);
+        parent::__construct($envelope ? $envelope->getMessage() : self::DEFAULT_MESSAGE, 0, null);
     }
 
     /**

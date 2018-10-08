@@ -8,6 +8,11 @@ use Instagram\SDK\DTO\Messages\Discover\ChannelsMessage;
 use Instagram\SDK\DTO\Messages\Discover\ExploreMessage;
 use Instagram\SDK\DTO\Messages\Discover\TopLiveMessage;
 
+/**
+ * Trait MakeDiscoverRequestAccessible
+ *
+ * @package Instagram\SDK\Requests\Traits
+ */
 trait MakeDiscoverRequestAccessible
 {
 

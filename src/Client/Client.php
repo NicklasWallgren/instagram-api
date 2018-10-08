@@ -4,7 +4,6 @@ namespace Instagram\SDK\Client;
 
 use Exception;
 use Instagram\SDK\Client\Features\DirectFeaturesTrait;
-use Instagram\SDK\Client\Features\DiscoverFeatures;
 use Instagram\SDK\Client\Features\DiscoverFeaturesTrait;
 use Instagram\SDK\Client\Features\FeedFeaturesTrait;
 use Instagram\SDK\Client\Features\GeneralFeaturesTrait;
@@ -12,11 +11,15 @@ use Instagram\SDK\Client\Features\SearchFeaturesTrait;
 use Instagram\SDK\Client\Features\UserFeaturesTrait;
 use Instagram\SDK\Devices\Builders\DeviceBuilder;
 use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
-use Instagram\SDK\DTO\CsrfTokenMessage;
 use Instagram\SDK\Http\RequestClient;
 use Instagram\SDK\Instagram;
 use Instagram\SDK\Session\Session;
 
+/**
+ * Class Client
+ *
+ * @package Instagram\SDK\Client
+ */
 class Client
 {
 
@@ -50,7 +53,7 @@ class Client
     /**
      * Client constructor.
      *
-     * @param DeviceBuilderInterface $builder
+     * @param DeviceBuilderInterface|null $builder
      */
     public function __construct(?DeviceBuilderInterface $builder = null)
     {
@@ -61,7 +64,7 @@ class Client
     /**
      * Returns the current session.
      *
-     * @return Session
+     * @return Session|null
      */
     public function getSession(): ?Session
     {
@@ -123,8 +126,9 @@ class Client
      * Validate the state.
      *
      * @throws Exception
+     * @return void
      */
-    protected function checkPrerequisites()
+    protected function checkPrerequisites(): void
     {
         // Check whether the user is authenticated or not
         if (!$this->isSessionAvailable()) {
@@ -140,5 +144,15 @@ class Client
     protected function isSessionAvailable(): bool
     {
         return $this->session !== null;
+    }
+
+    /**
+     * Returns the subject instance.
+     *
+     * @return Client
+     */
+    protected function getSubject(): Client
+    {
+        return $this;
     }
 }
