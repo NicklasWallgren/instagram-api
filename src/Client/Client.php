@@ -12,7 +12,6 @@ use Instagram\SDK\Client\Features\UserFeaturesTrait;
 use Instagram\SDK\Devices\Builders\DeviceBuilder;
 use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
 use Instagram\SDK\Http\RequestClient;
-use Instagram\SDK\Instagram;
 use Instagram\SDK\Session\Session;
 
 /**

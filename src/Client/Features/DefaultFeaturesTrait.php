@@ -7,7 +7,6 @@ use Instagram\SDK\Client\Adapters\Interfaces\AdapterInterface;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
 use Instagram\SDK\Http\RequestClient;
-use Instagram\SDK\Instagram;
 use Instagram\SDK\Session\Session;
 
 /**
