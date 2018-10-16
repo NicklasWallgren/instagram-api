@@ -2,6 +2,7 @@
 
 namespace Instagram\SDK\DTO\Hashtag;
 
+use Exception;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
@@ -196,6 +197,7 @@ class Item implements OnItemDecodeInterface
      * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array $container
      * @param array $requirements
+     * @throws Exception
      */
     public function onDecode(array $container, $requirements = []): void
     {

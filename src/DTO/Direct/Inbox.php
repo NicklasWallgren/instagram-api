@@ -2,6 +2,7 @@
 
 namespace Instagram\SDK\DTO\Direct;
 
+use Exception;
 use GuzzleHttp\Promise\Promise;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
@@ -128,6 +129,7 @@ class Inbox implements OnItemDecodeInterface
      * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array $container
      * @param array $requirements
+     * @throws Exception
      */
     public function onDecode(array $container, $requirements = []): void
     {

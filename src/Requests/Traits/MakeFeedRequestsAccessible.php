@@ -57,7 +57,7 @@ trait MakeFeedRequestsAccessible
      * @return FeedMessage|Promise<FeedMessage>
      * @throws \Exception
      */
-    public function feed($type, string $query, ?string $maxId = null)
+    public function feed(int $type, string $query, ?string $maxId = null)
     {
         return $this->getClient()->feed($type, $query, $maxId);
     }

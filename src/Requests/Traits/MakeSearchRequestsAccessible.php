@@ -3,7 +3,9 @@
 namespace Instagram\SDK\Requests\Traits;
 
 use Instagram\SDK\Client\Client;
+use Instagram\SDK\DTO\Messages\Search\HashtagMessage;
 use Instagram\SDK\DTO\Messages\Search\SearchResultMessage;
+use Instagram\SDK\DTO\Messages\Search\UserMessage;
 use Instagram\SDK\Support\Promise;
 
 /**
@@ -28,7 +30,7 @@ trait MakeSearchRequestsAccessible
      * Search by hashtag.
      *
      * @param string $tag
-     * @return SearchResultMessage|Promise
+     * @return HashtagMessage|Promise
      * @throws \Exception
      */
     public function searchByHashtag(string $tag)
@@ -40,7 +42,7 @@ trait MakeSearchRequestsAccessible
      * Search by user.
      *
      * @param string $user
-     * @return SearchResultMessage|Promise
+     * @return UserMessage|Promise
      * @throws \Exception
      */
     public function searchByUser(string $user)

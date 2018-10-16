@@ -2,6 +2,7 @@
 
 namespace Instagram\SDK\DTO\Messages\Search;
 
+use Exception;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
@@ -128,6 +129,7 @@ abstract class SearchResultMessage extends Envelope implements PropertiesInterfa
      * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array $container
      * @param array $requirements
+     * @throws Exception
      */
     public function onDecode(array $container, $requirements = []): void
     {

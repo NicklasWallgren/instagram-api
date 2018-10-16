@@ -2,6 +2,7 @@
 
 namespace Instagram\SDK\DTO\Messages\Feed;
 
+use Exception;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
@@ -304,6 +305,7 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
      * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array $container
      * @param array $requirements
+     * @throws Exception
      */
     public function onDecode(array $container, $requirements = []): void
     {
