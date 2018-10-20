@@ -2,15 +2,24 @@
 
 namespace Instagram\SDK\DTO\General;
 
+use Exception;
+use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Interfaces\UserInterface;
+use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
+use Instagram\SDK\DTO\Messages\Friendships\FollowMessage;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
+use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Instagram\SDK\Support\Promise;
 
 /**
  * Class User
  *
  * @package Instagram\SDK\DTO\General
  */
-class User implements UserInterface
+class User implements UserInterface, OnItemDecodeInterface
 {
+
+    use OnPropagateDecodeEventTrait;
 
     /**
      * @var string
@@ -42,7 +51,7 @@ class User implements UserInterface
     protected $profilePictureUrl;
 
     /**
-     * @var object
+     * @var \Instagram\SDK\DTO\General\FriendshipStatus
      * @name friendship_status
      */
     protected $friendshipStatus;
@@ -58,6 +67,11 @@ class User implements UserInterface
      * @name has_anonymous_profile_picture
      */
     protected $hasAnonymousProfilePicture;
+
+    /**
+     * @var Client
+     */
+    protected $client;
 
     /**
      * @return string
@@ -121,5 +135,52 @@ class User implements UserInterface
     public function hasAnonymousProfilePicture(): bool
     {
         return $this->hasAnonymousProfilePicture;
+    }
+
+    /**
+     * On item decode method.
+     *
+     * @suppress PhanUnusedPublicMethodParameter
+     * @suppress PhanPossiblyNullTypeMismatchProperty
+     * @param array $container
+     * @param array $requirements
+     * @throws Exception
+     */
+    public function onDecode(array $container, $requirements = []): void
+    {
+        $this->client = $container['client'];
+
+        $this->propagate($container);
+    }
+
+    /**
+     * Returns the user feed.
+     *
+     * @return FeedMessage|Promise<FeedMessage>
+     * @throws Exception
+     */
+    public function feed()
+    {
+        return $this->client->feedByUser($this->id);
+    }
+
+    /**
+     * Follow the user.
+     *
+     * @return FollowMessage|Promise<FollowMessage>
+     */
+    public function follow()
+    {
+        return $this->client->follow($this->id);
+    }
+
+    /**
+     * Unfollow the user.
+     *
+     * @return FollowMessage|Promise<FollowMessage>
+     */
+    public function unfollow()
+    {
+        return $this->client->unfollow($this->id);
     }
 }

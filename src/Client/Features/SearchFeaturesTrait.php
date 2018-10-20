@@ -121,7 +121,7 @@ trait SearchFeaturesTrait
 
             $request
                 ->addRankedToken()
-                ->setParam('q', $query)
+                ->setParam('query', $query)
                 ->setParam('is_typeahead', true);
 
             // Invoke the request
