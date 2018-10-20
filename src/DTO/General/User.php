@@ -6,6 +6,7 @@ use Exception;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Interfaces\UserInterface;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
+use Instagram\SDK\DTO\Messages\Friendships\FollowMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Instagram\SDK\Support\Promise;
@@ -161,5 +162,25 @@ class User implements UserInterface, OnItemDecodeInterface
     public function feed()
     {
         return $this->client->feedByUser($this->id);
+    }
+
+    /**
+     * Follow the user.
+     *
+     * @return FollowMessage|Promise<FollowMessage>
+     */
+    public function follow()
+    {
+        return $this->client->follow($this->id);
+    }
+
+    /**
+     * Unfollow the user.
+     *
+     * @return FollowMessage|Promise<FollowMessage>
+     */
+    public function unfollow()
+    {
+        return $this->client->unfollow($this->id);
     }
 }

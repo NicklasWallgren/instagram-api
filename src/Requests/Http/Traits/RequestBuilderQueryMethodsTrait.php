@@ -71,6 +71,11 @@ trait RequestBuilderQueryMethodsTrait
      */
     protected function getQuery(): ?string
     {
-        return '?' . http_build_query($this->getQueryParameters(), '', '&');
+        // Compose the query parameters
+        if (($parameters = http_build_query($this->getQueryParameters(), '', '&')) == null) {
+            return null;
+        }
+
+        return '?' . $parameters;
     }
 }

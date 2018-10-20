@@ -6,6 +6,7 @@ use Exception;
 use Instagram\SDK\Client\Features\DirectFeaturesTrait;
 use Instagram\SDK\Client\Features\DiscoverFeaturesTrait;
 use Instagram\SDK\Client\Features\FeedFeaturesTrait;
+use Instagram\SDK\Client\Features\FriendshipsFeaturesTrait;
 use Instagram\SDK\Client\Features\GeneralFeaturesTrait;
 use Instagram\SDK\Client\Features\SearchFeaturesTrait;
 use Instagram\SDK\Client\Features\UserFeaturesTrait;
@@ -28,6 +29,7 @@ class Client
     use DirectFeaturesTrait;
     use SearchFeaturesTrait;
     use FeedFeaturesTrait;
+    use FriendshipsFeaturesTrait;
 
     /**
      * @var RequestClient The Http client

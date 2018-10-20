@@ -50,6 +50,22 @@ trait RequestMethods
     }
 
     /**
+     * Adds the CSRF token.
+     *
+     * @param GenericRequest|null $request
+     * @return static
+     * @throws \Exception
+     */
+    public function addCSRFToken(?GenericRequest $request = null): self
+    {
+        $request = $request ?: $this;
+
+        $request->setPost('_csrftoken', $this->session->getCsrfToken()->getToken());
+
+        return $request;
+    }
+
+    /**
      * Adds the CSRF token and User id to the payload.
      *
      * @param GenericRequest|null $request
@@ -77,6 +93,55 @@ trait RequestMethods
         $request = $request ?: $this;
 
         $request->setParam('ranked_token', $this->session->getRankedToken());
+
+        return $request;
+    }
+
+    /**
+     * Adds uuid to the payload.
+     *
+     * @param GenericRequest|null $request
+     * @return self
+     */
+    public function addUuid(?GenericRequest $request = null): self
+    {
+        $request = $request ?: $this;
+
+        $request->setPost('_uuid', $this->session->getUuid());
+
+        return $request;
+    }
+
+    /**
+     * Adds uid to the payload.
+     *
+     * @param GenericRequest|null $request
+     * @return static
+     */
+    public function addUid(?GenericRequest $request = null): self
+    {
+        $request = $request ?: $this;
+
+        $request->setPost('_uid', $this->session->getUser()->getId());
+
+        return $request;
+    }
+
+    /**
+     * Adds Uuid and Uid to the payload.
+     *
+     * @param GenericRequest|null $request
+     * @return static
+     */
+    public function addUuidAndUid(?GenericRequest $request = null): self
+    {
+        $request = $request ?: $this;
+
+        // @phan-suppress-next-line PhanPartialTypeMismatchArgument
+        $this->addUuid($request);
+
+        // @phan-suppress-next-line PhanPartialTypeMismatchArgument
+        $this->addUid($request);
 
         return $request;
     }

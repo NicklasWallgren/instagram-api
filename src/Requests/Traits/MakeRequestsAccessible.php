@@ -18,6 +18,7 @@ trait MakeRequestsAccessible
     use MakeUserRequestAccessible;
     use MakeFeedRequestsAccessible;
     use MakeSearchRequestsAccessible;
+    use MakeFriendshipsRequestsAccessible;
 
     /**
      * Returns the result mode.
