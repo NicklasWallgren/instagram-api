@@ -12,6 +12,8 @@ use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\rejection_for;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
+use const Instagram\SDK\TYPE_HASHTAG;
+use const Instagram\SDK\TYPE_USER;
 
 /**
  * Trait SearchFeaturesTrait
@@ -22,16 +24,6 @@ trait SearchFeaturesTrait
 {
 
     use DefaultFeaturesTrait;
-
-    /**
-     * @var int The hashtag type
-     */
-    public static $TYPE_HASHTAG = 1;
-
-    /**
-     * @var int The user type
-     */
-    public static $TYPE_USER = 2;
 
     /**
      * @var string The hashtag search endpoint
@@ -52,7 +44,7 @@ trait SearchFeaturesTrait
      */
     public function searchByHashtag(string $tag)
     {
-        return $this->search(self::$TYPE_HASHTAG, $tag);
+        return $this->search(TYPE_HASHTAG, $tag);
     }
 
     /**
@@ -64,7 +56,7 @@ trait SearchFeaturesTrait
      */
     public function searchByUser(string $user)
     {
-        return $this->search(self::$TYPE_USER, $user);
+        return $this->search(TYPE_USER, $user);
     }
 
     /**
@@ -78,11 +70,11 @@ trait SearchFeaturesTrait
     public function search(int $type, string $query)
     {
         switch ($type) {
-            case self::$TYPE_HASHTAG:
+            case TYPE_HASHTAG:
                 $result = $this->querySearch(self::$ENDPOINT_HASHTAG_SEARCH, $query, HashtagMessage::class);
 
                 break;
-            case self::$TYPE_USER:
+            case TYPE_USER:
                 $result = $this->querySearch(self::$ENDPOINT_USER_SEARCH, $query, UserMessage::class);
 
                 break;

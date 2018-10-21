@@ -14,6 +14,8 @@ use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\rejection_for;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
+use const Instagram\SDK\TYPE_HASHTAG;
+use const Instagram\SDK\TYPE_USER;
 
 /**
  * Trait FeedFeaturesTrait
@@ -24,16 +26,6 @@ trait FeedFeaturesTrait
 {
 
     use DefaultFeaturesTrait;
-
-    /**
-     * @var int The hashtag feed type
-     */
-    public static $TYPE_HASHTAG = 1;
-
-    /**
-     * @var int The user feed type
-     */
-    public static $TYPE_USER = 2;
 
     /**
      * @var string The hastag feed uri
@@ -59,7 +51,7 @@ trait FeedFeaturesTrait
      */
     public function feedByHashtag(string $tag)
     {
-        return $this->feed(self::$TYPE_HASHTAG, $tag);
+        return $this->feed(TYPE_HASHTAG, $tag);
     }
 
     /**
@@ -71,7 +63,7 @@ trait FeedFeaturesTrait
      */
     public function feedByUser(string $user)
     {
-        return $this->feed(self::$TYPE_USER, $user);
+        return $this->feed(TYPE_USER, $user);
     }
 
     /**
@@ -86,11 +78,11 @@ trait FeedFeaturesTrait
     public function feed(int $type, string $query, ?string $maxId = null)
     {
         switch ($type) {
-            case self::$TYPE_HASHTAG:
+            case TYPE_HASHTAG:
                 $result = $this->queryFeed($type, self::$URI_HASHTAG_FEED, $query, FeedMessage::class, $maxId);
 
                 break;
-            case self::$TYPE_USER:
+            case TYPE_USER:
                 $result = $this->queryFeed($type, self::$URI_USER_FEED, $query, FeedMessage::class, $maxId);
 
                 break;
@@ -115,7 +107,14 @@ trait FeedFeaturesTrait
         return task(function () use ($options): Promise {
             $this->checkPrerequisites();
 
-            $request = $this->request(self::$URI_TIMELINE_FEED, new Timeline());
+            /**
+             * @var GenericRequest $request
+             */
+            $request = request(self::$URI_TIMELINE_FEED, new Timeline())(
+                $this,
+                $this->session,
+                $this->client
+            );
 
             // Prepare the request payload
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall, PhanUndeclaredMethod

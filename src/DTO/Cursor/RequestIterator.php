@@ -3,7 +3,6 @@
 namespace Instagram\SDK\DTO\Cursor;
 
 use Instagram\SDK\Client\Client;
-use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
 use Instagram\SDK\Responses\Interfaces\IteratorInterface;
 
 /**
@@ -13,8 +12,6 @@ use Instagram\SDK\Responses\Interfaces\IteratorInterface;
  */
 abstract class RequestIterator implements IteratorInterface
 {
-
-    use MakeRequestsAccessible;
 
     /**
      * @var Client

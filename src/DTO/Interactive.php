@@ -3,7 +3,6 @@
 namespace Instagram\SDK\DTO;
 
 use Instagram\SDK\Client\Client;
-use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
 
 /**
  * Class Interactive
@@ -12,8 +11,6 @@ use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
  */
 abstract class Interactive
 {
-
-    use MakeRequestsAccessible;
 
     /**
      * @var Client

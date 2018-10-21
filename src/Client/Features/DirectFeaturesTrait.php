@@ -5,17 +5,20 @@ namespace Instagram\SDK\Client\Features;
 use Exception;
 use Instagram\SDK\DTO\Messages\Direct\DirectSendItemMessage;
 use Instagram\SDK\DTO\Messages\Direct\InboxMessage;
+use Instagram\SDK\DTO\Messages\Direct\SeenMessage;
 use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
 use Instagram\SDK\Requests\Direct\InboxRequest;
 use Instagram\SDK\Requests\Direct\ThreadRequest;
+use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Support\Promise;
-use function Instagram\SDK\Support\request;
 use function Instagram\SDK\Support\Promises\task;
+use function Instagram\SDK\Support\request;
 
 /**
  * Trait DirectFeaturesTrait
  *
  * @package Instagram\SDK\Client\Features
+ * @phan-file-suppress PhanUnreferencedUseNormal
  */
 trait DirectFeaturesTrait
 {
@@ -26,6 +29,11 @@ trait DirectFeaturesTrait
      * @var string The message broadcast uri
      */
     private static $URI_BROADCAST_MESSAGE = 'direct_v2/threads/broadcast/text/';
+
+    /**
+     * @var string The thread seen uri
+     */
+    private static $URI_SEEN = 'direct_v2/threads/%s/items/%s/seen/';
 
     /**
      * Retrieves the inbox.
@@ -79,10 +87,42 @@ trait DirectFeaturesTrait
 
             // Prepare the request payload
             $request->setPost('text', $text)
-                    ->setPost('thread_ids', "[$threadId]")
-                    ->setPost('action', 'send_item')
-                    ->addUniqueContext()
-                    ->addCSRFTokenAndUserId();
+                ->setPost('thread_ids', "[$threadId]")
+                ->setPost('action', 'send_item')
+                ->addUniqueContext()
+                ->addCSRFTokenAndUserId();
+
+            // Invoke the request
+            return $request->fire();
+        })($this->getMode());
+    }
+
+    /**
+     * Set thread id as seen.
+     *
+     * @param string $threadId
+     * @param string $threadItemId
+     * @return SeenMessage|Promise<SeenMessage>
+     */
+    public function seen(string $threadId, string $threadItemId)
+    {
+        return task(function () use ($threadId, $threadItemId): Promise {
+            $this->checkPrerequisites();
+
+            /**
+             * @var GenericRequest $request
+             */
+            $request = request(sprintf(self::$URI_SEEN, $threadId, $threadItemId), new SeenMessage())(
+                $this,
+                $this->session,
+                $this->client
+            );
+
+            // Prepare the request payload
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall, PhanUndeclaredMethod
+            $request
+                ->addCSRFToken()
+                ->addUuid();
 
             // Invoke the request
             return $request->fire();

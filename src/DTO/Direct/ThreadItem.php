@@ -2,10 +2,13 @@
 
 namespace Instagram\SDK\DTO\Direct;
 
+use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\DTO;
 use Instagram\SDK\DTO\Interfaces\UserInterface;
+use Instagram\SDK\DTO\Messages\Direct\SeenMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeRequirementsInterface;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
+use Instagram\SDK\Support\Promise;
 
 /**
  * Class ThreadItem
@@ -66,7 +69,12 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
     protected $clientContext;
 
     /**
-     * @return mixed
+     * @var Client
+     */
+    protected $client;
+
+    /**
+     * @return string
      */
     public function getItemId()
     {
@@ -254,18 +262,27 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
         return $this;
     }
 
+
+    /**
+     * Sets the thread item as seen.
+     *
+     * @return SeenMessage|Promise<SeenMessage>
+     */
+    public function seen()
+    {
+        return $this->client->seen($this->parent->getThreadId(), $this->getItemId());
+    }
+
     /**
      * On item decode method.
      *
-     * @suppress PhanUnusedPublicMethodParameter
+     * @suppress PhanUnusedPublicMethodParameter, PhanPossiblyNullTypeMismatchProperty
      * @param array $container
      * @param array $requirements
      */
     public function onDecode(array $container, $requirements = []): void
     {
-//        $this->parent = $requirements['parent'];
-
-//        print_r($this->getUser());
+        $this->client = $container['client'];
     }
 
     /**

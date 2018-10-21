@@ -123,6 +123,22 @@ class Inbox implements OnItemDecodeInterface
     }
 
     /**
+     * Returns the unseen threads.
+     *
+     * @return array<string, ThreadItem[]>
+     */
+    public function getUnseen()
+    {
+        $result = [];
+
+        foreach ($this->threads as $thread) {
+            $result[$thread->getThreadId()] = $thread->getUnseenItems();
+        }
+
+        return $result;
+    }
+
+    /**
      * On item decode method.
      *
      * @suppress PhanUnusedPublicMethodParameter
