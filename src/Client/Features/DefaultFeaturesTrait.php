@@ -45,7 +45,7 @@ trait DefaultFeaturesTrait
     /**
      * @return bool
      */
-    abstract protected function getMode():bool;
+    abstract protected function getMode(): bool;
 
     /**
      * Validate the state.

@@ -8,7 +8,6 @@ use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
 use Instagram\SDK\DTO\Traits\Inflatable;
 use Instagram\SDK\DTO\Traits\PropertiesTrait;
-use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
 use Instagram\SDK\Responses\Interfaces\IteratorInterface;
 use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\task;
@@ -22,7 +21,6 @@ use function Instagram\SDK\Support\Promises\unwrap;
 class FeedMessage extends Envelope implements IteratorInterface, PropertiesInterface
 {
 
-    use MakeRequestsAccessible;
     use Inflatable;
     use PropertiesTrait;
 
@@ -275,7 +273,7 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
             $this->inflate($message);
 
             return true;
-        })($this->getMode());
+        })($this->client->getMode());
     }
 
     /**

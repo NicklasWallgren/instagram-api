@@ -4,6 +4,8 @@ namespace Instagram\SDK\Requests\Traits;
 
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
+use Instagram\SDK\DTO\Messages\Feed\Timeline;
+use Instagram\SDK\Requests\Feed\TimelineOptions;
 use Instagram\SDK\Support\Promise;
 
 /**
@@ -60,6 +62,17 @@ trait MakeFeedRequestsAccessible
     public function feed(int $type, string $query, ?string $maxId = null)
     {
         return $this->getClient()->feed($type, $query, $maxId);
+    }
+
+    /**
+     * Retrives the timeline feed for the current user.
+     *
+     * @param TimelineOptions|null $options
+     * @return Timeline|Promise<Timeline>
+     */
+    public function timeline(?TimelineOptions $options = null)
+    {
+        return $this->getClient()->timeline($options ?? new TimelineOptions());
     }
 
     /**
