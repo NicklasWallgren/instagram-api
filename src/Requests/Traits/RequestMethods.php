@@ -147,6 +147,36 @@ trait RequestMethods
     }
 
     /**
+     * Adds the phone id to the payload.
+     *
+     * @param GenericRequest|null $request
+     * @return static
+     */
+    public function addPhoneId(?GenericRequest $request = null): self
+    {
+        $request = $request ?: $this;
+
+        $request->setPost('phone_id', $this->session->getDevice()->phoneId());
+
+        return $request;
+    }
+
+    /**
+     * Adds the session id to the payload.
+     *
+     * @param GenericRequest|null $request
+     * @return static
+     */
+    public function addSessionId(?GenericRequest $request = null): self
+    {
+        $request = $request ?: $this;
+
+        $request->setPost('session_id', $this->session->getSessionId());
+
+        return $request;
+    }
+
+    /**
      * Asynchronous request.
      *
      * @param RequestInterface    $request

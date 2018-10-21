@@ -4,6 +4,7 @@ namespace Instagram\SDK\Requests;
 
 use Instagram\SDK\Http\RequestClient as HttpClient;
 use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
+use Instagram\SDK\Requests\Options\AbstractOptions;
 use Instagram\SDK\Requests\Traits\RequestMethods;
 use Instagram\SDK\Responses\Serializers\AbstractSerializer;
 use Instagram\SDK\Session\Session;
@@ -106,7 +107,7 @@ class GenericRequest extends Request
     /**
      * Sets the query parameter if defined.
      *
-     * @param string $name
+     * @param string      $name
      * @param string|null $value
      * @return GenericRequest
      */
@@ -118,6 +119,19 @@ class GenericRequest extends Request
         }
 
         return $this->setParam($name, $value);
+    }
+
+    /**
+     * Adds payload options.
+     *
+     * @param AbstractOptions $options
+     * @return static
+     */
+    public function addPayloadOptions(AbstractOptions $options): GenericRequest
+    {
+        $options->addAsPayload($this);
+
+        return $this;
     }
 
     /**

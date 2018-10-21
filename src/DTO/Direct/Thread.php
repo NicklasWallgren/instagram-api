@@ -545,10 +545,10 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
             $thread = $message->getThread();
 
             $this->setNewestCursor($thread->getNewestCursor())
-                 ->setOldestCursor($thread->getOldestCursor())
-                 ->setItems($thread->getItems())
-                 ->setHasOlder($thread->getHasOlder())
-                 ->setHasNewer($thread->getHasNewer());
+                ->setOldestCursor($thread->getOldestCursor())
+                ->setItems($thread->getItems())
+                ->setHasOlder($thread->getHasOlder())
+                ->setHasNewer($thread->getHasNewer());
 
             return true;
         })($this->getMode());
@@ -571,6 +571,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
 
     /**
      * On decode users.
+     *
      * @return void
      */
     protected function onDecodeUsers()
@@ -585,6 +586,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
 
     /**
      * On decode users.
+     *
      * @return void
      */
     protected function onDecodeLeftUsers()

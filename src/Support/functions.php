@@ -28,7 +28,7 @@ function uuid(bool $type = SignatureSupport::TYPE_DEFAULT): string
 /**
  * Generates a generic request instance.
  *
- * @param string|AbstractRequestBuilder $uri The request uri or request builder
+ * @param string|AbstractRequestBuilder $uri        The request uri or request builder
  * @param Envelope|AbstractSerializer   $serializer The response envelope or serializer
  * @return Closure
  */
@@ -47,4 +47,15 @@ function request($uri, $serializer)
 
         return new GenericRequest($session, $httpClient, $uri, $serializer);
     };
+}
+
+/**
+ * Returns the camel cased string as underscore case.
+ *
+ * @param string $target
+ * @return string
+ */
+function underscore(string $target): string
+{
+    return strtolower(preg_replace('/(?<=\\w)([A-Z])/', '_\\1', $target));
 }

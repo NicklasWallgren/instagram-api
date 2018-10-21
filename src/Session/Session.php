@@ -15,7 +15,9 @@ use Instagram\SDK\Http\Traits\CookieMethodsTrait;
 class Session
 {
 
-    use CookieMethodsTrait;
+    use CookieMethodsTrait {
+        getSessionId as protected _getSessionId;
+    }
     use SessionMethodsTrait;
 
     /**
@@ -34,6 +36,11 @@ class Session
     protected $device;
 
     /**
+     * @var string Session id.
+     */
+    protected $sessionId;
+
+    /**
      * @var CookieJar
      */
     protected $cookies;
@@ -44,7 +51,7 @@ class Session
      */
     public function getId(): string
     {
-        return $this->getSessionId()->getId();
+        return $this->_getSessionId()->getId();
     }
 
     /**
@@ -100,6 +107,25 @@ class Session
     public function setDevice(DeviceInterface $device)
     {
         $this->device = $device;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSessionId(): string
+    {
+        return $this->sessionId;
+    }
+
+    /**
+     * @param string $sessionId
+     * @return static
+     */
+    public function setSessionId(string $sessionId): self
+    {
+        $this->sessionId = $sessionId;
 
         return $this;
     }

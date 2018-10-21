@@ -4,8 +4,12 @@ namespace Instagram\SDK\Client\Features;
 
 use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
+use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
+use Instagram\SDK\DTO\Messages\Feed\Timeline;
 use Instagram\SDK\Instagram;
+use Instagram\SDK\Requests\Feed\TimelineOptions;
+use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\rejection_for;
 use function Instagram\SDK\Support\Promises\task;
@@ -32,14 +36,19 @@ trait FeedFeaturesTrait
     public static $TYPE_USER = 2;
 
     /**
-     * @var string The hashtag feed endpoint
+     * @var string The hastag feed uri
      */
-    private static $ENDPOINT_HASHTAG_FEED = 'feed/tag/%s/';
+    private static $URI_HASHTAG_FEED = 'feed/tag/%s/';
 
     /**
-     * @var string The user feed endpoint
+     * @var string The user feed uri
      */
-    private static $ENDPOINT_USER_FEED = 'feed/user/%s/';
+    private static $URI_USER_FEED = 'feed/user/%s/';
+
+    /**
+     * @var string The timeline uri
+     */
+    private static $URI_TIMELINE_FEED = 'feed/timeline/';
 
     /**
      * Retrieves feed by hashtag.
@@ -78,13 +87,14 @@ trait FeedFeaturesTrait
     {
         switch ($type) {
             case self::$TYPE_HASHTAG:
-                $result = $this->queryFeed($type, self::$ENDPOINT_HASHTAG_FEED, $query, FeedMessage::class, $maxId);
+                $result = $this->queryFeed($type, self::$URI_HASHTAG_FEED, $query, FeedMessage::class, $maxId);
 
                 break;
             case self::$TYPE_USER:
-                $result = $this->queryFeed($type, self::$ENDPOINT_USER_FEED, $query, FeedMessage::class, $maxId);
+                $result = $this->queryFeed($type, self::$URI_USER_FEED, $query, FeedMessage::class, $maxId);
 
                 break;
+
             default:
                 $result = $this->getInvalidFeedTypeError();
 
@@ -92,6 +102,34 @@ trait FeedFeaturesTrait
         }
 
         return $result;
+    }
+
+    /**
+     * Retrieves the timeline feed for the current user.
+     *
+     * @param TimelineOptions $options
+     * @return Promise|Promise<Timeline>
+     */
+    public function timeline(TimelineOptions $options)
+    {
+        return task(function () use ($options): Promise {
+            $this->checkPrerequisites();
+
+            $request = $this->request(self::$URI_TIMELINE_FEED, new Timeline());
+
+            // Prepare the request payload
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall, PhanUndeclaredMethod
+            $request
+                ->addCSRFToken()
+                ->addUuid()
+                ->addPhoneId()
+                ->addSessionId()
+                ->setPost('reason', 'cold_start_fetch')
+                ->addPayloadOptions($options);
+
+            // Invoke the request
+            return $request->fire();
+        })($this->getMode());
     }
 
     /**
@@ -127,6 +165,22 @@ trait FeedFeaturesTrait
             // Invoke the request
             return $request->fire();
         })($this->getMode());
+    }
+
+    /**
+     * Creates a generic request.
+     *
+     * @param string   $uri
+     * @param Envelope $message
+     * @return GenericRequest
+     */
+    protected function request(string $uri, Envelope $message): GenericRequest
+    {
+        return request($uri, $message)(
+            $this,
+            $this->session,
+            $this->client
+        );
     }
 
     /**
