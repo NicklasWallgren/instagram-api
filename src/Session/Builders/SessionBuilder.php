@@ -30,6 +30,7 @@ class SessionBuilder
         return (new Session())
             ->setUuid(SignatureSupport::uuid())
             ->setDevice($device)
+            ->setSessionId(SignatureSupport::uuid())
             ->setCookies($client->getCookies());
     }
 }

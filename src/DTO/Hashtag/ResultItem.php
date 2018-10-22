@@ -8,6 +8,7 @@ use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Instagram\SDK\Support\Promise;
+use const Instagram\SDK\TYPE_HASHTAG;
 
 /**
  * Class ResultItem
@@ -71,7 +72,7 @@ class ResultItem extends Interactive implements OnItemDecodeInterface
      */
     public function getFeed()
     {
-        return $this->feed(self::$TYPE_FEED_HASHTAG, $this->name);
+        return $this->client->feed(TYPE_HASHTAG, $this->name);
     }
 
     /**
