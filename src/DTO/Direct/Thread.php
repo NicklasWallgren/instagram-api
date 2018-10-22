@@ -2,11 +2,13 @@
 
 namespace Instagram\SDK\DTO\Direct;
 
-use GuzzleHttp\Promise\Promise;
 use Instagram\SDK\DTO\Cursor\RequestIterator;
+use Instagram\SDK\DTO\Direct\Collections\LastSeenAtCollection;
 use Instagram\SDK\DTO\General\ItemType;
+use Instagram\SDK\DTO\Messages\Direct\SeenMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\Promises\unwrap;
 
@@ -14,6 +16,7 @@ use function Instagram\SDK\Support\Promises\unwrap;
  * Class Thread
  *
  * @package Instagram\SDK\DTO\Direct
+ * @phan-file-suppress PhanUnextractableAnnotation, PhanPluginUnknownPropertyType
  */
 class Thread extends RequestIterator implements OnItemDecodeInterface
 {
@@ -99,6 +102,13 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     protected $hasNewer;
 
     /**
+     * Not able to define @var, due to the limitation of the json-mapper.
+     *
+     * @name last_seen_at
+     */
+    protected $lastSeenAt;
+
+    /**
      * @var string
      * @name newest_cursor
      */
@@ -121,7 +131,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getThreadId()
     {
@@ -222,6 +232,14 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     public function getHasNewer()
     {
         return $this->hasNewer;
+    }
+
+    /**
+     * @return \Instagram\SDK\DTO\Direct\LastSeenAt[]
+     */
+    public function getLastSeenAt()
+    {
+        return $this->lastSeenAt;
     }
 
     /**
@@ -426,7 +444,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     {
         return task(function () {
             return $this->retrieve();
-        })($this->getMode());
+        })($this->client->getMode());
     }
 
     /**
@@ -444,7 +462,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
             }
 
             return $this->retrieve($this->oldestCursor);
-        })($this->getMode());
+        })($this->client->getMode());
     }
 
     /**
@@ -462,7 +480,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
             }
 
             return $this->retrieve($this->newestCursor);
-        })($this->getMode());
+        })($this->client->getMode());
     }
 
     /**
@@ -476,7 +494,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     public function sendMessage(string $text)
     {
         $promise = task(function () use ($text) {
-            return $this->sendThreadMessage($text, $this->threadId);
+            return $this->client->sendThreadMessage($text, $this->threadId);
         });
 
         /**
@@ -501,7 +519,23 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
             $this->items[] = $item;
 
             return true;
-        })($this->getMode());
+        })($this->client->getMode());
+    }
+
+    /**
+     * Sets the thread, or thread id as seen.
+     *
+     * @param string|null $threadItemId
+     * @return SeenMessage|Promise<SeenMessage>
+     */
+    public function seen(?string $threadItemId = null)
+    {
+        /**
+         * @var ThreadItem $latestItem
+         */
+        $latestItem = current($this->items);
+
+        return $this->client->seen($this->threadId, $threadItemId ?? $latestItem->getItemId());
     }
 
     /**
@@ -514,7 +548,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     {
         return task(function () {
             return $this->retrieve();
-        })($this->getMode());
+        })($this->client->getMode());
     }
 
     /**
@@ -529,7 +563,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     {
         // Query for thread items by cursor
         $promise = task(function () use ($cursor) {
-            return $this->thread($this->threadId, $cursor);
+            return $this->client->thread($this->threadId, $cursor);
         });
 
 
@@ -551,7 +585,39 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
                 ->setHasNewer($thread->getHasNewer());
 
             return true;
-        })($this->getMode());
+        })($this->client->getMode());
+    }
+
+    /**
+     * Returns unseen items for the user.
+     *
+     * @param string|null $userId
+     * @return ThreadItem[]
+     */
+    public function getUnseenItems(?string $userId = null): array
+    {
+        $userId = $userId ?? $this->viewerId;
+
+        /**
+         * @var $lastSeenAt LastSeenAtCollection
+         */
+        $lastSeenAt = $this->lastSeenAt;
+
+        if (($lastSeenAtForUser = $lastSeenAt->get($userId)) === null) {
+            return [];
+        }
+
+        $result = [];
+
+        foreach ($this->items as $item) {
+            if ($item->getTimestamp() <= (float)$lastSeenAtForUser->getTimestamp()) {
+                continue;
+            }
+
+            $result[] = $item;
+        }
+
+        return $result;
     }
 
     /**
@@ -561,6 +627,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array $container
      * @param array $requirements
+     * @throws \Exception
      */
     public function onDecode(array $container, $requirements = []): void
     {
@@ -597,6 +664,22 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
 
             unset($this->leftUsers[$index]);
         }
+    }
+
+    /**
+     * On decode of last seen at property.
+     *
+     * @return void
+     */
+    protected function onDecodeLastSeenAt()
+    {
+        $result = [];
+
+        foreach ($this->lastSeenAt as $userId => $item) {
+            $result[$userId] = $item = new LastSeenAt($item->timestamp, $item->item_id);
+        }
+
+        $this->lastSeenAt = new LastSeenAtCollection($result);
     }
 
     /**

@@ -28,6 +28,7 @@
     },
     "files": [
       "src/Support/functions.php",
+      "src/Support/definitions.php",
       "src/Support/Promises/functions.php"
     ]
   },
