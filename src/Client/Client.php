@@ -8,6 +8,7 @@ use Instagram\SDK\Client\Features\DiscoverFeaturesTrait;
 use Instagram\SDK\Client\Features\FeedFeaturesTrait;
 use Instagram\SDK\Client\Features\FriendshipsFeaturesTrait;
 use Instagram\SDK\Client\Features\GeneralFeaturesTrait;
+use Instagram\SDK\Client\Features\MediaFeaturesTrait;
 use Instagram\SDK\Client\Features\SearchFeaturesTrait;
 use Instagram\SDK\Client\Features\UserFeaturesTrait;
 use Instagram\SDK\Devices\Builders\DeviceBuilder;
@@ -30,6 +31,7 @@ class Client
     use SearchFeaturesTrait;
     use FeedFeaturesTrait;
     use FriendshipsFeaturesTrait;
+    use MediaFeaturesTrait;
 
     /**
      * @var RequestClient The Http client
