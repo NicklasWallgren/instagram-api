@@ -6,6 +6,7 @@ use Exception;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Interfaces\UserInterface;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
+use Instagram\SDK\DTO\Messages\Friendships\FollowersMessage;
 use Instagram\SDK\DTO\Messages\Friendships\FollowMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
@@ -182,5 +183,15 @@ class User implements UserInterface, OnItemDecodeInterface
     public function unfollow()
     {
         return $this->client->unfollow($this->id);
+    }
+
+    /**
+     * Returns a list of followers.
+     *
+     * @return FollowersMessage|Promise<FollowersMessage>
+     */
+    public function followers()
+    {
+        return $this->client->followers($this->id);
     }
 }

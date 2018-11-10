@@ -2,6 +2,8 @@
 
 namespace Instagram\SDK\Client\Features;
 
+use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\DTO\Messages\Friendships\FollowersMessage;
 use Instagram\SDK\DTO\Messages\Friendships\FollowMessage;
 use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
@@ -12,7 +14,7 @@ use function Instagram\SDK\Support\request;
 /**
  * Trait FriendshipsFeaturesTrait
  *
- * @package Instagram\SDK\Client\Features
+ * @package            Instagram\SDK\Client\Features
  * @phan-file-suppress PhanUnreferencedUseNormal
  */
 trait FriendshipsFeaturesTrait
@@ -29,6 +31,11 @@ trait FriendshipsFeaturesTrait
      * @var string
      */
     private static $URI_UNFOLLOW = 'friendships/destroy/%s/';
+
+    /**
+     * @var string
+     */
+    private static $URI_FOLLOWERS = 'friendships/%s/followers/';
 
     /**
      * Follow a user by user id.
@@ -92,5 +99,48 @@ trait FriendshipsFeaturesTrait
             // Invoke the request
             return $request->fire();
         })($this->getMode());
+    }
+
+    /**
+     * Returns a list of followers.
+     *
+     * @param string      $userId
+     * @param string|null $maxId
+     * @return FollowersMessage|Promise<FollowersMessage>
+     */
+    public function followers(string $userId, ?string $maxId = null)
+    {
+        return task(function () use ($userId, $maxId): Promise {
+            /**
+             * @var GenericRequest $request
+             */
+            $request = request(sprintf(self::$URI_FOLLOWERS, $userId), (new FollowersMessage())->setUserId($userId))(
+                $this,
+                $this->session,
+                $this->client
+            );
+
+            // Prepare the request payload
+            $request
+                ->addRankedToken()
+                ->addParam('max_id', $maxId);
+
+            // Invoke the request
+            return $request->fire();
+        })($this->getMode());
+    }
+
+    /**
+     * @param string      $userId
+     * @param null|string $maxId
+     * @suppress PhanPluginUnknownMethodReturnType, PhanUnusedPublicMethodParameter, PhanPluginUnknownMethodReturnType
+     * @return void
+     */
+    public function following(string $userId, ?string $maxId)
+    {
+
+        // TODO
+        // friendships/<userid>/following/?rank_token=<token>
+        // Same response as FollowersMessage
     }
 }
