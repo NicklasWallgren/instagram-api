@@ -31,6 +31,16 @@ trait MediaFeaturesTrait
     private static $URI_UNLIKE = 'media/%s/unlike/';
 
     /**
+     * @var string
+     */
+    private static $URI_ADD_COMMENT = 'media/%s/comment/';
+
+    /**
+     * @var string
+     */
+    private static $URI_DELETE_COMMENT = 'media/%s/comment/bulk_delete/';
+
+    /**
      * Likes a media item.
      *
      * @param string $mediaId
@@ -89,6 +99,51 @@ trait MediaFeaturesTrait
                 ->addUuidAndUid()
                 ->setPost('module_name', 'photo_view')
                 ->setPost('media_id', $mediaId)
+                ->setMode(GenericRequestBuilder::$MODE_SIGNED);
+
+            // Invoke the request
+            return $request->fire();
+        })($this->getMode());
+    }
+
+    /**
+     * Comment a media item.
+     *
+     * @param string $mediaId
+     * @param string $comment
+     */
+    public function comment(string $mediaId, string $comment)
+    {
+
+
+    }
+
+    /**
+     * Deletes a previous comment.
+     *
+     * @param string $mediaId
+     * @param string $commentId
+     * @return mixed
+     */
+    public function deleteComment(string $mediaId, string $commentId)
+    {
+        return task(function () use ($mediaId, $commentId): Promise {
+            $this->checkPrerequisites();
+
+            /**
+             * @var GenericRequest $request
+             */
+            $request = request(sprintf(self::$URI_DELETE_COMMENT, $mediaId), new Envelope())(
+                $this,
+                $this->session,
+                $this->client
+            );
+
+            // Prepare the request payload
+            $request
+                ->addCSRFToken()
+                ->addUuidAndUid()
+                ->setPost('comment_ids_to_delete', $commentId)
                 ->setMode(GenericRequestBuilder::$MODE_SIGNED);
 
             // Invoke the request
