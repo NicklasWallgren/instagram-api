@@ -155,6 +155,7 @@ class FollowingMessage extends Envelope implements IteratorInterface
      */
     public function next()
     {
+        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
         $promise = task(function () {
             // Check whether the are any more items to be fetched
             if (!$this->bigList) {
@@ -165,7 +166,7 @@ class FollowingMessage extends Envelope implements IteratorInterface
             return $this->client->followers($this->userId, $this->nextMaxId);
         });
 
-        // @phan-suppress-next-line PhanPluginUnknownClosureParamType
+        // @phan-suppress-next-line PhanPluginUnknownClosureParamType, PhanPluginUnknownClosureReturnType
         return $promise->then(function ($promise) {
             $message = unwrap($promise);
 

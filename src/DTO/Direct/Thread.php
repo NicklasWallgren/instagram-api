@@ -15,7 +15,7 @@ use function Instagram\SDK\Support\Promises\unwrap;
 /**
  * Class Thread
  *
- * @package Instagram\SDK\DTO\Direct
+ * @package            Instagram\SDK\DTO\Direct
  * @phan-file-suppress PhanUnextractableAnnotation, PhanPluginUnknownPropertyType
  */
 class Thread extends RequestIterator implements OnItemDecodeInterface
@@ -437,11 +437,11 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Retrieves the whole thread with thread items.
      *
-     * @suppress PhanPluginUnknownClosureReturnType
      * @return bool|Promise<bool>
      */
     public function whole()
     {
+        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
         return task(function () {
             return $this->retrieve();
         })($this->client->getMode());
@@ -450,11 +450,11 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Step forward and get the next items in thread.
      *
-     * @suppress PhanPluginUnknownClosureReturnType
      * @return bool|Promise<bool>
      */
     public function next()
     {
+        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
         return task(function () {
             // Check whether there are any older posts
             if (!$this->getHasOlder()) {
@@ -468,11 +468,11 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Step backward and get the previous items in thread.
      *
-     * @suppress PhanPluginUnknownClosureReturnType
      * @return bool|Promise<bool>
      */
     public function rewind()
     {
+        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
         return task(function () {
             // Check whether there are any newer posts
             if (!$this->getHasNewer()) {
@@ -486,20 +486,18 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Sends a message to the thread.
      *
-     * @suppress PhanPluginUnknownClosureReturnType
-     * @suppress PhanPluginUnknownClosureParamType
      * @param string $text
+     * @phan-suppress PhanPluginMixedKeyNoKey
      * @return bool|Promise<bool>
      */
     public function sendMessage(string $text)
     {
+        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
         $promise = task(function () use ($text) {
             return $this->client->sendThreadMessage($text, $this->threadId);
         });
 
-        /**
-         * @suppress PhanPluginMixedKeyNoKey
-         */
+        // @phan-suppress-next-line PhanPluginMixedKeyNoKey, PhanPluginUnknownClosureReturnType, PhanPluginUnknownClosureParamType
         return $promise->then(function ($promise) use ($text) {
             $message = unwrap($promise);
 
@@ -510,6 +508,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
 
             // Build the thread item
             $item = ThreadItem::create([
+                // @phan-suppress-next-line PhanPluginMixedKeyNoKey
                 'itemType' => ItemType::TEXT,
                 'user'     => $this->getSender(),
                 'text'     => $text,
@@ -546,6 +545,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      */
     public function refresh()
     {
+        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
         return task(function () {
             return $this->retrieve();
         })($this->client->getMode());
@@ -554,19 +554,18 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Retrieve thread items by cursor.
      *
-     * @suppress PhanPluginUnknownClosureReturnType
-     * @suppress PhanPluginUnknownClosureParamType
      * @param string|null $cursor
      * @return bool|Promise<bool>
      */
     protected function retrieve(?string $cursor = null)
     {
         // Query for thread items by cursor
+        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
         $promise = task(function () use ($cursor) {
             return $this->client->thread($this->threadId, $cursor);
         });
 
-
+        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType, PhanPluginUnknownClosureParamType
         return $promise->then(function ($promise) {
             $message = unwrap($promise);
 
