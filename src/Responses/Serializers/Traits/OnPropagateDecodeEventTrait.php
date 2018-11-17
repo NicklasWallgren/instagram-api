@@ -182,6 +182,7 @@ trait OnPropagateDecodeEventTrait
         }
 
         // Retrieve the required parameter value
+        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
         $parameters = array_map(function (string $parameter) use ($subject) {
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             return $this->getRequirementParameterValue($subject, $parameter);

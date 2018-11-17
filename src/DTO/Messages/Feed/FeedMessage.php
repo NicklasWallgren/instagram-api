@@ -250,6 +250,7 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
      */
     public function next()
     {
+        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
         $promise = task(function () {
             // Check whether the are any more items to be fetched
             if (!$this->moreAvailable) {
@@ -260,7 +261,7 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
             return $this->client->feed($this->type, $this->query, $this->nextMaxId);
         });
 
-        // @phan-suppress-next-line PhanPluginUnknownClosureParamType
+        // @phan-suppress-next-line PhanPluginUnknownClosureParamType, PhanPluginUnknownClosureReturnType
         return $promise->then(function ($promise) {
             $message = unwrap($promise);
 
