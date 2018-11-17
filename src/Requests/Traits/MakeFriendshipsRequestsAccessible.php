@@ -3,6 +3,8 @@
 namespace Instagram\SDK\Requests\Traits;
 
 use Instagram\SDK\Client\Client;
+use Instagram\SDK\DTO\Messages\Friendships\FollowersMessage;
+use Instagram\SDK\DTO\Messages\Friendships\FollowingMessage;
 use Instagram\SDK\DTO\Messages\Friendships\FollowMessage;
 use Instagram\SDK\Support\Promise;
 
@@ -36,6 +38,29 @@ trait MakeFriendshipsRequestsAccessible
         return $this->getClient()->unfollow($userId);
     }
 
+    /**
+     * Returns list of followers.
+     *
+     * @param string      $userId
+     * @param string|null $maxId
+     * @return FollowersMessage|Promise<FollowersMessage>
+     */
+    public function followers(string $userId, ?string $maxId = null)
+    {
+        return $this->getClient()->followers($userId, $maxId);
+    }
+
+    /**
+     * Returns list of following users.
+     *
+     * @param string      $userId
+     * @param string|null $maxId
+     * @return FollowingMessage|Promise<FollowingMessage>
+     */
+    public function following(string $userId, ?string $maxId = null)
+    {
+        return $this->getClient()->following($userId, $maxId);
+    }
 
     /**
      * Returns the client.
