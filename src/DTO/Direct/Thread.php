@@ -497,6 +497,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
             return $this->client->sendThreadMessage($text, $this->threadId);
         });
 
+        // phpcs:ignore
         // @phan-suppress-next-line PhanPluginMixedKeyNoKey, PhanPluginUnknownClosureReturnType, PhanPluginUnknownClosureParamType
         return $promise->then(function ($promise) use ($text) {
             $message = unwrap($promise);
