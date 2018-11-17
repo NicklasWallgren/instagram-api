@@ -12,11 +12,11 @@ use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\Promises\unwrap;
 
 /**
- * Class FollowersMessage
+ * Class FollowingMessage
  *
  * @package Instagram\SDK\DTO\Messages\Friendships
  */
-class FollowersMessage extends Envelope implements IteratorInterface
+class FollowingMessage extends Envelope implements IteratorInterface
 {
 
     use Inflatable;

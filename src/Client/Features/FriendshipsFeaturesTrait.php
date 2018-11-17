@@ -2,8 +2,8 @@
 
 namespace Instagram\SDK\Client\Features;
 
-use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Messages\Friendships\FollowersMessage;
+use Instagram\SDK\DTO\Messages\Friendships\FollowingMessage;
 use Instagram\SDK\DTO\Messages\Friendships\FollowMessage;
 use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
@@ -36,6 +36,11 @@ trait FriendshipsFeaturesTrait
      * @var string
      */
     private static $URI_FOLLOWERS = 'friendships/%s/followers/';
+
+    /**
+     * @var string
+     */
+    private static $URI_FOLLOWING = 'friendships/%s/following/';
 
     /**
      * Follow a user by user id.
@@ -131,16 +136,31 @@ trait FriendshipsFeaturesTrait
     }
 
     /**
+     * Returns a list of following users.
+     *
      * @param string      $userId
      * @param null|string $maxId
-     * @suppress PhanPluginUnknownMethodReturnType, PhanUnusedPublicMethodParameter, PhanPluginUnknownMethodReturnType
-     * @return void
+     * @return FollowingMessage|Promise<FollowingMessage>
      */
     public function following(string $userId, ?string $maxId)
     {
+        return task(function () use ($userId, $maxId): Promise {
+            /**
+             * @var GenericRequest $request
+             */
+            $request = request(sprintf(self::$URI_FOLLOWING, $userId), (new FollowingMessage())->setUserId($userId))(
+                $this,
+                $this->session,
+                $this->client
+            );
 
-        // TODO
-        // friendships/<userid>/following/?rank_token=<token>
-        // Same response as FollowersMessage
+            // Prepare the request payload
+            $request
+                ->addRankedToken()
+                ->addParam('max_id', $maxId);
+
+            // Invoke the request
+            return $request->fire();
+        })($this->getMode());
     }
 }
