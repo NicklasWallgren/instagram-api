@@ -19,6 +19,7 @@ trait MakeRequestsAccessible
     use MakeFeedRequestsAccessible;
     use MakeSearchRequestsAccessible;
     use MakeFriendshipsRequestsAccessible;
+    use MakeMediaRequestsAccessible;
 
     /**
      * Returns the result mode.
