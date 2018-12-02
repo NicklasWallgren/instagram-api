@@ -3,11 +3,13 @@
 namespace Instagram\SDK\Client\Features;
 
 use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\DTO\Messages\Media\CommentMessage;
 use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
 use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
+use function Instagram\SDK\Support\uuid;
 
 /**
  * Trait MediaFeaturesTrait
@@ -111,21 +113,43 @@ trait MediaFeaturesTrait
      *
      * @param string $mediaId
      * @param string $comment
+     * @return CommentMessage|Promise<CommentMessage>
      */
     public function comment(string $mediaId, string $comment)
     {
+        return task(function () use ($mediaId, $comment): Promise {
+            $this->checkPrerequisites();
 
+            /**
+             * @var GenericRequest $request
+             */
+            $request = request(sprintf(self::$URI_ADD_COMMENT, $mediaId), new CommentMessage())(
+                $this,
+                $this->session,
+                $this->client
+            );
 
+            // Prepare the request payload
+            $request
+                ->addCSRFToken()
+                ->addUuidAndUid()
+                ->setPost('comment_text', $comment)
+                ->setPost('idempotence_token', uuid())
+                ->setMode(GenericRequestBuilder::$MODE_SIGNED);
+
+            // Invoke the request
+            return $request->fire();
+        })($this->getMode());
     }
 
     /**
      * Deletes a previous comment.
      *
      * @param string $mediaId
-     * @param string $commentId
-     * @return mixed
+     * @param int    $commentId
+     * @return Envelope|Promise<Envelope>
      */
-    public function deleteComment(string $mediaId, string $commentId)
+    public function deleteComment(string $mediaId, int $commentId)
     {
         return task(function () use ($mediaId, $commentId): Promise {
             $this->checkPrerequisites();
@@ -143,12 +167,11 @@ trait MediaFeaturesTrait
             $request
                 ->addCSRFToken()
                 ->addUuidAndUid()
-                ->setPost('comment_ids_to_delete', $commentId)
+                ->setPost('comment_ids_to_delete', (string)$commentId)
                 ->setMode(GenericRequestBuilder::$MODE_SIGNED);
 
             // Invoke the request
             return $request->fire();
         })($this->getMode());
     }
-
 }
