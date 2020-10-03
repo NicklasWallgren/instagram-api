@@ -13,7 +13,7 @@
     "psr/http-message": "^1.0",
     "netresearch/jsonmapper": "^1.1",
     "runz0rd/mapper-php": "^2.2",
-    "php": ">=7.1",
+    "php": ">=7.2",
     "ext-curl": "*",
     "webmozart/assert": "^1.3"
   },
