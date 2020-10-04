@@ -3,13 +3,14 @@ namespace Instagram\SDK\Support;
 
 use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
+use Instagram\SDK\Support\Interfaces\InvokableInterface;
 use function GuzzleHttp\Promise\exception_for;
 use function GuzzleHttp\Promise\queue;
 use function Instagram\SDK\Support\Promises\promise_for;
 use function Instagram\SDK\Support\Promises\rejection_for;
 use Throwable;
 
-class Promise implements PromiseInterface
+class Promise implements PromiseInterface, InvokableInterface
 {
 
     private $state = self::PENDING;

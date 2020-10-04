@@ -265,6 +265,7 @@ return [
         'PhanPluginNoCommentOnPrivateMethod',
         'PhanPluginDescriptionlessCommentOnPrivateMethod',
         'PhanPluginDescriptionlessCommentOnPublicMethod',
+        'PhanUndeclaredInvokeInCallable',
     ],
 
     // If empty, no filter against issues types will be applied.

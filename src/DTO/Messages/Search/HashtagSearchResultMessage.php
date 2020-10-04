@@ -5,11 +5,11 @@ namespace Instagram\SDK\DTO\Messages\Search;
 use Instagram\SDK\DTO\Hashtag\ResultItem;
 
 /**
- * Class HashtagMessage
+ * Class HashtagSearchResultMessage
  *
  * @package Instagram\SDK\DTO\Messages\Search
  */
-class HashtagMessage extends SearchResultMessage
+class HashtagSearchResultMessage extends SearchResultMessage
 {
 
     /**

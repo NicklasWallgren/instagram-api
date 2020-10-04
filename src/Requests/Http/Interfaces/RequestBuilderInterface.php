@@ -27,7 +27,7 @@ interface RequestBuilderInterface
     /**
      * Returns the default headers.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getHeaders(): array;
 

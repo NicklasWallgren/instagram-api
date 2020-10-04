@@ -24,7 +24,7 @@ class TopLiveMessage extends Envelope
     protected $autoLoadMoreEnabled;
 
     /**
-     * @var mixed
+     * @var array<\stdClass> // TODO, define DTO class
      */
     protected $broadcasts;
 
@@ -49,7 +49,7 @@ class TopLiveMessage extends Envelope
     }
 
     /**
-     * @return array
+     * @return array<\stdClass>
      */
     public function getBroadcasts(): array
     {

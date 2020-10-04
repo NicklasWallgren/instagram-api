@@ -18,12 +18,12 @@ class GenericRequestBuilder extends AbstractPayloadRequestBuilder
     use CommonSerializerTrait;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $parameters = [];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $payload = [];
 
@@ -76,7 +76,7 @@ class GenericRequestBuilder extends AbstractPayloadRequestBuilder
     /**
      * Sets the payload.
      *
-     * @param array $payload
+     * @param array<string, mixed> $payload
      * @return GenericRequestBuilder
      */
     public function setPayload(array $payload): GenericRequestBuilder
@@ -106,7 +106,7 @@ class GenericRequestBuilder extends AbstractPayloadRequestBuilder
     /**
      * Returns the body parameters.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getBodyParameters(): array
     {
@@ -116,7 +116,7 @@ class GenericRequestBuilder extends AbstractPayloadRequestBuilder
     /**
      * Returns the query parameters.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getQueryParameters(): array
     {

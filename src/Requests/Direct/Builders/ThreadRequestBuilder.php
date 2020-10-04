@@ -51,7 +51,7 @@ class ThreadRequestBuilder extends AbstractQueryRequestBuilder
     /**
      * Returns the method uri parameters.
      *
-     * @return array
+     * @return array<string>
      */
     protected function getMethodUriParameters(): array
     {
@@ -61,7 +61,7 @@ class ThreadRequestBuilder extends AbstractQueryRequestBuilder
     /**
      * Returns the query parameters.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getQueryParameters(): array
     {
@@ -76,7 +76,7 @@ class ThreadRequestBuilder extends AbstractQueryRequestBuilder
     /**
      * Adds the cursor query parameter
      *
-     * @param $query
+     * @param array<string, mixed> $query
      * @return void
      */
     protected function addCursorParameter(array &$query)

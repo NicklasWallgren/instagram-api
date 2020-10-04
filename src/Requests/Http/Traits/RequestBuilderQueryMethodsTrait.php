@@ -24,7 +24,7 @@ trait RequestBuilderQueryMethodsTrait
     /**
      * Returns the query parameters.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getQueryParameters(): array
     {
@@ -34,7 +34,7 @@ trait RequestBuilderQueryMethodsTrait
     /**
      * Returns the method uri parameters.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getMethodUriParameters(): array
     {
@@ -58,7 +58,7 @@ trait RequestBuilderQueryMethodsTrait
      */
     protected function getMethodUri(): string
     {
-        // Compose the method uri
+        // @phan-suppress-next-line PhanPluginPrintfVariableFormatString,PhanTypeMismatchUnpackKey
         $methodUri = sprintf(static::$URI_TEMPLATE, ...$this->getMethodUriParameters());
 
         return sprintf('%s%s', $methodUri, $this->getQuery());

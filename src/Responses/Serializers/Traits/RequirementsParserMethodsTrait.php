@@ -15,7 +15,7 @@ trait RequirementsParserMethodsTrait
      *
      * @suppress PhanUnusedVariable
      * @param string $requirement
-     * @return array
+     * @return array<string, mixed>
      */
     public function parse(string $requirement): array
     {
@@ -30,9 +30,9 @@ trait RequirementsParserMethodsTrait
      * Parses the parameters.
      *
      * @param string|null $parameters
-     * @return array
+     * @return array<string, mixed>
      */
-    private function parseParameters($parameters)
+    private function parseParameters(?string $parameters)
     {
         return $parameters !== null? explode(',', $parameters) : [];
     }

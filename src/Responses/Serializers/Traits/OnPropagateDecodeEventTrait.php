@@ -20,8 +20,8 @@ trait OnPropagateDecodeEventTrait
      * On item decode method.
      *
      * @suppress PhanUnusedPublicMethodParameter
-     * @param array $container
-     * @param array $requirements
+     * @param array<string, mixed>  $container
+     * @param array<string, string> $requirements
      * @throws Exception
      */
     public function onDecode(array $container, $requirements = []): void
@@ -33,7 +33,7 @@ trait OnPropagateDecodeEventTrait
      * Propagate the on decode event.
      *
      * @suppress PhanPartialTypeMismatchArgument
-     * @param array $container
+     * @param array<string, mixed> $container
      * @throws Exception
      */
     protected function propagate(array $container): void
@@ -61,8 +61,8 @@ trait OnPropagateDecodeEventTrait
     /**
      * Invokes the decode event listener.
      *
-     * @param iterable $iterable
-     * @param array    $container
+     * @param iterable             $iterable
+     * @param array<string, mixed> $container
      * @throws Exception
      */
     protected function invokeDecodeEventListener(iterable $iterable, array $container): void
@@ -87,7 +87,7 @@ trait OnPropagateDecodeEventTrait
     /**
      * Set requirements if possible.
      *
-     * @param array  $requirements
+     * @param array<string, string>  $requirements
      * @param object $subject
      */
     protected function setRequirementsIfPossible(array $requirements, $subject): void
@@ -145,7 +145,7 @@ trait OnPropagateDecodeEventTrait
      * Returns the list of subject requirements.
      *
      * @param OnDecodeRequirementsInterface $subject
-     * @return array
+     * @return array<string, string>
      * @throws Exception
      */
     protected function getRequirements(OnDecodeRequirementsInterface $subject): array

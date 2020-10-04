@@ -4,9 +4,9 @@ namespace Instagram\SDK\Client\Features;
 
 use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
-use Instagram\SDK\DTO\Messages\Search\HashtagMessage;
+use Instagram\SDK\DTO\Messages\Search\HashtagSearchResultMessage;
 use Instagram\SDK\DTO\Messages\Search\SearchResultMessage;
-use Instagram\SDK\DTO\Messages\Search\UserMessage;
+use Instagram\SDK\DTO\Messages\Search\UserSearchResultMessage;
 use Instagram\SDK\Instagram;
 use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\rejection_for;
@@ -71,11 +71,11 @@ trait SearchFeaturesTrait
     {
         switch ($type) {
             case TYPE_HASHTAG:
-                $result = $this->querySearch(self::$ENDPOINT_HASHTAG_SEARCH, $query, HashtagMessage::class);
+                $result = $this->querySearch(self::$ENDPOINT_HASHTAG_SEARCH, $query, HashtagSearchResultMessage::class);
 
                 break;
             case TYPE_USER:
-                $result = $this->querySearch(self::$ENDPOINT_USER_SEARCH, $query, UserMessage::class);
+                $result = $this->querySearch(self::$ENDPOINT_USER_SEARCH, $query, UserSearchResultMessage::class);
 
                 break;
             default:
