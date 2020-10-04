@@ -80,8 +80,8 @@ class ResultItem extends Interactive implements OnItemDecodeInterface
      *
      * @suppress PhanUnusedPublicMethodParameter
      * @suppress PhanPossiblyNullTypeMismatchProperty
-     * @param array $container
-     * @param array $requirements
+     * @param array<string, mixed> $container
+     * @param array<string, string> $requirements
      * @throws \Exception
      */
     public function onDecode(array $container, $requirements = []): void

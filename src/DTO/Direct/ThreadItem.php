@@ -277,8 +277,8 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
      * On item decode method.
      *
      * @suppress PhanUnusedPublicMethodParameter, PhanPossiblyNullTypeMismatchProperty
-     * @param array $container
-     * @param array $requirements
+     * @param array<string, mixed> $container
+     * @param array<string, string> $requirements
      */
     public function onDecode(array $container, $requirements = []): void
     {

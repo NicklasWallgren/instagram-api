@@ -13,8 +13,8 @@ interface OnItemDecodeInterface
     /**
      * On item decode method.
      *
-     * @param array $container
-     * @param array $requirements
+     * @param array<string, mixed> $container
+     * @param array<string, string> $requirements
      */
     public function onDecode(array $container, $requirements = []): void;
 }

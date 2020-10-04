@@ -139,8 +139,8 @@ class RequestClient
     /**
      * Compose the options list.
      *
-     * @param array $options
-     * @return array
+     * @param array<string, mixed> $options
+     * @return array<string, mixed>
      */
     protected function options(array $options = []): array
     {

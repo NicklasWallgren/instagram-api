@@ -13,7 +13,7 @@ interface PropertiesInterface
     /**
      * Returns the properties.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getProperties(): array;
 }

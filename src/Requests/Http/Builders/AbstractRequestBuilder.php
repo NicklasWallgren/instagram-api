@@ -90,7 +90,7 @@ abstract class AbstractRequestBuilder
     /**
      * Returns the default headers.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     abstract protected function getHeaders(): array;
 

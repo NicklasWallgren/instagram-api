@@ -51,11 +51,13 @@ trait MediaFeaturesTrait
     public function like(string $mediaId)
     {
         return task(function () use ($mediaId): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             /**
              * @var GenericRequest $request
              */
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_LIKE, $mediaId), new Envelope())(
                 $this,
                 $this->session,
@@ -84,11 +86,13 @@ trait MediaFeaturesTrait
     public function unlike(string $mediaId)
     {
         return task(function () use ($mediaId): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             /**
              * @var GenericRequest $request
              */
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_UNLIKE, $mediaId), new Envelope())(
                 $this,
                 $this->session,
@@ -118,11 +122,13 @@ trait MediaFeaturesTrait
     public function comment(string $mediaId, string $comment)
     {
         return task(function () use ($mediaId, $comment): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             /**
              * @var GenericRequest $request
              */
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_ADD_COMMENT, $mediaId), new CommentMessage())(
                 $this,
                 $this->session,
@@ -152,11 +158,13 @@ trait MediaFeaturesTrait
     public function deleteComment(string $mediaId, int $commentId)
     {
         return task(function () use ($mediaId, $commentId): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             /**
              * @var GenericRequest $request
              */
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_DELETE_COMMENT, $mediaId), new Envelope())(
                 $this,
                 $this->session,

@@ -30,7 +30,7 @@ function uuid(bool $type = SignatureSupport::TYPE_DEFAULT): string
  *
  * @param string|AbstractRequestBuilder $uri        The request uri or request builder
  * @param Envelope|AbstractSerializer   $serializer The response envelope or serializer
- * @return Closure
+ * @return Closure<GenericRequest>
  */
 function request($uri, $serializer)
 {

@@ -38,7 +38,7 @@ class Timeline extends Envelope implements IteratorInterface, PropertiesInterfac
     protected $autoLoadMoreEnabled;
 
     /**
-     * @var array
+     * @var array<\stdClass> // TODO, define DTO class
      * @name feed_items
      */
     protected $feedItems;

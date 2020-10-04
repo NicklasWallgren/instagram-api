@@ -30,7 +30,7 @@ class ExploreMessage extends Envelope
     protected $autoLoadMoreEnabled;
 
     /**
-     * @var mixed
+     * @var array<\stdClass> // TODO, define DTO class
      */
     protected $items;
 
@@ -75,7 +75,7 @@ class ExploreMessage extends Envelope
     }
 
     /**
-     * @return array
+     * @return array<\stdClass>
      */
     public function getItems(): array
     {

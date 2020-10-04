@@ -5,15 +5,16 @@ namespace Instagram\SDK\DTO\Messages\Search;
 use Instagram\SDK\DTO\General\User;
 
 /**
- * Class UserMessage
+ * Class UserSearchResultMessage
  *
  * @package Instagram\SDK\DTO\Messages\Search
  */
-class UserMessage extends SearchResultMessage
+class UserSearchResultMessage extends SearchResultMessage
 {
 
     /**
      * @var int
+     * @name num_results
      */
     protected $numResults;
 

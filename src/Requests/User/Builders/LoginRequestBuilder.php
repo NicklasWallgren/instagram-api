@@ -49,7 +49,7 @@ class LoginRequestBuilder extends AbstractPayloadRequestBuilder
     /**
      * Returns the body parameters.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getBodyParameters(): array
     {
@@ -65,10 +65,10 @@ class LoginRequestBuilder extends AbstractPayloadRequestBuilder
     /**
      * Adds session parameters.
      *
-     * @param array $parameters
-     * @return array
+     * @param array<string, mixed> $parameters
+     * @return array<string, string>
      */
-    protected function addSessionParameters(&$parameters)
+    protected function addSessionParameters(array &$parameters)
     {
         return $parameters = array_merge([
             'device_id'  => $this->session->getDevice()->deviceId(),

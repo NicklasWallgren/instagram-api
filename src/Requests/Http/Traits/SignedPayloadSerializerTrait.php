@@ -28,11 +28,11 @@ trait SignedPayloadSerializerTrait
             /**
              * Encodes the body.
              *
-             * @param array $body
+             * @param array<string, mixed> $body
              * @return string
              * @throws EncodingException
              */
-            public function encode($body)
+            public function encode(array $body)
             {
                 if (($data = json_encode($body)) === false) {
                     throw new EncodingException(json_last_error_msg());

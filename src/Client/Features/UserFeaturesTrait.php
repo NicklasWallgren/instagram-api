@@ -66,6 +66,7 @@ trait UserFeaturesTrait
     public function loginUsingNonce(string $nonce)
     {
         return task(function () use ($nonce): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             // Build the request instance
@@ -99,6 +100,7 @@ trait UserFeaturesTrait
     public function logout()
     {
         return task(function (): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             // Build the request instance

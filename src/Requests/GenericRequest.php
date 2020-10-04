@@ -81,7 +81,7 @@ class GenericRequest extends Request
     /**
      * Sets the post payload.
      *
-     * @param array $payload
+     * @param array<string, mixed> $payload
      * @return GenericRequest
      */
     public function setPayload(array $payload): GenericRequest

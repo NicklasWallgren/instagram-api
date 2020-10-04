@@ -3,8 +3,8 @@
 namespace Instagram\SDK\Client\Adapters;
 
 use GuzzleHttp\Promise\Promise;
+use GuzzleHttp\Promise\Utils;
 use Instagram\SDK\Client\Adapters\Interfaces\AdapterInterface;
-use function GuzzleHttp\Promise\task;
 
 /**
  * Class PromiseAdapter
@@ -22,6 +22,6 @@ class PromiseAdapter implements AdapterInterface
      */
     public function run(callable $callback): Promise
     {
-        return task($callback);
+        return Utils::task($callback);
     }
 }

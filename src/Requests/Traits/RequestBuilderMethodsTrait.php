@@ -47,7 +47,7 @@ trait RequestBuilderMethodsTrait
     /**
      * Returns the headers.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getHeaders(): array
     {

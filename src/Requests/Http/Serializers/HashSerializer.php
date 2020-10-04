@@ -18,11 +18,11 @@ class HashSerializer implements SerializerInterface
     /**
      * Encodes the body.
      *
-     * @param array $body
+     * @param array<string, mixed> $body
      * @return string
      * @throws Exception
      */
-    public function encode($body): string
+    public function encode(array $body): string
     {
         Assert::isArray($body);
 

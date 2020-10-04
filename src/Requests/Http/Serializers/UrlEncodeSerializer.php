@@ -13,10 +13,10 @@ class UrlEncodeSerializer implements SerializerInterface
     /**
      * Encodes the body.
      *
-     * @param array $body
+     * @param array<string, mixed> $body
      * @return string
      */
-    public function encode($body): string
+    public function encode(array $body): string
     {
         return http_build_query($body, '', '&');
     }

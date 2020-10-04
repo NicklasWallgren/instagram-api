@@ -38,7 +38,7 @@ class HeadersBuilder
     /**
      * Returns the default headers.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function build(): array
     {
