@@ -16,7 +16,6 @@ use Traits\MappableTrait;
 class Envelope implements ResponseMessageInterface, PropertiesInterface
 {
 
-    use MappableTrait;
     use PropertiesTrait;
     use OnPropagateDecodeEventTrait;
 
@@ -37,7 +36,6 @@ class Envelope implements ResponseMessageInterface, PropertiesInterface
 
     /**
      * @var string
-     * @name error_type
      */
     protected $errorType;
 
@@ -48,7 +46,6 @@ class Envelope implements ResponseMessageInterface, PropertiesInterface
 
     /**
      * @var bool
-     * @name invalid_credentials
      */
     protected $invalidCredentials;
 

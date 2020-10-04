@@ -33,19 +33,16 @@ class FollowingMessage extends Envelope implements IteratorInterface
 
     /**
      * @var bool
-     * @name big_list
      */
     protected $bigList;
 
     /**
      * @var string|null
-     * @name next_max_id
      */
     protected $nextMaxId;
 
     /**
      * @var int
-     * @name page_size
      */
     protected $pageSize;
 

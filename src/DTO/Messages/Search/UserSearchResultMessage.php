@@ -14,7 +14,6 @@ class UserSearchResultMessage extends SearchResultMessage
 
     /**
      * @var int
-     * @name num_results
      */
     protected $numResults;
 

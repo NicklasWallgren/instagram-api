@@ -14,7 +14,6 @@ use Traits\MappableTrait;
 class DirectSendItemMessage extends Envelope
 {
 
-    use MappableTrait;
     use OnPropagateDecodeEventTrait;
 
     /**
@@ -24,7 +23,6 @@ class DirectSendItemMessage extends Envelope
 
     /**
      * @var string
-     * @name status_code
      */
     protected $statusCode;
 

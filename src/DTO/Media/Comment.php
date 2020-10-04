@@ -12,7 +12,6 @@ class Comment
 
     /**
      * @var string
-     * @name content_type
      */
     protected $contentType;
 
@@ -38,19 +37,16 @@ class Comment
 
     /**
      * @var int
-     * @name created_at
      */
     protected $createdAt;
 
     /**
      * @var int
-     * @name created_at_utc
      */
     protected $createdAtUTC;
 
     /**
      * @var int
-     * @name media_id
      */
     protected $mediaId;
 
@@ -61,7 +57,6 @@ class Comment
 
     /**
      * @var bool
-     * @name share_enabled
      */
     protected $shareEnabled;
 

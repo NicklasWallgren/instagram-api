@@ -31,7 +31,6 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
 
     /**
      * @var \Instagram\SDK\DTO\Hashtag\Item[]
-     * @name ranked_items
      */
     protected $rankedItems = [];
 
@@ -42,7 +41,6 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
 
     /**
      * @var int
-     * @name num_results
      */
     protected $numResults;
 
@@ -53,19 +51,16 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
 
     /**
      * @var string
-     * @name next_max_id
      */
     protected $nextMaxId;
 
     /**
      * @var bool
-     * @name more_available
      */
     protected $moreAvailable;
 
     /**
      * @var bool
-     * @name auto_load_more_enabled
      */
     protected $autoLoadMoreEnabled;
 

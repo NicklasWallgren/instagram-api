@@ -4,6 +4,7 @@ namespace Instagram\SDK\DTO\Messages\Discover;
 
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Tebru\Gson\Annotation as Gson;
 use Traits\MappableTrait;
 
 /**
@@ -14,49 +15,42 @@ use Traits\MappableTrait;
 class ExploreMessage extends Envelope
 {
 
-    use MappableTrait;
     use OnPropagateDecodeEventTrait;
 
     /**
      * @var int
-     * @name num_results
      */
-    protected $numResults;
+    private $numResults;
 
     /**
      * @var bool
-     * @name auto_load_more_enabled
      */
-    protected $autoLoadMoreEnabled;
+    private $autoLoadMoreEnabled;
 
     /**
      * @var array<\stdClass> // TODO, define DTO class
      */
-    protected $items;
+    private $items;
 
     /**
      * @var bool
-     * @name more_available
      */
-    protected $moreAvailable;
+    private $moreAvailable;
 
     /**
      * @var string
-     * @name next_max_id
      */
-    protected $nextMaxId;
+    private $nextMaxId;
 
     /**
      * @var string
-     * @name max_Id
      */
-    protected $maxId;
+    private $maxId;
 
     /**
      * @var string
-     * @name rank_token
      */
-    protected $rankToken;
+    private $rankToken;
 
     /**
      * @return mixed

@@ -3,6 +3,7 @@
 namespace Instagram\SDK\DTO\Direct;
 
 use Instagram\SDK\DTO\General\MediaType;
+use Tebru\Gson\Annotation\SerializedName;
 
 /**
  * Class ThreadMediaItem
@@ -14,31 +15,27 @@ class ThreadMediaItem
 
     /**
      * @var int
-     * @name media_type
      */
     protected $mediaType;
 
     /**
      * @var \Instagram\SDK\DTO\General\Media\ImageVersions2
-     * @name image_versions2
+     * @SerializedName("image_versions2")
      */
     protected $images;
 
     /**
-     * @var mixed
-     * @name video_versions
+     * @var mixed // TODO
      */
     protected $videoVersions;
 
     /**
      * @var int
-     * @name original_width
      */
     protected $originalWidth;
 
     /**
      * @var int
-     * @name original_height
      */
     protected $originalHeight;
 

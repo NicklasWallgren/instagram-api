@@ -9,6 +9,7 @@ use Instagram\SDK\DTO\Messages\Direct\SeenMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Instagram\SDK\Support\Promise;
+use Tebru\Gson\Annotation\JsonAdapter;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\Promises\unwrap;
 
@@ -25,100 +26,89 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
 
     /**
      * @var string
-     * @name thread_id
      */
-    protected $threadId;
+    private $threadId;
 
     /**
      * @var \Instagram\SDK\DTO\General\User[]
      */
-    protected $users = [];
+    private $users = [];
 
     /**
      * @var \Instagram\SDK\DTO\General\User[]
-     * @name left_users
      */
-    protected $leftUsers = [];
+    private $leftUsers = [];
 
     /**
      * @var \Instagram\SDK\DTO\Direct\ThreadItem[]
      */
-    protected $items;
+    private $items;
 
     /**
      * @var string
-     * @name thread_title
      */
-    protected $threadTitle;
+    private $threadTitle;
 
     /**
      * @var double
-     * @name last_activity_at
      */
-    protected $lastActivityAt;
+    private $lastActivityAt;
 
     /**
      * @var bool
      */
-    protected $muted;
+    private $muted;
 
     /**
      * @var bool
      */
-    protected $named;
+    private $named;
 
     /**
      * @var bool
      */
-    protected $canonical;
+    private $canonical;
 
     /**
      * @var bool
      */
-    protected $pending;
+    private $pending;
 
     /**
      * @var string
-     * @name thread_type
      */
-    protected $threadType;
+    private $threadType;
 
     /**
      * @var int
-     * @name viewer_id
      */
-    protected $viewerId;
+    private $viewerId;
 
     /**
      * @var bool
-     * @name has_older
      */
-    protected $hasOlder;
+    private $hasOlder;
 
     /**
      * @var bool
-     * @name has_newer
      */
-    protected $hasNewer;
+    private $hasNewer;
 
     /**
-     * Not able to define @var, due to the limitation of the json-mapper.
-     *
-     * @name last_seen_at
+     * @var LastSeenAtCollection<LastSeenAt>
+     * @JsonAdapter("Instagram\SDK\DTO\Direct\Adapters\LastSeenAtAdapter")
      */
-    protected $lastSeenAt;
-
-    /**
-     * @var string
-     * @name newest_cursor
-     */
-    protected $newestCursor;
+    private $lastSeenAt;
 
     /**
      * @var string
-     * @name oldest_cursor
      */
-    protected $oldestCursor;
+    private $newestCursor;
+
+    /**
+     * @var string
+     */
+    private $oldestCursor;
 
     /**
      * Returns the thread items.
@@ -625,7 +615,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      *
      * @suppress PhanUnusedPublicMethodParameter
      * @suppress PhanPossiblyNullTypeMismatchProperty
-     * @param array<string, mixed> $container
+     * @param array<string, mixed>  $container
      * @param array<string, string> $requirements
      * @throws \Exception
      */
@@ -664,22 +654,6 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
 
             unset($this->leftUsers[$index]);
         }
-    }
-
-    /**
-     * On decode of last seen at property.
-     *
-     * @return void
-     */
-    protected function onDecodeLastSeenAt()
-    {
-        $result = [];
-
-        foreach ($this->lastSeenAt as $userId => $item) {
-            $result[$userId] = $item = new LastSeenAt($item->timestamp, $item->item_id);
-        }
-
-        $this->lastSeenAt = new LastSeenAtCollection($result);
     }
 
     /**

@@ -14,7 +14,6 @@ use Traits\MappableTrait;
 class InboxMessage extends Envelope
 {
 
-    use MappableTrait;
     use OnPropagateDecodeEventTrait;
 
     /**
@@ -26,9 +25,8 @@ class InboxMessage extends Envelope
 
     /**
      * @var int
-     * @name seq_id
      */
-    protected $seqId;
+    protected $seqId; // TODO
 
     /**
      * @var mixed
@@ -37,13 +35,11 @@ class InboxMessage extends Envelope
 
     /**
      * @var int
-     * @name pending_requests_total
      */
     protected $pendingRequestsTotal;
 
     /**
-     * @var mixed
-     * @name pending_requests_user
+     * @var mixed // TODO
      */
     protected $pendingRequestsUsers;
 

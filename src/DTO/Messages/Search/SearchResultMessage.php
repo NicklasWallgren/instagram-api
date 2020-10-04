@@ -34,13 +34,11 @@ abstract class SearchResultMessage extends Envelope implements PropertiesInterfa
 
     /**
      * @var bool
-     * @name has_more
      */
     protected $hasMore;
 
     /**
      * @var string
-     * @name rank_token
      */
     protected $rankToken;
 

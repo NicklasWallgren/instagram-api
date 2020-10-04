@@ -6,6 +6,7 @@ use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
 use Instagram\SDK\DTO\Traits\Inflatable;
 use Instagram\SDK\Responses\Interfaces\IteratorInterface;
+use Tebru\Gson\Annotation\SerializedName;
 
 /**
  * Class Timeline
@@ -21,37 +22,32 @@ class Timeline extends Envelope implements IteratorInterface, PropertiesInterfac
 
     /**
      * @var int
-     * @name num_results
+     * @SerializedName("num_results")
      */
     protected $numberOfResults;
 
     /**
      * @var bool
-     * @name more_available
      */
     protected $moreAvailable;
 
     /**
      * @var bool
-     * @name auto_load_more_enabled
      */
     protected $autoLoadMoreEnabled;
 
     /**
      * @var array<\stdClass> // TODO, define DTO class
-     * @name feed_items
      */
     protected $feedItems;
 
     /**
      * @var string
-     * @name next_max_id
      */
     protected $nextMaxId;
 
     /**
      * @var
-     * @name pagination_info
      */
     protected $paginationInfo;
 

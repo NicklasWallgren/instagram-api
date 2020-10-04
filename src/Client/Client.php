@@ -158,4 +158,13 @@ class Client
     {
         return $this;
     }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function __debugInfo()
+    {
+        return [];
+    }
 }

@@ -25,13 +25,11 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
 
     /**
      * @var string
-     * @name item_id
      */
     protected $itemId;
 
     /**
      * @var int
-     * @name user_id
      */
     protected $userId;
 
@@ -47,7 +45,6 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
 
     /**
      * @var string
-     * @name item_type
      */
     protected $itemType;
 
@@ -58,13 +55,11 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
 
     /**
      * @var string
-     * @name text
      */
     protected $text;
 
     /**
      * @var string
-     * @name client_context
      */
     protected $clientContext;
 

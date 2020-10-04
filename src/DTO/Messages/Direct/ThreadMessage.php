@@ -15,7 +15,6 @@ use Traits\MappableTrait;
 class ThreadMessage extends Envelope implements OnItemDecodeInterface
 {
 
-    use MappableTrait;
     use OnPropagateDecodeEventTrait;
 
     /**

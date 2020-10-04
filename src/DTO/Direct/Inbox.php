@@ -20,19 +20,16 @@ class Inbox implements OnItemDecodeInterface
 
     /**
      * @var int
-     * @name unseen_count
      */
     protected $unseenCount;
 
     /**
      * @var bool
-     * @name has_older
      */
     protected $hasOlder;
 
     /**
      * @var double
-     * @name unseen_count_timestamp
      */
     protected $unseenCountTimestamp;
 

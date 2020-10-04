@@ -12,7 +12,6 @@ class ImageVersions2
 
     /**
      * @var \Instagram\SDK\DTO\General\Media\Image[]
-     * @name candidates
      */
     protected $candidates;
 
