@@ -17,7 +17,7 @@ use function Instagram\SDK\Support\request;
 /**
  * Trait DirectFeaturesTrait
  *
- * @package Instagram\SDK\Client\Features
+ * @package            Instagram\SDK\Client\Features
  * @phan-file-suppress PhanUnreferencedUseNormal
  */
 trait DirectFeaturesTrait
@@ -38,12 +38,13 @@ trait DirectFeaturesTrait
     /**
      * Retrieves the inbox.
      *
-     * @throws Exception
      * @return InboxMessage|Promise<InboxMessage>
+     * @throws Exception
      */
     public function inbox()
     {
         return task(function (): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             return (new InboxRequest($this->getSubject(), $this->session, $this->client))->fire();
@@ -60,6 +61,7 @@ trait DirectFeaturesTrait
     public function thread(string $id, ?string $cursor = null)
     {
         return task(function () use ($id, $cursor): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             return (new ThreadRequest($this->getSubject(), $this->session, $this->client, $id, $cursor))->fire();
@@ -76,6 +78,7 @@ trait DirectFeaturesTrait
     public function sendThreadMessage(string $text, string $threadId)
     {
         return task(function () use ($text, $threadId): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             // Build the request instance
@@ -107,11 +110,13 @@ trait DirectFeaturesTrait
     public function seen(string $threadId, string $threadItemId)
     {
         return task(function () use ($threadId, $threadItemId): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             /**
              * @var GenericRequest $request
              */
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_SEEN, $threadId, $threadItemId), new SeenMessage())(
                 $this,
                 $this->session,

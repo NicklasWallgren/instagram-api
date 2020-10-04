@@ -16,7 +16,7 @@ class Options
     protected const ATTRIBUTE_PROXY_OPTION = 'proxy';
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $attributes = [];
 
@@ -50,7 +50,7 @@ class Options
     /**
      * Returns the attributes list.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function get(): array
     {
@@ -60,7 +60,7 @@ class Options
     /**
      * Returns the attributes list.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function __invoke()
     {

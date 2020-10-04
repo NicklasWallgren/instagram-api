@@ -105,6 +105,7 @@ trait FeedFeaturesTrait
     public function timeline(TimelineOptions $options)
     {
         return task(function () use ($options): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             /**
@@ -151,7 +152,7 @@ trait FeedFeaturesTrait
             $message->setQuery($tag);
             $message->setType($type);
 
-            // Build the request instance
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf($uri, $tag), $message)(
                 $this,
                 $this->session,

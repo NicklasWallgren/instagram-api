@@ -15,7 +15,7 @@ trait Inflatable
     /**
      * Inflates the instance with properties.
      *
-     * @param array|PropertiesInterface $properties
+     * @param array<string, mixed>|PropertiesInterface $properties
      * @return static
      */
     public function inflate($properties)
@@ -73,7 +73,7 @@ trait Inflatable
      * Returns the properties.
      *
      * @param array|PropertiesInterface $subject
-     * @return array
+     * @return array<string, mixed>
      */
     protected function properties($subject): array
     {

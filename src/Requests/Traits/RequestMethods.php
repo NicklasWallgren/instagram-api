@@ -3,6 +3,7 @@
 namespace Instagram\SDK\Requests\Traits;
 
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
 use Instagram\SDK\Http\RequestClient;
@@ -12,7 +13,6 @@ use Instagram\SDK\Session\Session;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use Throwable;
-use function GuzzleHttp\Promise\rejection_for;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\uuid;
 
@@ -193,7 +193,7 @@ trait RequestMethods
             return $this->decode($response, $serializer);
         })->otherwise(function (Throwable $exception) use ($serializer): PromiseInterface {
             if (!$this->isRequestException($exception)) {
-                return rejection_for($exception);
+                return Create::rejectionFor($exception);
             }
 
             // @phan-suppress-next-line PhanUndeclaredMethod

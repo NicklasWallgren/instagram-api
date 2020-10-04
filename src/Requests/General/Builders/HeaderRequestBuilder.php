@@ -42,7 +42,7 @@ class HeaderRequestBuilder extends AbstractPayloadRequestBuilder
     /**
      * Returns the body parameters.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getBodyParameters(): array
     {

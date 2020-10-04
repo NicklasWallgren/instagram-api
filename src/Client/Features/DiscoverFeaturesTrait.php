@@ -29,6 +29,7 @@ trait DiscoverFeaturesTrait
     public function explore()
     {
         return task(function (): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             return (new ExploreRequest($this->getSubject(), $this->session, $this->client))->fire();
@@ -43,6 +44,7 @@ trait DiscoverFeaturesTrait
     public function topLives()
     {
         return task(function (): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             return (new TopLiveRequest($this->getSubject(), $this->session, $this->client))->fire();
@@ -57,6 +59,7 @@ trait DiscoverFeaturesTrait
     public function channels()
     {
         return task(function (): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             return (new ChannelsRequest($this->getSubject(), $this->session, $this->client))->fire();

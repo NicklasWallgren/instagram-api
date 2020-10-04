@@ -51,11 +51,13 @@ trait FriendshipsFeaturesTrait
     public function follow(string $userId)
     {
         return task(function () use ($userId): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             /**
              * @var GenericRequest $request
              */
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_FOLLOW, $userId), new FollowMessage())(
                 $this,
                 $this->session,
@@ -83,11 +85,13 @@ trait FriendshipsFeaturesTrait
     public function unfollow(string $userId)
     {
         return task(function () use ($userId): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             /**
              * @var GenericRequest $request
              */
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_UNFOLLOW, $userId), new FollowMessage())(
                 $this,
                 $this->session,
@@ -119,6 +123,7 @@ trait FriendshipsFeaturesTrait
             /**
              * @var GenericRequest $request
              */
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_FOLLOWERS, $userId), (new FollowersMessage())->setUserId($userId))(
                 $this,
                 $this->session,
@@ -148,6 +153,7 @@ trait FriendshipsFeaturesTrait
             /**
              * @var GenericRequest $request
              */
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_FOLLOWING, $userId), (new FollowingMessage())->setUserId($userId))(
                 $this,
                 $this->session,

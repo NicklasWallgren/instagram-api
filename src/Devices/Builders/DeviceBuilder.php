@@ -50,8 +50,8 @@ class DeviceBuilder implements DeviceBuilderInterface
     /**
      * Add phone id.
      *
-     * @param array  $metadata
-     * @param string $id
+     * @param array<int, mixed> $metadata
+     * @param string               $id
      */
     protected function addPhoneId(array &$metadata, string $id): void
     {
@@ -61,7 +61,7 @@ class DeviceBuilder implements DeviceBuilderInterface
     /**
      * Adds device id.
      *
-     * @param array  $metadata
+     * @param array<int, mixed>  $metadata
      * @param string $id
      */
     protected function addDeviceId(array &$metadata, string $id): void
