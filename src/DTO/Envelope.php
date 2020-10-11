@@ -6,7 +6,6 @@ use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
 use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
 use Instagram\SDK\DTO\Traits\PropertiesTrait;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
-use Traits\MappableTrait;
 
 /**
  * Class Envelope

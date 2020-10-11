@@ -2,9 +2,9 @@
 
 namespace Instagram\SDK\DTO\Messages\Direct;
 
+use Instagram\SDK\DTO\Direct\Inbox;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
-use Traits\MappableTrait;
 
 /**
  * Class InboxMessage
@@ -19,14 +19,14 @@ class InboxMessage extends Envelope
     /**
      * The logged in user property.
      *
-     * @var \Instagram\SDK\DTO\Direct\Inbox
+     * @var Inbox
      */
     protected $inbox;
 
     /**
      * @var int
      */
-    protected $seqId; // TODO
+    protected $seqId;
 
     /**
      * @var mixed
@@ -44,9 +44,9 @@ class InboxMessage extends Envelope
     protected $pendingRequestsUsers;
 
     /**
-     * @return \Instagram\SDK\DTO\Direct\Inbox
+     * @return Inbox
      */
-    public function getInbox(): \Instagram\SDK\DTO\Direct\Inbox
+    public function getInbox(): Inbox
     {
         return $this->inbox;
     }

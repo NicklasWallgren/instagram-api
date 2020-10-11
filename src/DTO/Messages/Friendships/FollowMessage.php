@@ -5,7 +5,6 @@ namespace Instagram\SDK\DTO\Messages\Friendships;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\General\FriendshipStatus;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
-use Traits\MappableTrait;
 
 /**
  * Class FollowMessage

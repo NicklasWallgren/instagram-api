@@ -225,7 +225,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     }
 
     /**
-     * @return \Instagram\SDK\DTO\Direct\LastSeenAt[]
+     * @return LastSeenAtCollection<LastSeenAt>
      */
     public function getLastSeenAt()
     {
@@ -581,19 +581,14 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     /**
      * Returns unseen items for the user.
      *
-     * @param string|null $userId
+     * @param int|null $userId
      * @return ThreadItem[]
      */
-    public function getUnseenItems(?string $userId = null): array
+    public function getUnseenItems(?int $userId = null): array
     {
         $userId = $userId ?? $this->viewerId;
 
-        /**
-         * @var $lastSeenAt LastSeenAtCollection
-         */
-        $lastSeenAt = $this->lastSeenAt;
-
-        if (($lastSeenAtForUser = $lastSeenAt->get($userId)) === null) {
+        if (($lastSeenAtForUser = $this->lastSeenAt->get($userId)) === null) {
             return [];
         }
 

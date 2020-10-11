@@ -4,8 +4,6 @@ namespace Instagram\SDK\DTO\Messages\Discover;
 
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
-use Tebru\Gson\Annotation as Gson;
-use Traits\MappableTrait;
 
 /**
  * Class ExploreMessage

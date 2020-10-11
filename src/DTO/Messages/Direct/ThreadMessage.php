@@ -5,7 +5,6 @@ namespace Instagram\SDK\DTO\Messages\Direct;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
-use Traits\MappableTrait;
 
 /**
  * Class ThreadMessage

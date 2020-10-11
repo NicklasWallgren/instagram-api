@@ -1,6 +1,5 @@
 # composer
 vendor/
-composer.lock
 
 # travis
 travis/
