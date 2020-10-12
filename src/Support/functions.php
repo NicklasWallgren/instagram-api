@@ -35,6 +35,7 @@ function uuid(bool $type = SignatureSupport::TYPE_DEFAULT): string
  */
 function request(string $uri, Envelope $message, string $method = 'POST'): Closure
 {
+    // phpcs:ignore
     return function (Client $client, Session $session, HttpClient $httpClient) use ($uri, $message, $method): GenericRequest {
         return new GenericRequest(
             $session,
