@@ -2,9 +2,9 @@
 
 namespace Instagram\SDK\Requests\Http\Traits;
 
-use Instagram\SDK\Requests\Http\Serializers\HashSerializer;
-use Instagram\SDK\Requests\Http\Serializers\SerializerInterface;
-use Instagram\SDK\Requests\Http\Serializers\UrlEncodeSerializer;
+use Instagram\SDK\Requests\Http\Serializers\HashRequestSerializer;
+use Instagram\SDK\Requests\Http\Serializers\RequestSerializerInterface;
+use Instagram\SDK\Requests\Http\Serializers\UrlEncodeRequestSerializer;
 
 /**
  * Trait CommonSerializerTrait
@@ -50,20 +50,20 @@ trait CommonSerializerTrait
     /**
      * The request body serializer.
      *
-     * @return SerializerInterface
+     * @return RequestSerializerInterface
      */
-    protected function serializer(): SerializerInterface
+    protected function serializer(): RequestSerializerInterface
     {
-        $serializer = new UrlEncodeSerializer();
+        $serializer = new UrlEncodeRequestSerializer();
 
         switch ($this->mode) {
             case self::$MODE_SIGNED:
-                $serializer = new HashSerializer();
+                $serializer = new HashRequestSerializer();
 
                 break;
 
             case self::$MODE_ENCODED:
-                $serializer = new UrlEncodeSerializer();
+                $serializer = new UrlEncodeRequestSerializer();
 
                 break;
 

@@ -2,9 +2,11 @@
 
 namespace Instagram\SDK\DTO\Messages\Direct;
 
+use Instagram\SDK\DTO\Direct\Thread;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Tebru\Gson\Annotation\JsonAdapter;
 
 /**
  * Class ThreadMessage
@@ -19,14 +21,15 @@ class ThreadMessage extends Envelope implements OnItemDecodeInterface
     /**
      * The logged in user property.
      *
-     * @var \Instagram\SDK\DTO\Direct\Thread
+     * @var Thread
+     * @JsonAdapter("Instagram\SDK\DTO\Direct\Adapters\ThreadAdapterFactory")
      */
     protected $thread;
 
     /**
-     * @return \Instagram\SDK\DTO\Direct\Thread
+     * @return Thread
      */
-    public function getThread(): \Instagram\SDK\DTO\Direct\Thread
+    public function getThread(): Thread
     {
         return $this->thread;
     }

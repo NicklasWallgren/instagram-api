@@ -5,6 +5,7 @@ namespace Instagram\SDK\DTO\Messages\Feed;
 use Exception;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\DTO\Hashtag\Item;
 use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
 use Instagram\SDK\DTO\Traits\Inflatable;
 use Instagram\SDK\DTO\Traits\PropertiesTrait;
@@ -30,12 +31,12 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
     protected $client;
 
     /**
-     * @var \Instagram\SDK\DTO\Hashtag\Item[]
+     * @var Item[]
      */
     protected $rankedItems = [];
 
     /**
-     * @var \Instagram\SDK\DTO\Hashtag\Item[]
+     * @var Item[]
      */
     protected $items = [];
 
@@ -75,7 +76,7 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
     protected $type;
 
     /**
-     * @return \Instagram\SDK\DTO\Hashtag\Item[]
+     * @return Item[]
      */
     public function getRankedItems(): array
     {
@@ -83,7 +84,7 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
     }
 
     /**
-     * @return \Instagram\SDK\DTO\Hashtag\Item[]
+     * @return Item[]
      */
     public function getItems(): array
     {
@@ -134,7 +135,7 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
     }
 
     /**
-     * @param \Instagram\SDK\DTO\Hashtag\Item[] $items
+     * @param Item[] $items
      * @return static
      */
     public function setItems(array $items)
@@ -298,10 +299,9 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
      * @suppress PhanUnusedPublicMethodParameter
      * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array<string, mixed> $container
-     * @param array<string, string> $requirements
      * @throws Exception
      */
-    public function onDecode(array $container, $requirements = []): void
+    public function onDecode(array $container): void
     {
         $this->client = $container['client'];
 

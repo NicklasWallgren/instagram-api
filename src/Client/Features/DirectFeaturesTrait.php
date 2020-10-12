@@ -81,7 +81,7 @@ trait DirectFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            // Build the request instance
+            /** @var GenericRequest $request */
             $request = request(self::$URI_BROADCAST_MESSAGE, new DirectSendItemMessage())(
                 $this,
                 $this->session,
@@ -89,9 +89,9 @@ trait DirectFeaturesTrait
             );
 
             // Prepare the request payload
-            $request->setPost('text', $text)
-                ->setPost('thread_ids', "[$threadId]")
-                ->setPost('action', 'send_item')
+            $request->addPayloadParam('text', $text)
+                ->addPayloadParam('thread_ids', "[$threadId]")
+                ->addPayloadParam('action', 'send_item')
                 ->addUniqueContext()
                 ->addCSRFTokenAndUserId();
 

@@ -5,6 +5,7 @@ namespace Instagram\SDK\DTO\Messages\Friendships;
 use Exception;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\DTO\General\User;
 use Instagram\SDK\DTO\Traits\Inflatable;
 use Instagram\SDK\Responses\Interfaces\IteratorInterface;
 use Instagram\SDK\Support\Promise;
@@ -27,7 +28,7 @@ class FollowingMessage extends Envelope implements IteratorInterface
     protected $userId;
 
     /**
-     * @var \Instagram\SDK\DTO\General\User[]
+     * @var User[]
      */
     protected $users;
 
@@ -71,7 +72,7 @@ class FollowingMessage extends Envelope implements IteratorInterface
     }
 
     /**
-     * @return \Instagram\SDK\DTO\General\User[]
+     * @return User[]
      */
     public function getUsers(): array
     {
@@ -79,7 +80,7 @@ class FollowingMessage extends Envelope implements IteratorInterface
     }
 
     /**
-     * @param \Instagram\SDK\DTO\General\User[] $users
+     * @param User[] $users
      * @return static
      */
     public function setUsers(array $users): self
@@ -195,10 +196,9 @@ class FollowingMessage extends Envelope implements IteratorInterface
      * @suppress PhanUnusedPublicMethodParameter
      * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array<string, mixed> $container
-     * @param array<string, string> $requirements
      * @throws Exception
      */
-    public function onDecode(array $container, $requirements = []): void
+    public function onDecode(array $container): void
     {
         $this->client = $container['client'];
 

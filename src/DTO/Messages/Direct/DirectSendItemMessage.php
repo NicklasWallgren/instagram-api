@@ -2,6 +2,7 @@
 
 namespace Instagram\SDK\DTO\Messages\Direct;
 
+use Instagram\SDK\DTO\Direct\DirectSendItemPayload;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 
@@ -26,7 +27,7 @@ class DirectSendItemMessage extends Envelope
     protected $statusCode;
 
     /**
-     * @var \Instagram\SDK\DTO\Direct\DirectSendItemPayload
+     * @var DirectSendItemPayload
      */
     protected $payload;
 
@@ -47,9 +48,9 @@ class DirectSendItemMessage extends Envelope
     }
 
     /**
-     * @return \Instagram\SDK\DTO\Direct\DirectSendItemPayload
+     * @return DirectSendItemPayload
      */
-    public function getPayload(): \Instagram\SDK\DTO\Direct\DirectSendItemPayload
+    public function getPayload(): DirectSendItemPayload
     {
         return $this->payload;
     }

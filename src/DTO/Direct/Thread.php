@@ -5,7 +5,10 @@ namespace Instagram\SDK\DTO\Direct;
 use Instagram\SDK\DTO\Cursor\RequestIterator;
 use Instagram\SDK\DTO\Direct\Collections\LastSeenAtCollection;
 use Instagram\SDK\DTO\General\ItemType;
+use Instagram\SDK\DTO\General\User;
+use Instagram\SDK\DTO\Messages\Direct\DirectSendItemMessage;
 use Instagram\SDK\DTO\Messages\Direct\SeenMessage;
+use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Instagram\SDK\Support\Promise;
@@ -17,7 +20,7 @@ use function Instagram\SDK\Support\Promises\unwrap;
  * Class Thread
  *
  * @package            Instagram\SDK\DTO\Direct
- * @phan-file-suppress PhanUnextractableAnnotation, PhanPluginUnknownPropertyType
+ * @phan-file-suppress PhanUnextractableAnnotation, PhanPluginUnknownPropertyType, PhanUnreferencedUseNormal
  */
 class Thread extends RequestIterator implements OnItemDecodeInterface
 {
@@ -30,17 +33,17 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     private $threadId;
 
     /**
-     * @var \Instagram\SDK\DTO\General\User[]
+     * @var User[]
      */
     private $users = [];
 
     /**
-     * @var \Instagram\SDK\DTO\General\User[]
+     * @var User[]
      */
     private $leftUsers = [];
 
     /**
-     * @var \Instagram\SDK\DTO\Direct\ThreadItem[]
+     * @var ThreadItem[]
      */
     private $items;
 
@@ -129,7 +132,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     }
 
     /**
-     * @return \Instagram\SDK\DTO\General\User[]
+     * @return User[]
      */
     public function getUsers(): array
     {
@@ -260,7 +263,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     }
 
     /**
-     * @param \Instagram\SDK\DTO\General\User[] $users
+     * @param User[] $users
      * @return $this
      */
     public function setUsers(array $users)
@@ -433,7 +436,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     {
         // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
         return task(function () {
-            return $this->retrieve();
+            return $this->retrieveByCursor();
         })($this->client->getMode());
     }
 
@@ -451,7 +454,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
                 return false;
             }
 
-            return $this->retrieve($this->oldestCursor);
+            return $this->retrieveByCursor($this->oldestCursor);
         })($this->client->getMode());
     }
 
@@ -469,7 +472,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
                 return false;
             }
 
-            return $this->retrieve($this->newestCursor);
+            return $this->retrieveByCursor($this->newestCursor);
         })($this->client->getMode());
     }
 
@@ -490,6 +493,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
         // phpcs:ignore
         // @phan-suppress-next-line PhanPluginMixedKeyNoKey, PhanPluginUnknownClosureReturnType, PhanPluginUnknownClosureParamType
         return $promise->then(function ($promise) use ($text) {
+            /** @var DirectSendItemMessage $message */
             $message = unwrap($promise);
 
             // Check if the message was successful
@@ -538,7 +542,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     {
         // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
         return task(function () {
-            return $this->retrieve();
+            return $this->retrieveByCursor();
         })($this->client->getMode());
     }
 
@@ -548,7 +552,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      * @param string|null $cursor
      * @return bool|Promise<bool>
      */
-    protected function retrieve(?string $cursor = null)
+    protected function retrieveByCursor(?string $cursor = null)
     {
         // Query for thread items by cursor
         // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
@@ -558,6 +562,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
 
         // @phan-suppress-next-line PhanPluginUnknownClosureReturnType, PhanPluginUnknownClosureParamType
         return $promise->then(function ($promise) {
+            /** @var ThreadMessage $message */
             $message = unwrap($promise);
 
             // Check if we successfully retrieved additional thread items
@@ -611,44 +616,12 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      * @suppress PhanUnusedPublicMethodParameter
      * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array<string, mixed>  $container
-     * @param array<string, string> $requirements
-     * @throws \Exception
      */
-    public function onDecode(array $container, $requirements = []): void
+    public function onDecode(array $container): void
     {
         $this->client = $container['client'];
 
         $this->propagate($container);
-    }
-
-    /**
-     * On decode users.
-     *
-     * @return void
-     */
-    protected function onDecodeUsers()
-    {
-        // Group by user id
-        foreach ($this->users as $index => $user) {
-            $this->users[$user->getId()] = $user;
-
-            unset($this->users[$index]);
-        }
-    }
-
-    /**
-     * On decode users.
-     *
-     * @return void
-     */
-    protected function onDecodeLeftUsers()
-    {
-        // Group by user id
-        foreach ($this->leftUsers as $index => $user) {
-            $this->leftUsers[$user->getId()] = $user;
-
-            unset($this->leftUsers[$index]);
-        }
     }
 
     /**
@@ -659,29 +632,5 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     protected function getSender()
     {
         return $this->client->getSession()->getUser();
-    }
-
-    /**
-     * Returns the user by id.
-     *
-     * @param int $userId
-     * @return \Instagram\SDK\DTO\General\User|\Instagram\SDK\DTO\Session\User|null
-     */
-    protected function getUser(int $userId)
-    {
-        // Check whether the user id corresponds to an active thread user
-        if (array_key_exists($userId, $this->users)) {
-            return $this->users[$userId];
-        }
-
-        // Check whether the user id corresponds to an inactive thread user
-        if (array_key_exists($userId, $this->leftUsers)) {
-            return $this->leftUsers[$userId];
-        }
-
-        // Retrieve the logged in user
-        $user = $this->client->getSession()->getUser();
-
-        return $user->getId() == $userId ? $user : null;
     }
 }

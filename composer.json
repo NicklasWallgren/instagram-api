@@ -12,9 +12,10 @@
     "guzzlehttp/guzzle": "^6.2",
     "psr/http-message": "^1.0",
     "php": ">=7.2",
+    "webmozart/assert": "^1.0",
+    "tebru/gson-php": "^0.7",
     "ext-curl": "*",
-    "webmozart/assert": "^1.3",
-    "tebru/gson-php": "^0.7"
+    "ext-json": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "~6.0",

@@ -53,13 +53,8 @@ abstract class AbstractSerializer implements SerializerInterface
 
         // Compose a new message instance
         $message = $this->message();
-//        $message->mapFromJson((string)$response->getBody());
+
         $response = (string)$response->getBody();
-
-//        echo("\n");
-//        echo($response);
-//        echo("\n");
-
 
         $gson = Gson::builder()->build();
         $gson->fromJson($response, $message);

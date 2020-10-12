@@ -2,14 +2,12 @@
 
 namespace Instagram\SDK\Requests\Http\Serializers;
 
-use Instagram\SDK\Requests\Exceptions\EncodingException;
-
 /**
- * Interface SerializerInterface
+ * Class UrlEncodeSerializer
  *
  * @package Instagram\SDK\Requests\Http\Serializers
  */
-interface SerializerInterface
+class UrlEncodeRequestSerializer implements RequestSerializerInterface
 {
 
     /**
@@ -17,7 +15,9 @@ interface SerializerInterface
      *
      * @param array<string, mixed> $body
      * @return string
-     * @throws EncodingException
      */
-    public function encode(array $body);
+    public function encode(array $body): string
+    {
+        return http_build_query($body, '', '&');
+    }
 }

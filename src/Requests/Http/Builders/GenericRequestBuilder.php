@@ -2,47 +2,58 @@
 
 namespace Instagram\SDK\Requests\Http\Builders;
 
-use Instagram\SDK\Requests\Http\Traits\CommonSerializerTrait;
-use Instagram\SDK\Requests\Http\Traits\RequestBuilderQueryMethodsTrait;
+use GuzzleHttp\Psr7\Request;
+use Instagram\SDK\Requests\Exceptions\EncodingException;
+use Instagram\SDK\Requests\Http\Factories\SerializerFactory;
+use Instagram\SDK\Requests\Http\HeadersBuilder;
+use Instagram\SDK\Requests\Http\Utils\RequestUtils;
 use Instagram\SDK\Session\Session;
+use InvalidArgumentException;
+use Webmozart\Assert\Assert;
 
 /**
  * Class GenericRequestBuilder
  *
  * @package Instagram\SDK\Requests\Http\Builders
  */
-class GenericRequestBuilder extends AbstractPayloadRequestBuilder
+class GenericRequestBuilder implements RequestBuilderInterface
 {
 
-    use RequestBuilderQueryMethodsTrait;
-    use CommonSerializerTrait;
+    private const ENDPOINT_URL = 'i.instagram.com';
 
-    /**
-     * @var array<string, mixed>
-     */
-    protected $parameters = [];
+    /** @var string */
+    private $uri;
 
-    /**
-     * @var array<string, mixed>
-     */
-    protected $payload = [];
+    /** @var string */
+    private $method;
 
-    /**
-     * @var string
-     */
-    protected $uri;
+    /** @var Session */
+    private $session;
+
+    /** @var array<string, mixed> */
+    private $queryParameters = [];
+
+    /** @var array<string, mixed> */
+    private $payload = [];
+
+    /** @var int */
+    private $serializerType = SerializerFactory::ENCODED;
 
     /**
      * GenericRequestBuilder constructor.
      *
      * @param string  $uri
+     * @param string  $method
      * @param Session $session
+     * @throws InvalidArgumentException
      */
-    public function __construct(string $uri, Session $session)
+    public function __construct(string $uri, string $method, Session $session)
     {
-        $this->uri = $uri;
+        Assert::oneOf($method, ['GET', 'POST']);
 
-        parent::__construct($session);
+        $this->uri = $uri;
+        $this->method = $method;
+        $this->session = $session;
     }
 
     /**
@@ -52,23 +63,9 @@ class GenericRequestBuilder extends AbstractPayloadRequestBuilder
      * @param mixed  $value
      * @return GenericRequestBuilder
      */
-    public function setPost(string $name, $value): GenericRequestBuilder
+    public function addPayloadParam(string $name, $value): GenericRequestBuilder
     {
         $this->payload[$name] = $value;
-
-        return $this;
-    }
-
-    /**
-     * Sets a query parameter.
-     *
-     * @param string $name
-     * @param mixed  $value
-     * @return GenericRequestBuilder
-     */
-    public function setParam(string $name, $value): GenericRequestBuilder
-    {
-        $this->parameters[$name] = $value;
 
         return $this;
     }
@@ -87,49 +84,46 @@ class GenericRequestBuilder extends AbstractPayloadRequestBuilder
     }
 
     /**
-     * Sets the query parameter if defined.
+     * Sets a query parameter.
      *
      * @param string $name
-     * @param string|null $value
+     * @param mixed  $value
      * @return GenericRequestBuilder
      */
-    public function addParam(string $name, ?string $value): GenericRequestBuilder
+    public function addQueryParam(string $name, $value): GenericRequestBuilder
     {
-        // Check whether the value is defined
-        if ($value !== null) {
-            return $this;
-        }
+        $this->queryParameters[$name] = $value;
 
-        return $this->setParam($name, $value);
+        return $this;
     }
 
     /**
-     * Returns the body parameters.
-     *
-     * @return array<string, mixed>
+     * @param int $serializerType
+     * @return static
+     * @throws InvalidArgumentException
      */
-    protected function getBodyParameters(): array
+    public function setSerializerType(int $serializerType)
     {
-        return $this->payload;
+        Assert::oneOf($serializerType, SerializerFactory::VALID_SERIALIZERS);
+
+        $this->serializerType = $serializerType;
+        return $this;
     }
 
     /**
-     * Returns the query parameters.
-     *
-     * @return array<string, mixed>
+     * @inheritDoc
+     * @throws InvalidArgumentException
+     * @throws EncodingException
      */
-    protected function getQueryParameters(): array
+    public function build(): Request
     {
-        return $this->parameters;
-    }
+        $serializer = SerializerFactory::create($this->serializerType);
 
-    /**
-     * Returns the request uri.
-     *
-     * @return string
-     */
-    protected function getRequestUri(): string
-    {
-        return $this->uri;
+        return new Request(
+            $this->method,
+            RequestUtils::createUri(self::ENDPOINT_URL, $this->uri, $this->queryParameters),
+            (new HeadersBuilder())->build($this->session),
+            $serializer->encode($this->payload)
+        );
     }
 }

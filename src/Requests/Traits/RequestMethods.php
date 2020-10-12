@@ -44,7 +44,7 @@ trait RequestMethods
     {
         $request = $request ?: $this;
 
-        $request->setPost('client_context', uuid(true));
+        $request->addPayloadParam('client_context', uuid(true));
 
         return $request;
     }
@@ -60,7 +60,7 @@ trait RequestMethods
     {
         $request = $request ?: $this;
 
-        $request->setPost('_csrftoken', $this->session->getCsrfToken()->getToken());
+        $request->addPayloadParam('_csrftoken', $this->session->getCsrfToken()->getToken());
 
         return $request;
     }
@@ -76,8 +76,8 @@ trait RequestMethods
     {
         $request = $request ?: $this;
 
-        $request->setPost('_csrftoken', $this->session->getCsrfToken()->getToken());
-        $request->setPost('_uid', $this->session->getUser()->getId());
+        $request->addPayloadParam('_csrftoken', $this->session->getCsrfToken()->getToken());
+        $request->addPayloadParam('_uid', $this->session->getUser()->getId());
 
         return $request;
     }
@@ -92,7 +92,7 @@ trait RequestMethods
     {
         $request = $request ?: $this;
 
-        $request->setParam('ranked_token', $this->session->getRankedToken());
+        $request->addQueryParam('rank_token', $this->session->getRankedToken());
 
         return $request;
     }
@@ -107,7 +107,7 @@ trait RequestMethods
     {
         $request = $request ?: $this;
 
-        $request->setPost('_uuid', $this->session->getUuid());
+        $request->addPayloadParam('_uuid', $this->session->getUuid());
 
         return $request;
     }
@@ -122,7 +122,7 @@ trait RequestMethods
     {
         $request = $request ?: $this;
 
-        $request->setPost('_uid', $this->session->getUser()->getId());
+        $request->addPayloadParam('_uid', $this->session->getUser()->getId());
 
         return $request;
     }
@@ -156,7 +156,7 @@ trait RequestMethods
     {
         $request = $request ?: $this;
 
-        $request->setPost('phone_id', $this->session->getDevice()->phoneId());
+        $request->addPayloadParam('phone_id', $this->session->getDevice()->phoneId());
 
         return $request;
     }
@@ -171,7 +171,7 @@ trait RequestMethods
     {
         $request = $request ?: $this;
 
-        $request->setPost('session_id', $this->session->getSessionId());
+        $request->addPayloadParam('session_id', $this->session->getSessionId());
 
         return $request;
     }

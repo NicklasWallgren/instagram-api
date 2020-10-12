@@ -474,6 +474,7 @@ return [
         'vendor/psr/http-message',
         'vendor/webmozart/assert',
         'vendor/tebru/',
+        'vendor/webmozart/',
     ],
 
     // List of case-insensitive file extensions supported by Phan.
