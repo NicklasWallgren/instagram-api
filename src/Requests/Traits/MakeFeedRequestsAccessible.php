@@ -41,13 +41,13 @@ trait MakeFeedRequestsAccessible
     /**
      * Retrieves feed by user.
      *
-     * @param string $user
+     * @param string $userId
      * @return FeedMessage|Promise
      * @throws \Exception
      */
-    public function feedByUser(string $user)
+    public function feedByUser(string $userId)
     {
-        return $this->feed(self::$TYPE_FEED_USER, $user);
+        return $this->feed(self::$TYPE_FEED_USER, $userId);
     }
 
     /**
@@ -65,7 +65,7 @@ trait MakeFeedRequestsAccessible
     }
 
     /**
-     * Retrives the timeline feed for the current user.
+     * Retrieves the timeline feed for the current user.
      *
      * @param TimelineOptions|null $options
      * @return Timeline|Promise<Timeline>

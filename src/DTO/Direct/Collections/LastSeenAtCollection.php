@@ -30,10 +30,10 @@ class LastSeenAtCollection
     /**
      * Returns the @code LastSeenAt item, if exists.
      *
-     * @param string $userId
+     * @param int $userId
      * @return LastSeenAt|null
      */
-    public function get(string $userId): ?LastSeenAt
+    public function get(int $userId): ?LastSeenAt
     {
         return @$this->items[$userId];
     }

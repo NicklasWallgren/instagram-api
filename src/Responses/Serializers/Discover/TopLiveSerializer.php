@@ -23,7 +23,7 @@ class TopLiveSerializer extends AbstractSerializer implements OnDecodeInterface
     protected $client;
 
     /**
-     * InboxSerializer constructor.
+     * TopLiveSerializer constructor.
      *
      * @param Client $client
      */

@@ -14,12 +14,11 @@ class UserSearchResultMessage extends SearchResultMessage
 
     /**
      * @var int
-     * @name num_results
      */
     protected $numResults;
 
     /**
-     * @var \Instagram\SDK\DTO\General\User[]
+     * @var User[]
      */
     protected $users;
 

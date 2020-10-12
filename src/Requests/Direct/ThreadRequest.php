@@ -3,6 +3,7 @@
 namespace Instagram\SDK\Requests\Direct;
 
 use Instagram\SDK\Client\Client;
+use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
 use Instagram\SDK\Http\RequestClient as HttpClient;
 use Instagram\SDK\Requests\Direct\Builders\ThreadRequestBuilder;
 use Instagram\SDK\Requests\Request;

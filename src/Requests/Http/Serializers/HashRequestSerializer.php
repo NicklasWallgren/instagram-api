@@ -12,7 +12,7 @@ use Webmozart\Assert\Assert;
  *
  * @package Instagram\SDK\Requests\Http\Serializers
  */
-class HashSerializer implements SerializerInterface
+class HashRequestSerializer implements RequestSerializerInterface
 {
 
     /**

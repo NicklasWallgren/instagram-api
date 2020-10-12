@@ -3,6 +3,7 @@
 namespace Instagram\SDK\DTO\Session;
 
 use Instagram\SDK\DTO\Interfaces\UserInterface;
+use Tebru\Gson\Annotation\SerializedName;
 
 /**
  * Class User
@@ -14,7 +15,7 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @name pk
+     * @SerializedName("pk")
      */
     protected $id;
 
@@ -25,43 +26,36 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @name full_name
      */
     protected $fullName;
 
     /**
      * @var bool
-     * @name is_private
      */
-    protected $private;
+    protected $isPrivate;
 
     /**
      * @var string
-     * @name profile_pic_url
      */
     protected $pictureUrl;
 
     /**
      * @var string
-     * @name profile_pic_id
      */
     protected $pictureId;
 
     /**
      * @var bool
-     * @name is_verified
      */
-    protected $verified;
+    protected $isVerified;
 
     /**
      * @var bool
-     * @name has_anonymous_profile_picture
      */
     protected $hasAnonymousProfilePicture;
 
     /**
      * @var bool
-     * @name allow_contacts_sync
      */
     protected $allowContactsSync;
 
@@ -94,7 +88,7 @@ class User implements UserInterface
      */
     public function isPrivate(): bool
     {
-        return $this->private;
+        return $this->isPrivate;
     }
 
     /**
@@ -118,7 +112,7 @@ class User implements UserInterface
      */
     public function isVerified(): bool
     {
-        return $this->verified;
+        return $this->isVerified;
     }
 
     /**

@@ -32,7 +32,7 @@ class ApiResponseException extends Exception
     {
         $this->envelope = $envelope;
 
-        parent::__construct($envelope ? $envelope->getMessage() : self::DEFAULT_MESSAGE, 0, null);
+        parent::__construct(self::getMessageOrFallback($envelope), 0, null);
     }
 
     /**
@@ -41,5 +41,10 @@ class ApiResponseException extends Exception
     public function getEnvelope(): Envelope
     {
         return $this->envelope;
+    }
+
+    private static function getMessageOrFallback(Envelope $envelope): string
+    {
+        return $envelope ? $envelope->getMessage() ?? '' : self::DEFAULT_MESSAGE;
     }
 }

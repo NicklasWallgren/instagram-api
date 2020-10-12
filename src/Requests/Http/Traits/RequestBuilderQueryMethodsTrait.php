@@ -58,9 +58,10 @@ trait RequestBuilderQueryMethodsTrait
      */
     protected function getMethodUri(): string
     {
-        // @phan-suppress-next-line PhanPluginPrintfVariableFormatString,PhanTypeMismatchUnpackKey
+        // @phan-suppress-next-line PhanPluginPrintfVariableFormatString, PhanTypeMismatchUnpackKey
         $methodUri = sprintf(static::$URI_TEMPLATE, ...$this->getMethodUriParameters());
 
+        // @phan-suppress-next-line PhanPluginPrintfIncompatibleArgumentType, PhanTypeMismatchArgumentNullableInternal
         return sprintf('%s%s', $methodUri, $this->getQuery());
     }
 

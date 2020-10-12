@@ -22,7 +22,7 @@ class AbstractOptions
     public function addAsPayload(GenericRequest $request): void
     {
         foreach (get_defined_vars() as $parameter => $value) {
-            $request->setPost(underscore($parameter), $value);
+            $request->addPayloadParam(underscore($parameter), $value);
         }
     }
 
@@ -35,7 +35,7 @@ class AbstractOptions
     public function addAsQuery(GenericRequest $request): void
     {
         foreach (get_defined_vars() as $parameter => $value) {
-            $request->setParam(underscore($parameter), $value);
+            $request->addQueryParam(underscore($parameter), $value);
         }
     }
 

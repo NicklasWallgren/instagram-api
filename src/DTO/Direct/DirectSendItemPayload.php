@@ -14,7 +14,6 @@ class DirectSendItemPayload extends DTO
 
     /**
      * @var string
-     * @name client_context
      */
     protected $clientContext;
 
@@ -25,7 +24,6 @@ class DirectSendItemPayload extends DTO
 
     /**
      * @var string
-     * @name item_id
      */
     protected $itemId;
 
@@ -36,7 +34,6 @@ class DirectSendItemPayload extends DTO
 
     /**
      * @var string
-     * @name thread_id
      */
     protected $threadId;
 

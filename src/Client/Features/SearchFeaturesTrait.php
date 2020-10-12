@@ -8,6 +8,7 @@ use Instagram\SDK\DTO\Messages\Search\HashtagSearchResultMessage;
 use Instagram\SDK\DTO\Messages\Search\SearchResultMessage;
 use Instagram\SDK\DTO\Messages\Search\UserSearchResultMessage;
 use Instagram\SDK\Instagram;
+use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\rejection_for;
 use function Instagram\SDK\Support\Promises\task;
@@ -19,6 +20,7 @@ use const Instagram\SDK\TYPE_USER;
  * Trait SearchFeaturesTrait
  *
  * @package Instagram\SDK\Client\Features
+ * @phan-file-suppress PhanUnreferencedUseNormal
  */
 trait SearchFeaturesTrait
 {
@@ -33,7 +35,7 @@ trait SearchFeaturesTrait
     /**
      * @var string The user search endpoint
      */
-    private static $ENDPOINT_USER_SEARCH = 'users/search';
+    private static $ENDPOINT_USER_SEARCH = 'users/search/';
 
     /**
      * Search by hashtag.
@@ -104,8 +106,8 @@ trait SearchFeaturesTrait
             $message = new $result();
             $message->setQuery($query);
 
-            // Build the request instance
-            $request = request($uri, $message)(
+            /** @var GenericRequest $request */
+            $request = request($uri, $message, 'GET')(
                 $this,
                 $this->session,
                 $this->client
@@ -113,8 +115,8 @@ trait SearchFeaturesTrait
 
             $request
                 ->addRankedToken()
-                ->setParam('query', $query)
-                ->setParam('is_typeahead', true);
+                ->addQueryParam('q', $query)
+                ->addQueryParam('is_typeahead', true);
 
             // Invoke the request
             return $request->fire();

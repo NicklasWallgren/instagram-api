@@ -471,9 +471,10 @@ return [
     'directory_list' => [
         'src',
         'vendor/guzzlehttp/',
-        'vendor/runz0rd/mapper-php/',
         'vendor/psr/http-message',
         'vendor/webmozart/assert',
+        'vendor/tebru/',
+        'vendor/webmozart/',
     ],
 
     // List of case-insensitive file extensions supported by Phan.
@@ -555,5 +556,6 @@ return [
         'DuplicateExpressionPlugin',
         'NoAssertPlugin',
         'HasPHPDocPlugin',
+        'vendor/drenso/phan-extensions/Plugin/Annotation/SymfonyAnnotationPlugin.php'
     ],
 ];

@@ -30,7 +30,7 @@ trait MakeSearchRequestsAccessible
      * Search by hashtag.
      *
      * @param string $tag
-     * @return HashtagSearchResultMessage|Promise
+     * @return HashtagSearchResultMessage|Promise<HashtagSearchResultMessage>
      * @throws \Exception
      */
     public function searchByHashtag(string $tag)

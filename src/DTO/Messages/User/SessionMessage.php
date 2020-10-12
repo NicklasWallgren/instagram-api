@@ -17,7 +17,6 @@ class SessionMessage extends Envelope
      * The logged in user property.
      *
      * @var \Instagram\SDK\DTO\Session\User
-     * @name logged_in_user
      */
     protected $loggedInUser;
 

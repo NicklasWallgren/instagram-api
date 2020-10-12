@@ -28,26 +28,24 @@ function uuid(bool $type = SignatureSupport::TYPE_DEFAULT): string
 /**
  * Generates a generic request instance.
  *
- * @param string|AbstractRequestBuilder $uri        The request uri or request builder
- * @param Envelope|AbstractSerializer   $serializer The response envelope or serializer
+ * @param string   $uri     The request uri.
+ * @param Envelope $message The envelope.
+ * @param string   $method
  * @return Closure<GenericRequest>
  */
-function request($uri, $serializer)
+function request(string $uri, Envelope $message, string $method = 'POST'): Closure
 {
-    return function (Client $client, Session $session, HttpClient $httpClient) use ($uri, $serializer): GenericRequest {
-        // Check whether uri corresponds to a request builder
-        if (!($uri instanceof GenericRequestBuilder)) {
-            $uri = new GenericRequestBuilder($uri, $session);
-        }
-
-        // Check whether serializer corresponds to a abstract serializer
-        if (!($serializer instanceof AbstractSerializer)) {
-            $serializer = new GenericSerializer($client, $serializer);
-        }
-
-        return new GenericRequest($session, $httpClient, $uri, $serializer);
+    // phpcs:ignore
+    return function (Client $client, Session $session, HttpClient $httpClient) use ($uri, $message, $method): GenericRequest {
+        return new GenericRequest(
+            $session,
+            $httpClient,
+            new GenericRequestBuilder($uri, $method, $session),
+            new GenericSerializer($client, $message)
+        );
     };
 }
+
 
 /**
  * Returns the camel cased string as underscore case.

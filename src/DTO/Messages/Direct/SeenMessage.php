@@ -3,6 +3,7 @@
 namespace Instagram\SDK\DTO\Messages\Direct;
 
 use Instagram\SDK\DTO\Envelope;
+use Tebru\Gson\Annotation\SerializedName;
 
 /**
  * Class SeenMessage
@@ -14,13 +15,12 @@ class SeenMessage extends Envelope
 
     /**
      * @var int
-     * @name unseen_count
      */
     protected $unseenCount;
 
     /**
      * @var int
-     * @name unseen_count_ts
+     * @SerializedName("unseen_count_ts")
      */
     protected $unseenCountTimestamp;
 

@@ -9,6 +9,7 @@ use Instagram\SDK\Requests\Traits\RequestMethods;
 use Instagram\SDK\Responses\Serializers\AbstractSerializer;
 use Instagram\SDK\Session\Session;
 use Instagram\SDK\Support\Promise;
+use InvalidArgumentException;
 
 /**
  * Class GenericRequest
@@ -57,9 +58,9 @@ class GenericRequest extends Request
      * @param mixed  $value
      * @return GenericRequest
      */
-    public function setParam(string $parameter, $value): GenericRequest
+    public function addQueryParam(string $parameter, $value): GenericRequest
     {
-        $this->requestBuilder->setParam($parameter, $value);
+        $this->requestBuilder->addQueryParam($parameter, $value);
 
         return $this;
     }
@@ -71,9 +72,9 @@ class GenericRequest extends Request
      * @param mixed  $value
      * @return GenericRequest
      */
-    public function setPost(string $parameter, $value): GenericRequest
+    public function addPayloadParam(string $parameter, $value): GenericRequest
     {
-        $this->requestBuilder->setPost($parameter, $value);
+        $this->requestBuilder->addPayloadParam($parameter, $value);
 
         return $this;
     }
@@ -94,12 +95,13 @@ class GenericRequest extends Request
     /**
      * Sets the serializer mode.
      *
-     * @param int $mode
+     * @param int $serializerType
      * @return GenericRequest
+     * @throws InvalidArgumentException
      */
-    public function setMode(int $mode): GenericRequest
+    public function setSerializerType(int $serializerType): GenericRequest
     {
-        $this->requestBuilder->setMode($mode);
+        $this->requestBuilder->setSerializerType($serializerType);
 
         return $this;
     }
@@ -111,14 +113,14 @@ class GenericRequest extends Request
      * @param string|null $value
      * @return GenericRequest
      */
-    public function addParam(string $name, ?string $value): GenericRequest
+    public function addQueryParamIfNotNull(string $name, ?string $value): GenericRequest
     {
         // Check whether the value is defined
         if ($value === null) {
             return $this;
         }
 
-        return $this->setParam($name, $value);
+        return $this->addQueryParam($name, $value);
     }
 
     /**
@@ -138,6 +140,7 @@ class GenericRequest extends Request
      * Fire the request.
      *
      * @return Promise
+     * @suppress PhanThrowTypeAbsentForCall
      */
     public function fire(): Promise
     {
