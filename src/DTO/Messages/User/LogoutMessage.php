@@ -17,7 +17,6 @@ class LogoutMessage extends Envelope
 
     /**
      * @var string
-     * @name login_nonce
      */
     protected $loginNonce;
 

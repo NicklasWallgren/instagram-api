@@ -20,19 +20,16 @@ class Inbox implements OnItemDecodeInterface
 
     /**
      * @var int
-     * @name unseen_count
      */
     protected $unseenCount;
 
     /**
      * @var bool
-     * @name has_older
      */
     protected $hasOlder;
 
     /**
      * @var double
-     * @name unseen_count_timestamp
      */
     protected $unseenCountTimestamp;
 
@@ -127,7 +124,7 @@ class Inbox implements OnItemDecodeInterface
      *
      * @return array<string, ThreadItem[]>
      */
-    public function getUnseen()
+    public function getUnseen(): array
     {
         $result = [];
 
@@ -144,10 +141,9 @@ class Inbox implements OnItemDecodeInterface
      * @suppress PhanUnusedPublicMethodParameter
      * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array<string, mixed>  $container
-     * @param array<string, string> $requirements
      * @throws Exception
      */
-    public function onDecode(array $container, $requirements = []): void
+    public function onDecode(array $container): void
     {
         $this->client = $container['client'];
 

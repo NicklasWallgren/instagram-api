@@ -17,7 +17,6 @@ class LastSeenAt
 
     /**
      * @var string
-     * @name item_id
      */
     protected $itemId;
 

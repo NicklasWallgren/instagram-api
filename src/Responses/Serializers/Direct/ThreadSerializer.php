@@ -45,7 +45,6 @@ class ThreadSerializer extends AbstractSerializer implements OnDecodeInterface
      * On decode method.
      *
      * @param Envelope $message
-     * @throws \Exception
      */
     public function onDecode(Envelope &$message): void
     {

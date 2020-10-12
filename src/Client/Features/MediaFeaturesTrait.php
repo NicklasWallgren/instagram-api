@@ -6,6 +6,7 @@ use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Messages\Media\CommentMessage;
 use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
+use Instagram\SDK\Requests\Http\Factories\SerializerFactory;
 use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
@@ -68,9 +69,9 @@ trait MediaFeaturesTrait
             $request
                 ->addCSRFTokenAndUserId()
                 ->addUuidAndUid()
-                ->setPost('module_name', 'photo_view')
-                ->setPost('media_id', $mediaId)
-                ->setMode(GenericRequestBuilder::$MODE_SIGNED);
+                ->addPayloadParam('module_name', 'photo_view')
+                ->addPayloadParam('media_id', $mediaId)
+                ->setSerializerType(SerializerFactory::SIGNED);
 
             // Invoke the request
             return $request->fire();
@@ -103,9 +104,9 @@ trait MediaFeaturesTrait
             $request
                 ->addCSRFTokenAndUserId()
                 ->addUuidAndUid()
-                ->setPost('module_name', 'photo_view')
-                ->setPost('media_id', $mediaId)
-                ->setMode(GenericRequestBuilder::$MODE_SIGNED);
+                ->addPayloadParam('module_name', 'photo_view')
+                ->addPayloadParam('media_id', $mediaId)
+                ->setSerializerType(SerializerFactory::SIGNED);
 
             // Invoke the request
             return $request->fire();
@@ -139,9 +140,9 @@ trait MediaFeaturesTrait
             $request
                 ->addCSRFToken()
                 ->addUuidAndUid()
-                ->setPost('comment_text', $comment)
-                ->setPost('idempotence_token', uuid())
-                ->setMode(GenericRequestBuilder::$MODE_SIGNED);
+                ->addPayloadParam('comment_text', $comment)
+                ->addPayloadParam('idempotence_token', uuid())
+                ->setSerializerType(SerializerFactory::SIGNED);
 
             // Invoke the request
             return $request->fire();
@@ -175,8 +176,8 @@ trait MediaFeaturesTrait
             $request
                 ->addCSRFToken()
                 ->addUuidAndUid()
-                ->setPost('comment_ids_to_delete', (string)$commentId)
-                ->setMode(GenericRequestBuilder::$MODE_SIGNED);
+                ->addPayloadParam('comment_ids_to_delete', (string)$commentId)
+                ->setSerializerType(SerializerFactory::SIGNED);
 
             // Invoke the request
             return $request->fire();

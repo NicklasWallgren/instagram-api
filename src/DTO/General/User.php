@@ -11,6 +11,7 @@ use Instagram\SDK\DTO\Messages\Friendships\FollowMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Instagram\SDK\Support\Promise;
+use Tebru\Gson\Annotation\SerializedName;
 
 /**
  * Class User
@@ -24,7 +25,7 @@ class User implements UserInterface, OnItemDecodeInterface
 
     /**
      * @var string
-     * @name pk
+     * @SerializedName("pk")
      */
     protected $id;
 
@@ -35,37 +36,32 @@ class User implements UserInterface, OnItemDecodeInterface
 
     /**
      * @var string
-     * @name full_name
      */
     protected $fullName;
 
     /**
      * @var bool
-     * @name is_private
      */
-    protected $private;
+    protected $isPrivate;
 
     /**
      * @var string
-     * @name profile_pic_url
+     * @SerializedName("profile_pic_url")
      */
     protected $profilePictureUrl;
 
     /**
-     * @var \Instagram\SDK\DTO\General\FriendshipStatus
-     * @name friendship_status
+     * @var FriendshipStatus
      */
     protected $friendshipStatus;
 
     /**
      * @var bool
-     * @name is_verified
      */
-    protected $verified;
+    protected $isVerified;
 
     /**
      * @var bool
-     * @name has_anonymous_profile_picture
      */
     protected $hasAnonymousProfilePicture;
 
@@ -103,7 +99,7 @@ class User implements UserInterface, OnItemDecodeInterface
      */
     public function isPrivate(): bool
     {
-        return $this->private;
+        return $this->isPrivate;
     }
 
     /**
@@ -115,7 +111,7 @@ class User implements UserInterface, OnItemDecodeInterface
     }
 
     /**
-     * @return mixed
+     * @return FriendshipStatus
      */
     public function getFriendshipStatus()
     {
@@ -127,7 +123,7 @@ class User implements UserInterface, OnItemDecodeInterface
      */
     public function isVerified(): bool
     {
-        return $this->verified;
+        return $this->isVerified;
     }
 
     /**
@@ -143,11 +139,9 @@ class User implements UserInterface, OnItemDecodeInterface
      *
      * @suppress PhanUnusedPublicMethodParameter
      * @suppress PhanPossiblyNullTypeMismatchProperty
-     * @param array<string, mixed> $container
-     * @param array<string, string> $requirements
-     * @throws Exception
+     * @param array<string, mixed>  $container
      */
-    public function onDecode(array $container, $requirements = []): void
+    public function onDecode(array $container): void
     {
         $this->client = $container['client'];
 

@@ -7,7 +7,8 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Messages\User\LogoutMessage;
 use Instagram\SDK\DTO\Messages\User\SessionMessage;
 use Instagram\SDK\Instagram;
-use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
+use Instagram\SDK\Requests\GenericRequest;
+use Instagram\SDK\Requests\Http\Factories\SerializerFactory;
 use Instagram\SDK\Requests\Support\SignatureSupport;
 use Instagram\SDK\Requests\User\LoginRequest;
 use Instagram\SDK\Session\Builders\SessionBuilder;
@@ -18,7 +19,8 @@ use function Instagram\SDK\Support\request;
 /**
  * Trait UserFeaturesTrait
  *
- * @package Instagram\SDK\Client\Features
+ * @package            Instagram\SDK\Client\Features
+ * @phan-file-suppress PhanUnreferencedUseNormal
  */
 trait UserFeaturesTrait
 {
@@ -40,8 +42,8 @@ trait UserFeaturesTrait
      *
      * @param string $username The username
      * @param string $password The password
-     * @throws Exception
      * @return SessionMessage|Promise<InboxMessage>
+     * @throws Exception
      */
     public function login(string $username, string $password)
     {
@@ -85,7 +87,7 @@ trait UserFeaturesTrait
             ];
 
             $request->setPayload($body)
-                    ->setMode(GenericRequestBuilder::$MODE_SIGNED);
+                ->setMode(SerializerFactory::SIGNED);
 
             // Invoke the request
             return $request->fire();
@@ -103,7 +105,7 @@ trait UserFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            // Build the request instance
+            /** @var GenericRequest $request */
             $request = request(self::$URI_LOGOUT, new LogoutMessage())(
                 $this,
                 $this->session,
@@ -111,8 +113,8 @@ trait UserFeaturesTrait
             );
 
             // Prepare the request payload
-            $request->setPost('device_id', $this->session->getDevice()->deviceId())
-                    ->setPost('one_tap_app_login', true);
+            $request->addPayloadParam('device_id', $this->session->getDevice()->deviceId())
+                ->addPayloadParam('one_tap_app_login', true);
 
             // Invoke the request
             return $request->fire();

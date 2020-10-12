@@ -6,7 +6,7 @@ use Instagram\SDK\DTO\Messages\Friendships\FollowersMessage;
 use Instagram\SDK\DTO\Messages\Friendships\FollowingMessage;
 use Instagram\SDK\DTO\Messages\Friendships\FollowMessage;
 use Instagram\SDK\Requests\GenericRequest;
-use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
+use Instagram\SDK\Requests\Http\Factories\SerializerFactory;
 use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
@@ -54,9 +54,7 @@ trait FriendshipsFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /**
-             * @var GenericRequest $request
-             */
+            /** @var GenericRequest $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_FOLLOW, $userId), new FollowMessage())(
                 $this,
@@ -68,8 +66,8 @@ trait FriendshipsFeaturesTrait
             $request
                 ->addCSRFTokenAndUserId()
                 ->addUuid()
-                ->setPost('user_id', $userId)
-                ->setMode(GenericRequestBuilder::$MODE_SIGNED);
+                ->addPayloadParam('user_id', $userId)
+                ->setSerializerType(SerializerFactory::SIGNED);
 
             // Invoke the request
             return $request->fire();
@@ -102,8 +100,8 @@ trait FriendshipsFeaturesTrait
             $request
                 ->addCSRFTokenAndUserId()
                 ->addUuid()
-                ->setPost('user_id', $userId)
-                ->setMode(GenericRequestBuilder::$MODE_SIGNED);
+                ->addPayloadParam('user_id', $userId)
+                ->setSerializerType(SerializerFactory::SIGNED);
 
             // Invoke the request
             return $request->fire();
@@ -133,7 +131,7 @@ trait FriendshipsFeaturesTrait
             // Prepare the request payload
             $request
                 ->addRankedToken()
-                ->addParam('max_id', $maxId);
+                ->addQueryParamIfNotNull('max_id', $maxId);
 
             // Invoke the request
             return $request->fire();
@@ -163,7 +161,7 @@ trait FriendshipsFeaturesTrait
             // Prepare the request payload
             $request
                 ->addRankedToken()
-                ->addParam('max_id', $maxId);
+                ->addQueryParamIfNotNull('max_id', $maxId);
 
             // Invoke the request
             return $request->fire();

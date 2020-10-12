@@ -22,7 +22,7 @@ abstract class DTO implements PropertiesInterface
      *
      * @param array|PropertiesInterface $properties
      * @return static
-     * @phan-suppress PhanTypeInstantiateAbstract
+     * @phan-suppress PhanTypeInstantiateAbstractStatic
      */
     public static function create($properties)
     {

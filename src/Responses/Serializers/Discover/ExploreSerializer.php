@@ -23,7 +23,7 @@ class ExploreSerializer extends AbstractSerializer implements OnDecodeInterface
     protected $client;
 
     /**
-     * InboxSerializer constructor.
+     * ExploreSerializer constructor.
      *
      * @param Client $client
      */

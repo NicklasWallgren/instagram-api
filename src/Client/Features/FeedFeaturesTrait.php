@@ -108,9 +108,7 @@ trait FeedFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /**
-             * @var GenericRequest $request
-             */
+            /** @var GenericRequest $request */
             $request = request(self::$URI_TIMELINE_FEED, new Timeline())(
                 $this,
                 $this->session,
@@ -124,7 +122,7 @@ trait FeedFeaturesTrait
                 ->addUuid()
                 ->addPhoneId()
                 ->addSessionId()
-                ->setPost('reason', 'cold_start_fetch')
+                ->addPayloadParam('reason', 'cold_start_fetch')
                 ->addPayloadOptions($options);
 
             // Invoke the request
@@ -152,6 +150,7 @@ trait FeedFeaturesTrait
             $message->setQuery($tag);
             $message->setType($type);
 
+            /** @var GenericRequest $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf($uri, $tag), $message)(
                 $this,
@@ -160,7 +159,7 @@ trait FeedFeaturesTrait
             );
 
             // Prepare the request parameters
-            $request->addParam('max_id', $maxId);
+            $request->addQueryParamIfNotNull('max_id', $maxId);
 
             // Invoke the request
             return $request->fire();

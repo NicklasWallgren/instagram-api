@@ -23,7 +23,7 @@ class ChannelsSerializer extends AbstractSerializer implements OnDecodeInterface
     protected $client;
 
     /**
-     * InboxSerializer constructor.
+     * ChannelsSerializer constructor.
      *
      * @param Client $client
      */

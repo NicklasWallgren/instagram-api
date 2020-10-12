@@ -33,19 +33,16 @@ class FollowersMessage extends Envelope implements IteratorInterface
 
     /**
      * @var bool
-     * @name big_list
      */
     protected $bigList;
 
     /**
      * @var string|null
-     * @name next_max_id
      */
     protected $nextMaxId;
 
     /**
      * @var int
-     * @name page_size
      */
     protected $pageSize;
 
@@ -198,10 +195,9 @@ class FollowersMessage extends Envelope implements IteratorInterface
      * @suppress PhanUnusedPublicMethodParameter
      * @suppress PhanPossiblyNullTypeMismatchProperty
      * @param array<string, mixed> $container
-     * @param array<string, string> $requirements
      * @throws Exception
      */
-    public function onDecode(array $container, $requirements = []): void
+    public function onDecode(array $container): void
     {
         $this->client = $container['client'];
 

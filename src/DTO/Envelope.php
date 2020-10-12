@@ -6,7 +6,6 @@ use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
 use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
 use Instagram\SDK\DTO\Traits\PropertiesTrait;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
-use Traits\MappableTrait;
 
 /**
  * Class Envelope
@@ -16,7 +15,6 @@ use Traits\MappableTrait;
 class Envelope implements ResponseMessageInterface, PropertiesInterface
 {
 
-    use MappableTrait;
     use PropertiesTrait;
     use OnPropagateDecodeEventTrait;
 
@@ -37,7 +35,6 @@ class Envelope implements ResponseMessageInterface, PropertiesInterface
 
     /**
      * @var string
-     * @name error_type
      */
     protected $errorType;
 
@@ -48,7 +45,6 @@ class Envelope implements ResponseMessageInterface, PropertiesInterface
 
     /**
      * @var bool
-     * @name invalid_credentials
      */
     protected $invalidCredentials;
 

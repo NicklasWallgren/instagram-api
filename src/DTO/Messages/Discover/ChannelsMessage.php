@@ -4,7 +4,6 @@ namespace Instagram\SDK\DTO\Messages\Discover;
 
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
-use Traits\MappableTrait;
 
 /**
  * Class ChannelsMessage
@@ -14,12 +13,10 @@ use Traits\MappableTrait;
 class ChannelsMessage extends Envelope
 {
 
-    use MappableTrait;
     use OnPropagateDecodeEventTrait;
 
     /**
      * @var bool
-     * @name auto_load_more_enabled
      */
     protected $autoLoadMoreEnabled;
 
@@ -30,13 +27,11 @@ class ChannelsMessage extends Envelope
 
     /**
      * @var bool
-     * @name more_available
      */
     protected $moreAvailable;
 
     /**
      * @var string
-     * @name next_max_id
      */
     protected $nextMaxId;
 

@@ -14,7 +14,6 @@ interface OnItemDecodeInterface
      * On item decode method.
      *
      * @param array<string, mixed> $container
-     * @param array<string, string> $requirements
      */
-    public function onDecode(array $container, $requirements = []): void;
+    public function onDecode(array $container): void;
 }

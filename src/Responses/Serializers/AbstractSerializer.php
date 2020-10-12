@@ -11,6 +11,7 @@ use Instagram\SDK\Responses\Interfaces\SerializerInterface;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 use Instagram\SDK\Responses\Traits\ErrorTypeMethodsTrait;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
+use Tebru\Gson\Gson;
 
 /**
  * Class AbstractSerializer
@@ -52,7 +53,11 @@ abstract class AbstractSerializer implements SerializerInterface
 
         // Compose a new message instance
         $message = $this->message();
-        $message->mapFromJson((string)$response->getBody());
+
+        $response = (string)$response->getBody();
+
+        $gson = Gson::builder()->build();
+        $gson->fromJson($response, $message);
 
         // Check whether we retrieved a valid response
         if (!$this->isValidResponse($message)) {

@@ -3,7 +3,7 @@
 namespace Instagram\SDK\Requests\Http\Traits;
 
 use Instagram\SDK\Requests\Exceptions\EncodingException;
-use Instagram\SDK\Requests\Http\Serializers\SerializerInterface;
+use Instagram\SDK\Requests\Http\Serializers\RequestSerializerInterface;
 use Instagram\SDK\Requests\Traits\RequestBuilderMethodsTrait;
 
 /**
@@ -40,7 +40,7 @@ trait RequestBuilderBodyMethodsTrait
     /**
      * Returns the body serializer.
      *
-     * @return SerializerInterface
+     * @return RequestSerializerInterface
      */
-    abstract protected function serializer(): SerializerInterface;
+    abstract protected function serializer(): RequestSerializerInterface;
 }

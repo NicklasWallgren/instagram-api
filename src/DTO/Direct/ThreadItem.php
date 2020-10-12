@@ -6,7 +6,6 @@ use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\DTO;
 use Instagram\SDK\DTO\Interfaces\UserInterface;
 use Instagram\SDK\DTO\Messages\Direct\SeenMessage;
-use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeRequirementsInterface;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Support\Promise;
 
@@ -15,7 +14,7 @@ use Instagram\SDK\Support\Promise;
  *
  * @package Instagram\SDK\DTO\Direct
  */
-class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequirementsInterface
+class ThreadItem extends DTO implements OnItemDecodeInterface
 {
 
     /**
@@ -25,13 +24,11 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
 
     /**
      * @var string
-     * @name item_id
      */
     protected $itemId;
 
     /**
      * @var int
-     * @name user_id
      */
     protected $userId;
 
@@ -47,7 +44,6 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
 
     /**
      * @var string
-     * @name item_type
      */
     protected $itemType;
 
@@ -58,13 +54,11 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
 
     /**
      * @var string
-     * @name text
      */
     protected $text;
 
     /**
      * @var string
-     * @name client_context
      */
     protected $clientContext;
 
@@ -133,9 +127,9 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
     /**
      * Returns true if the provided type matches the item type.
      *
-     * @see \Instagram\SDK\DTO\General\ItemType
      * @param string $type
      * @return bool
+     * @see \Instagram\SDK\DTO\General\ItemType
      */
     public function isItemType(string $type): bool
     {
@@ -278,20 +272,9 @@ class ThreadItem extends DTO implements OnItemDecodeInterface, OnDecodeRequireme
      *
      * @suppress PhanUnusedPublicMethodParameter, PhanPossiblyNullTypeMismatchProperty
      * @param array<string, mixed> $container
-     * @param array<string, string> $requirements
      */
-    public function onDecode(array $container, $requirements = []): void
+    public function onDecode(array $container): void
     {
         $this->client = $container['client'];
-    }
-
-    /**
-     * Returns the requirements.
-     *
-     * @return string[]
-     */
-    public function requirements(): array
-    {
-        return ['user:userId', 'parent'];
     }
 }

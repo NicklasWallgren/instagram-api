@@ -61,7 +61,7 @@ trait Inflatable
      * @param string $property
      * @return bool
      */
-    protected function hasSubjectSetterMethod($property): bool
+    protected function hasSubjectSetterMethod(string $property): bool
     {
         // Compose the method name
         $method = 'set' . ucfirst($property);
