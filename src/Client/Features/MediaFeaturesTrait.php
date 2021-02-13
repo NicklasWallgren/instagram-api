@@ -71,7 +71,7 @@ trait MediaFeaturesTrait
                 ->addUuidAndUid()
                 ->addPayloadParam('module_name', 'photo_view')
                 ->addPayloadParam('media_id', $mediaId)
-                ->setSerializerType(SerializerFactory::SIGNED);
+                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
 
             // Invoke the request
             return $request->fire();
@@ -106,7 +106,7 @@ trait MediaFeaturesTrait
                 ->addUuidAndUid()
                 ->addPayloadParam('module_name', 'photo_view')
                 ->addPayloadParam('media_id', $mediaId)
-                ->setSerializerType(SerializerFactory::SIGNED);
+                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
 
             // Invoke the request
             return $request->fire();
@@ -142,7 +142,7 @@ trait MediaFeaturesTrait
                 ->addUuidAndUid()
                 ->addPayloadParam('comment_text', $comment)
                 ->addPayloadParam('idempotence_token', uuid())
-                ->setSerializerType(SerializerFactory::SIGNED);
+                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
 
             // Invoke the request
             return $request->fire();
@@ -177,7 +177,7 @@ trait MediaFeaturesTrait
                 ->addCSRFToken()
                 ->addUuidAndUid()
                 ->addPayloadParam('comment_ids_to_delete', (string)$commentId)
-                ->setSerializerType(SerializerFactory::SIGNED);
+                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
 
             // Invoke the request
             return $request->fire();

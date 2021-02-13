@@ -7,10 +7,9 @@ use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Http\RequestClient as HttpClient;
 use Instagram\SDK\Requests\GenericRequest;
-use Instagram\SDK\Requests\Http\Builders\AbstractRequestBuilder;
 use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
 use Instagram\SDK\Requests\Support\SignatureSupport;
-use Instagram\SDK\Responses\Serializers\AbstractSerializer;
+use Instagram\SDK\Responses\Interfaces\SerializerInterface;
 use Instagram\SDK\Responses\Serializers\GenericSerializer;
 use Instagram\SDK\Session\Session;
 
@@ -45,6 +44,30 @@ function request(string $uri, Envelope $message, string $method = 'POST'): Closu
         );
     };
 }
+
+/**
+ * Generates a generic request instance.
+ *
+ * @param SerializerInterface $serializer
+ * @param string              $uri     The request uri.
+ * @param Envelope            $message The envelope.
+ * @param string              $method
+ * @return Closure<GenericRequest>
+ */
+// phpcs:ignore
+function requestWithSerializer(SerializerInterface $serializer, string $uri, Envelope $message, string $method = 'POST'): Closure
+{
+    // phpcs:ignore
+    return function (Session $session, HttpClient $httpClient) use ($serializer, $uri, $message, $method): GenericRequest {
+        return new GenericRequest(
+            $session,
+            $httpClient,
+            new GenericRequestBuilder($uri, $method, $session),
+            $serializer
+        );
+    };
+}
+
 
 
 /**

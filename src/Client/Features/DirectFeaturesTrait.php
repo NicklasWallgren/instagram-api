@@ -7,7 +7,6 @@ use Instagram\SDK\DTO\Messages\Direct\DirectSendItemMessage;
 use Instagram\SDK\DTO\Messages\Direct\InboxMessage;
 use Instagram\SDK\DTO\Messages\Direct\SeenMessage;
 use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
-use Instagram\SDK\Requests\Direct\InboxRequest;
 use Instagram\SDK\Requests\Direct\ThreadRequest;
 use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Support\Promise;
@@ -47,7 +46,15 @@ trait DirectFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            return (new InboxRequest($this->getSubject(), $this->session, $this->client))->fire();
+            /** @var GenericRequest $request */
+            $request = request('direct_v2/inbox/', new InboxMessage(), 'GET')(
+                $this,
+                $this->session,
+                $this->client
+            );
+
+            // Invoke the request
+            return $request->fire();
         })($this->getMode());
     }
 
@@ -64,7 +71,17 @@ trait DirectFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            return (new ThreadRequest($this->getSubject(), $this->session, $this->client, $id, $cursor))->fire();
+            /** @var GenericRequest $request */
+            $request = request(sprintf('direct_v2/threads/%s/', $id), new ThreadMessage(), 'GET')(
+                $this,
+                $this->session,
+                $this->client
+            );
+
+            $request->addQueryParamIfNotNull('cursor', $cursor);
+
+            // Invoke the request
+            return $request->fire();
         })($this->getMode());
     }
 
@@ -113,9 +130,7 @@ trait DirectFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /**
-             * @var GenericRequest $request
-             */
+            /** @var GenericRequest $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_SEEN, $threadId, $threadItemId), new SeenMessage())(
                 $this,

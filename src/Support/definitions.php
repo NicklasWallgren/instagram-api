@@ -1,6 +1,6 @@
 <?php
 
-namespace Instagram\SDK;
+namespace Instagram\SDK\Client\Features;
 
 /**
  * @var int The hashtag feed type

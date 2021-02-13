@@ -5,11 +5,12 @@ namespace Instagram\SDK\Client\Features;
 use Instagram\SDK\DTO\Messages\Discover\ChannelsMessage;
 use Instagram\SDK\DTO\Messages\Discover\ExploreMessage;
 use Instagram\SDK\DTO\Messages\Discover\TopLiveMessage;
-use Instagram\SDK\Requests\Discover\ChannelsRequest;
 use Instagram\SDK\Requests\Discover\ExploreRequest;
 use Instagram\SDK\Requests\Discover\TopLiveRequest;
+use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\task;
+use function Instagram\SDK\Support\request;
 
 /**
  * Trait DiscoverFeaturesTrait
@@ -32,7 +33,15 @@ trait DiscoverFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            return (new ExploreRequest($this->getSubject(), $this->session, $this->client))->fire();
+            /** @var GenericRequest $request */
+            $request = request('discover/explore/', new ExploreMessage(), 'GET')(
+                $this,
+                $this->session,
+                $this->client
+            );
+
+            // Invoke the request
+            return $request->fire();
         })($this->getMode());
     }
 
@@ -47,7 +56,15 @@ trait DiscoverFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            return (new TopLiveRequest($this->getSubject(), $this->session, $this->client))->fire();
+            /** @var GenericRequest $request */
+            $request = request('discover/top_live/', new TopLiveMessage(), 'GET')(
+                $this,
+                $this->session,
+                $this->client
+            );
+
+            // Invoke the request
+            return $request->fire();
         })($this->getMode());
     }
 
@@ -62,7 +79,15 @@ trait DiscoverFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            return (new ChannelsRequest($this->getSubject(), $this->session, $this->client))->fire();
+            /** @var GenericRequest $request */
+            $request = request('discover/channels_home/', new ChannelsMessage(), 'GET')(
+                $this,
+                $this->session,
+                $this->client
+            );
+
+            // Invoke the request
+            return $request->fire();
         })($this->getMode());
     }
 }

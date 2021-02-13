@@ -3,6 +3,8 @@
 namespace Instagram\SDK\Client\Features;
 
 use Exception;
+use GuzzleHttp\Promise\PromiseInterface;
+use Instagram\SDK\DTO\Messages\HeaderMessage;
 use Instagram\SDK\Requests\General\HeaderRequest;
 use Instagram\SDK\Requests\Support\SignatureSupport;
 use Instagram\SDK\Support\Promise;
@@ -24,11 +26,11 @@ trait GeneralFeaturesTrait
      * Returns the headers containing the initial CSRF token.
      *
      * @throws Exception
-     * @return Promise<HeaderMessage>
+     * @return HeaderMessage|PromiseInterface<HeaderMessage>
      */
     protected function headers()
     {
-        return task(function (): Promise {
+        return task(function (): PromiseInterface {
             // Check whether the user is authenticated or not
             if (!$this->isSessionAvailable()) {
                 return rejection_for('The session is not available. Please authenticate first');

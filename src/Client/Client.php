@@ -150,17 +150,6 @@ class Client
     }
 
     /**
-     * Returns the subject instance.
-     *
-     * @return Client
-     */
-    protected function getSubject(): Client
-    {
-        return $this;
-    }
-
-
-    /**
      * @inheritDoc
      */
     public function __debugInfo()

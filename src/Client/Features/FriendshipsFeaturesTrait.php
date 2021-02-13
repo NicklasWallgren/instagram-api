@@ -67,7 +67,7 @@ trait FriendshipsFeaturesTrait
                 ->addCSRFTokenAndUserId()
                 ->addUuid()
                 ->addPayloadParam('user_id', $userId)
-                ->setSerializerType(SerializerFactory::SIGNED);
+                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
 
             // Invoke the request
             return $request->fire();
@@ -101,7 +101,7 @@ trait FriendshipsFeaturesTrait
                 ->addCSRFTokenAndUserId()
                 ->addUuid()
                 ->addPayloadParam('user_id', $userId)
-                ->setSerializerType(SerializerFactory::SIGNED);
+                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
 
             // Invoke the request
             return $request->fire();

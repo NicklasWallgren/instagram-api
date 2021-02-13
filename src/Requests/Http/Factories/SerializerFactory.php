@@ -16,9 +16,9 @@ use Webmozart\Assert\Assert;
 class SerializerFactory
 {
 
-    public const SIGNED = 0;
-    public const ENCODED = 1;
-    public const VALID_SERIALIZERS = [self::SIGNED, self::ENCODED];
+    public const TYPE_SIGNED = 0;
+    public const TYPE_URL_ENCODED = 1;
+    public const VALID_SERIALIZERS = [self::TYPE_SIGNED, self::TYPE_URL_ENCODED];
 
     /**
      * @param int $type
@@ -31,9 +31,9 @@ class SerializerFactory
         Assert::oneOf($type, self::VALID_SERIALIZERS);
 
         switch ($type) {
-            case self::SIGNED:
+            case self::TYPE_SIGNED:
                 return new HashRequestSerializer();
-            case self::ENCODED:
+            case self::TYPE_URL_ENCODED:
                 return new UrlEncodeRequestSerializer();
             default:
         }

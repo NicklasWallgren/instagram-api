@@ -37,7 +37,7 @@ class GenericRequestBuilder implements RequestBuilderInterface
     private $payload = [];
 
     /** @var int */
-    private $serializerType = SerializerFactory::ENCODED;
+    private $serializerType = SerializerFactory::TYPE_URL_ENCODED;
 
     /**
      * GenericRequestBuilder constructor.

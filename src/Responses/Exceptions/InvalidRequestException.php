@@ -9,19 +9,21 @@ use Exception;
  *
  * @package Instagram\SDK\Responses\Exceptions
  */
-class InvalidRequestException extends Exception
+final class InvalidRequestException extends Exception
 {
 
     /**
      * @var string The default error message
      */
-    const DEFAULT_MESSAGE = 'Invalid request';
+    private const DEFAULT_MESSAGE = 'Invalid request';
 
     /**
      * InvalidResponseException constructor.
+     *
+     * @param string|null $message
      */
-    public function __construct()
+    public function __construct(?string $message = null)
     {
-        parent::__construct(self::DEFAULT_MESSAGE, 0, null);
+        parent::__construct($message ?? self::DEFAULT_MESSAGE, 0, null);
     }
 }

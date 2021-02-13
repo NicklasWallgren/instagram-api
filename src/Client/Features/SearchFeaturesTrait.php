@@ -13,8 +13,6 @@ use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\rejection_for;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
-use const Instagram\SDK\TYPE_HASHTAG;
-use const Instagram\SDK\TYPE_USER;
 
 /**
  * Trait SearchFeaturesTrait

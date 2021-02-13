@@ -167,6 +167,238 @@ class Item implements OnItemDecodeInterface
     protected $organicTrackingToken;
 
     /**
+     * @return int
+     */
+    public function getTakenAt(): int
+    {
+        return $this->takenAt;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPk(): float
+    {
+        return $this->pk;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeviceTimestamp(): int
+    {
+        return $this->deviceTimestamp;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMediaType(): int
+    {
+        return $this->mediaType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClientCacheKey(): string
+    {
+        return $this->clientCacheKey;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFilterType(): int
+    {
+        return $this->filterType;
+    }
+
+    /**
+     * @return \Instagram\SDK\DTO\General\Media\ImageVersions2[]
+     */
+    public function getImageVersions2(): array
+    {
+        return $this->imageVersions2;
+    }
+
+    /**
+     * @return float
+     */
+    public function getOriginalWidth(): float
+    {
+        return $this->originalWidth;
+    }
+
+    /**
+     * @return float
+     */
+    public function getOriginalHeight(): float
+    {
+        return $this->originalHeight;
+    }
+
+    /**
+     * @return object
+     */
+    public function getVideoVersions(): object
+    {
+        return $this->videoVersions;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHasAudio(): bool
+    {
+        return $this->hasAudio;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVideoDuration(): int
+    {
+        return $this->videoDuration;
+    }
+
+    /**
+     * @return int
+     */
+    public function getViewCount(): int
+    {
+        return $this->viewCount;
+    }
+
+    /**
+     * @return object
+     */
+    public function getUser(): object
+    {
+        return $this->user;
+    }
+
+    /**
+     * @return object
+     */
+    public function getCaption(): object
+    {
+        return $this->caption;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCaptionIsEdited(): bool
+    {
+        return $this->captionIsEdited;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLikeCount(): int
+    {
+        return $this->likeCount;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHasLiked(): bool
+    {
+        return $this->has_liked;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCommentLikesEnabled(): bool
+    {
+        return $this->commentLikesEnabled;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCommentThreadingEnabled(): bool
+    {
+        return $this->commentThreadingEnabled;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHasMoreComments(): bool
+    {
+        return $this->hasMoreComments;
+    }
+
+    /**
+     * @return float
+     */
+    public function getNextMaxId(): float
+    {
+        return $this->nextMaxId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxNumVisiblePreviewComments(): int
+    {
+        return $this->maxNumVisiblePreviewComments;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCommentCount(): int
+    {
+        return $this->commentCount;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPhotoOfYou(): bool
+    {
+        return $this->photoOfYou;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCanViewerSave(): bool
+    {
+        return $this->canViewerSave;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrganicTrackingToken(): string
+    {
+        return $this->organicTrackingToken;
+    }
+
+    /**
      * On item decode method.
      *
      * @suppress PhanUnusedPublicMethodParameter

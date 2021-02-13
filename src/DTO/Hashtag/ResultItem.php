@@ -8,7 +8,7 @@ use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Instagram\SDK\Support\Promise;
-use const Instagram\SDK\TYPE_HASHTAG;
+use const Instagram\SDK\Client\Features\TYPE_HASHTAG;
 
 /**
  * Class ResultItem

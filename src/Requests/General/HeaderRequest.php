@@ -2,13 +2,16 @@
 
 namespace Instagram\SDK\Requests\General;
 
+use Instagram\SDK\DTO\Messages\HeaderMessage;
 use Instagram\SDK\Http\RequestClient as HttpClient;
-use Instagram\SDK\Requests\General\Builders\HeaderRequestBuilder;
+use Instagram\SDK\Requests\GenericRequest;
+use Instagram\SDK\Requests\Http\Factories\SerializerFactory;
 use Instagram\SDK\Requests\Request;
 use Instagram\SDK\Requests\Traits\RequestMethods;
 use Instagram\SDK\Responses\Serializers\General\HeaderSerializer;
 use Instagram\SDK\Session\Session;
 use Instagram\SDK\Support\Promise;
+use function Instagram\SDK\Support\requestWithSerializer;
 
 /**
  * Class HeaderRequest
@@ -40,16 +43,26 @@ class HeaderRequest extends Request
     }
 
     /**
-     * Fire the request.
-     *
-     * @return Promise
+     * @inheritDoc
      */
     public function fire(): Promise
     {
-        // Build the request instance
-        $request = new HeaderRequestBuilder($this->signature, $this->session);
+        /** @var GenericRequest $request */
+        // phpcs:ignore
+        $request = requestWithSerializer(new HeaderSerializer($this->httpClient), 'si/fetch_headers/', new HeaderMessage())(
+            $this->session,
+            $this->httpClient
+        );
 
-        // Return a promise chain
-        return $this->request($request->build(), new HeaderSerializer($this->httpClient));
+        // Prepare the payload
+        $body = [
+            'challenge_type' => 'signup',
+            'guid'           => $this->signature,
+        ];
+
+        $request->setPayload($body)
+            ->setSerializerType(SerializerFactory::TYPE_URL_ENCODED);
+
+        return $request->fire();
     }
 }

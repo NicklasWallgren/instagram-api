@@ -98,7 +98,9 @@ abstract class AbstractSerializer implements SerializerInterface
     {
         // Check whether the request was invalid
         if ($response->getStatusCode() === static::HTTP_NOT_FOUND) {
-            throw new InvalidRequestException();
+            throw new InvalidRequestException(
+                sprintf('Http status 404. Error: %s', (string)$response->getBody()->getContents())
+            );
         }
 
         throw new ApiResponseException(new Envelope((string)$response->getBody()));
@@ -110,7 +112,7 @@ abstract class AbstractSerializer implements SerializerInterface
      * @param Envelope $envelope
      * @return bool
      */
-    protected function isValidResponse(Envelope $envelope)
+    protected function isValidResponse(Envelope $envelope): bool
     {
         return $envelope->isSuccess();
     }
@@ -121,7 +123,7 @@ abstract class AbstractSerializer implements SerializerInterface
      * @param Envelope $message
      * @return void
      */
-    protected function finalize(Envelope $message)
+    protected function finalize(Envelope $message): void
     {
         // Check whether the listener is implemented
         if ($this instanceof OnDecodeInterface) {

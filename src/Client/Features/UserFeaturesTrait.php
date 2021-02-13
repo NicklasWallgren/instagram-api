@@ -28,21 +28,11 @@ trait UserFeaturesTrait
     use DefaultFeaturesTrait;
 
     /**
-     * @var string The login nonce uri
-     */
-    private static $URI_LOGIN_NONCE = 'accounts/one_tap_app_login/';
-
-    /**
-     * @var string The logout uri
-     */
-    private static $URI_LOGOUT = 'accounts/logout/';
-
-    /**
      * Authenticates a user.
      *
      * @param string $username The username
      * @param string $password The password
-     * @return SessionMessage|Promise<InboxMessage>
+     * @return SessionMessage|Promise<SessionMessage>
      * @throws Exception
      */
     public function login(string $username, string $password)
@@ -51,7 +41,6 @@ trait UserFeaturesTrait
         $this->session = (new SessionBuilder())->build($this->builder, $this->client);
 
         return $this->chain(function () use ($username, $password): Promise {
-            // Retrieve the header message
             // @phan-suppress-next-line PhanUndeclaredMethod
             return $this->headers()->then(function () use ($username, $password): Promise {
                 return (new LoginRequest($username, $password, $this->session, $this->client))->fire();
@@ -63,7 +52,7 @@ trait UserFeaturesTrait
      * Authenticates a user using nonce.
      *
      * @param string $nonce
-     * @return SessionMessage|Promise<InboxMessage>
+     * @return SessionMessage|Promise<SessionMessage>
      */
     public function loginUsingNonce(string $nonce)
     {
@@ -71,8 +60,8 @@ trait UserFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            // Build the request instance
-            $request = request(self::$URI_LOGIN_NONCE, new SessionMessage())(
+            /** @var GenericRequest $request */
+            $request = request('accounts/one_tap_app_login/', new SessionMessage())(
                 $this,
                 $this->session,
                 $this->client
@@ -87,7 +76,7 @@ trait UserFeaturesTrait
             ];
 
             $request->setPayload($body)
-                ->setMode(SerializerFactory::SIGNED);
+                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
 
             // Invoke the request
             return $request->fire();
@@ -106,7 +95,7 @@ trait UserFeaturesTrait
             $this->checkPrerequisites();
 
             /** @var GenericRequest $request */
-            $request = request(self::$URI_LOGOUT, new LogoutMessage())(
+            $request = request('accounts/logout/', new LogoutMessage())(
                 $this,
                 $this->session,
                 $this->client

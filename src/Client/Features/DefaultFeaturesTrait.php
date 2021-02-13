@@ -54,10 +54,4 @@ trait DefaultFeaturesTrait
      */
     abstract protected function checkPrerequisites(): void;
 
-    /**
-     * Returns the subject instance.
-     *
-     * @return Client
-     */
-    abstract protected function getSubject(): Client;
 }

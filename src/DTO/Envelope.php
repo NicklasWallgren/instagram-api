@@ -95,7 +95,7 @@ class Envelope implements ResponseMessageInterface, PropertiesInterface
      *
      * @return bool
      */
-    public function isSuccess()
+    public function isSuccess(): bool
     {
         return $this->status === static::STATUS_SUCCESS;
     }

@@ -7,6 +7,8 @@ use Instagram\SDK\DTO\Messages\Search\HashtagSearchResultMessage;
 use Instagram\SDK\DTO\Messages\Search\SearchResultMessage;
 use Instagram\SDK\DTO\Messages\Search\UserSearchResultMessage;
 use Instagram\SDK\Support\Promise;
+use const Instagram\SDK\Client\Features\TYPE_HASHTAG;
+use const Instagram\SDK\Client\Features\TYPE_USER;
 
 /**
  * Trait MakeSearchRequestsAccessible
@@ -17,16 +19,6 @@ trait MakeSearchRequestsAccessible
 {
 
     /**
-     * @var int The hashtag search type
-     */
-    public static $TYPE_SEARCH_HASHTAG = 1;
-
-    /**
-     * @var int The user search type
-     */
-    public static $TYPE_SEARCH_USER = 2;
-
-    /**
      * Search by hashtag.
      *
      * @param string $tag
@@ -35,7 +27,7 @@ trait MakeSearchRequestsAccessible
      */
     public function searchByHashtag(string $tag)
     {
-        return $this->search(self::$TYPE_SEARCH_HASHTAG, $tag);
+        return $this->search(TYPE_HASHTAG, $tag);
     }
 
     /**
@@ -47,7 +39,7 @@ trait MakeSearchRequestsAccessible
      */
     public function searchByUser(string $user)
     {
-        return $this->search(self::$TYPE_SEARCH_USER, $user);
+        return $this->search(TYPE_USER, $user);
     }
 
     /**

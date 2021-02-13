@@ -6,6 +6,7 @@ use Instagram\SDK\Http\RequestClient as HttpClient;
 use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
 use Instagram\SDK\Requests\Options\AbstractOptions;
 use Instagram\SDK\Requests\Traits\RequestMethods;
+use Instagram\SDK\Responses\Interfaces\SerializerInterface;
 use Instagram\SDK\Responses\Serializers\AbstractSerializer;
 use Instagram\SDK\Session\Session;
 use Instagram\SDK\Support\Promise;
@@ -27,7 +28,7 @@ class GenericRequest extends Request
     protected $requestBuilder;
 
     /**
-     * @var AbstractSerializer
+     * @var SerializerInterface
      */
     protected $serializer;
 
@@ -37,13 +38,13 @@ class GenericRequest extends Request
      * @param Session               $session
      * @param HttpClient            $httpClient
      * @param GenericRequestBuilder $requestBuilder
-     * @param AbstractSerializer    $serializer
+     * @param SerializerInterface   $serializer
      */
     public function __construct(
         Session $session,
         HttpClient $httpClient,
         GenericRequestBuilder $requestBuilder,
-        AbstractSerializer $serializer
+        SerializerInterface $serializer
     ) {
         $this->requestBuilder = $requestBuilder;
         $this->serializer = $serializer;
