@@ -24,7 +24,7 @@ class ThreadMessage extends Envelope implements OnItemDecodeInterface
      * @var Thread
      * @JsonAdapter("Instagram\SDK\DTO\Direct\Adapters\ThreadAdapterFactory")
      */
-    protected $thread;
+    private $thread;
 
     /**
      * @return Thread

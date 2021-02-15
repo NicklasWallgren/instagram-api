@@ -2,6 +2,8 @@
 
 namespace Instagram\SDK\Responses\Interfaces;
 
+use GuzzleHttp\Promise\PromiseInterface;
+
 /**
  * Interface IteratorInterface
  *
@@ -10,13 +12,11 @@ namespace Instagram\SDK\Responses\Interfaces;
 interface IteratorInterface
 {
 
-    /**
-     * @return bool
-     */
     public function next();
 
-    /**
-     * @return bool
-     */
+    public function nextPromise(): PromiseInterface;
+
     public function rewind();
+
+    public function rewindPromise(): PromiseInterface;
 }

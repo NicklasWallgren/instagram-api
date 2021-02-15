@@ -19,17 +19,17 @@ class DirectSendItemMessage extends Envelope
     /**
      * @var string
      */
-    protected $action;
+    private $action;
 
     /**
      * @var string
      */
-    protected $statusCode;
+    private $statusCode;
 
     /**
      * @var DirectSendItemPayload
      */
-    protected $payload;
+    private $payload;
 
     /**
      * @return string

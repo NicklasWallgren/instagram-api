@@ -18,7 +18,7 @@ trait Inflatable
      * @param array<string, mixed>|PropertiesInterface $properties
      * @return static
      */
-    public function inflate($properties)
+    protected function inflate($properties)
     {
         // Retrieve the properties
         $properties = $this->properties($properties);

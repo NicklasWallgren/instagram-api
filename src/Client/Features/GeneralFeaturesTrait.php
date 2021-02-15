@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK\Client\Features;
 
 use Exception;
@@ -7,7 +9,6 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Messages\HeaderMessage;
 use Instagram\SDK\Requests\General\HeaderRequest;
 use Instagram\SDK\Requests\Support\SignatureSupport;
-use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\rejection_for;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\uuid;
@@ -26,9 +27,9 @@ trait GeneralFeaturesTrait
      * Returns the headers containing the initial CSRF token.
      *
      * @throws Exception
-     * @return HeaderMessage|PromiseInterface<HeaderMessage>
+     * @return PromiseInterface<HeaderMessage>
      */
-    protected function headers()
+    protected function headers(): PromiseInterface
     {
         return task(function (): PromiseInterface {
             // Check whether the user is authenticated or not
@@ -37,7 +38,7 @@ trait GeneralFeaturesTrait
             }
 
             return (new HeaderRequest(uuid(SignatureSupport::TYPE_COMBINED), $this->session, $this->client))->fire();
-        })($this->getMode());
+        });
     }
 
     /**

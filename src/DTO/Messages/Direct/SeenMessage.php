@@ -16,13 +16,13 @@ class SeenMessage extends Envelope
     /**
      * @var int
      */
-    protected $unseenCount;
+    private $unseenCount;
 
     /**
      * @var int
      * @SerializedName("unseen_count_ts")
      */
-    protected $unseenCountTimestamp;
+    private $unseenCountTimestamp;
 
     /**
      * @return int

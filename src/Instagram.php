@@ -18,16 +18,6 @@ class Instagram
     use MakeRequestsAccessible;
 
     /**
-     * @var bool The promise mode flag
-     */
-    public const MODE_PROMISE = false;
-
-    /**
-     * @var bool The unwrap mode flag
-     */
-    public const MODE_UNWRAP = true;
-
-    /**
      * @var Client The Instagram API client
      */
     public $client;
@@ -51,19 +41,6 @@ class Instagram
     public function setSession(Session $session)
     {
         $this->client->setSession($session);
-
-        return $this;
-    }
-
-    /**
-     * Sets the result mode.
-     *
-     * @param bool $mode
-     * @return static
-     */
-    public function setMode(bool $mode): self
-    {
-        $this->client->setMode($mode);
 
         return $this;
     }

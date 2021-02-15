@@ -2,11 +2,13 @@
 
 namespace Instagram\SDK\Requests\Traits;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
-use Instagram\SDK\DTO\Messages\Feed\Timeline;
+use Instagram\SDK\DTO\Messages\Feed\TimelineMessage;
 use Instagram\SDK\Requests\Feed\TimelineOptions;
-use Instagram\SDK\Support\Promise;
+use const Instagram\SDK\Client\Features\TYPE_HASHTAG;
+use const Instagram\SDK\Client\Features\TYPE_USER;
 
 /**
  * Trait MakeFeedRequestsAccessible
@@ -17,60 +19,69 @@ trait MakeFeedRequestsAccessible
 {
 
     /**
-     * @var int The hashtag feed type
+     * Retrieves feed by hashtag.
+     *
+     * @param string $tag
+     * @return FeedMessage
+     * @throws \Exception
      */
-    public static $TYPE_FEED_HASHTAG = 1;
-
-    /**
-     * @var int The user feed type
-     */
-    public static $TYPE_FEED_USER = 2;
+    public function feedByHashtag(string $tag): FeedMessage
+    {
+        return $this->feedByHashtagPromise($tag)->wait();
+    }
 
     /**
      * Retrieves feed by hashtag.
      *
      * @param string $tag
-     * @return FeedMessage|Promise
-     * @throws \Exception
+     * @return PromiseInterface<FeedMessage>
      */
-    public function feedByHashtag(string $tag)
+    public function feedByHashtagPromise(string $tag): PromiseInterface
     {
-        return $this->feed(self::$TYPE_FEED_HASHTAG, $tag);
+        return $this->feed(TYPE_HASHTAG, $tag);
     }
 
     /**
      * Retrieves feed by user.
      *
      * @param string $userId
-     * @return FeedMessage|Promise
+     * @return FeedMessage
      * @throws \Exception
      */
-    public function feedByUser(string $userId)
+    public function feedByUser(string $userId): FeedMessage
     {
-        return $this->feed(self::$TYPE_FEED_USER, $userId);
+        return $this->feedByUserPromise($userId)->wait();
     }
 
     /**
-     * Retrieves feed by type.
+     * Retrieves feed by user.
      *
-     * @param int         $type
-     * @param string      $query
-     * @param string|null $maxId
-     * @return FeedMessage|Promise<FeedMessage>
-     * @throws \Exception
+     * @param string $userId
+     * @return PromiseInterface<FeedMessage>
      */
-    public function feed(int $type, string $query, ?string $maxId = null)
+    public function feedByUserPromise(string $userId): PromiseInterface
     {
-        return $this->getClient()->feed($type, $query, $maxId);
+        return $this->feed(TYPE_USER, $userId);
     }
 
     /**
      * Retrieves the timeline feed for the current user.
      *
      * @param TimelineOptions|null $options
-     * @return Timeline|Promise<Timeline>
+     * @return TimelineMessage
      */
-    public function timeline(?TimelineOptions $options = null)
+    public function timeline(?TimelineOptions $options = null): TimelineMessage
+    {
+        return $this->timelinePromise($options)->wait();
+    }
+
+    /**
+     * Retrieves the timeline feed for the current user.
+     *
+     * @param TimelineOptions|null $options
+     * @return PromiseInterface<TimelineMessage>
+     */
+    public function timelinePromise(?TimelineOptions $options = null): PromiseInterface
     {
         return $this->getClient()->timeline($options ?? new TimelineOptions());
     }
@@ -81,4 +92,17 @@ trait MakeFeedRequestsAccessible
      * @return Client
      */
     abstract protected function getClient(): Client;
+
+    /**
+     * Retrieves feed by type.
+     *
+     * @param int         $type
+     * @param string      $query
+     * @param string|null $maxId
+     * @return PromiseInterface<FeedMessage>
+     */
+    private function feed(int $type, string $query, ?string $maxId = null): PromiseInterface
+    {
+        return $this->getClient()->feed($type, $query, $maxId);
+    }
 }

@@ -15,27 +15,27 @@ class TimelineOptions extends AbstractOptions
     /**
      * @var string
      */
-    protected $reason;
+    private $reason;
 
     /**
      * @var bool
      */
-    protected $isPrefetch;
+    private $isPrefetch;
 
     /**
      * @var bool
      */
-    protected $isCharging;
+    private $isCharging;
 
     /**
      * @var int
      */
-    protected $timezoneOffset;
+    private $timezoneOffset;
 
     /**
      * @var int
      */
-    protected $batteryLevel;
+    private $batteryLevel;
 
     /**
      * TimelineOptions constructor.

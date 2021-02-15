@@ -13,27 +13,27 @@ class FriendshipStatus
     /**
      * @var bool
      */
-    protected $following;
+    private $following;
 
     /**
      * @var bool
      */
-    protected $isPrivate;
+    private $isPrivate;
 
     /**
      * @var bool
      */
-    protected $incomingRequest;
+    private $incomingRequest;
 
     /**
      * @var bool
      */
-    protected $outgoingRequest;
+    private $outgoingRequest;
 
     /**
      * @var bool
      */
-    protected $isBestie;
+    private $isBestie;
 
     /**
      * Returns following.

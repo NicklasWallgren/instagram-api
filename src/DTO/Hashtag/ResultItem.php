@@ -2,12 +2,12 @@
 
 namespace Instagram\SDK\DTO\Hashtag;
 
-use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Interactive;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Instagram\SDK\Support\Promise;
+use Tebru\Gson\Annotation\SerializedName;
 use const Instagram\SDK\Client\Features\TYPE_HASHTAG;
 
 /**
@@ -23,22 +23,18 @@ class ResultItem extends Interactive implements OnItemDecodeInterface
     /**
      * @var float
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
-    protected $name;
+    private $name;
 
     /**
      * @var int
+     * @SerializedName("media_count")
      */
-    protected $media_count;
-
-    /**
-     * @var Client
-     */
-    protected $client;
+    private $mediaCount;
 
     /**
      * @return float
@@ -61,7 +57,7 @@ class ResultItem extends Interactive implements OnItemDecodeInterface
      */
     public function getMediaCount(): int
     {
-        return $this->media_count;
+        return $this->mediaCount;
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Instagram\SDK\DTO\Hashtag;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Tebru\Gson\Annotation\SerializedName;
 
 /**
  * Class Item
@@ -19,152 +20,153 @@ class Item implements OnItemDecodeInterface
     /**
      * @var Client
      */
-    protected $client;
+    private $client;
 
     /**
      * @var int
      */
-    protected $takenAt;
+    private $takenAt;
 
     /**
      * @var float
      */
-    protected $pk;
+    private $pk;
 
     /**
      * @var string
      */
-    protected $id;
+    private $id;
 
     /**
      * @var int
      */
-    protected $deviceTimestamp;
+    private $deviceTimestamp;
 
     /**
      * @var int
      */
-    protected $mediaType;
+    private $mediaType;
 
     /**
      * @var string
      */
-    protected $code;
+    private $code;
 
     /**
      * @var string
      */
-    protected $clientCacheKey;
+    private $clientCacheKey;
 
     /**
      * @var int
      */
-    protected $filterType;
+    private $filterType;
 
     /**
      * @var \Instagram\SDK\DTO\General\Media\ImageVersions2[]
      */
-    protected $imageVersions2;
+    private $imageVersions2;
 
     /**
      * @var float
      */
-    protected $originalWidth;
+    private $originalWidth;
 
     /**
      * @var float
      */
-    protected $originalHeight;
+    private $originalHeight;
 
     /**
      * @var object
      */
-    protected $videoVersions;
+    private $videoVersions;
 
     /**
      * @var bool
      */
-    protected $hasAudio;
+    private $hasAudio;
 
     /**
      * @var int
      */
-    protected $videoDuration;
+    private $videoDuration;
 
     /**
      * @var int
      */
-    protected $viewCount;
+    private $viewCount;
 
     /**
      * @var object // TODO
      */
-    protected $user;
+    private $user;
 
     /**
      * @var object // TODO
      */
-    protected $caption;
+    private $caption;
 
     /**
      * @var bool
      */
-    protected $captionIsEdited;
+    private $captionIsEdited;
 
     /**
      * @var int
      */
-    protected $likeCount;
+    private $likeCount;
+
+    /**
+     * @var bool
+     * @SerializedName("has_liked")
+     */
+    private $hasLiked;
 
     /**
      * @var bool
      */
-    protected $has_liked;
+    private $commentLikesEnabled;
 
     /**
      * @var bool
      */
-    protected $commentLikesEnabled;
+    private $commentThreadingEnabled;
 
     /**
      * @var bool
      */
-    protected $commentThreadingEnabled;
-
-    /**
-     * @var bool
-     */
-    protected $hasMoreComments;
+    private $hasMoreComments;
 
     /**
      * @var float
      */
-    protected $nextMaxId;
+    private $nextMaxId;
 
     /**
      * @var int
      */
-    protected $maxNumVisiblePreviewComments;
+    private $maxNumVisiblePreviewComments;
 
     /**
      * @var int
      */
-    protected $commentCount;
+    private $commentCount;
 
     /**
      * @var bool
      */
-    protected $photoOfYou;
+    private $photoOfYou;
 
     /**
      * @var bool
      */
-    protected $canViewerSave;
+    private $canViewerSave;
 
     /**
      * @var string
      */
-    protected $organicTrackingToken;
+    private $organicTrackingToken;
 
     /**
      * @return int
@@ -323,7 +325,7 @@ class Item implements OnItemDecodeInterface
      */
     public function isHasLiked(): bool
     {
-        return $this->has_liked;
+        return $this->hasLiked;
     }
 
     /**

@@ -18,22 +18,22 @@ class ChannelsMessage extends Envelope
     /**
      * @var bool
      */
-    protected $autoLoadMoreEnabled;
+    private $autoLoadMoreEnabled;
 
     /**
      * @var mixed
      */
-    protected $items;
+    private $items;
 
     /**
      * @var bool
      */
-    protected $moreAvailable;
+    private $moreAvailable;
 
     /**
      * @var string
      */
-    protected $nextMaxId;
+    private $nextMaxId;
 
     /**
      * @return mixed

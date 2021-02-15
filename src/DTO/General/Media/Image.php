@@ -13,17 +13,17 @@ class Image
     /**
      * @var string
      */
-    protected $url;
+    private $url;
 
     /**
      * @var string
      */
-    protected $width;
+    private $width;
 
     /**
      * @var string
      */
-    protected $height;
+    private $height;
 
     /**
      * @return string

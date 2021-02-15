@@ -3,16 +3,14 @@
 namespace Instagram\SDK\DTO\Messages\Feed;
 
 use Exception;
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Hashtag\Item;
 use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
-use Instagram\SDK\DTO\Traits\Inflatable;
-use Instagram\SDK\DTO\Traits\PropertiesTrait;
 use Instagram\SDK\Responses\Interfaces\IteratorInterface;
-use Instagram\SDK\Support\Promise;
-use function Instagram\SDK\Support\Promises\task;
-use function Instagram\SDK\Support\Promises\unwrap;
+use function Instagram\SDK\Support\Promises\promise_for;
+use function Instagram\SDK\Support\Promises\rejection_for;
 
 /**
  * Class FeedMessage
@@ -22,58 +20,55 @@ use function Instagram\SDK\Support\Promises\unwrap;
 class FeedMessage extends Envelope implements IteratorInterface, PropertiesInterface
 {
 
-    use Inflatable;
-    use PropertiesTrait;
-
     /**
      * @var Client
      */
-    protected $client;
+    private $client;
 
     /**
      * @var Item[]
      */
-    protected $rankedItems = [];
+    private $rankedItems = [];
 
     /**
      * @var Item[]
      */
-    protected $items = [];
+    private $items = [];
 
     /**
      * @var int
      */
-    protected $numResults;
+    private $numResults;
 
     /**
      * @var string[]
      */
-    protected $previousMaxIds = [];
+    private $previousMaxIds = [];
 
     /**
      * @var string
      */
-    protected $nextMaxId;
+    private $nextMaxId;
 
     /**
      * @var bool
      */
-    protected $moreAvailable;
+    private $moreAvailable;
 
     /**
      * @var bool
      */
-    protected $autoLoadMoreEnabled;
+    private $autoLoadMoreEnabled;
 
     /**
      * @var string
      */
-    protected $query;
+    private $query;
 
     /**
      * @var int
      */
-    protected $type;
+    private $type;
 
     /**
      * @return Item[]
@@ -124,99 +119,11 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
     }
 
     /**
-     * @param mixed $rankedItems
-     * @return static
-     */
-    public function setRankedItems($rankedItems)
-    {
-        $this->rankedItems = $rankedItems;
-
-        return $this;
-    }
-
-    /**
-     * @param Item[] $items
-     * @return static
-     */
-    public function setItems(array $items)
-    {
-        $this->items = $items;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $numResults
-     * @return static
-     */
-    public function setNumResults($numResults)
-    {
-        $this->numResults = $numResults;
-
-        return $this;
-    }
-
-    /**
-     * @param string[] $previousMaxIds
-     * @return static
-     */
-    public function setPreviousMaxIds(array $previousMaxIds)
-    {
-        $this->previousMaxIds = $previousMaxIds;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $nextMaxId
-     * @return static
-     */
-    public function setNextMaxId($nextMaxId)
-    {
-        $this->nextMaxId = $nextMaxId;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $moreAvailable
-     * @return static
-     */
-    public function setMoreAvailable($moreAvailable)
-    {
-        $this->moreAvailable = $moreAvailable;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $autoLoadMoreEnabled
-     * @return static
-     */
-    public function setAutoLoadMoreEnabled($autoLoadMoreEnabled)
-    {
-        $this->autoLoadMoreEnabled = $autoLoadMoreEnabled;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getQuery(): string
     {
         return $this->query;
-    }
-
-    /**
-     * @param string $query
-     * @return static
-     */
-    public function setQuery(string $query)
-    {
-        $this->query = $query;
-
-        return $this;
     }
 
     /**
@@ -228,69 +135,46 @@ class FeedMessage extends Envelope implements IteratorInterface, PropertiesInter
     }
 
     /**
-     * @param int $type
-     * @return static
-     */
-    public function setType(int $type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
      * Retrieves the next items in the collection.
      *
      * @suppress PhanPluginUnknownClosureReturnType
-     * @return bool|Promise<bool>
+     * @return FeedMessage|null
      */
-    public function next()
+    public function next(): ?FeedMessage
     {
-        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
-        $promise = task(function () {
-            // Check whether the are any more items to be fetched
-            if (!$this->moreAvailable) {
-                return false;
-            }
-
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            return $this->client->feed($this->type, $this->query, $this->nextMaxId);
-        });
-
-        // @phan-suppress-next-line PhanPluginUnknownClosureParamType, PhanPluginUnknownClosureReturnType
-        return $promise->then(function ($promise) {
-            $message = unwrap($promise);
-
-            // Check if the message was successful
-            if (!$message->isSuccess()) {
-                return false;
-            }
-
-            // Update the feed message
-            $this->inflate($message);
-
-            return true;
-        })($this->client->getMode());
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->nextPromise()->wait();
     }
 
     /**
-     * @return bool
+     * @return PromiseInterface<FeedMessage>
      */
-    public function rewind()
+    public function nextPromise(): PromiseInterface
     {
-        // TODO
+        // Check whether the are any more items to be fetched
+        if (!$this->moreAvailable) {
+            return promise_for(null);
+        }
 
-        return false;
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->client->feed($this->type, $this->query, $this->nextMaxId);
     }
 
     /**
-     * Returns the client.
-     *
-     * @return Client
+     * @return FeedMessage|null
      */
-    protected function getClient(): Client
+    public function rewind(): ?FeedMessage
     {
-        return $this->client;
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->rewindPromise()->wait();
+    }
+
+    /**
+     * @return PromiseInterface<FeedMessage|null>
+     */
+    public function rewindPromise(): PromiseInterface
+    {
+        return rejection_for('not implemented yet');
     }
 
     /**

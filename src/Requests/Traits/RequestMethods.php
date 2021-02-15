@@ -181,9 +181,9 @@ trait RequestMethods
      *
      * @param RequestInterface    $request
      * @param SerializerInterface $serializer
-     * @return mixed
+     * @return PromiseInterface
      */
-    protected function request(RequestInterface $request, SerializerInterface $serializer)
+    protected function request(RequestInterface $request, SerializerInterface $serializer): PromiseInterface
     {
         // Execute the asynchronous request
         $promise = $this->httpClient->requestAsync($request);
@@ -210,9 +210,7 @@ trait RequestMethods
      */
     protected function decode(HttpResponseInterface $response, SerializerInterface $serializer)
     {
-        // Compose a task, reject promise on failure
         return task(function () use ($response, $serializer): ResponseMessageInterface {
-            // Queue the serialization
             return $serializer->decode($response);
         });
     }

@@ -1,21 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK\Client\Features;
 
-use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
-use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
-use Instagram\SDK\DTO\Messages\Feed\Timeline;
-use Instagram\SDK\Instagram;
+use Instagram\SDK\DTO\Messages\Feed\TimelineMessage;
 use Instagram\SDK\Requests\Feed\TimelineOptions;
 use Instagram\SDK\Requests\GenericRequest;
-use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\rejection_for;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
-use const Instagram\SDK\TYPE_HASHTAG;
-use const Instagram\SDK\TYPE_USER;
 
 /**
  * Trait FeedFeaturesTrait
@@ -28,28 +24,12 @@ trait FeedFeaturesTrait
     use DefaultFeaturesTrait;
 
     /**
-     * @var string The hastag feed uri
-     */
-    private static $URI_HASHTAG_FEED = 'feed/tag/%s/';
-
-    /**
-     * @var string The user feed uri
-     */
-    private static $URI_USER_FEED = 'feed/user/%s/';
-
-    /**
-     * @var string The timeline uri
-     */
-    private static $URI_TIMELINE_FEED = 'feed/timeline/';
-
-    /**
      * Retrieves feed by hashtag.
      *
      * @param string $tag
-     * @return FeedMessage|Promise<FeedMessage>
-     * @throws Exception
+     * @return PromiseInterface<FeedMessage>
      */
-    public function feedByHashtag(string $tag)
+    public function feedByHashtag(string $tag): PromiseInterface
     {
         return $this->feed(TYPE_HASHTAG, $tag);
     }
@@ -58,10 +38,9 @@ trait FeedFeaturesTrait
      * Retrieves feed by user.
      *
      * @param string $user
-     * @return FeedMessage|Promise<FeedMessage>
-     * @throws Exception
+     * @return PromiseInterface<FeedMessage>
      */
-    public function feedByUser(string $user)
+    public function feedByUser(string $user): PromiseInterface
     {
         return $this->feed(TYPE_USER, $user);
     }
@@ -72,24 +51,19 @@ trait FeedFeaturesTrait
      * @param int         $type
      * @param string      $query
      * @param string|null $maxId
-     * @return FeedMessage|Promise<FeedMessage>
-     * @throws Exception
+     * @return PromiseInterface<FeedMessage>
      */
-    public function feed(int $type, string $query, ?string $maxId = null)
+    public function feed(int $type, string $query, ?string $maxId = null): PromiseInterface
     {
         switch ($type) {
             case TYPE_HASHTAG:
-                $result = $this->queryFeed($type, self::$URI_HASHTAG_FEED, $query, FeedMessage::class, $maxId);
-
+                $result = $this->queryFeed($type, 'feed/tag/%s/', $query, FeedMessage::class, $maxId);
                 break;
             case TYPE_USER:
-                $result = $this->queryFeed($type, self::$URI_USER_FEED, $query, FeedMessage::class, $maxId);
-
+                $result = $this->queryFeed($type, 'feed/user/%s/', $query, FeedMessage::class, $maxId);
                 break;
-
             default:
                 $result = $this->getInvalidFeedTypeError();
-
                 break;
         }
 
@@ -100,16 +74,16 @@ trait FeedFeaturesTrait
      * Retrieves the timeline feed for the current user.
      *
      * @param TimelineOptions $options
-     * @return Promise|Promise<Timeline>
+     * @return PromiseInterface<TimelineMessage>
      */
-    public function timeline(TimelineOptions $options)
+    public function timeline(TimelineOptions $options): PromiseInterface
     {
-        return task(function () use ($options): Promise {
+        return task(function () use ($options): PromiseInterface {
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
             /** @var GenericRequest $request */
-            $request = request(self::$URI_TIMELINE_FEED, new Timeline())(
+            $request = request('feed/timeline/', new TimelineMessage())(
                 $this,
                 $this->session,
                 $this->client
@@ -125,9 +99,8 @@ trait FeedFeaturesTrait
                 ->addPayloadParam('reason', 'cold_start_fetch')
                 ->addPayloadOptions($options);
 
-            // Invoke the request
             return $request->fire();
-        })($this->getMode());
+        });
     }
 
     /**
@@ -138,14 +111,15 @@ trait FeedFeaturesTrait
      * @param string      $query
      * @param string      $result
      * @param string|null $maxId
-     * @return FeedMessage|Promise <SearchResultMessage>
+     * @return PromiseInterface<FeedMessage>
      */
-    protected function queryFeed(int $type, string $uri, string $query, string $result, ?string $maxId)
+    // phpcs:ignore
+    protected function queryFeed(int $type, string $uri, string $query, string $result, ?string $maxId): PromiseInterface
     {
         // Prepare the tag query
         $tag = rawurlencode($query);
 
-        return task(function () use ($type, $uri, $tag, $maxId, $result): Promise {
+        return task(function () use ($type, $uri, $tag, $maxId, $result): PromiseInterface {
             $message = new $result();
             $message->setQuery($tag);
             $message->setType($type);
@@ -161,39 +135,17 @@ trait FeedFeaturesTrait
             // Prepare the request parameters
             $request->addQueryParamIfNotNull('max_id', $maxId);
 
-            // Invoke the request
             return $request->fire();
-        })($this->getMode());
-    }
-
-    /**
-     * Creates a generic request.
-     *
-     * @param string   $uri
-     * @param Envelope $message
-     * @return GenericRequest
-     */
-    protected function request(string $uri, Envelope $message): GenericRequest
-    {
-        return request($uri, $message)(
-            $this,
-            $this->session,
-            $this->client
-        );
+        });
     }
 
     /**
      * Returns the invalid type error.
      *
      * @return PromiseInterface
-     * @throws Exception
      */
     protected function getInvalidFeedTypeError(): PromiseInterface
     {
-        if ($this->getMode() === Instagram::MODE_PROMISE) {
-            return rejection_for('Invalid type provided');
-        }
-
-        throw new Exception('Invalid type provided');
+        return rejection_for('Invalid type provided');
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK\Client\Features;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Messages\Discover\ChannelsMessage;
 use Instagram\SDK\DTO\Messages\Discover\ExploreMessage;
 use Instagram\SDK\DTO\Messages\Discover\TopLiveMessage;
-use Instagram\SDK\Requests\Discover\ExploreRequest;
-use Instagram\SDK\Requests\Discover\TopLiveRequest;
 use Instagram\SDK\Requests\GenericRequest;
-use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
 
@@ -25,11 +25,11 @@ trait DiscoverFeaturesTrait
     /**
      * Retrieves the discover explore items.
      *
-     * @return ExploreMessage|Promise<ExploreMessage>
+     * @return PromiseInterface<ExploreMessage>
      */
-    public function explore()
+    public function explore(): PromiseInterface
     {
-        return task(function (): Promise {
+        return task(function (): PromiseInterface {
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
@@ -40,19 +40,18 @@ trait DiscoverFeaturesTrait
                 $this->client
             );
 
-            // Invoke the request
             return $request->fire();
-        })($this->getMode());
+        });
     }
 
     /**
      * Retrieves the discover top lives items.
      *
-     * @return TopLiveMessage|Promise<TopLiveMessage>
+     * @return PromiseInterface<TopLiveMessage>
      */
-    public function topLives()
+    public function topLives(): PromiseInterface
     {
-        return task(function (): Promise {
+        return task(function (): PromiseInterface {
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
@@ -63,19 +62,18 @@ trait DiscoverFeaturesTrait
                 $this->client
             );
 
-            // Invoke the request
             return $request->fire();
-        })($this->getMode());
+        });
     }
 
     /**
      * Retrieves the discover channels items.
      *
-     * @return ChannelsMessage|Promise<ChannelsMessage>
+     * @return PromiseInterface<ChannelsMessage>
      */
-    public function channels()
+    public function channels(): PromiseInterface
     {
-        return task(function (): Promise {
+        return task(function (): PromiseInterface {
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
@@ -86,8 +84,7 @@ trait DiscoverFeaturesTrait
                 $this->client
             );
 
-            // Invoke the request
             return $request->fire();
-        })($this->getMode());
+        });
     }
 }

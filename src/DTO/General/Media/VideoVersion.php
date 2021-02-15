@@ -13,22 +13,22 @@ class VideoVersion
     /**
      * @var int
      */
-    protected $type;
+    private $type;
 
     /**
      * @var float
      */
-    protected $width;
+    private $width;
 
     /**
      * @var float
      */
-    protected $height;
+    private $height;
 
     /**
      * @var string
      */
-    protected $url;
+    private $url;
 
     /**
      * @return int

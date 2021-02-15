@@ -17,47 +17,47 @@ class User implements UserInterface
      * @var string
      * @SerializedName("pk")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
-    protected $username;
+    private $username;
 
     /**
      * @var string
      */
-    protected $fullName;
+    private $fullName;
 
     /**
      * @var bool
      */
-    protected $isPrivate;
+    private $isPrivate;
 
     /**
      * @var string
      */
-    protected $pictureUrl;
+    private $pictureUrl;
 
     /**
      * @var string
      */
-    protected $pictureId;
+    private $pictureId;
 
     /**
      * @var bool
      */
-    protected $isVerified;
+    private $isVerified;
 
     /**
      * @var bool
      */
-    protected $hasAnonymousProfilePicture;
+    private $hasAnonymousProfilePicture;
 
     /**
      * @var bool
      */
-    protected $allowContactsSync;
+    private $allowContactsSync;
 
     /**
      * @return string

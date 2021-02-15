@@ -15,7 +15,7 @@ class HashtagSearchResultMessage extends SearchResultMessage
     /**
      * @var \Instagram\SDK\DTO\Hashtag\ResultItem[]
      */
-    protected $results;
+    private $results;
 
     /**
      * @return ResultItem[]

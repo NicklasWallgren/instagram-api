@@ -2,6 +2,7 @@
 
 namespace Instagram\SDK\Requests\General;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Messages\HeaderMessage;
 use Instagram\SDK\Http\RequestClient as HttpClient;
 use Instagram\SDK\Requests\GenericRequest;
@@ -10,7 +11,6 @@ use Instagram\SDK\Requests\Request;
 use Instagram\SDK\Requests\Traits\RequestMethods;
 use Instagram\SDK\Responses\Serializers\General\HeaderSerializer;
 use Instagram\SDK\Session\Session;
-use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\requestWithSerializer;
 
 /**
@@ -45,7 +45,7 @@ class HeaderRequest extends Request
     /**
      * @inheritDoc
      */
-    public function fire(): Promise
+    public function fire(): PromiseInterface
     {
         /** @var GenericRequest $request */
         // phpcs:ignore

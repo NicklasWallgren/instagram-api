@@ -3,6 +3,7 @@
 namespace Instagram\SDK\Responses\Serializers;
 
 use Exception;
+use Instagram\SDK\DTO\Adapters\CustomReaderContext;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
 use Instagram\SDK\Responses\Exceptions\ApiResponseException;
@@ -56,7 +57,7 @@ abstract class AbstractSerializer implements SerializerInterface
 
         $response = (string)$response->getBody();
 
-        $gson = Gson::builder()->build();
+        $gson = Gson::builder()->setReaderContext(new CustomReaderContext())->build();
         $gson->fromJson($response, $message);
 
         // Check whether we retrieved a valid response

@@ -16,7 +16,7 @@ class HeaderMessage extends Envelope
     /**
      * @var CsrfToken
      */
-    protected $token;
+    private $token;
 
     /**
      * @return CsrfToken

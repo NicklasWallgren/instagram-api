@@ -2,19 +2,17 @@
 
 namespace Instagram\SDK\DTO\Direct;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Cursor\RequestIterator;
 use Instagram\SDK\DTO\Direct\Collections\LastSeenAtCollection;
-use Instagram\SDK\DTO\General\ItemType;
 use Instagram\SDK\DTO\General\User;
 use Instagram\SDK\DTO\Messages\Direct\DirectSendItemMessage;
 use Instagram\SDK\DTO\Messages\Direct\SeenMessage;
 use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
-use Instagram\SDK\Support\Promise;
 use Tebru\Gson\Annotation\JsonAdapter;
-use function Instagram\SDK\Support\Promises\task;
-use function Instagram\SDK\Support\Promises\unwrap;
+use function Instagram\SDK\Support\Promises\promise_for;
 
 /**
  * Class Thread
@@ -252,228 +250,98 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     }
 
     /**
-     * @param mixed $threadId
-     * @return $this
+     * Retrieves the whole thread with thread items.
+     *
+     * @return ThreadMessage
      */
-    public function setThreadId($threadId)
+    public function whole(): ThreadMessage
     {
-        $this->threadId = $threadId;
-
-        return $this;
-    }
-
-    /**
-     * @param User[] $users
-     * @return $this
-     */
-    public function setUsers(array $users)
-    {
-        $this->users = $users;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $leftUsers
-     * @return $this
-     */
-    public function setLeftUsers($leftUsers)
-    {
-        $this->leftUsers = $leftUsers;
-
-        return $this;
-    }
-
-    /**
-     * @param ThreadItem[] $items
-     * @return $this
-     */
-    public function setItems(array $items)
-    {
-        $this->items = $items;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $threadTitle
-     * @return $this
-     */
-    public function setThreadTitle($threadTitle)
-    {
-        $this->threadTitle = $threadTitle;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $lastActivityAt
-     * @return $this
-     */
-    public function setLastActivityAt($lastActivityAt)
-    {
-        $this->lastActivityAt = $lastActivityAt;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $muted
-     * @return $this
-     */
-    public function setMuted(bool $muted)
-    {
-        $this->muted = $muted;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $named
-     * @return $this
-     */
-    public function setNamed(bool $named)
-    {
-        $this->named = $named;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $canonical
-     * @return $this
-     */
-    public function setCanonical(bool $canonical)
-    {
-        $this->canonical = $canonical;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $pending
-     * @return $this
-     */
-    public function setPending(bool $pending)
-    {
-        $this->pending = $pending;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $threadType
-     * @return $this
-     */
-    public function setThreadType($threadType)
-    {
-        $this->threadType = $threadType;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $viewerId
-     * @return $this
-     */
-    public function setViewerId($viewerId)
-    {
-        $this->viewerId = $viewerId;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $hasOlder
-     * @return $this
-     */
-    public function setHasOlder($hasOlder)
-    {
-        $this->hasOlder = $hasOlder;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $hasNewer
-     * @return $this
-     */
-    public function setHasNewer($hasNewer)
-    {
-        $this->hasNewer = $hasNewer;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $newestCursor
-     * @return $this
-     */
-    public function setNewestCursor($newestCursor)
-    {
-        $this->newestCursor = $newestCursor;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $oldestCursor
-     * @return $this
-     */
-    public function setOldestCursor($oldestCursor)
-    {
-        $this->oldestCursor = $oldestCursor;
-
-        return $this;
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->retrieveByCursor()->wait();
     }
 
     /**
      * Retrieves the whole thread with thread items.
      *
-     * @return bool|Promise<bool>
+     * @return PromiseInterface<ThreadMessage>
      */
-    public function whole()
+    public function wholePromise(): PromiseInterface
     {
-        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
-        return task(function () {
-            return $this->retrieveByCursor();
-        })($this->client->getMode());
+        return $this->retrieveByCursor();
     }
 
     /**
      * Step forward and get the next items in thread.
      *
-     * @return bool|Promise<bool>
+     * @return ThreadMessage|null
      */
-    public function next()
+    public function next(): ?ThreadMessage
     {
-        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
-        return task(function () {
-            // Check whether there are any older posts
-            if (!$this->getHasOlder()) {
-                return false;
-            }
+        // Check whether there are any older posts
+        if (!$this->getHasOlder()) {
+            return null;
+        }
 
-            return $this->retrieveByCursor($this->oldestCursor);
-        })($this->client->getMode());
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->retrieveByCursor($this->oldestCursor)->wait();
+    }
+
+    /**
+     * Step forward and get the next items in thread.
+     *
+     * @return PromiseInterface<ThreadMessage|null>
+     */
+    public function nextPromise(): PromiseInterface
+    {
+        // Check whether there are any older posts
+        if (!$this->getHasOlder()) {
+            return promise_for(null);
+        }
+
+        return $this->retrieveByCursor($this->oldestCursor);
     }
 
     /**
      * Step backward and get the previous items in thread.
      *
-     * @return bool|Promise<bool>
+     * @return ThreadMessage|null
      */
-    public function rewind()
+    public function rewind(): ?ThreadMessage
     {
-        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
-        return task(function () {
-            // Check whether there are any newer posts
-            if (!$this->getHasNewer()) {
-                return false;
-            }
+        // Check whether there are any newer posts
+        if (!$this->getHasNewer()) {
+            return null;
+        }
 
-            return $this->retrieveByCursor($this->newestCursor);
-        })($this->client->getMode());
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->retrieveByCursor($this->newestCursor)->wait();
+    }
+
+    /**
+     * Step backward and get the previous items in thread.
+     *
+     * @return PromiseInterface<ThreadMessage>
+     */
+    public function rewindPromise(): PromiseInterface
+    {
+        // Check whether there are any newer posts
+        if (!$this->getHasNewer()) {
+            return promise_for(null);
+        }
+
+        return $this->retrieveByCursor($this->newestCursor);
+    }
+
+    /**
+     * Sends a message to the thread.
+     *
+     * @param string $text
+     * @return DirectSendItemMessage
+     */
+    public function sendMessage(string $text): DirectSendItemMessage
+    {
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->sendMessagePromise($text)->wait();
     }
 
     /**
@@ -481,52 +349,35 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      *
      * @param string $text
      * @phan-suppress PhanPluginMixedKeyNoKey
-     * @return bool|Promise<bool>
+     * @return PromiseInterface<DirectSendItemMessage>
      */
-    public function sendMessage(string $text)
+    public function sendMessagePromise(string $text): PromiseInterface
     {
-        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
-        $promise = task(function () use ($text) {
-            return $this->client->sendThreadMessage($text, $this->threadId);
-        });
-
-        // phpcs:ignore
-        // @phan-suppress-next-line PhanPluginMixedKeyNoKey, PhanPluginUnknownClosureReturnType, PhanPluginUnknownClosureParamType
-        return $promise->then(function ($promise) use ($text) {
-            /** @var DirectSendItemMessage $message */
-            $message = unwrap($promise);
-
-            // Check if the message was successful
-            if (!$message->isSuccess()) {
-                return false;
-            }
-
-            // Build the thread item
-            $item = ThreadItem::create([
-                // @phan-suppress-next-line PhanPluginMixedKeyNoKey
-                'itemType' => ItemType::TEXT,
-                'user'     => $this->getSender(),
-                'text'     => $text,
-                $message->getPayload(),
-            ]);
-
-            $this->items[] = $item;
-
-            return true;
-        })($this->client->getMode());
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->client->sendThreadMessage($text, $this->threadId);
     }
 
     /**
      * Sets the thread, or thread id as seen.
      *
      * @param string|null $threadItemId
-     * @return SeenMessage|Promise<SeenMessage>
+     * @return SeenMessage
      */
-    public function seen(?string $threadItemId = null)
+    public function seen(?string $threadItemId = null): SeenMessage
     {
-        /**
-         * @var ThreadItem $latestItem
-         */
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->seenPromise($threadItemId)->wait();
+    }
+
+    /**
+     * Sets the thread, or thread id as seen.
+     *
+     * @param string|null $threadItemId
+     * @return PromiseInterface<SeenMessage>
+     */
+    public function seenPromise(?string $threadItemId = null): PromiseInterface
+    {
+        /** @var ThreadItem $latestItem */
         $latestItem = current($this->items);
 
         return $this->client->seen($this->threadId, $threadItemId ?? $latestItem->getItemId());
@@ -536,51 +387,34 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      * Refresh the thread with the latest updates.
      *
      * @suppress PhanPluginUnknownClosureReturnType
-     * @return bool|Promise<bool>
+     * @return ThreadMessage
      */
-    public function refresh()
+    public function refresh(): ThreadMessage
     {
-        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
-        return task(function () {
-            return $this->retrieveByCursor();
-        })($this->client->getMode());
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->refreshPromise()->wait();
+    }
+
+    /**
+     * Refresh the thread with the latest updates.
+     *
+     * @suppress PhanPluginUnknownClosureReturnType
+     * @return PromiseInterface<ThreadMessage>
+     */
+    public function refreshPromise(): PromiseInterface
+    {
+        return $this->retrieveByCursor();
     }
 
     /**
      * Retrieve thread items by cursor.
      *
      * @param string|null $cursor
-     * @return bool|Promise<bool>
+     * @return PromiseInterface<ThreadMessage>
      */
-    protected function retrieveByCursor(?string $cursor = null)
+    protected function retrieveByCursor(?string $cursor = null): PromiseInterface
     {
-        // Query for thread items by cursor
-        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
-        $promise = task(function () use ($cursor) {
-            return $this->client->thread($this->threadId, $cursor);
-        });
-
-        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType, PhanPluginUnknownClosureParamType
-        return $promise->then(function ($promise) {
-            /** @var ThreadMessage $message */
-            $message = unwrap($promise);
-
-            // Check if we successfully retrieved additional thread items
-            if (!$message->isSuccess()) {
-                return false;
-            }
-
-            // Retrieve the thread
-            $thread = $message->getThread();
-
-            $this->setNewestCursor($thread->getNewestCursor())
-                ->setOldestCursor($thread->getOldestCursor())
-                ->setItems($thread->getItems())
-                ->setHasOlder($thread->getHasOlder())
-                ->setHasNewer($thread->getHasNewer());
-
-            return true;
-        })($this->client->getMode());
+        return $this->client->thread($this->threadId, $cursor);
     }
 
     /**
@@ -615,7 +449,7 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
      *
      * @suppress PhanUnusedPublicMethodParameter
      * @suppress PhanPossiblyNullTypeMismatchProperty
-     * @param array<string, mixed>  $container
+     * @param array<string, mixed> $container
      */
     public function onDecode(array $container): void
     {

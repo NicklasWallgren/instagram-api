@@ -3,13 +3,12 @@
 namespace Instagram\SDK\DTO\Messages\Friendships;
 
 use Exception;
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
-use Instagram\SDK\DTO\Traits\Inflatable;
 use Instagram\SDK\Responses\Interfaces\IteratorInterface;
-use Instagram\SDK\Support\Promise;
-use function Instagram\SDK\Support\Promises\task;
-use function Instagram\SDK\Support\Promises\unwrap;
+use function Instagram\SDK\Support\Promises\promise_for;
+use function Instagram\SDK\Support\Promises\rejection_for;
 
 /**
  * Class FollowersMessage
@@ -19,37 +18,35 @@ use function Instagram\SDK\Support\Promises\unwrap;
 class FollowersMessage extends Envelope implements IteratorInterface
 {
 
-    use Inflatable;
-
     /**
      * @var string
      */
-    protected $userId;
+    private $userId;
 
     /**
      * @var \Instagram\SDK\DTO\General\User[]
      */
-    protected $users;
+    private $users;
 
     /**
      * @var bool
      */
-    protected $bigList;
+    private $bigList;
 
     /**
      * @var string|null
      */
-    protected $nextMaxId;
+    private $nextMaxId;
 
     /**
      * @var int
      */
-    protected $pageSize;
+    private $pageSize;
 
     /**
      * @var Client
      */
-    protected $client;
+    private $client;
 
     /**
      * @return string
@@ -79,33 +76,11 @@ class FollowersMessage extends Envelope implements IteratorInterface
     }
 
     /**
-     * @param \Instagram\SDK\DTO\General\User[] $users
-     * @return static
-     */
-    public function setUsers(array $users): self
-    {
-        $this->users = $users;
-
-        return $this;
-    }
-
-    /**
      * @return bool
      */
     public function getBigList(): bool
     {
         return $this->bigList;
-    }
-
-    /**
-     * @param bool $bigList
-     * @return static
-     */
-    public function setBigList(bool $bigList): self
-    {
-        $this->bigList = $bigList;
-
-        return $this;
     }
 
     /**
@@ -117,17 +92,6 @@ class FollowersMessage extends Envelope implements IteratorInterface
     }
 
     /**
-     * @param string|null $nextMaxId
-     * @return static
-     */
-    public function setNextMaxId(?string $nextMaxId): self
-    {
-        $this->nextMaxId = $nextMaxId;
-
-        return $this;
-    }
-
-    /**
      * @return int
      */
     public function getPageSize(): int
@@ -136,57 +100,42 @@ class FollowersMessage extends Envelope implements IteratorInterface
     }
 
     /**
-     * @param int $pageSize
-     * @return static
-     */
-    public function setPageSize(int $pageSize): self
-    {
-        $this->pageSize = $pageSize;
-
-        return $this;
-    }
-
-    /**
      * @suppress PhanPluginUnknownClosureReturnType
-     * @return bool|Promise<bool>
+     * @return FollowersMessage
      */
-    public function next()
+    public function next(): ?FollowersMessage
     {
-        // @phan-suppress-next-line PhanPluginUnknownClosureReturnType
-        $promise = task(function () {
-            // Check whether the are any more items to be fetched
-            if (!$this->bigList) {
-                return false;
-            }
-
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            return $this->client->followers($this->userId, $this->nextMaxId);
-        });
-
-        // @phan-suppress-next-line PhanPluginUnknownClosureParamType, PhanPluginUnknownClosureReturnType
-        return $promise->then(function ($promise) {
-            $message = unwrap($promise);
-
-            // Check if the message was successful
-            if (!$message->isSuccess()) {
-                return false;
-            }
-
-            // Update the feed message
-            $this->inflate($message);
-
-            return true;
-        })($this->client->getMode());
+        $this->nextPromise()->wait();
     }
 
     /**
-     * @return bool
+     * @return PromiseInterface<FollowersMessage|null>
      */
-    public function rewind()
+    public function nextPromise(): PromiseInterface
     {
-        // TODO
+        // Check whether the are any more items to be fetched
+        if (!$this->bigList) {
+            return promise_for(null);
+        }
 
-        return true;
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->client->followers($this->userId, $this->nextMaxId);
+    }
+
+    /**
+     * @return FollowersMessage|null
+     */
+    public function rewind(): ?FollowersMessage
+    {
+        return $this->rewindPromise()->wait();
+    }
+
+    /**
+     * @return PromiseInterface<FollowersMessage|null>
+     */
+    public function rewindPromise(): PromiseInterface
+    {
+        return rejection_for('not implemented yet');
     }
 
     /**

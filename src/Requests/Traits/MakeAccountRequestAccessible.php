@@ -8,11 +8,11 @@ use Instagram\SDK\DTO\Messages\User\LogoutMessage;
 use Instagram\SDK\DTO\Messages\User\SessionMessage;
 
 /**
- * Trait MakeUserRequestAccessible
+ * Trait MakeAccountRequestAccessible
  *
  * @package Instagram\SDK\Requests\Traits
  */
-trait MakeUserRequestAccessible
+trait MakeAccountRequestAccessible
 {
 
     /**

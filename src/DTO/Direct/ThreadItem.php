@@ -20,52 +20,52 @@ class ThreadItem extends DTO implements OnItemDecodeInterface
     /**
      * @var Thread
      */
-    protected $parent;
+    private $parent;
 
     /**
      * @var string
      */
-    protected $itemId;
+    private $itemId;
 
     /**
      * @var int
      */
-    protected $userId;
+    private $userId;
 
     /**
      * @var UserInterface
      */
-    protected $user;
+    private $user;
 
     /**
      * @var double
      */
-    protected $timestamp;
+    private $timestamp;
 
     /**
      * @var string
      */
-    protected $itemType;
+    private $itemType;
 
     /**
      * @var ThreadMediaItem
      */
-    protected $media;
+    private $media;
 
     /**
      * @var string
      */
-    protected $text;
+    private $text;
 
     /**
      * @var string
      */
-    protected $clientContext;
+    private $clientContext;
 
     /**
      * @var Client
      */
-    protected $client;
+    private $client;
 
     /**
      * @return string
@@ -94,27 +94,12 @@ class ThreadItem extends DTO implements OnItemDecodeInterface
     }
 
     /**
-     * Sets the user.
-     *
-     * @param UserInterface $user
-     * @return $this
-     */
-    public function setUser(UserInterface $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
      * @return float
      */
     public function getTimestamp(): float
     {
         return $this->timestamp;
     }
-
-    // timestamp to date
 
     /**
      * @return mixed
@@ -167,95 +152,6 @@ class ThreadItem extends DTO implements OnItemDecodeInterface
     {
         return $this->parent;
     }
-
-    /**
-     * @param Thread $parent
-     * @return static
-     */
-    public function setParent(Thread $parent)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $itemId
-     * @return static
-     */
-    public function setItemId($itemId)
-    {
-        $this->itemId = $itemId;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $userId
-     * @return static
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * @param float $timestamp
-     * @return static
-     */
-    public function setTimestamp(float $timestamp)
-    {
-        $this->timestamp = $timestamp;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $itemType
-     * @return static
-     */
-    public function setItemType($itemType)
-    {
-        $this->itemType = $itemType;
-
-        return $this;
-    }
-
-    /**
-     * @param ThreadMediaItem $media
-     * @return static
-     */
-    public function setMedia(ThreadMediaItem $media)
-    {
-        $this->media = $media;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $text
-     * @return static
-     */
-    public function setText($text)
-    {
-        $this->text = $text;
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $clientContext
-     * @return static
-     */
-    public function setClientContext($clientContext)
-    {
-        $this->clientContext = $clientContext;
-
-        return $this;
-    }
-
 
     /**
      * Sets the thread item as seen.

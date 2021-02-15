@@ -2,15 +2,16 @@
 
 namespace Instagram\SDK\Requests;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\Http\RequestClient as HttpClient;
+use Instagram\SDK\Requests\Exceptions\EncodingException;
 use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
 use Instagram\SDK\Requests\Options\AbstractOptions;
 use Instagram\SDK\Requests\Traits\RequestMethods;
 use Instagram\SDK\Responses\Interfaces\SerializerInterface;
-use Instagram\SDK\Responses\Serializers\AbstractSerializer;
 use Instagram\SDK\Session\Session;
-use Instagram\SDK\Support\Promise;
 use InvalidArgumentException;
+use function Instagram\SDK\Support\Promises\rejection_for;
 
 /**
  * Class GenericRequest
@@ -140,12 +141,20 @@ class GenericRequest extends Request
     /**
      * Fire the request.
      *
-     * @return Promise
+     * @return PromiseInterface
      * @suppress PhanThrowTypeAbsentForCall
      */
-    public function fire(): Promise
+    public function fire(): PromiseInterface
     {
+        $request = null;
+
+        try {
+            $request = $this->requestBuilder->build();
+        } catch (EncodingException $e) {
+            return rejection_for($e->getMessage());
+        }
+
         // Return a promise chain
-        return $this->request($this->requestBuilder->build(), $this->serializer);
+        return $this->request($request, $this->serializer);
     }
 }

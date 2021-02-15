@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK\Client\Features;
 
 use Exception;
 use Instagram\SDK\Client\Adapters\Interfaces\AdapterInterface;
-use Instagram\SDK\Client\Client;
 use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
+use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Http\RequestClient;
+use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Session\Session;
 
 /**
@@ -38,20 +41,11 @@ trait DefaultFeaturesTrait
     protected $builder;
 
     /**
-     * @var bool The result mode
-     */
-    protected $mode = true;
-
-    /**
-     * @return bool
-     */
-    abstract protected function getMode(): bool;
-
-    /**
      * Validate the state.
      *
      * @throws Exception
      */
     abstract protected function checkPrerequisites(): void;
 
+    abstract protected function request(string $uri, Envelope $message, string $method = 'POST'): GenericRequest;
 }

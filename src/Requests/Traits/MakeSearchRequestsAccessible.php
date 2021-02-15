@@ -2,11 +2,12 @@
 
 namespace Instagram\SDK\Requests\Traits;
 
+use Exception;
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Messages\Search\HashtagSearchResultMessage;
 use Instagram\SDK\DTO\Messages\Search\SearchResultMessage;
 use Instagram\SDK\DTO\Messages\Search\UserSearchResultMessage;
-use Instagram\SDK\Support\Promise;
 use const Instagram\SDK\Client\Features\TYPE_HASHTAG;
 use const Instagram\SDK\Client\Features\TYPE_USER;
 
@@ -22,24 +23,46 @@ trait MakeSearchRequestsAccessible
      * Search by hashtag.
      *
      * @param string $tag
-     * @return HashtagSearchResultMessage|Promise<HashtagSearchResultMessage>
-     * @throws \Exception
+     * @return HashtagSearchResultMessage
+     * @throws Exception
      */
-    public function searchByHashtag(string $tag)
+    public function searchByHashtag(string $tag): HashtagSearchResultMessage
     {
-        return $this->search(TYPE_HASHTAG, $tag);
+        return $this->searchByHashtagPromise($tag)->wait();
+    }
+
+    /**
+     * Search by hashtag.
+     *
+     * @param string $tag
+     * @return PromiseInterface<HashtagSearchResultMessage>
+     */
+    public function searchByHashtagPromise(string $tag): PromiseInterface
+    {
+        return $this->searchPromise(TYPE_HASHTAG, $tag);
     }
 
     /**
      * Search by user.
      *
      * @param string $user
-     * @return UserSearchResultMessage|Promise
-     * @throws \Exception
+     * @return UserSearchResultMessage
+     * @throws Exception
      */
-    public function searchByUser(string $user)
+    public function searchByUser(string $user): UserSearchResultMessage
     {
-        return $this->search(TYPE_USER, $user);
+        return $this->searchByUserPromise($user)->wait();
+    }
+
+    /**
+     * Search by user.
+     *
+     * @param string $user
+     * @return PromiseInterface<UserSearchResultMessage>
+     */
+    public function searchByUserPromise(string $user): PromiseInterface
+    {
+        return $this->searchPromise(TYPE_USER, $user);
     }
 
     /**
@@ -47,10 +70,22 @@ trait MakeSearchRequestsAccessible
      *
      * @param int    $type
      * @param string $query
-     * @return SearchResultMessage|Promise<SearchResultMessage>
-     * @throws \Exception
+     * @return SearchResultMessage
+     * @throws Exception
      */
-    public function search(int $type, string $query)
+    public function search(int $type, string $query): SearchResultMessage
+    {
+        return $this->searchPromise($type, $query)->wait();
+    }
+
+    /**
+     * Search the feed by query and type.
+     *
+     * @param int    $type
+     * @param string $query
+     * @return PromiseInterface<SearchResultMessage>
+     */
+    public function searchPromise(int $type, string $query): PromiseInterface
     {
         return $this->getClient()->search($type, $query);
     }

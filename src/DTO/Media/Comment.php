@@ -13,52 +13,52 @@ class Comment
     /**
      * @var string
      */
-    protected $contentType;
+    private $contentType;
 
     /**
      * @var \Instagram\SDK\DTO\General\User
      */
-    protected $user;
+    private $user;
 
     /**
      * @var int
      */
-    protected $pk;
+    private $pk;
 
     /**
      * @var string
      */
-    protected $text;
+    private $text;
 
     /**
      * @var int
      */
-    protected $type;
+    private $type;
 
     /**
      * @var int
      */
-    protected $createdAt;
+    private $createdAt;
 
     /**
      * @var int
      */
-    protected $createdAtUTC;
+    private $createdAtUTC;
 
     /**
      * @var int
      */
-    protected $mediaId;
+    private $mediaId;
 
     /**
      * @var string
      */
-    protected $status;
+    private $status;
 
     /**
      * @var bool
      */
-    protected $shareEnabled;
+    private $shareEnabled;
 
     /**
      * @return mixed

@@ -15,27 +15,27 @@ class DirectSendItemPayload extends DTO
     /**
      * @var string
      */
-    protected $clientContext;
+    private $clientContext;
 
     /**
      * @var string
      */
-    protected $message;
+    private $message;
 
     /**
      * @var string
      */
-    protected $itemId;
+    private $itemId;
 
     /**
      * @var string
      */
-    protected $timestamp;
+    private $timestamp;
 
     /**
      * @var string
      */
-    protected $threadId;
+    private $threadId;
 
     /**
      * @return mixed

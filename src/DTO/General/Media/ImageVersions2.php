@@ -13,7 +13,7 @@ class ImageVersions2
     /**
      * @var \Instagram\SDK\DTO\General\Media\Image[]
      */
-    protected $candidates;
+    private $candidates;
 
     /**
      * @return Image[]

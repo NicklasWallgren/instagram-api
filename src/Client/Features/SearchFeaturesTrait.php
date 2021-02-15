@@ -1,23 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK\Client\Features;
 
-use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Messages\Search\HashtagSearchResultMessage;
 use Instagram\SDK\DTO\Messages\Search\SearchResultMessage;
 use Instagram\SDK\DTO\Messages\Search\UserSearchResultMessage;
-use Instagram\SDK\Instagram;
 use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Support\Promise;
 use function Instagram\SDK\Support\Promises\rejection_for;
-use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
 
 /**
  * Trait SearchFeaturesTrait
  *
- * @package Instagram\SDK\Client\Features
+ * @package            Instagram\SDK\Client\Features
  * @phan-file-suppress PhanUnreferencedUseNormal
  */
 trait SearchFeaturesTrait
@@ -26,23 +25,12 @@ trait SearchFeaturesTrait
     use DefaultFeaturesTrait;
 
     /**
-     * @var string The hashtag search endpoint
-     */
-    private static $ENDPOINT_HASHTAG_SEARCH = 'tags/search/';
-
-    /**
-     * @var string The user search endpoint
-     */
-    private static $ENDPOINT_USER_SEARCH = 'users/search/';
-
-    /**
      * Search by hashtag.
      *
      * @param string $tag
-     * @return SearchResultMessage|Promise<SearchResultMessage>
-     * @throws Exception
+     * @return Promise<SearchResultMessage>
      */
-    public function searchByHashtag(string $tag)
+    public function searchByHashtag(string $tag): PromiseInterface
     {
         return $this->search(TYPE_HASHTAG, $tag);
     }
@@ -51,10 +39,9 @@ trait SearchFeaturesTrait
      * Search by user.
      *
      * @param string $user
-     * @return SearchResultMessage|Promise<SearchResultMessage>
-     * @throws Exception
+     * @return PromiseInterface<SearchResultMessage>
      */
-    public function searchByUser(string $user)
+    public function searchByUser(string $user): PromiseInterface
     {
         return $this->search(TYPE_USER, $user);
     }
@@ -64,23 +51,19 @@ trait SearchFeaturesTrait
      *
      * @param int    $type
      * @param string $query
-     * @return SearchResultMessage|Promise<SearchResultMessage>
-     * @throws Exception
+     * @return PromiseInterface<SearchResultMessage>
      */
-    public function search(int $type, string $query)
+    public function search(int $type, string $query): PromiseInterface
     {
         switch ($type) {
             case TYPE_HASHTAG:
-                $result = $this->querySearch(self::$ENDPOINT_HASHTAG_SEARCH, $query, HashtagSearchResultMessage::class);
-
+                $result = $this->querySearch('tags/search/', $query, HashtagSearchResultMessage::class);
                 break;
             case TYPE_USER:
-                $result = $this->querySearch(self::$ENDPOINT_USER_SEARCH, $query, UserSearchResultMessage::class);
-
+                $result = $this->querySearch('users/search/', $query, UserSearchResultMessage::class);
                 break;
             default:
                 $result = $this->getInvalidSearchTypeError();
-
                 break;
         }
 
@@ -93,46 +76,38 @@ trait SearchFeaturesTrait
      * @param string $uri
      * @param string $query
      * @param string $result
-     * @return SearchResultMessage|Promise<SearchResultMessage>
+     * @return PromiseInterface<SearchResultMessage>
      */
-    protected function querySearch(string $uri, string $query, string $result)
+    protected function querySearch(string $uri, string $query, string $result): PromiseInterface
     {
         // Prepare the tag query
         $query = rawurlencode($query);
 
-        return task(function () use ($uri, $query, $result): Promise {
-            $message = new $result();
-            $message->setQuery($query);
+        $message = new $result();
+        $message->setQuery($query);
 
-            /** @var GenericRequest $request */
-            $request = request($uri, $message, 'GET')(
-                $this,
-                $this->session,
-                $this->client
-            );
+        /** @var GenericRequest $request */
+        $request = request($uri, $message, 'GET')(
+            $this,
+            $this->session,
+            $this->client
+        );
 
-            $request
-                ->addRankedToken()
-                ->addQueryParam('q', $query)
-                ->addQueryParam('is_typeahead', true);
+        $request
+            ->addRankedToken()
+            ->addQueryParam('q', $query)
+            ->addQueryParam('is_typeahead', true);
 
-            // Invoke the request
-            return $request->fire();
-        })($this->getMode());
+        return $request->fire();
     }
 
     /**
      * Returns the invalid type error.
      *
      * @return PromiseInterface
-     * @throws Exception
      */
-    protected function getInvalidSearchTypeError()
+    protected function getInvalidSearchTypeError(): PromiseInterface
     {
-        if ($this->getMode() === Instagram::MODE_PROMISE) {
-            return rejection_for('Invalid type provided');
-        }
-
-        throw new Exception('Invalid type provided');
+        return rejection_for('Invalid type provided');
     }
 }

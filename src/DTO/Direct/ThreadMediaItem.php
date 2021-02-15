@@ -16,28 +16,28 @@ class ThreadMediaItem
     /**
      * @var int
      */
-    protected $mediaType;
+    private $mediaType;
 
     /**
      * @var \Instagram\SDK\DTO\General\Media\ImageVersions2
      * @SerializedName("image_versions2")
      */
-    protected $images;
+    private $images;
 
     /**
      * @var mixed // TODO
      */
-    protected $videoVersions;
+    private $videoVersions;
 
     /**
      * @var int
      */
-    protected $originalWidth;
+    private $originalWidth;
 
     /**
      * @var int
      */
-    protected $originalHeight;
+    private $originalHeight;
 
     /**
      * @return int

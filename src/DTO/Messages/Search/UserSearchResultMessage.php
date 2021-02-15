@@ -15,12 +15,12 @@ class UserSearchResultMessage extends SearchResultMessage
     /**
      * @var int
      */
-    protected $numResults;
+    private $numResults;
 
     /**
      * @var User[]
      */
-    protected $users;
+    private $users;
 
     /**
      * @return int

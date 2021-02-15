@@ -18,12 +18,12 @@ class SessionMessage extends Envelope
      *
      * @var \Instagram\SDK\DTO\Session\User
      */
-    protected $loggedInUser;
+    private $loggedInUser;
 
     /**
      * @var Session
      */
-    protected $session;
+    private $session;
 
     /**
      * Returns the logged in user.

@@ -21,27 +21,27 @@ class InboxMessage extends Envelope
      *
      * @var Inbox
      */
-    protected $inbox;
+    private $inbox;
 
     /**
      * @var int
      */
-    protected $seqId;
+    private $seqId;
 
     /**
      * @var mixed
      */
-    protected $subscription;
+    private $subscription;
 
     /**
      * @var int
      */
-    protected $pendingRequestsTotal;
+    private $pendingRequestsTotal;
 
     /**
      * @var mixed // TODO
      */
-    protected $pendingRequestsUsers;
+    private $pendingRequestsUsers;
 
     /**
      * @return Inbox

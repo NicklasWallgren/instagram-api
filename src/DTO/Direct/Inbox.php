@@ -4,9 +4,12 @@ namespace Instagram\SDK\DTO\Direct;
 
 use Exception;
 use GuzzleHttp\Promise\Promise;
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\Client\Client;
+use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use function Instagram\SDK\Support\Promises\promise_for;
 
 /**
  * Class Inbox
@@ -21,27 +24,27 @@ class Inbox implements OnItemDecodeInterface
     /**
      * @var int
      */
-    protected $unseenCount;
+    private $unseenCount;
 
     /**
      * @var bool
      */
-    protected $hasOlder;
+    private $hasOlder;
 
     /**
      * @var double
      */
-    protected $unseenCountTimestamp;
+    private $unseenCountTimestamp;
 
     /**
      * @var \Instagram\SDK\DTO\Direct\Thread[]
      */
-    protected $threads;
+    private $threads;
 
     /**
      * @var Client
      */
-    protected $client;
+    private $client;
 
     /**
      * @return mixed
@@ -88,17 +91,35 @@ class Inbox implements OnItemDecodeInterface
      *
      * @param string $id
      * @param bool   $whole
-     * @return Thread|Promise<Thread|null>|null
+     * @return Thread|null
      */
-    public function getThreadById(string $id, bool $whole = false)
+    public function getThreadById(string $id, bool $whole = false): ?Thread
+    {
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->getThreadByIdPromise($id, $whole)->wait();
+    }
+
+    /**
+     * Returns a thread by id.
+     *
+     * @param string $id
+     * @param bool   $whole
+     * @return PromiseInterface<Thread|null>
+     */
+    public function getThreadByIdPromise(string $id, bool $whole = false): PromiseInterface
     {
         foreach ($this->threads as $thread) {
             if ($thread->getThreadId() === $id) {
-                return $whole ? $this->client->thread($id)->getThread() : $thread;
+                if ($whole) {
+                    return $this->client->thread($id)->then(function (ThreadMessage $threadMessage): Thread {
+                        return $threadMessage->getThread();
+                    });
+                }
+                return promise_for($thread);
             }
         }
 
-        return null;
+        return promise_for(null);
     }
 
     /**
@@ -112,11 +133,35 @@ class Inbox implements OnItemDecodeInterface
     {
         foreach ($this->threads as $thread) {
             if ($thread->getThreadTitle() === $title) {
-                return $whole ? $this->client->thread($thread->getThreadId())->getThread() : $thread;
+                // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+                return $whole ? $this->client->thread($thread->getThreadId())->wait()->getThread() : $thread;
             }
         }
 
         return null;
+    }
+
+    /**
+     * Returns a thread by title.
+     *
+     * @param string $title
+     * @param bool   $whole
+     * @return PromiseInterface<Thread|null>
+     */
+    public function getThreadByTitlePromise(string $title, bool $whole = false): PromiseInterface
+    {
+        foreach ($this->threads as $thread) {
+            if ($thread->getThreadTitle() === $title) {
+                if ($whole) {
+                    return $this->client->thread($thread->getThreadId())->then(function (ThreadMessage $threadMessage): Thread {
+                        return $threadMessage->getThread();
+                    });
+                }
+                return promise_for($thread);
+            }
+        }
+
+        return promise_for(null);
     }
 
     /**
@@ -140,7 +185,7 @@ class Inbox implements OnItemDecodeInterface
      *
      * @suppress PhanUnusedPublicMethodParameter
      * @suppress PhanPossiblyNullTypeMismatchProperty
-     * @param array<string, mixed>  $container
+     * @param array<string, mixed> $container
      * @throws Exception
      */
     public function onDecode(array $container): void

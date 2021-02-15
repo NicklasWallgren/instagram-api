@@ -42,12 +42,8 @@ class Promise implements PromiseInterface, InvokableInterface
      *
      * @return static|mixed
      */
-    public function unwrap($flag = true)
+    public function unwrap()
     {
-        if ($flag) {
-            return $this->wait();
-        }
-
         return $this;
     }
 
@@ -76,7 +72,7 @@ class Promise implements PromiseInterface, InvokableInterface
      */
     public function __invoke()
     {
-        return $this->unwrap(...func_get_args());
+        return $this->unwrap();
     }
 
     public function then(

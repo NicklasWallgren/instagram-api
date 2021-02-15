@@ -3,6 +3,7 @@
 namespace Instagram\SDK\Client;
 
 use Exception;
+use Instagram\SDK\Client\Features\AccountFeaturesTrait;
 use Instagram\SDK\Client\Features\DirectFeaturesTrait;
 use Instagram\SDK\Client\Features\DiscoverFeaturesTrait;
 use Instagram\SDK\Client\Features\FeedFeaturesTrait;
@@ -10,11 +11,14 @@ use Instagram\SDK\Client\Features\FriendshipsFeaturesTrait;
 use Instagram\SDK\Client\Features\GeneralFeaturesTrait;
 use Instagram\SDK\Client\Features\MediaFeaturesTrait;
 use Instagram\SDK\Client\Features\SearchFeaturesTrait;
-use Instagram\SDK\Client\Features\UserFeaturesTrait;
+use Instagram\SDK\Client\Features\UsersFeaturesTrait;
 use Instagram\SDK\Devices\Builders\DeviceBuilder;
 use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
+use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\Http\RequestClient;
+use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Session\Session;
+use function Instagram\SDK\Support\request;
 
 /**
  * Class Client
@@ -26,12 +30,13 @@ class Client
 
     use DiscoverFeaturesTrait;
     use GeneralFeaturesTrait;
-    use UserFeaturesTrait;
+    use AccountFeaturesTrait;
     use DirectFeaturesTrait;
     use SearchFeaturesTrait;
     use FeedFeaturesTrait;
     use FriendshipsFeaturesTrait;
     use MediaFeaturesTrait;
+    use UsersFeaturesTrait;
 
     /**
      * @var RequestClient The Http client
@@ -47,11 +52,6 @@ class Client
      * @var DeviceBuilderInterface
      */
     protected $builder;
-
-    /**
-     * @var bool The result mode
-     */
-    protected $mode = true;
 
     /**
      * Client constructor.
@@ -90,29 +90,6 @@ class Client
     }
 
     /**
-     * Sets the result mode.
-     *
-     * @param bool $mode
-     * @return self
-     */
-    public function setMode(bool $mode): self
-    {
-        $this->mode = $mode;
-
-        return $this;
-    }
-
-    /**
-     * Returns the result mode.
-     *
-     * @return bool
-     */
-    public function getMode(): bool
-    {
-        return $this->mode;
-    }
-
-    /**
      * Sets the proxy uri.
      *
      * @param string $uri
@@ -128,8 +105,8 @@ class Client
     /**
      * Validate the state.
      *
-     * @throws Exception
      * @return void
+     * @throws Exception
      */
     protected function checkPrerequisites(): void
     {
@@ -147,6 +124,27 @@ class Client
     protected function isSessionAvailable(): bool
     {
         return $this->session !== null;
+    }
+
+    /**
+     * Creates a generic request.
+     *
+     * @param string   $uri
+     * @param Envelope $message
+     * @param string   $method
+     * @return GenericRequest
+     */
+    protected function request(string $uri, Envelope $message, string $method = 'POST'): GenericRequest
+    {
+
+
+
+
+        return request($uri, $message, $method)(
+            $this,
+            $this->session,
+            $this->client
+        );
     }
 
     /**

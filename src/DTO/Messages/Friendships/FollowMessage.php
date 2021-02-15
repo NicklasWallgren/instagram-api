@@ -19,7 +19,7 @@ class FollowMessage extends Envelope
     /**
      * @var \Instagram\SDK\DTO\General\FriendshipStatus
      */
-    protected $friendshipStatus;
+    private $friendshipStatus;
 
     /**
      * @return FriendshipStatus

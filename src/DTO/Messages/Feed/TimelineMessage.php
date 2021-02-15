@@ -2,54 +2,53 @@
 
 namespace Instagram\SDK\DTO\Messages\Feed;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
-use Instagram\SDK\DTO\Traits\Inflatable;
 use Instagram\SDK\Responses\Interfaces\IteratorInterface;
 use Tebru\Gson\Annotation\SerializedName;
+use function Instagram\SDK\Support\Promises\rejection_for;
 
 /**
  * Class Timeline
  *
- * @package Instagram\SDK\DTO\Messages\Feed
+ * @package            Instagram\SDK\DTO\Messages\Feed
  * @phan-file-suppress PhanUnextractableAnnotation
  * @phan-file-suppress PhanPluginUnknownPropertyType
  */
-class Timeline extends Envelope implements IteratorInterface, PropertiesInterface
+class TimelineMessage extends Envelope implements IteratorInterface, PropertiesInterface
 {
-
-    use Inflatable;
 
     /**
      * @var int
      * @SerializedName("num_results")
      */
-    protected $numberOfResults;
+    private $numberOfResults;
 
     /**
      * @var bool
      */
-    protected $moreAvailable;
+    private $moreAvailable;
 
     /**
      * @var bool
      */
-    protected $autoLoadMoreEnabled;
+    private $autoLoadMoreEnabled;
 
     /**
      * @var array<\stdClass> // TODO, define DTO class
      */
-    protected $feedItems;
+    private $feedItems;
 
     /**
      * @var string
      */
-    protected $nextMaxId;
+    private $nextMaxId;
 
     /**
      * @var
      */
-    protected $paginationInfo;
+    private $paginationInfo;
 
     /**
      * @return mixed
@@ -100,18 +99,36 @@ class Timeline extends Envelope implements IteratorInterface, PropertiesInterfac
     }
 
     /**
-     * @return bool
+     * @return mixed
      */
     public function next()
     {
-        return false;
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->nextPromise()->wait();
     }
 
     /**
-     * @return bool
+     * @return PromiseInterface
+     */
+    public function nextPromise(): PromiseInterface
+    {
+        return rejection_for('not implemented yet.');
+    }
+
+    /**
+     * @return mixed
      */
     public function rewind()
     {
-        return false;
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->rewindPromise()->wait();
+    }
+
+    /**
+     * @return PromiseInterface
+     */
+    public function rewindPromise(): PromiseInterface
+    {
+        return rejection_for('not implemented yet.');
     }
 }

@@ -18,22 +18,22 @@ class TopLiveMessage extends Envelope
     /**
      * @var bool
      */
-    protected $autoLoadMoreEnabled;
+    private $autoLoadMoreEnabled;
 
     /**
      * @var array<\stdClass> // TODO, define DTO class
      */
-    protected $broadcasts;
+    private $broadcasts;
 
     /**
      * @var bool
      */
-    protected $moreAvailable;
+    private $moreAvailable;
 
     /**
      * @var string
      */
-    protected $nextMaxId;
+    private $nextMaxId;
 
     /**
      * @return mixed

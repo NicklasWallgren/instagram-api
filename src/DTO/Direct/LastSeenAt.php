@@ -13,12 +13,12 @@ class LastSeenAt
     /**
      * @var string
      */
-    protected $timestamp;
+    private $timestamp;
 
     /**
      * @var string
      */
-    protected $itemId;
+    private $itemId;
 
     /**
      * LastSeenAt constructor.

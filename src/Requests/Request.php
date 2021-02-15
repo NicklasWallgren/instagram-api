@@ -3,9 +3,9 @@
 
 namespace Instagram\SDK\Requests;
 
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\Http\RequestClient;
 use Instagram\SDK\Session\Session;
-use Instagram\SDK\Support\Promise;
 
 /**
  * Class Request
@@ -40,7 +40,7 @@ abstract class Request
     /**
      * Fire the request.
      *
-     * @return Promise
+     * @return PromiseInterface
      */
-    abstract public function fire(): Promise;
+    abstract public function fire(): PromiseInterface;
 }

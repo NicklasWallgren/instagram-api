@@ -6,7 +6,6 @@ use Exception;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
-use Instagram\SDK\DTO\Traits\Inflatable;
 use Instagram\SDK\DTO\Traits\PropertiesTrait;
 use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
 
@@ -19,7 +18,6 @@ abstract class SearchResultMessage extends Envelope implements PropertiesInterfa
 {
 
     use MakeRequestsAccessible;
-    use Inflatable;
     use PropertiesTrait;
 
     /**
@@ -51,44 +49,11 @@ abstract class SearchResultMessage extends Envelope implements PropertiesInterfa
     }
 
     /**
-     * @param mixed $hasMore
-     * @return static
-     */
-    public function setHasMore($hasMore)
-    {
-        $this->hasMore = $hasMore;
-
-        return $this;
-    }
-
-    /**
      * @return mixed
      */
     public function getRankToken()
     {
         return $this->rankToken;
-    }
-
-    /**
-     * @param mixed $rankToken
-     * @return static
-     */
-    public function setRankToken($rankToken)
-    {
-        $this->rankToken = $rankToken;
-
-        return $this;
-    }
-
-    /**
-     * @param Client $client
-     * @return static
-     */
-    public function setClient(Client $client)
-    {
-        $this->client = $client;
-
-        return $this;
     }
 
     /**
@@ -106,7 +71,6 @@ abstract class SearchResultMessage extends Envelope implements PropertiesInterfa
     public function setQuery(string $query)
     {
         $this->query = $query;
-
         return $this;
     }
 

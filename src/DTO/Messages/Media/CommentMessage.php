@@ -16,7 +16,7 @@ class CommentMessage extends Envelope
     /**
      * @var \Instagram\SDK\DTO\Media\Comment
      */
-    protected $comment;
+    private $comment;
 
     /**
      * @return Comment

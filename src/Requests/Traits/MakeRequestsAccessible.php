@@ -15,21 +15,12 @@ trait MakeRequestsAccessible
     use MakeGeneralRequestAccessible;
     use MakeDirectRequestAccessible;
     use MakeDiscoverRequestAccessible;
-    use MakeUserRequestAccessible;
+    use MakeAccountRequestAccessible;
     use MakeFeedRequestsAccessible;
     use MakeSearchRequestsAccessible;
     use MakeFriendshipsRequestsAccessible;
     use MakeMediaRequestsAccessible;
-
-    /**
-     * Returns the result mode.
-     *
-     * @return bool
-     */
-    protected function getMode(): bool
-    {
-        return $this->getClient()->getMode();
-    }
+    use MakeUsersRequestAccessible;
 
     /**
      * Returns the client.

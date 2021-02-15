@@ -3,6 +3,7 @@
 namespace Instagram\SDK\DTO\General;
 
 use Exception;
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Interfaces\UserInterface;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
@@ -27,48 +28,48 @@ class User implements UserInterface, OnItemDecodeInterface
      * @var string
      * @SerializedName("pk")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
-    protected $username;
+    private $username;
 
     /**
      * @var string
      */
-    protected $fullName;
+    private $fullName;
 
     /**
      * @var bool
      */
-    protected $isPrivate;
+    private $isPrivate;
 
     /**
      * @var string
      * @SerializedName("profile_pic_url")
      */
-    protected $profilePictureUrl;
+    private $profilePictureUrl;
 
     /**
      * @var FriendshipStatus
      */
-    protected $friendshipStatus;
+    private $friendshipStatus;
 
     /**
      * @var bool
      */
-    protected $isVerified;
+    private $isVerified;
 
     /**
      * @var bool
      */
-    protected $hasAnonymousProfilePicture;
+    private $hasAnonymousProfilePicture;
 
     /**
      * @var Client
      */
-    protected $client;
+    private $client;
 
     /**
      * @return string
@@ -139,7 +140,7 @@ class User implements UserInterface, OnItemDecodeInterface
      *
      * @suppress PhanUnusedPublicMethodParameter
      * @suppress PhanPossiblyNullTypeMismatchProperty
-     * @param array<string, mixed>  $container
+     * @param array<string, mixed> $container
      */
     public function onDecode(array $container): void
     {
@@ -151,10 +152,20 @@ class User implements UserInterface, OnItemDecodeInterface
     /**
      * Returns the user feed.
      *
-     * @return FeedMessage|Promise<FeedMessage>
+     * @return FeedMessage
      * @throws Exception
      */
-    public function feed()
+    public function feed(): FeedMessage
+    {
+        return $this->client->feedByUser($this->id)->wait();
+    }
+
+    /**
+     * Returns the user feed.
+     *
+     * @return PromiseInterface<FeedMessage>
+     */
+    public function feedPromise(): PromiseInterface
     {
         return $this->client->feedByUser($this->id);
     }
@@ -162,9 +173,20 @@ class User implements UserInterface, OnItemDecodeInterface
     /**
      * Follow the user.
      *
-     * @return FollowMessage|Promise<FollowMessage>
+     * @return FollowMessage
      */
-    public function follow()
+    public function follow(): FollowMessage
+    {
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->client->follow($this->id)->wait();
+    }
+
+    /**
+     * Follow the user.
+     *
+     * @return PromiseInterface<FollowMessage>
+     */
+    public function followPromise(): PromiseInterface
     {
         return $this->client->follow($this->id);
     }
@@ -176,15 +198,37 @@ class User implements UserInterface, OnItemDecodeInterface
      */
     public function unfollow()
     {
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->client->unfollow($this->id)->wait();
+    }
+
+    /**
+     * Unfollow the user.
+     *
+     * @return PromiseInterface<FollowMessage>
+     */
+    public function unfollowPromise(): PromiseInterface
+    {
         return $this->client->unfollow($this->id);
     }
 
     /**
      * Returns a list of followers.
      *
-     * @return FollowersMessage|Promise<FollowersMessage>
+     * @return FollowersMessage
      */
-    public function followers()
+    public function followers(): FollowersMessage
+    {
+        // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+        return $this->client->followers($this->id)->wait();
+    }
+
+    /**
+     * Returns a list of followers.
+     *
+     * @return PromiseInterface<FollowersMessage>
+     */
+    public function followersPromise(): PromiseInterface
     {
         return $this->client->followers($this->id);
     }

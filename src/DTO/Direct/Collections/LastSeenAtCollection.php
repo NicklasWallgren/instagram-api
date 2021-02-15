@@ -15,7 +15,7 @@ class LastSeenAtCollection
     /**
      * @var LastSeenAt[]
      */
-    protected $items = [];
+    private $items = [];
 
     /**
      * LastSeenAtCollection constructor.

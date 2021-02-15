@@ -1,6 +1,6 @@
 <?php
 
-namespace Instagram\SDK\DTO\Direct\Adapters;
+namespace Instagram\SDK\DTO\Adapters;
 
 use Instagram\SDK\DTO\Direct\Thread;
 use Instagram\SDK\DTO\Direct\ThreadItem;
@@ -15,7 +15,7 @@ use Tebru\Gson\TypeAdapter;
  * @package Instagram\SDK\DTO\Direct\Adapters
  * @phan-file-suppress PhanUnreferencedUseNormal
  */
-class ThreadAdapter extends TypeAdapter
+class TestAdapter extends TypeAdapter
 {
     /**
      * @var TypeAdapter
@@ -33,8 +33,8 @@ class ThreadAdapter extends TypeAdapter
     }
 
     /**
-     * @param mixed         $value
-     * @param ReaderContext $context
+     * @param mixed               $value
+     * @param CustomReaderContext $context
      * @return mixed
      */
     public function read($value, ReaderContext $context)
@@ -42,7 +42,7 @@ class ThreadAdapter extends TypeAdapter
         /** @var Thread $deserialized */
         $deserialized = $this->defaultTypeAdapter->read($value, $context);
 
-//        var_dump($context);
+        // check if deserilized implmenet onDecode, then call it?
 
 
         $closure = new SetByClosure('parent', ThreadItem::class);
