@@ -3,8 +3,8 @@
 namespace Instagram\SDK\Session\Builders;
 
 use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
-use Instagram\SDK\Http\RequestClient;
-use Instagram\SDK\Requests\Support\SignatureSupport;
+use Instagram\SDK\Http\HttpClient;
+use Instagram\SDK\Requests\Utils\SignatureUtils;
 use Instagram\SDK\Session\Session;
 
 /**
@@ -12,25 +12,25 @@ use Instagram\SDK\Session\Session;
  *
  * @package Instagram\SDK\Session\Builders
  */
-class SessionBuilder
+final class SessionBuilder
 {
 
     /**
      * The session builder.
      *
      * @param DeviceBuilderInterface $deviceBuilder
-     * @param RequestClient          $client
+     * @param HttpClient             $client
      * @return Session
      */
-    public function build(DeviceBuilderInterface $deviceBuilder, RequestClient $client): Session
+    public function build(DeviceBuilderInterface $deviceBuilder, HttpClient $client): Session
     {
         // Build the device instance
         $device = $deviceBuilder->build();
 
         return (new Session())
-            ->setUuid(SignatureSupport::uuid())
+            ->setUuid(SignatureUtils::uuid())
             ->setDevice($device)
-            ->setSessionId(SignatureSupport::uuid())
+            ->setSessionId(SignatureUtils::uuid())
             ->setCookies($client->getCookies());
     }
 }

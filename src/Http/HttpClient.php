@@ -2,48 +2,35 @@
 
 namespace Instagram\SDK\Http;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Cookie\CookieJar;
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\Psr7\Request;
-use Instagram\SDK\Http\Guzzle\Client;
-use Instagram\SDK\Http\Guzzle\Handlers\HandlerStack;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class RequestClient
  *
  * @package Instagram\SDK\Http
  */
-class RequestClient
+class HttpClient
 {
-
-    /**
-     * @var string Get method keyword
-     */
-    public const METHOD_GET = 'GET';
-
-    /**
-     * @var string Post method keyword
-     */
-    public const METHOD_POST = 'POST';
 
     /**
      * @var ClientInterface
      */
-    protected $client;
+    private $client;
 
     /**
      * @var CookieJar
      */
-    protected $cookies;
+    private $cookies;
 
     /**
-     * @var Options
+     * @var HttpClientConfiguration
      */
-    protected $options;
+    private $configuration;
 
     /**
      * Client constructor.
@@ -51,32 +38,7 @@ class RequestClient
     public function __construct()
     {
         $this->client = new Client(['handler' => HandlerStack::create()]);
-        $this->options = new Options();
-    }
-
-    /**
-     * Sends the HTTP request.
-     *
-     * @suppress PhanTypeInvalidThrowsIsInterface
-     * @param Request $request
-     * @return ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function request(Request $request): ResponseInterface
-    {
-        try {
-            $response = $this->client->send($request, $this->options(['cookies' => $this->getCookies()]));
-        } catch (ClientException $e) {
-            // Retrieve the response envelope content
-            $response = $e->getResponse();
-
-            // Check whether we retrieved a standardalized API request error
-            if ($response->getStatusCode() !== 400 || $response === null) {
-                throw $e;
-            }
-        }
-
-        return $response;
+        $this->configuration = new HttpClientConfiguration();
     }
 
     /**
@@ -118,20 +80,20 @@ class RequestClient
     }
 
     /**
-     * @return Options
+     * @return HttpClientConfiguration
      */
-    public function getOptions(): Options
+    public function getConfiguration(): HttpClientConfiguration
     {
-        return $this->options;
+        return $this->configuration;
     }
 
     /**
-     * @param Options $options
+     * @param HttpClientConfiguration $configuration
      * @return static
      */
-    public function setOptions(Options $options)
+    public function setConfiguration(HttpClientConfiguration $configuration)
     {
-        $this->options = $options;
+        $this->configuration = $configuration;
 
         return $this;
     }
@@ -144,6 +106,6 @@ class RequestClient
      */
     protected function options(array $options = []): array
     {
-        return array_merge($options, $this->options !== null ? $this->options->get() : []);
+        return array_merge($options, $this->configuration !== null ? $this->configuration->toArray() : []);
     }
 }

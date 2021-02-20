@@ -23,27 +23,27 @@ class Session
     /**
      * @var string The unique id
      */
-    protected $uuid;
+    private $uuid;
 
     /**
      * @var User
      */
-    protected $user;
+    private $user;
 
     /**
      * @var DeviceInterface
      */
-    protected $device;
+    private $device;
 
     /**
      * @var string Session id.
      */
-    protected $sessionId;
+    private $sessionId;
 
     /**
      * @var CookieJar
      */
-    protected $cookies;
+    private $cookies;
 
     /**
      * @return string

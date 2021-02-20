@@ -4,17 +4,14 @@ namespace Instagram\SDK\DTO\Messages\Direct;
 
 use Instagram\SDK\DTO\Direct\DirectSendItemPayload;
 use Instagram\SDK\DTO\Envelope;
-use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 
 /**
  * Class DirectSendItemMessage
  *
  * @package Instagram\SDK\DTO\Messages\Direct
  */
-class DirectSendItemMessage extends Envelope
+final class DirectSendItemMessage extends Envelope
 {
-
-    use OnPropagateDecodeEventTrait;
 
     /**
      * @var string

@@ -10,7 +10,7 @@ use Instagram\SDK\DTO\Envelope;
  *
  * @package Instagram\SDK\DTO\Messages
  */
-class HeaderMessage extends Envelope
+final class HeaderMessage extends Envelope
 {
 
     /**

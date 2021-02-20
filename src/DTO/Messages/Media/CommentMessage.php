@@ -10,7 +10,7 @@ use Instagram\SDK\DTO\Media\Comment;
  *
  * @package Instagram\SDK\DTO\Messages\Media
  */
-class CommentMessage extends Envelope
+final class CommentMessage extends Envelope
 {
 
     /**

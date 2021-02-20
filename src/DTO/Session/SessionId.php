@@ -7,7 +7,7 @@ namespace Instagram\SDK\DTO\Session;
  *
  * @package Instagram\SDK\DTO\Session
  */
-class SessionId
+final class SessionId
 {
 
     /**
@@ -20,7 +20,7 @@ class SessionId
      *
      * @param string $id
      */
-    public function __construct($id)
+    public function __construct(string $id)
     {
         $this->id = $id;
     }

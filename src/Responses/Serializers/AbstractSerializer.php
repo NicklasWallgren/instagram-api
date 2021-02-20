@@ -3,13 +3,13 @@
 namespace Instagram\SDK\Responses\Serializers;
 
 use Exception;
+use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Adapters\CustomReaderContext;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
 use Instagram\SDK\Responses\Exceptions\ApiResponseException;
 use Instagram\SDK\Responses\Exceptions\InvalidRequestException;
 use Instagram\SDK\Responses\Interfaces\SerializerInterface;
-use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 use Instagram\SDK\Responses\Traits\ErrorTypeMethodsTrait;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use Tebru\Gson\Gson;
@@ -24,48 +24,35 @@ abstract class AbstractSerializer implements SerializerInterface
 
     use ErrorTypeMethodsTrait;
 
-    /**
-     * @var int The successful status
-     */
     protected const STATUS_SUCCESS = 200;
-
-    /**
-     * @var int The error status
-     */
     protected const STATUS_ERROR = 400;
-
-    /**
-     * @var int The HTTP not found error
-     */
     protected const HTTP_NOT_FOUND = 404;
 
     /**
      * Decodes the response message.
      *
      * @param HttpResponseInterface $response
+     * @param Client                $client
      * @return ResponseMessageInterface
      * @throws Exception
      */
-    public function decode(HttpResponseInterface $response): ResponseMessageInterface
+    public function decode(HttpResponseInterface $response, Client $client): ResponseMessageInterface
     {
-        if (!$this->isValidHttpResponse($response)) {
-            $this->handleInvalidHttpResponse($response);
+        if (!self::isExpectedHttpResponse($response)) {
+            self::handleUnexpectedHttpResponse($response);
         }
 
-        // Compose a new message instance
         $message = $this->message();
 
-        $response = (string)$response->getBody();
+        $gson = Gson::builder()
+            ->setReaderContext(new CustomReaderContext($client))
+            ->build();
 
-        $gson = Gson::builder()->setReaderContext(new CustomReaderContext())->build();
-        $gson->fromJson($response, $message);
+        $gson->fromJson((string)$response->getBody(), $message);
 
-        // Check whether we retrieved a valid response
-        if (!$this->isValidResponse($message)) {
+        if (!self::isValidResponse($message)) {
             throw $this->toException($message->getErrorType(), $message);
         }
-
-        $this->finalize($message);
 
         return $message;
     }
@@ -78,12 +65,12 @@ abstract class AbstractSerializer implements SerializerInterface
     abstract protected function message(): Envelope;
 
     /**
-     * Check whether we retrieved a successful HTTP response, false otherwise.
+     * Check whether we retrieved a expected HTTP response, false otherwise.
      *
      * @param HttpResponseInterface $response
      * @return bool
      */
-    protected function isValidHttpResponse(HttpResponseInterface $response): bool
+    protected static function isExpectedHttpResponse(HttpResponseInterface $response): bool
     {
         return $response->getStatusCode() === static::STATUS_SUCCESS ||
             $response->getStatusCode() === static::STATUS_ERROR;
@@ -95,9 +82,8 @@ abstract class AbstractSerializer implements SerializerInterface
      * @param HttpResponseInterface $response
      * @throws Exception
      */
-    protected function handleInvalidHttpResponse(HttpResponseInterface $response): void
+    private static function handleUnexpectedHttpResponse(HttpResponseInterface $response): void
     {
-        // Check whether the request was invalid
         if ($response->getStatusCode() === static::HTTP_NOT_FOUND) {
             throw new InvalidRequestException(
                 sprintf('Http status 404. Error: %s', (string)$response->getBody()->getContents())
@@ -113,22 +99,9 @@ abstract class AbstractSerializer implements SerializerInterface
      * @param Envelope $envelope
      * @return bool
      */
-    protected function isValidResponse(Envelope $envelope): bool
+    private static function isValidResponse(Envelope $envelope): bool
     {
         return $envelope->isSuccess();
     }
 
-    /**
-     * The finalize method.
-     *
-     * @param Envelope $message
-     * @return void
-     */
-    protected function finalize(Envelope $message): void
-    {
-        // Check whether the listener is implemented
-        if ($this instanceof OnDecodeInterface) {
-            $this->onDecode($message);
-        }
-    }
 }

@@ -7,12 +7,11 @@ namespace Instagram\SDK\Client\Features;
 use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Messages\User\LogoutMessage;
 use Instagram\SDK\DTO\Messages\User\SessionMessage;
-use Instagram\SDK\Requests\GenericRequest;
-use Instagram\SDK\Requests\Http\Factories\SerializerFactory;
-use Instagram\SDK\Requests\Support\SignatureSupport;
-use Instagram\SDK\Requests\User\LoginRequest;
+use Instagram\SDK\Requests\Http\Factories\PayloadSerializerFactory;
+use Instagram\SDK\Requests\Utils\SignatureUtils;
+use Instagram\SDK\Responses\Serializers\User\LoginSerializer;
 use Instagram\SDK\Session\Builders\SessionBuilder;
-use function Instagram\SDK\Support\Promises\task;
+use function GuzzleHttp\Promise\task;
 
 /**
  * Trait AccountFeaturesTrait
@@ -34,12 +33,24 @@ trait AccountFeaturesTrait
      */
     public function login(string $username, string $password): PromiseInterface
     {
-        // Initialize a new session
         $this->session = (new SessionBuilder())->build($this->builder, $this->client);
 
         // @phan-suppress-next-line PhanUndeclaredMethod
         return $this->headers()->then(function () use ($username, $password): PromiseInterface {
-            return (new LoginRequest($username, $password, $this->session, $this->client))->fire();
+            // phpcs:ignore
+            $request = $this->buildRequestWithSerializer('accounts/login/', new SessionMessage(), new LoginSerializer($this->session, $this->client));
+
+            $body = [
+                'username'            => $username,
+                'password'            => $password,
+                'login_attempt_count' => '0',
+                'device_id'           => $this->session->getDevice()->deviceId(),
+            ];
+
+            $request->setPayload($body)
+                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
+
+            return $this->call($request);
         });
     }
 
@@ -55,21 +66,20 @@ trait AccountFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /** @var GenericRequest $request */
-            $request = $this->request('accounts/one_tap_app_login/', new SessionMessage());
+            $request = $this->buildRequest('accounts/one_tap_app_login/', new SessionMessage());
 
             $body = [
                 'device_id'   => $this->session->getDevice()->deviceId(),
                 'user_id'     => $this->session->getUser()->getId(),
                 'login_nonce' => $nonce,
-                'adid'        => SignatureSupport::uuid(),
+                'adid'        => SignatureUtils::uuid(),
             ];
 
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $request->setPayload($body)
-                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
+                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 
@@ -84,13 +94,11 @@ trait AccountFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /** @var GenericRequest $request */
-            $request = $this->request('accounts/logout/', new LogoutMessage());
-
-            $request->addPayloadParam('device_id', $this->session->getDevice()->deviceId())
+            $request = $this->buildRequest('accounts/logout/', new LogoutMessage())
+                ->addPayloadParam('device_id', $this->session->getDevice()->deviceId())
                 ->addPayloadParam('one_tap_app_login', true);
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 }

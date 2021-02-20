@@ -7,7 +7,7 @@ namespace Instagram\SDK\Responses\Exceptions;
  *
  * @package Instagram\SDK\Responses\Exceptions
  */
-class RateLimitException extends ApiResponseException
+final class RateLimitException extends ApiResponseException
 {
 
 }

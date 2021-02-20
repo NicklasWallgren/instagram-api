@@ -30,22 +30,15 @@ trait ErrorTypeMethodsTrait
         switch ($type) {
             case ResponseErrorTypes::BAD_PASSWORD:
                 $exception = new BadPasswordException($envelope);
-
                 break;
-
             case ResponseErrorTypes::INVALID_USER:
                 $exception = new InvalidUserException($envelope);
-
                 break;
-
             case ResponseErrorTypes::RATE_LIMIT:
                 $exception = new RateLimitException($envelope);
-
                 break;
-
             default:
                 $exception = new ApiResponseException($envelope);
-
                 break;
         }
 

@@ -2,19 +2,8 @@
 
 namespace Instagram\SDK\Requests\Traits;
 
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise\Create;
-use GuzzleHttp\Promise\PromiseInterface;
-use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
-use Instagram\SDK\Http\RequestClient;
-use Instagram\SDK\Requests\GenericRequest;
-use Instagram\SDK\Responses\Interfaces\SerializerInterface;
-use Instagram\SDK\Session\Session;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
-use Throwable;
-use function Instagram\SDK\Support\Promises\task;
-use function Instagram\SDK\Support\uuid;
+use Instagram\SDK\Requests\Request;
+use Instagram\SDK\Requests\Utils\SignatureUtils;
 
 /**
  * Trait RequestMethods
@@ -25,26 +14,16 @@ trait RequestMethods
 {
 
     /**
-     * @var RequestClient
-     */
-    protected $httpClient;
-
-    /**
-     * @var Session
-     */
-    protected $session;
-
-    /**
      * Adds a unique context to the payload.
      *
-     * @param GenericRequest|null $request
+     * @param Request|null $request
      * @return static
      */
-    public function addUniqueContext(?GenericRequest $request = null): self
+    public function addUniqueContext(?Request $request = null): self
     {
         $request = $request ?: $this;
 
-        $request->addPayloadParam('client_context', uuid(true));
+        $request->addPayloadParam('client_context', SignatureUtils::uuid(SignatureUtils::TYPE_DEFAULT));
 
         return $request;
     }
@@ -52,11 +31,11 @@ trait RequestMethods
     /**
      * Adds the CSRF token.
      *
-     * @param GenericRequest|null $request
+     * @param Request|null $request
      * @return static
      * @throws \Exception
      */
-    public function addCSRFToken(?GenericRequest $request = null): self
+    public function addCSRFToken(?Request $request = null): self
     {
         $request = $request ?: $this;
 
@@ -68,11 +47,11 @@ trait RequestMethods
     /**
      * Adds the CSRF token and User id to the payload.
      *
-     * @param GenericRequest|null $request
+     * @param Request|null $request
      * @return static
      * @throws \Exception
      */
-    public function addCSRFTokenAndUserId(?GenericRequest $request = null): self
+    public function addCSRFTokenAndUserId(?Request $request = null): self
     {
         $request = $request ?: $this;
 
@@ -85,10 +64,10 @@ trait RequestMethods
     /**
      * Adds the ranked token as a query parameter.
      *
-     * @param GenericRequest|null $request
+     * @param Request|null $request
      * @return static
      */
-    public function addRankedToken(?GenericRequest $request = null): self
+    public function addRankedToken(?Request $request = null): self
     {
         $request = $request ?: $this;
 
@@ -100,10 +79,10 @@ trait RequestMethods
     /**
      * Adds uuid to the payload.
      *
-     * @param GenericRequest|null $request
+     * @param Request|null $request
      * @return self
      */
-    public function addUuid(?GenericRequest $request = null): self
+    public function addUuid(?Request $request = null): self
     {
         $request = $request ?: $this;
 
@@ -115,10 +94,10 @@ trait RequestMethods
     /**
      * Adds uid to the payload.
      *
-     * @param GenericRequest|null $request
+     * @param Request|null $request
      * @return static
      */
-    public function addUid(?GenericRequest $request = null): self
+    public function addUid(?Request $request = null): self
     {
         $request = $request ?: $this;
 
@@ -130,10 +109,10 @@ trait RequestMethods
     /**
      * Adds Uuid and Uid to the payload.
      *
-     * @param GenericRequest|null $request
+     * @param Request|null $request
      * @return static
      */
-    public function addUuidAndUid(?GenericRequest $request = null): self
+    public function addUuidAndUid(?Request $request = null): self
     {
         $request = $request ?: $this;
 
@@ -149,10 +128,10 @@ trait RequestMethods
     /**
      * Adds the phone id to the payload.
      *
-     * @param GenericRequest|null $request
+     * @param Request|null $request
      * @return static
      */
-    public function addPhoneId(?GenericRequest $request = null): self
+    public function addPhoneId(?Request $request = null): self
     {
         $request = $request ?: $this;
 
@@ -164,10 +143,10 @@ trait RequestMethods
     /**
      * Adds the session id to the payload.
      *
-     * @param GenericRequest|null $request
+     * @param Request|null $request
      * @return static
      */
-    public function addSessionId(?GenericRequest $request = null): self
+    public function addSessionId(?Request $request = null): self
     {
         $request = $request ?: $this;
 
@@ -176,53 +155,4 @@ trait RequestMethods
         return $request;
     }
 
-    /**
-     * Asynchronous request.
-     *
-     * @param RequestInterface    $request
-     * @param SerializerInterface $serializer
-     * @return PromiseInterface
-     */
-    protected function request(RequestInterface $request, SerializerInterface $serializer): PromiseInterface
-    {
-        // Execute the asynchronous request
-        $promise = $this->httpClient->requestAsync($request);
-
-        // Return a promise chain
-        return $promise->then(function (HttpResponseInterface $response) use ($serializer): PromiseInterface {
-            return $this->decode($response, $serializer);
-        })->otherwise(function (Throwable $exception) use ($serializer): PromiseInterface {
-            if (!$this->isRequestException($exception)) {
-                return Create::rejectionFor($exception);
-            }
-
-            // @phan-suppress-next-line PhanUndeclaredMethod
-            return $this->decode($exception->getResponse(), $serializer);
-        });
-    }
-
-    /**
-     * Decode the response.
-     *
-     * @param HttpResponseInterface $response
-     * @param SerializerInterface   $serializer
-     * @return PromiseInterface
-     */
-    protected function decode(HttpResponseInterface $response, SerializerInterface $serializer)
-    {
-        return task(function () use ($response, $serializer): ResponseMessageInterface {
-            return $serializer->decode($response);
-        });
-    }
-
-    /**
-     * Returns true if the exception is of request exception, false otherwise.
-     *
-     * @param Throwable $exception
-     * @return bool
-     */
-    protected function isRequestException(Throwable $exception)
-    {
-        return $exception instanceof RequestException;
-    }
 }

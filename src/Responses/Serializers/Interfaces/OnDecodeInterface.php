@@ -2,8 +2,6 @@
 
 namespace Instagram\SDK\Responses\Serializers\Interfaces;
 
-use Instagram\SDK\DTO\Envelope;
-
 /**
  * Interface OnDecodeInterface
  *
@@ -13,9 +11,9 @@ interface OnDecodeInterface
 {
 
     /**
-     * On decode method.
+     * On item decode method.
      *
-     * @param Envelope $message
+     * @param array<string, mixed> $container
      */
-    public function onDecode(Envelope &$message): void;
+    public function onDecode(array $container): void;
 }

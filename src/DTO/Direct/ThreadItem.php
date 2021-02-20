@@ -4,9 +4,10 @@ namespace Instagram\SDK\DTO\Direct;
 
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\DTO;
+use Instagram\SDK\DTO\Interactive;
 use Instagram\SDK\DTO\Interfaces\UserInterface;
 use Instagram\SDK\DTO\Messages\Direct\SeenMessage;
-use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 use Instagram\SDK\Support\Promise;
 
 /**
@@ -14,7 +15,7 @@ use Instagram\SDK\Support\Promise;
  *
  * @package Instagram\SDK\DTO\Direct
  */
-class ThreadItem extends DTO implements OnItemDecodeInterface
+final class ThreadItem extends Interactive implements OnDecodeInterface
 {
 
     /**
@@ -61,11 +62,6 @@ class ThreadItem extends DTO implements OnItemDecodeInterface
      * @var string
      */
     private $clientContext;
-
-    /**
-     * @var Client
-     */
-    private $client;
 
     /**
      * @return string

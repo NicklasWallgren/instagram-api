@@ -7,7 +7,7 @@ namespace Instagram\SDK\DTO\General;
  *
  * @package Instagram\SDK\DTO\General
  */
-class FriendshipStatus
+final class FriendshipStatus
 {
 
     /**

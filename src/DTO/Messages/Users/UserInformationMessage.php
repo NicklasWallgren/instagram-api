@@ -13,7 +13,7 @@ use Instagram\SDK\DTO\General\User;
  *
  * @package Instagram\SDK\DTO\Messages\Users
  */
-class UserInformationMessage extends Envelope
+final class UserInformationMessage extends Envelope
 {
 
     /**

@@ -9,7 +9,7 @@ use Instagram\SDK\Requests\Options\AbstractOptions;
  *
  * @package Instagram\SDK\Requests\Feed
  */
-class TimelineOptions extends AbstractOptions
+final class TimelineOptions extends AbstractOptions
 {
 
     /**

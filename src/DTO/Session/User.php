@@ -10,7 +10,7 @@ use Tebru\Gson\Annotation\SerializedName;
  *
  * @package Instagram\SDK\DTO\Session
  */
-class User implements UserInterface
+final class User implements UserInterface
 {
 
     /**

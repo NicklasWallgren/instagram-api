@@ -8,14 +8,14 @@ use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\General\User;
 use Instagram\SDK\Responses\Interfaces\IteratorInterface;
-use function Instagram\SDK\Support\Promises\promise_for;
+use function GuzzleHttp\Promise\promise_for;
 
 /**
  * Class FollowingMessage
  *
  * @package Instagram\SDK\DTO\Messages\Friendships
  */
-class FollowingMessage extends Envelope implements IteratorInterface
+final class FollowingMessage extends Envelope implements IteratorInterface
 {
 
     /**

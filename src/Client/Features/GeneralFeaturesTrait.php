@@ -7,11 +7,12 @@ namespace Instagram\SDK\Client\Features;
 use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Messages\HeaderMessage;
-use Instagram\SDK\Requests\General\HeaderRequest;
-use Instagram\SDK\Requests\Support\SignatureSupport;
-use function Instagram\SDK\Support\Promises\rejection_for;
-use function Instagram\SDK\Support\Promises\task;
-use function Instagram\SDK\Support\uuid;
+use Instagram\SDK\Requests\Http\Factories\PayloadSerializerFactory;
+use Instagram\SDK\Requests\Request;
+use Instagram\SDK\Requests\Utils\SignatureUtils;
+use Instagram\SDK\Responses\Serializers\General\HeaderSerializer;
+use function GuzzleHttp\Promise\rejection_for;
+use function GuzzleHttp\Promise\task;
 
 /**
  * Trait GeneralFeaturesTrait
@@ -26,8 +27,8 @@ trait GeneralFeaturesTrait
     /**
      * Returns the headers containing the initial CSRF token.
      *
-     * @throws Exception
      * @return PromiseInterface<HeaderMessage>
+     * @throws Exception
      */
     protected function headers(): PromiseInterface
     {
@@ -37,7 +38,23 @@ trait GeneralFeaturesTrait
                 return rejection_for('The session is not available. Please authenticate first');
             }
 
-            return (new HeaderRequest(uuid(SignatureSupport::TYPE_COMBINED), $this->session, $this->client))->fire();
+            /** @var Request $request */
+            // phpcs:ignore
+            $request = $this->buildRequestWithSerializer('si/fetch_headers/', new HeaderMessage(), new HeaderSerializer($this->client))(
+                $this->session,
+                $this->httpClient
+            );
+
+            // Prepare the payload
+            $body = [
+                'challenge_type' => 'signup',
+                'guid'           => SignatureUtils::uuid(SignatureUtils::TYPE_COMBINED),
+            ];
+
+            $request->setPayload($body)
+                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_URL_ENCODED);
+
+            return $this->call($request);
         });
     }
 

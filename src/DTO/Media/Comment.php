@@ -2,13 +2,22 @@
 
 namespace Instagram\SDK\DTO\Media;
 
+use Instagram\SDK\DTO\General\User;
+use Tebru\Gson\Annotation\SerializedName;
+
 /**
  * Class Comment
  *
  * @package Instagram\SDK\DTO\Media
  */
-class Comment
+final class Comment
 {
+
+    /**
+     * @var int
+     * @SerializedName("pk")
+     */
+    private $id;
 
     /**
      * @var string
@@ -16,14 +25,9 @@ class Comment
     private $contentType;
 
     /**
-     * @var \Instagram\SDK\DTO\General\User
+     * @var User
      */
     private $user;
-
-    /**
-     * @var int
-     */
-    private $pk;
 
     /**
      * @var string
@@ -61,6 +65,14 @@ class Comment
     private $shareEnabled;
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
      * @return mixed
      */
     public function getContentType()
@@ -69,19 +81,11 @@ class Comment
     }
 
     /**
-     * @return \Instagram\SDK\DTO\General\User
+     * @return User
      */
-    public function getUser(): \Instagram\SDK\DTO\General\User
+    public function getUser(): User
     {
         return $this->user;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPk(): int
-    {
-        return $this->pk;
     }
 
     /**

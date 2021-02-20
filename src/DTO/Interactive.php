@@ -9,7 +9,7 @@ use Instagram\SDK\Client\Client;
  *
  * @package Instagram\SDK\DTO
  */
-abstract class Interactive
+abstract class Interactive extends DTO
 {
 
     /**

@@ -8,9 +8,9 @@ use Tebru\Gson\TypeAdapterFactory;
 use Tebru\PhpType\TypeToken;
 
 /**
- * Class ThreadAdapterFactory
+ * Class TestAdapterFactory
  *
- * @package Instagram\SDK\DTO\Direct\Adapters
+ * @package Instagram\SDK\DTO\Adapters
  */
 class TestAdapterFactory implements TypeAdapterFactory
 {

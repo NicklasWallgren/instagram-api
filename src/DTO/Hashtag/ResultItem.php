@@ -4,21 +4,17 @@ namespace Instagram\SDK\DTO\Hashtag;
 
 use Instagram\SDK\DTO\Interactive;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
-use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
-use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 use Instagram\SDK\Support\Promise;
-use Tebru\Gson\Annotation\SerializedName;
-use const Instagram\SDK\Client\Features\TYPE_HASHTAG;
+use const Instagram\SDK\TYPE_HASHTAG;
 
 /**
  * Class ResultItem
  *
  * @package Instagram\SDK\DTO\Hashtag
  */
-class ResultItem extends Interactive implements OnItemDecodeInterface
+final class ResultItem extends Interactive implements OnDecodeInterface
 {
-
-    use OnPropagateDecodeEventTrait;
 
     /**
      * @var float
@@ -32,7 +28,6 @@ class ResultItem extends Interactive implements OnItemDecodeInterface
 
     /**
      * @var int
-     * @SerializedName("media_count")
      */
     private $mediaCount;
 
@@ -81,7 +76,5 @@ class ResultItem extends Interactive implements OnItemDecodeInterface
     public function onDecode(array $container): void
     {
         $this->client = $container['client'];
-
-        $this->propagate($container);
     }
 }

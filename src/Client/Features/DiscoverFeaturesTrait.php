@@ -8,9 +8,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Messages\Discover\ChannelsMessage;
 use Instagram\SDK\DTO\Messages\Discover\ExploreMessage;
 use Instagram\SDK\DTO\Messages\Discover\TopLiveMessage;
-use Instagram\SDK\Requests\GenericRequest;
-use function Instagram\SDK\Support\Promises\task;
-use function Instagram\SDK\Support\request;
+use function GuzzleHttp\Promise\task;
 
 /**
  * Trait DiscoverFeaturesTrait
@@ -33,14 +31,9 @@ trait DiscoverFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /** @var GenericRequest $request */
-            $request = request('discover/explore/', new ExploreMessage(), 'GET')(
-                $this,
-                $this->session,
-                $this->client
-            );
+            $request = $this->buildRequest('discover/explore/', new ExploreMessage(), 'GET');
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 
@@ -55,14 +48,9 @@ trait DiscoverFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /** @var GenericRequest $request */
-            $request = request('discover/top_live/', new TopLiveMessage(), 'GET')(
-                $this,
-                $this->session,
-                $this->client
-            );
+            $request = $this->buildRequest('discover/top_live/', new TopLiveMessage(), 'GET');
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 
@@ -77,14 +65,9 @@ trait DiscoverFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /** @var GenericRequest $request */
-            $request = request('discover/channels_home/', new ChannelsMessage(), 'GET')(
-                $this,
-                $this->session,
-                $this->client
-            );
+            $request = $this->buildRequest('discover/channels_home/', new ChannelsMessage(), 'GET');
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 }

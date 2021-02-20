@@ -7,11 +7,11 @@ namespace Instagram\SDK\Client\Features;
 use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Messages\Media\CommentMessage;
-use Instagram\SDK\Requests\GenericRequest;
-use Instagram\SDK\Requests\Http\Factories\SerializerFactory;
-use function Instagram\SDK\Support\Promises\task;
+use Instagram\SDK\Requests\Http\Factories\PayloadSerializerFactory;
+use Instagram\SDK\Requests\Request;
+use Instagram\SDK\Requests\Utils\SignatureUtils;
+use function GuzzleHttp\Promise\task;
 use function Instagram\SDK\Support\request;
-use function Instagram\SDK\Support\uuid;
 
 /**
  * Trait MediaFeaturesTrait
@@ -56,7 +56,7 @@ trait MediaFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /** @var GenericRequest $request */
+            /** @var Request $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_LIKE, $mediaId), new Envelope())(
                 $this,
@@ -70,7 +70,7 @@ trait MediaFeaturesTrait
                 ->addUuidAndUid()
                 ->addPayloadParam('module_name', 'photo_view')
                 ->addPayloadParam('media_id', $mediaId)
-                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
+                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
 
             return $request->fire();
         });
@@ -88,7 +88,7 @@ trait MediaFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /** @var GenericRequest $request */
+            /** @var Request $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_UNLIKE, $mediaId), new Envelope())(
                 $this,
@@ -102,7 +102,7 @@ trait MediaFeaturesTrait
                 ->addUuidAndUid()
                 ->addPayloadParam('module_name', 'photo_view')
                 ->addPayloadParam('media_id', $mediaId)
-                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
+                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
 
             return $request->fire();
         });
@@ -121,7 +121,7 @@ trait MediaFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /** @var GenericRequest $request */
+            /** @var Request $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_ADD_COMMENT, $mediaId), new CommentMessage())(
                 $this,
@@ -134,8 +134,8 @@ trait MediaFeaturesTrait
                 ->addCSRFToken()
                 ->addUuidAndUid()
                 ->addPayloadParam('comment_text', $comment)
-                ->addPayloadParam('idempotence_token', uuid())
-                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
+                ->addPayloadParam('idempotence_token', SignatureUtils::uuid())
+                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
 
             return $request->fire();
         });
@@ -154,7 +154,7 @@ trait MediaFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /** @var GenericRequest $request */
+            /** @var Request $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf(self::$URI_DELETE_COMMENT, $mediaId), new Envelope())(
                 $this,
@@ -167,7 +167,7 @@ trait MediaFeaturesTrait
                 ->addCSRFToken()
                 ->addUuidAndUid()
                 ->addPayloadParam('comment_ids_to_delete', (string)$commentId)
-                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
+                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
 
             return $request->fire();
         });

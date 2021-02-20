@@ -2,8 +2,8 @@
 
 namespace Instagram\SDK\Requests\Http\Traits;
 
-use Instagram\SDK\Requests\Http\Serializers\RequestSerializerInterface;
-use Instagram\SDK\Requests\Http\Serializers\UrlEncodeRequestSerializer;
+use Instagram\SDK\Requests\Http\Serializers\PayloadSerializerInterface;
+use Instagram\SDK\Requests\Http\Serializers\UrlEncodePayloadSerializer;
 
 /**
  * Trait UrlEncodedSerializerTrait
@@ -16,10 +16,10 @@ trait UrlEncodedSerializerTrait
     /**
      * The request body serializer.
      *
-     * @return RequestSerializerInterface
+     * @return PayloadSerializerInterface
      */
-    protected function serializer(): RequestSerializerInterface
+    protected function serializer(): PayloadSerializerInterface
     {
-        return new UrlEncodeRequestSerializer();
+        return new UrlEncodePayloadSerializer();
     }
 }

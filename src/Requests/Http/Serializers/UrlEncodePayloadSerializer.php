@@ -7,7 +7,7 @@ namespace Instagram\SDK\Requests\Http\Serializers;
  *
  * @package Instagram\SDK\Requests\Http\Serializers
  */
-class UrlEncodeRequestSerializer implements RequestSerializerInterface
+class UrlEncodePayloadSerializer implements PayloadSerializerInterface
 {
 
     /**

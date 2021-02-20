@@ -7,8 +7,8 @@ use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
 use Instagram\SDK\DTO\Messages\Feed\TimelineMessage;
 use Instagram\SDK\Requests\Feed\TimelineOptions;
-use const Instagram\SDK\Client\Features\TYPE_HASHTAG;
-use const Instagram\SDK\Client\Features\TYPE_USER;
+use const Instagram\SDK\TYPE_HASHTAG;
+use const Instagram\SDK\TYPE_USER;
 
 /**
  * Trait MakeFeedRequestsAccessible

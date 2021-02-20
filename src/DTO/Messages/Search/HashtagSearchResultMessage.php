@@ -9,11 +9,11 @@ use Instagram\SDK\DTO\Hashtag\ResultItem;
  *
  * @package Instagram\SDK\DTO\Messages\Search
  */
-class HashtagSearchResultMessage extends SearchResultMessage
+final class HashtagSearchResultMessage extends SearchResultMessage
 {
 
     /**
-     * @var \Instagram\SDK\DTO\Hashtag\ResultItem[]
+     * @var ResultItem[]
      */
     private $results;
 

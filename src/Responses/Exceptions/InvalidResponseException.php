@@ -9,7 +9,7 @@ use Exception;
  *
  * @package Instagram\SDK\Responses\Exceptions
  */
-class InvalidResponseException extends Exception
+final class InvalidResponseException extends Exception
 {
 
     /**

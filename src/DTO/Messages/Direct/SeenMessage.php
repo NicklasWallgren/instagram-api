@@ -10,7 +10,7 @@ use Tebru\Gson\Annotation\SerializedName;
  *
  * @package Instagram\SDK\DTO\Messages\Direct
  */
-class SeenMessage extends Envelope
+final class SeenMessage extends Envelope
 {
 
     /**

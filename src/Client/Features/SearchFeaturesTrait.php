@@ -8,10 +8,12 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Messages\Search\HashtagSearchResultMessage;
 use Instagram\SDK\DTO\Messages\Search\SearchResultMessage;
 use Instagram\SDK\DTO\Messages\Search\UserSearchResultMessage;
-use Instagram\SDK\Requests\GenericRequest;
+use Instagram\SDK\Requests\Request;
 use Instagram\SDK\Support\Promise;
-use function Instagram\SDK\Support\Promises\rejection_for;
+use function GuzzleHttp\Promise\rejection_for;
 use function Instagram\SDK\Support\request;
+use const Instagram\SDK\TYPE_HASHTAG;
+use const Instagram\SDK\TYPE_USER;
 
 /**
  * Trait SearchFeaturesTrait
@@ -86,7 +88,7 @@ trait SearchFeaturesTrait
         $message = new $result();
         $message->setQuery($query);
 
-        /** @var GenericRequest $request */
+        /** @var Request $request */
         $request = request($uri, $message, 'GET')(
             $this,
             $this->session,

@@ -3,19 +3,16 @@
 namespace Instagram\SDK\DTO\Hashtag;
 
 use Instagram\SDK\Client\Client;
-use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
-use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
-use Tebru\Gson\Annotation\SerializedName;
+use Instagram\SDK\DTO\General\Media\ImageVersions2;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 
 /**
  * Class Item
  *
  * @package Instagram\SDK\DTO\Hashtag
  */
-class Item implements OnItemDecodeInterface
+final class Item implements OnDecodeInterface
 {
-
-    use OnPropagateDecodeEventTrait;
 
     /**
      * @var Client
@@ -63,7 +60,7 @@ class Item implements OnItemDecodeInterface
     private $filterType;
 
     /**
-     * @var \Instagram\SDK\DTO\General\Media\ImageVersions2[]
+     * @var ImageVersions2[]
      */
     private $imageVersions2;
 
@@ -119,7 +116,6 @@ class Item implements OnItemDecodeInterface
 
     /**
      * @var bool
-     * @SerializedName("has_liked")
      */
     private $hasLiked;
 
@@ -233,7 +229,7 @@ class Item implements OnItemDecodeInterface
     }
 
     /**
-     * @return \Instagram\SDK\DTO\General\Media\ImageVersions2[]
+     * @return ImageVersions2[]
      */
     public function getImageVersions2(): array
     {
@@ -410,7 +406,5 @@ class Item implements OnItemDecodeInterface
     public function onDecode(array $container): void
     {
         $this->client = $container['client'];
-
-        $this->propagate($container);
     }
 }

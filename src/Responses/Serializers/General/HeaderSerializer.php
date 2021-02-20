@@ -4,10 +4,11 @@ namespace Instagram\SDK\Responses\Serializers\General;
 
 use Exception;
 use GuzzleHttp\Cookie\CookieJar;
+use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
 use Instagram\SDK\DTO\Messages\HeaderMessage;
-use Instagram\SDK\Http\RequestClient;
+use Instagram\SDK\Http\HttpClient;
 use Instagram\SDK\Http\Traits\CookieMethodsTrait;
 use Instagram\SDK\Responses\Exceptions\InvalidResponseException;
 use Instagram\SDK\Responses\Serializers\AbstractSerializer;
@@ -24,16 +25,16 @@ class HeaderSerializer extends AbstractSerializer
     use CookieMethodsTrait;
 
     /**
-     * @var RequestClient
+     * @var HttpClient
      */
-    protected $client;
+    private $client;
 
     /**
      * HeaderSerializer constructor.
      *
-     * @param RequestClient $client
+     * @param HttpClient $client
      */
-    public function __construct(RequestClient $client)
+    public function __construct(HttpClient $client)
     {
         $this->client = $client;
     }
@@ -43,13 +44,13 @@ class HeaderSerializer extends AbstractSerializer
      *
      * @suppress PhanUndeclaredMethod
      * @param HttpResponseInterface $response
+     * @param Client                $client
      * @return ResponseMessageInterface
      * @throws InvalidResponseException
-     * @throws Exception
      */
-    public function decode(HttpResponseInterface $response): ResponseMessageInterface
+    public function decode(HttpResponseInterface $response, Client $client): ResponseMessageInterface
     {
-        if (!$this->isValidHttpResponse($response)) {
+        if (!self::isExpectedHttpResponse($response)) {
             throw new InvalidResponseException();
         }
 

@@ -2,17 +2,15 @@
 
 namespace Instagram\SDK\DTO\Adapters;
 
-use Instagram\SDK\DTO\Direct\Thread;
-use Instagram\SDK\DTO\Direct\ThreadItem;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 use Tebru\Gson\Context\ReaderContext;
 use Tebru\Gson\Context\WriterContext;
-use Tebru\Gson\Internal\AccessorStrategy\SetByClosure;
 use Tebru\Gson\TypeAdapter;
 
 /**
- * Class ThreadAdapter
+ * Class TestAdapter
  *
- * @package Instagram\SDK\DTO\Direct\Adapters
+ * @package            Instagram\SDK\DTO\Adapters
  * @phan-file-suppress PhanUnreferencedUseNormal
  */
 class TestAdapter extends TypeAdapter
@@ -29,38 +27,47 @@ class TestAdapter extends TypeAdapter
      */
     public function __construct(TypeAdapter $defaultTypeAdapter)
     {
+        // OnItemDecodeTypeAdapter
+
+
         $this->defaultTypeAdapter = $defaultTypeAdapter;
     }
 
     /**
-     * @param mixed               $value
-     * @param CustomReaderContext $context
-     * @return mixed
+     * @inheritDoc
      */
     public function read($value, ReaderContext $context)
     {
-        /** @var Thread $deserialized */
         $deserialized = $this->defaultTypeAdapter->read($value, $context);
 
-        // check if deserilized implmenet onDecode, then call it?
+        if (is_iterable($deserialized)) {
+            foreach ($deserialized as $item) {
+                self::handleOnDecode($item, $context);
+            }
 
-
-        $closure = new SetByClosure('parent', ThreadItem::class);
-
-        foreach ($deserialized->getItems() as $threadItem) {
-            $closure->set($threadItem, $deserialized);
+            return $deserialized;
         }
+
+        self::handleOnDecode($deserialized, $context);
 
         return $deserialized;
     }
 
     /**
-     * @param mixed         $value
-     * @param WriterContext $context
-     * @return mixed
+     * @inheritDoc
      */
     public function write($value, WriterContext $context)
     {
         return $this->defaultTypeAdapter->write($value, $context);
     }
+
+    private static function handleOnDecode($subject, CustomReaderContext $context): void
+    {
+        if (!$subject instanceof OnDecodeInterface) {
+            return;
+        }
+
+        $subject->onDecode(['client' => $context->getClient()]);
+    }
+
 }

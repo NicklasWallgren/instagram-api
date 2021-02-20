@@ -8,9 +8,9 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Messages\Friendships\FollowersMessage;
 use Instagram\SDK\DTO\Messages\Friendships\FollowingMessage;
 use Instagram\SDK\DTO\Messages\Friendships\FollowMessage;
-use Instagram\SDK\Requests\GenericRequest;
-use Instagram\SDK\Requests\Http\Factories\SerializerFactory;
-use function Instagram\SDK\Support\Promises\task;
+use Instagram\SDK\Requests\Request;
+use Instagram\SDK\Requests\Http\Factories\PayloadSerializerFactory;
+use function GuzzleHttp\Promise\task;
 use function Instagram\SDK\Support\request;
 
 /**
@@ -32,18 +32,11 @@ trait FriendshipsFeaturesTrait
      */
     public function follow(string $userId): PromiseInterface
     {
-
-        // TODO, ska en request verkligen ha tillgång till http client?
-        // Och en serializer?
-
         return task(function () use ($userId): PromiseInterface {
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-
-
-
-            /** @var GenericRequest $request */
+            /** @var Request $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf('friendships/create/%s/', $userId), new FollowMessage())(
                 $this,
@@ -56,9 +49,7 @@ trait FriendshipsFeaturesTrait
                 ->addCSRFTokenAndUserId()
                 ->addUuid()
                 ->addPayloadParam('user_id', $userId)
-                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
-
-
+                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
 
             return $request->fire();
         });
@@ -77,7 +68,7 @@ trait FriendshipsFeaturesTrait
             $this->checkPrerequisites();
 
             /**
-             * @var GenericRequest $request
+             * @var Request $request
              */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             $request = request(sprintf('friendships/destroy/%s/', $userId), new FollowMessage())(
@@ -91,7 +82,7 @@ trait FriendshipsFeaturesTrait
                 ->addCSRFTokenAndUserId()
                 ->addUuid()
                 ->addPayloadParam('user_id', $userId)
-                ->setSerializerType(SerializerFactory::TYPE_SIGNED);
+                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
 
             return $request->fire();
         });
@@ -107,7 +98,7 @@ trait FriendshipsFeaturesTrait
     public function followers(string $userId, ?string $maxId = null): PromiseInterface
     {
         return task(function () use ($userId, $maxId): PromiseInterface {
-            /** @var GenericRequest $request */
+            /** @var Request $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             // phpcs:ignore
             $request = request(sprintf('friendships/%s/followers/', $userId), (new FollowersMessage())->setUserId($userId))(
@@ -135,7 +126,7 @@ trait FriendshipsFeaturesTrait
     public function following(string $userId, ?string $maxId): PromiseInterface
     {
         return task(function () use ($userId, $maxId): PromiseInterface {
-            /** @var GenericRequest $request */
+            /** @var Request $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             // phpcs:ignore
             $request = request(sprintf('friendships/%s/following/', $userId), (new FollowingMessage())->setUserId($userId))(

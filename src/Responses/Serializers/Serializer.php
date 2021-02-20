@@ -4,28 +4,27 @@ namespace Instagram\SDK\Responses\Serializers;
 
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
-use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 
 /**
- * Class GenericSerializer
+ * Class Serializer
  *
  * @package Instagram\SDK\Responses\Serializers
  */
-class GenericSerializer extends AbstractSerializer implements OnDecodeInterface
+final class Serializer extends AbstractSerializer
 {
 
     /**
      * @var Client
      */
-    protected $client;
+    private $client;
 
     /**
      * @var Envelope
      */
-    protected $envelope;
+    private $envelope;
 
     /**
-     * InboxSerializer constructor.
+     * Serializer constructor.
      *
      * @param Client   $client
      * @param Envelope $envelope
@@ -35,6 +34,8 @@ class GenericSerializer extends AbstractSerializer implements OnDecodeInterface
         $this->client = $client;
         $this->envelope = $envelope;
     }
+
+    // TODO, on decode propagate? pass reader context?
 
     /**
      * Returns the message implementation.
@@ -46,14 +47,4 @@ class GenericSerializer extends AbstractSerializer implements OnDecodeInterface
         return $this->envelope;
     }
 
-    /**
-     * On decode method.
-     *
-     * @param Envelope $message
-     * @throws \Exception
-     */
-    public function onDecode(Envelope &$message): void
-    {
-        $message->onDecode(['client' => $this->client]);
-    }
 }

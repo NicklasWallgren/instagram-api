@@ -2,10 +2,11 @@
 
 namespace Instagram\SDK\Responses\Serializers\User;
 
+use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
 use Instagram\SDK\DTO\Messages\User\SessionMessage;
-use Instagram\SDK\Http\RequestClient;
+use Instagram\SDK\Http\HttpClient;
 use Instagram\SDK\Responses\Serializers\AbstractSerializer;
 use Instagram\SDK\Session\Session;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
@@ -21,20 +22,20 @@ class LoginSerializer extends AbstractSerializer
     /**
      * @var Session
      */
-    protected $session;
+    private $session;
 
     /**
-     * @var RequestClient
+     * @var HttpClient
      */
-    protected $client;
+    private $client;
 
     /**
      * LoginSerializer constructor.
      *
-     * @param Session       $session
-     * @param RequestClient $client
+     * @param Session    $session
+     * @param HttpClient $client
      */
-    public function __construct(Session $session, RequestClient $client)
+    public function __construct(Session $session, HttpClient $client)
     {
         $this->session = $session;
         $this->client = $client;
@@ -46,10 +47,11 @@ class LoginSerializer extends AbstractSerializer
      * @suppress PhanTypeMismatchArgument
      * @suppress PhanUndeclaredMethod
      * @param HttpResponseInterface $response
+     * @param Client                $client
      * @return ResponseMessageInterface
      * @throws \Exception
      */
-    public function decode(HttpResponseInterface $response): ResponseMessageInterface
+    public function decode(HttpResponseInterface $response, Client $client): ResponseMessageInterface
     {
         /**
          * @var SessionMessage $message

@@ -1,29 +1,19 @@
 <?php
 
-namespace Instagram\SDK\Requests\Support;
+namespace Instagram\SDK\Requests\Utils;
 
 /**
- * Class SignatureSupport
+ * Class SignatureUtils
  *
  * @package Instagram\SDK\Requests\Support
  */
-class SignatureSupport
+final class SignatureUtils
 {
 
-    /**
-     * @var bool The default uuid type
-     */
     public const TYPE_DEFAULT = true;
-
-    /**
-     * @var bool The combined uuid type
-     */
     public const TYPE_COMBINED = false;
 
-    /**
-     * @var string The signature key
-     */
-    protected const SIGNATURE_KEY = '5b39482c3a00d6c525f3722aba347fe9ecc626ae754b59c1e70c43a1f0ffdcce';
+    private const SIGNATURE_KEY = '5b39482c3a00d6c525f3722aba347fe9ecc626ae754b59c1e70c43a1f0ffdcce';
 
     /**
      * Generate a signature.
@@ -60,4 +50,12 @@ class SignatureSupport
 
         return $type ? $uuid : str_replace('-', '', $uuid);
     }
+
+    /**
+     * SignatureUtils constructor.
+     */
+    private function __construct()
+    {
+    }
+
 }

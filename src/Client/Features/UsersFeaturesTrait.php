@@ -6,7 +6,7 @@ namespace Instagram\SDK\Client\Features;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Messages\Users\UserInformationMessage;
-use function Instagram\SDK\Support\Promises\task;
+use function GuzzleHttp\Promise\task;
 
 /**
  * Trait AccountFeaturesTrait
@@ -31,7 +31,7 @@ trait UsersFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            $request = $this->request(
+            $request = $this->buildRequest(
                 sprintf('users/%s/usernameinfo/', $username),
                 new UserInformationMessage(),
                 'GET'
@@ -53,7 +53,7 @@ trait UsersFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            $request = $this->request(sprintf('users/%s/info/', $userId), new UserInformationMessage(), 'GET');
+            $request = $this->buildRequest(sprintf('users/%s/info/', $userId), new UserInformationMessage(), 'GET');
 
             $request->addPayloadParam('device_id', $this->session->getDevice()->deviceId());
 

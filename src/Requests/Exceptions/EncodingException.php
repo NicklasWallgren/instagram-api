@@ -9,7 +9,7 @@ use Exception;
  *
  * @package Instagram\SDK\Requests\Exceptions
  */
-class EncodingException extends Exception
+final class EncodingException extends Exception
 {
 
     /**

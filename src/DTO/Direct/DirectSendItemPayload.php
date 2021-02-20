@@ -9,7 +9,7 @@ use Instagram\SDK\DTO\DTO;
  *
  * @package Instagram\SDK\DTO\Direct
  */
-class DirectSendItemPayload extends DTO
+final class DirectSendItemPayload extends DTO
 {
 
     /**

@@ -7,7 +7,7 @@ namespace Instagram\SDK\DTO\General\Media;
  *
  * @package Instagram\SDK\DTO\General\Media
  */
-class ImageVersions2
+final class ImageVersions2
 {
 
     /**

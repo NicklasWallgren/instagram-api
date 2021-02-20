@@ -9,7 +9,7 @@ use Instagram\SDK\DTO\General\User;
  *
  * @package Instagram\SDK\DTO\Messages\Search
  */
-class UserSearchResultMessage extends SearchResultMessage
+final class UserSearchResultMessage extends SearchResultMessage
 {
 
     /**

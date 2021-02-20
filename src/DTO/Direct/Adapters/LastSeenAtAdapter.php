@@ -12,7 +12,7 @@ use Tebru\PhpType\TypeToken;
  *
  * @package Instagram\SDK\DTO\Direct\Adapters
  */
-class LastSeenAtAdapter implements JsonDeserializer
+final class LastSeenAtAdapter implements JsonDeserializer
 {
 
     /**

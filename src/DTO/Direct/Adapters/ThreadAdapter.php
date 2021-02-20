@@ -15,7 +15,7 @@ use Tebru\Gson\TypeAdapter;
  * @package Instagram\SDK\DTO\Direct\Adapters
  * @phan-file-suppress PhanUnreferencedUseNormal
  */
-class ThreadAdapter extends TypeAdapter
+final class ThreadAdapter extends TypeAdapter
 {
     /**
      * @var TypeAdapter
@@ -42,14 +42,13 @@ class ThreadAdapter extends TypeAdapter
         /** @var Thread $deserialized */
         $deserialized = $this->defaultTypeAdapter->read($value, $context);
 
-//        var_dump($context);
-
-
         $closure = new SetByClosure('parent', ThreadItem::class);
 
         foreach ($deserialized->getItems() as $threadItem) {
             $closure->set($threadItem, $deserialized);
         }
+
+        $deserialized->onDecode(['client' => $context->getClient()]);
 
         return $deserialized;
     }

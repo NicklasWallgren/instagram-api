@@ -7,17 +7,16 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Hashtag\Item;
-use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
 use Instagram\SDK\Responses\Interfaces\IteratorInterface;
-use function Instagram\SDK\Support\Promises\promise_for;
-use function Instagram\SDK\Support\Promises\rejection_for;
+use function GuzzleHttp\Promise\promise_for;
+use function GuzzleHttp\Promise\rejection_for;
 
 /**
  * Class FeedMessage
  *
  * @package Instagram\SDK\DTO\Messages\Feed
  */
-class FeedMessage extends Envelope implements IteratorInterface, PropertiesInterface
+final class FeedMessage extends Envelope implements IteratorInterface
 {
 
     /**

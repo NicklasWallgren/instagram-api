@@ -7,7 +7,7 @@ namespace Instagram\SDK\Responses\Exceptions;
  *
  * @package Instagram\SDK\Responses\Exceptions
  */
-class BadPasswordException extends ApiResponseException
+final class BadPasswordException extends ApiResponseException
 {
 
 }

@@ -5,8 +5,6 @@ namespace Instagram\SDK\DTO\Messages\Search;
 use Exception;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Envelope;
-use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
-use Instagram\SDK\DTO\Traits\PropertiesTrait;
 use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
 
 /**
@@ -14,11 +12,10 @@ use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
  *
  * @package Instagram\SDK\DTO\Messages\Search
  */
-abstract class SearchResultMessage extends Envelope implements PropertiesInterface
+abstract class SearchResultMessage extends Envelope
 {
 
     use MakeRequestsAccessible;
-    use PropertiesTrait;
 
     /**
      * @var Client

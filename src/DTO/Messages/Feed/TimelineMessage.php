@@ -4,10 +4,9 @@ namespace Instagram\SDK\DTO\Messages\Feed;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Envelope;
-use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
 use Instagram\SDK\Responses\Interfaces\IteratorInterface;
 use Tebru\Gson\Annotation\SerializedName;
-use function Instagram\SDK\Support\Promises\rejection_for;
+use function GuzzleHttp\Promise\rejection_for;
 
 /**
  * Class Timeline
@@ -16,7 +15,7 @@ use function Instagram\SDK\Support\Promises\rejection_for;
  * @phan-file-suppress PhanUnextractableAnnotation
  * @phan-file-suppress PhanPluginUnknownPropertyType
  */
-class TimelineMessage extends Envelope implements IteratorInterface, PropertiesInterface
+final class TimelineMessage extends Envelope implements IteratorInterface
 {
 
     /**

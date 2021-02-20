@@ -7,19 +7,17 @@ use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
-use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
-use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
-use function Instagram\SDK\Support\Promises\promise_for;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
+use Tebru\Gson\Annotation\JsonAdapter;
+use function GuzzleHttp\Promise\promise_for;
 
 /**
  * Class Inbox
  *
  * @package Instagram\SDK\DTO\Direct
  */
-class Inbox implements OnItemDecodeInterface
+final class Inbox implements OnDecodeInterface
 {
-
-    use OnPropagateDecodeEventTrait;
 
     /**
      * @var int
@@ -38,6 +36,7 @@ class Inbox implements OnItemDecodeInterface
 
     /**
      * @var \Instagram\SDK\DTO\Direct\Thread[]
+     * @JsonAdapter("Instagram\SDK\DTO\Adapters\TestAdapterFactory")
      */
     private $threads;
 
@@ -191,7 +190,5 @@ class Inbox implements OnItemDecodeInterface
     public function onDecode(array $container): void
     {
         $this->client = $container['client'];
-
-        $this->propagate($container);
     }
 }

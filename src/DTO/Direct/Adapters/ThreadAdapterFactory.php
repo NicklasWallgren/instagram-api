@@ -12,7 +12,7 @@ use Tebru\PhpType\TypeToken;
  *
  * @package Instagram\SDK\DTO\Direct\Adapters
  */
-class ThreadAdapterFactory implements TypeAdapterFactory
+final class ThreadAdapterFactory implements TypeAdapterFactory
 {
 
     /**

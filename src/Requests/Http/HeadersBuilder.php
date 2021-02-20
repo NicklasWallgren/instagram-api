@@ -7,33 +7,14 @@ namespace Instagram\SDK\Requests\Http;
  *
  * @package Instagram\SDK\Requests\Http
  */
-class HeadersBuilder
+final class HeadersBuilder
 {
 
-    /**
-     * @var string The user agent header
-     */
-    protected const USER_AGENT = 'User-Agent';
-
-    /**
-     * @var string The capabilities header
-     */
-    protected const CAPABILITIES = 'X-IG-Capabilities';
-
-    /**
-     * @var string The connection type header
-     */
-    protected const CONNECTION_TYPE = 'X-IG-Connection-Type';
-
-    /**
-     * @var string The connection speed
-     */
-    protected const CONNECTION_SPEED = 'X-IG-Connection-Speed';
-
-    /**
-     * @var string The http engine
-     */
-    protected const HTTP_ENGINE = 'X-FB-HTTP-Engine';
+    private const USER_AGENT = 'User-Agent';
+    private const CAPABILITIES = 'X-IG-Capabilities';
+    private const CONNECTION_TYPE = 'X-IG-Connection-Type';
+    private const CONNECTION_SPEED = 'X-IG-Connection-Speed';
+    private const HTTP_ENGINE = 'X-FB-HTTP-Engine';
 
     /**
      * Returns the default headers.

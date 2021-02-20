@@ -9,8 +9,7 @@ use Instagram\SDK\DTO\Interfaces\UserInterface;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
 use Instagram\SDK\DTO\Messages\Friendships\FollowersMessage;
 use Instagram\SDK\DTO\Messages\Friendships\FollowMessage;
-use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
-use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 use Instagram\SDK\Support\Promise;
 use Tebru\Gson\Annotation\SerializedName;
 
@@ -19,10 +18,8 @@ use Tebru\Gson\Annotation\SerializedName;
  *
  * @package Instagram\SDK\DTO\General
  */
-class User implements UserInterface, OnItemDecodeInterface
+final class User implements UserInterface, OnDecodeInterface
 {
-
-    use OnPropagateDecodeEventTrait;
 
     /**
      * @var string
@@ -47,7 +44,6 @@ class User implements UserInterface, OnItemDecodeInterface
 
     /**
      * @var string
-     * @SerializedName("profile_pic_url")
      */
     private $profilePictureUrl;
 
@@ -145,8 +141,6 @@ class User implements UserInterface, OnItemDecodeInterface
     public function onDecode(array $container): void
     {
         $this->client = $container['client'];
-
-        $this->propagate($container);
     }
 
     /**

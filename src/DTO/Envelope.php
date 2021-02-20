@@ -2,30 +2,17 @@
 
 namespace Instagram\SDK\DTO;
 
-use Instagram\SDK\DTO\Interfaces\PropertiesInterface;
 use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
-use Instagram\SDK\DTO\Traits\PropertiesTrait;
-use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 
 /**
  * Class Envelope
  *
  * @package Instagram\SDK\DTO
  */
-class Envelope implements ResponseMessageInterface, PropertiesInterface
+class Envelope implements ResponseMessageInterface
 {
 
-    use PropertiesTrait;
-    use OnPropagateDecodeEventTrait;
-
-    /**
-     * @var string The success status
-     */
     const STATUS_SUCCESS = 'ok';
-
-    /**
-     * @var string The error status
-     */
     const STATUS_ERROR = 'fail';
 
     /**
@@ -99,4 +86,5 @@ class Envelope implements ResponseMessageInterface, PropertiesInterface
     {
         return $this->status === static::STATUS_SUCCESS;
     }
+
 }

@@ -8,10 +8,11 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
 use Instagram\SDK\DTO\Messages\Feed\TimelineMessage;
 use Instagram\SDK\Requests\Feed\TimelineOptions;
-use Instagram\SDK\Requests\GenericRequest;
-use function Instagram\SDK\Support\Promises\rejection_for;
-use function Instagram\SDK\Support\Promises\task;
-use function Instagram\SDK\Support\request;
+use Instagram\SDK\Requests\Request;
+use function GuzzleHttp\Promise\rejection_for;
+use function GuzzleHttp\Promise\task;
+use const Instagram\SDK\TYPE_HASHTAG;
+use const Instagram\SDK\TYPE_USER;
 
 /**
  * Trait FeedFeaturesTrait
@@ -82,16 +83,8 @@ trait FeedFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /** @var GenericRequest $request */
-            $request = request('feed/timeline/', new TimelineMessage())(
-                $this,
-                $this->session,
-                $this->client
-            );
-
-            // Prepare the request payload
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall, PhanUndeclaredMethod
-            $request
+            $request = $this->buildRequest('feed/timeline/', new TimelineMessage())
                 ->addCSRFToken()
                 ->addUuid()
                 ->addPhoneId()
@@ -124,16 +117,10 @@ trait FeedFeaturesTrait
             $message->setQuery($tag);
             $message->setType($type);
 
-            /** @var GenericRequest $request */
+            /** @var Request $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
-            $request = request(sprintf($uri, $tag), $message)(
-                $this,
-                $this->session,
-                $this->client
-            );
-
-            // Prepare the request parameters
-            $request->addQueryParamIfNotNull('max_id', $maxId);
+            $request = $this->buildRequest(sprintf($uri, $tag), $message)
+                ->addQueryParamIfNotNull('max_id', $maxId);
 
             return $request->fire();
         });

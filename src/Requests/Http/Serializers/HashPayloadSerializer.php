@@ -4,7 +4,7 @@ namespace Instagram\SDK\Requests\Http\Serializers;
 
 use Exception;
 use Instagram\SDK\Requests\Exceptions\EncodingException;
-use Instagram\SDK\Requests\Support\SignatureSupport;
+use Instagram\SDK\Requests\Utils\SignatureUtils;
 use Webmozart\Assert\Assert;
 
 /**
@@ -12,7 +12,7 @@ use Webmozart\Assert\Assert;
  *
  * @package Instagram\SDK\Requests\Http\Serializers
  */
-class HashRequestSerializer implements RequestSerializerInterface
+class HashPayloadSerializer implements PayloadSerializerInterface
 {
 
     /**
@@ -30,6 +30,6 @@ class HashRequestSerializer implements RequestSerializerInterface
             throw new EncodingException(json_last_error_msg());
         }
 
-        return SignatureSupport::signature($data);
+        return SignatureUtils::signature($data);
     }
 }

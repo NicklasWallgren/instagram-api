@@ -10,7 +10,7 @@ use Tebru\Gson\Annotation\SerializedName;
  *
  * @package Instagram\SDK\DTO\Direct
  */
-class ThreadMediaItem
+final class ThreadMediaItem
 {
 
     /**

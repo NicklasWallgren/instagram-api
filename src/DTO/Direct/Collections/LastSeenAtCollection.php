@@ -9,7 +9,7 @@ use Instagram\SDK\DTO\Direct\LastSeenAt;
  *
  * @package Instagram\SDK\DTO\Direct\Collections
  */
-class LastSeenAtCollection
+final class LastSeenAtCollection
 {
 
     /**

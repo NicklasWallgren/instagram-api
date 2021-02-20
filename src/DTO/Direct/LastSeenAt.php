@@ -7,7 +7,7 @@ namespace Instagram\SDK\DTO\Direct;
  *
  * @package Instagram\SDK\DTO\Direct
  */
-class LastSeenAt
+final class LastSeenAt
 {
 
     /**

@@ -44,7 +44,7 @@ trait CookieMethodsTrait
      * @return string
      * @throws Exception
      */
-    public function getCookieValue($name): string
+    public function getCookieValue(string $name): string
     {
         // Retrieve the cookie value by cookie name
         if (!$cookie = $this->getCookieJar()->getCookieByName($name)) {

@@ -2,18 +2,18 @@
 
 namespace Instagram\SDK\Requests\Http\Factories;
 
-use Instagram\SDK\Requests\Http\Serializers\HashRequestSerializer;
-use Instagram\SDK\Requests\Http\Serializers\RequestSerializerInterface;
-use Instagram\SDK\Requests\Http\Serializers\UrlEncodeRequestSerializer;
+use Instagram\SDK\Requests\Http\Serializers\HashPayloadSerializer;
+use Instagram\SDK\Requests\Http\Serializers\PayloadSerializerInterface;
+use Instagram\SDK\Requests\Http\Serializers\UrlEncodePayloadSerializer;
 use InvalidArgumentException;
 use Webmozart\Assert\Assert;
 
 /**
- * Class SerializerFactory
+ * Class PayloadSerializerFactory
  *
  * @package Instagram\SDK\Requests\Http\Factories
  */
-class SerializerFactory
+final class PayloadSerializerFactory
 {
 
     public const TYPE_SIGNED = 0;
@@ -22,19 +22,19 @@ class SerializerFactory
 
     /**
      * @param int $type
-     * @return RequestSerializerInterface
-     * @phan-suppress PhanPluginAlwaysReturnMethod
+     * @return PayloadSerializerInterface
      * @throws InvalidArgumentException
+     * @phan-suppress PhanPluginAlwaysReturnMethod
      */
-    public static function create(int $type): RequestSerializerInterface
+    public static function create(int $type): PayloadSerializerInterface
     {
         Assert::oneOf($type, self::VALID_SERIALIZERS);
 
         switch ($type) {
             case self::TYPE_SIGNED:
-                return new HashRequestSerializer();
+                return new HashPayloadSerializer();
             case self::TYPE_URL_ENCODED:
-                return new UrlEncodeRequestSerializer();
+                return new UrlEncodePayloadSerializer();
             default:
         }
     }

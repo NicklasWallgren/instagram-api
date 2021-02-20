@@ -9,8 +9,8 @@ use Instagram\SDK\DTO\Messages\Direct\DirectSendItemMessage;
 use Instagram\SDK\DTO\Messages\Direct\InboxMessage;
 use Instagram\SDK\DTO\Messages\Direct\SeenMessage;
 use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
-use Instagram\SDK\Requests\GenericRequest;
-use function Instagram\SDK\Support\Promises\task;
+use Instagram\SDK\Requests\Request;
+use function GuzzleHttp\Promise\task;
 use function Instagram\SDK\Support\request;
 
 /**
@@ -35,14 +35,9 @@ trait DirectFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /** @var GenericRequest $request */
-            $request = request('direct_v2/inbox/', new InboxMessage(), 'GET')(
-                $this,
-                $this->session,
-                $this->client
-            );
+            $request = $this->buildRequest('direct_v2/inbox/', new InboxMessage(), 'GET');
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 
@@ -59,18 +54,10 @@ trait DirectFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            // Request, GenericRequest
+            $request = $this->buildRequest(sprintf('direct_v2/threads/%s/', $id), new ThreadMessage(), 'GET')
+                ->addQueryParamIfNotNull('cursor', $cursor);
 
-            $request = $this->request(sprintf('direct_v2/threads/%s/', $id), new ThreadMessage(), 'GET');
-
-            $request->addQueryParamIfNotNull('cursor', $cursor);
-
-            // $request->build()
-
-//            $this->client->request(); request, serializer
-
-
-            return $request->fire();
+            return $this->call($request);
         });
     }
 
@@ -87,21 +74,14 @@ trait DirectFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /** @var GenericRequest $request */
-            $request = request('direct_v2/threads/broadcast/text', new DirectSendItemMessage())(
-                $this,
-                $this->session,
-                $this->client
-            );
-
-            // Prepare the request payload
-            $request->addPayloadParam('text', $text)
+            $request = $this->buildRequest('direct_v2/threads/broadcast/text', new DirectSendItemMessage())
+                ->addPayloadParam('text', $text)
                 ->addPayloadParam('thread_ids', "[$threadId]")
                 ->addPayloadParam('action', 'send_item')
                 ->addUniqueContext()
                 ->addCSRFTokenAndUserId();
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 
@@ -118,22 +98,13 @@ trait DirectFeaturesTrait
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->checkPrerequisites();
 
-            /** @var GenericRequest $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             // phpcs:ignore
-            $request = request(sprintf('direct_v2/threads/%s/items/%s/seen/', $threadId, $threadItemId), new SeenMessage())(
-                $this,
-                $this->session,
-                $this->client
-            );
-
-            // Prepare the request payload
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall, PhanUndeclaredMethod
-            $request
+            $request = $this->buildRequest(sprintf('direct_v2/threads/%s/items/%s/seen/', $threadId, $threadItemId), new SeenMessage())
                 ->addCSRFToken()
                 ->addUuid();
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 }

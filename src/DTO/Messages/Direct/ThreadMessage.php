@@ -4,8 +4,6 @@ namespace Instagram\SDK\DTO\Messages\Direct;
 
 use Instagram\SDK\DTO\Direct\Thread;
 use Instagram\SDK\DTO\Envelope;
-use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
-use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 use Tebru\Gson\Annotation\JsonAdapter;
 
 /**
@@ -13,10 +11,8 @@ use Tebru\Gson\Annotation\JsonAdapter;
  *
  * @package Instagram\SDK\DTO\Messages\Direct
  */
-class ThreadMessage extends Envelope implements OnItemDecodeInterface
+final class ThreadMessage extends Envelope
 {
-
-    use OnPropagateDecodeEventTrait;
 
     /**
      * The logged in user property.

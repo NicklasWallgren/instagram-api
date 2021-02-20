@@ -3,6 +3,7 @@
 namespace Instagram\SDK\DTO\Messages\User;
 
 use Instagram\SDK\DTO\Envelope;
+use Instagram\SDK\DTO\Session\User;
 use Instagram\SDK\Session\Session;
 
 /**
@@ -10,13 +11,13 @@ use Instagram\SDK\Session\Session;
  *
  * @package Instagram\SDK\DTO\Messages\User
  */
-class SessionMessage extends Envelope
+final class SessionMessage extends Envelope
 {
 
     /**
      * The logged in user property.
      *
-     * @var \Instagram\SDK\DTO\Session\User
+     * @var User
      */
     private $loggedInUser;
 
@@ -28,7 +29,7 @@ class SessionMessage extends Envelope
     /**
      * Returns the logged in user.
      *
-     * @return \Instagram\SDK\DTO\Session\User
+     * @return User
      */
     public function getLoggedInUser()
     {

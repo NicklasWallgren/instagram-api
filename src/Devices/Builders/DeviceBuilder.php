@@ -5,20 +5,20 @@ namespace Instagram\SDK\Devices\Builders;
 use Instagram\SDK\Devices\Device;
 use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
 use Instagram\SDK\Devices\Interfaces\DeviceInterface;
-use Instagram\SDK\Requests\Support\SignatureSupport;
+use Instagram\SDK\Requests\Utils\SignatureUtils;
 
 /**
  * Class DeviceBuilder
  *
  * @package Instagram\SDK\Devices\Builders
  */
-class DeviceBuilder implements DeviceBuilderInterface
+final class DeviceBuilder implements DeviceBuilderInterface
 {
 
     /**
      * @var array
      */
-    protected const DEVICES = [
+    private const DEVICES = [
         ['iPhone6,1', 'iOS 11_0', 'en_GB', '2.00', 'normal', '640x1136'],
         ['iPhone6,2', 'iOS 11_0', 'en_GB', '2.00', 'normal', '640x1136'],
         ['iPhone8,1', 'iOS 11_0', 'en_GB', '2.00', 'normal', '1080x1920'],
@@ -53,7 +53,7 @@ class DeviceBuilder implements DeviceBuilderInterface
      * @param array<int, mixed> $metadata
      * @param string               $id
      */
-    protected function addPhoneId(array &$metadata, string $id): void
+    private function addPhoneId(array &$metadata, string $id): void
     {
         $metadata[] = $id;
     }
@@ -64,7 +64,7 @@ class DeviceBuilder implements DeviceBuilderInterface
      * @param array<int, mixed>  $metadata
      * @param string $id
      */
-    protected function addDeviceId(array &$metadata, string $id): void
+    private function addDeviceId(array &$metadata, string $id): void
     {
         $metadata[] = $id;
     }
@@ -74,8 +74,8 @@ class DeviceBuilder implements DeviceBuilderInterface
      *
      * @return string
      */
-    protected function getUniqueSignatureId()
+    private function getUniqueSignatureId()
     {
-        return strtoupper(SignatureSupport::uuid());
+        return strtoupper(SignatureUtils::uuid());
     }
 }

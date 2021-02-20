@@ -9,10 +9,9 @@ use Instagram\SDK\DTO\General\User;
 use Instagram\SDK\DTO\Messages\Direct\DirectSendItemMessage;
 use Instagram\SDK\DTO\Messages\Direct\SeenMessage;
 use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
-use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
-use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
+use Instagram\SDK\Responses\Serializers\Interfaces\OnDecodeInterface;
 use Tebru\Gson\Annotation\JsonAdapter;
-use function Instagram\SDK\Support\Promises\promise_for;
+use function GuzzleHttp\Promise\promise_for;
 
 /**
  * Class Thread
@@ -20,10 +19,8 @@ use function Instagram\SDK\Support\Promises\promise_for;
  * @package            Instagram\SDK\DTO\Direct
  * @phan-file-suppress PhanUnextractableAnnotation, PhanPluginUnknownPropertyType, PhanUnreferencedUseNormal
  */
-class Thread extends RequestIterator implements OnItemDecodeInterface
+final class Thread extends RequestIterator implements OnDecodeInterface
 {
-
-    use OnPropagateDecodeEventTrait;
 
     /**
      * @var string
@@ -32,16 +29,19 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
 
     /**
      * @var User[]
+     * @JsonAdapter("Instagram\SDK\DTO\Adapters\TestAdapterFactory")
      */
     private $users = [];
 
     /**
      * @var User[]
+     * @JsonAdapter("Instagram\SDK\DTO\Adapters\TestAdapterFactory")
      */
     private $leftUsers = [];
 
     /**
      * @var ThreadItem[]
+     * @JsonAdapter("Instagram\SDK\DTO\Adapters\TestAdapterFactory") // TODO, parent?
      */
     private $items;
 
@@ -454,8 +454,6 @@ class Thread extends RequestIterator implements OnItemDecodeInterface
     public function onDecode(array $container): void
     {
         $this->client = $container['client'];
-
-        $this->propagate($container);
     }
 
     /**

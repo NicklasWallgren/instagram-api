@@ -5,7 +5,7 @@ namespace Instagram\SDK\DTO\Adapters;
 use Instagram\SDK\Client\Client;
 use Tebru\Gson\Context\ReaderContext;
 
-class CustomReaderContext extends ReaderContext
+final class CustomReaderContext extends ReaderContext
 {
 
     /**
@@ -14,13 +14,21 @@ class CustomReaderContext extends ReaderContext
     private $client;
 
     /**
+     * CustomReaderContext constructor.
+     *
      * @param Client $client
-     * @return static
      */
-    public function setClient(Client $client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
-        return $this;
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient(): Client
+    {
+        return $this->client;
     }
 
 }

@@ -3,8 +3,8 @@
 namespace Instagram\SDK\Requests\Http\Traits;
 
 use Instagram\SDK\Requests\Exceptions\EncodingException;
-use Instagram\SDK\Requests\Http\Serializers\RequestSerializerInterface;
-use Instagram\SDK\Requests\Support\SignatureSupport;
+use Instagram\SDK\Requests\Http\Serializers\PayloadSerializerInterface;
+use Instagram\SDK\Requests\Utils\SignatureUtils;
 
 /**
  * Trait SignedPayloadSerializerTrait
@@ -18,11 +18,11 @@ trait SignedPayloadSerializerTrait
      * The request body serializer.
      *
      * @suppress PhanPluginNoCommentOnClass
-     * @return RequestSerializerInterface
+     * @return PayloadSerializerInterface
      */
-    protected function serializer(): RequestSerializerInterface
+    protected function serializer(): PayloadSerializerInterface
     {
-        return new class implements RequestSerializerInterface
+        return new class implements PayloadSerializerInterface
         {
 
             /**
@@ -38,7 +38,7 @@ trait SignedPayloadSerializerTrait
                     throw new EncodingException(json_last_error_msg());
                 }
 
-                return SignatureSupport::signature($data);
+                return SignatureUtils::signature($data);
             }
         };
     }

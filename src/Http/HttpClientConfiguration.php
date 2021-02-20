@@ -7,24 +7,24 @@ namespace Instagram\SDK\Http;
  *
  * @package Instagram\SDK\Http
  */
-class Options
+class HttpClientConfiguration
 {
 
     /**
      * @var string Proxy attribute
      */
-    protected const ATTRIBUTE_PROXY_OPTION = 'proxy';
+    private const ATTRIBUTE_PROXY_OPTION = 'proxy';
 
     /**
      * @var array<string, mixed>
      */
-    protected $attributes = [];
+    private $attributes = [];
 
     /**
      * Adds proxy uri.
      *
      * @param string $uri
-     * @return Options|static
+     * @return HttpClientConfiguration|static
      */
     public function addProxyUri(string $uri): self
     {
@@ -38,9 +38,9 @@ class Options
      *
      * @param string $attribute
      * @param mixed  $value
-     * @return Options|static
+     * @return HttpClientConfiguration|static
      */
-    protected function addAttribute(string $attribute, $value): self
+    private function addAttribute(string $attribute, $value): self
     {
         $this->attributes[$attribute] = $value;
 
@@ -52,18 +52,9 @@ class Options
      *
      * @return array<string, mixed>
      */
-    public function get(): array
+    public function toArray(): array
     {
         return $this->attributes;
     }
 
-    /**
-     * Returns the attributes list.
-     *
-     * @return array<string, mixed>
-     */
-    public function __invoke()
-    {
-        return $this->get();
-    }
 }

@@ -3,17 +3,14 @@
 namespace Instagram\SDK\DTO\Messages\Discover;
 
 use Instagram\SDK\DTO\Envelope;
-use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 
 /**
  * Class ExploreMessage
  *
  * @package Instagram\SDK\DTO\Messages\Discover
  */
-class ExploreMessage extends Envelope
+final class ExploreMessage extends Envelope
 {
-
-    use OnPropagateDecodeEventTrait;
 
     /**
      * @var int

@@ -10,9 +10,8 @@ use Psr\Http\Message\UriInterface;
  *
  * @package Instagram\SDK\Requests\Http\Utils
  */
-class RequestUtils
+final class RequestUtils
 {
-
     /**
      * Returns the method uri.
      *
@@ -54,4 +53,12 @@ class RequestUtils
 
         return $parameters;
     }
+
+    /**
+     * RequestUtils constructor.
+     */
+    private function __construct()
+    {
+    }
+
 }

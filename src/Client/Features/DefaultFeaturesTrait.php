@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Instagram\SDK\Client\Features;
 
 use Exception;
-use Instagram\SDK\Client\Adapters\Interfaces\AdapterInterface;
+use GuzzleHttp\Promise\PromiseInterface;
 use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
 use Instagram\SDK\DTO\Envelope;
-use Instagram\SDK\Http\RequestClient;
-use Instagram\SDK\Requests\GenericRequest;
+use Instagram\SDK\Http\HttpClient;
+use Instagram\SDK\Requests\Request;
 use Instagram\SDK\Session\Session;
 
 /**
@@ -21,12 +21,7 @@ trait DefaultFeaturesTrait
 {
 
     /**
-     * @var AdapterInterface
-     */
-    protected $adapter;
-
-    /**
-     * @var RequestClient The request client
+     * @var HttpClient The request client
      */
     protected $client;
 
@@ -47,5 +42,22 @@ trait DefaultFeaturesTrait
      */
     abstract protected function checkPrerequisites(): void;
 
-    abstract protected function request(string $uri, Envelope $message, string $method = 'POST'): GenericRequest;
+    /**
+     * Builds a request.
+     *
+     * @param string   $uri
+     * @param Envelope $message
+     * @param string   $method
+     * @return Request
+     */
+    abstract protected function buildRequest(string $uri, Envelope $message, string $method = 'POST'): Request;
+
+    /**
+     * Executes a request to the external API.
+     *
+     * @param Request $request
+     * @return PromiseInterface
+     */
+    abstract protected function call(Request $request): PromiseInterface;
+
 }

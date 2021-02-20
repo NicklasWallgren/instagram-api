@@ -10,60 +10,53 @@ use Instagram\SDK\Devices\Traits\DeviceIdentifierMethodsTrait;
  *
  * @package Instagram\SDK\Devices
  */
-class Device implements DeviceInterface
+final class Device implements DeviceInterface
 {
 
     use DeviceIdentifierMethodsTrait;
 
-    /**
-     * @var string The device version
-     */
-    protected const DEVICE_VERSION = '10.28.0';
-
-    /**
-     * @var string The language
-     */
-    protected const LANGUAGE = 'en-US';
+    private const DEVICE_VERSION = '10.28.0';
+    private const LANGUAGE = 'en-US';
 
     /**
      * @var string
      */
-    protected $model;
+    private $model;
 
     /**
      * @var string
      */
-    protected $os;
+    private $os;
 
     /**
      * @var string
      */
-    protected $locale;
+    private $locale;
 
     /**
      * @var string
      */
-    protected $scale;
+    private $scale;
 
     /**
      * @var string
      */
-    protected $gamut;
+    private $gamut;
 
     /**
      * @var string
      */
-    protected $resolution;
+    private $resolution;
 
     /**
      * @var string
      */
-    protected $phoneId;
+    private $phoneId;
 
     /**
      * @var string
      */
-    protected $deviceId;
+    private $deviceId;
 
     /**
      * Device constructor.
@@ -78,14 +71,14 @@ class Device implements DeviceInterface
      * @param string $deviceId
      */
     public function __construct(
-        $model,
-        $os,
-        $locale,
-        $scale,
-        $gamut,
-        $resolution,
-        $phoneId,
-        $deviceId
+        string $model,
+        string $os,
+        string $locale,
+        string $scale,
+        string $gamut,
+        string $resolution,
+        string $phoneId,
+        string $deviceId
     ) {
         $this->model = $model;
         $this->os = $os;

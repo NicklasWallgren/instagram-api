@@ -8,8 +8,8 @@ use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Messages\Search\HashtagSearchResultMessage;
 use Instagram\SDK\DTO\Messages\Search\SearchResultMessage;
 use Instagram\SDK\DTO\Messages\Search\UserSearchResultMessage;
-use const Instagram\SDK\Client\Features\TYPE_HASHTAG;
-use const Instagram\SDK\Client\Features\TYPE_USER;
+use const Instagram\SDK\TYPE_HASHTAG;
+use const Instagram\SDK\TYPE_USER;
 
 /**
  * Trait MakeSearchRequestsAccessible

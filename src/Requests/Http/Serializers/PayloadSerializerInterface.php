@@ -5,11 +5,11 @@ namespace Instagram\SDK\Requests\Http\Serializers;
 use Instagram\SDK\Requests\Exceptions\EncodingException;
 
 /**
- * Interface SerializerInterface
+ * Interface PayloadSerializerInterface
  *
  * @package Instagram\SDK\Requests\Http\Serializers
  */
-interface RequestSerializerInterface
+interface PayloadSerializerInterface
 {
 
     /**

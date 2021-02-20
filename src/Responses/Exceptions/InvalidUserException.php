@@ -7,7 +7,7 @@ namespace Instagram\SDK\Responses\Exceptions;
  *
  * @package Instagram\SDK\Responses\Exceptions
  */
-class InvalidUserException extends ApiResponseException
+final class InvalidUserException extends ApiResponseException
 {
 
 }

@@ -4,7 +4,7 @@ namespace Instagram\SDK\Requests\Http\Builders;
 
 use GuzzleHttp\Psr7\Request;
 use Instagram\SDK\Requests\Exceptions\EncodingException;
-use Instagram\SDK\Requests\Http\Factories\SerializerFactory;
+use Instagram\SDK\Requests\Http\Factories\PayloadSerializerFactory;
 use Instagram\SDK\Requests\Http\HeadersBuilder;
 use Instagram\SDK\Requests\Http\Utils\RequestUtils;
 use Instagram\SDK\Session\Session;
@@ -12,11 +12,11 @@ use InvalidArgumentException;
 use Webmozart\Assert\Assert;
 
 /**
- * Class GenericRequestBuilder
+ * Class RequestBuilder
  *
  * @package Instagram\SDK\Requests\Http\Builders
  */
-class GenericRequestBuilder implements RequestBuilderInterface
+class RequestBuilder implements RequestBuilderInterface
 {
 
     private const ENDPOINT_URL = 'i.instagram.com';
@@ -37,7 +37,7 @@ class GenericRequestBuilder implements RequestBuilderInterface
     private $payload = [];
 
     /** @var int */
-    private $serializerType = SerializerFactory::TYPE_URL_ENCODED;
+    private $payloadSerializerType = PayloadSerializerFactory::TYPE_URL_ENCODED;
 
     /**
      * GenericRequestBuilder constructor.
@@ -61,9 +61,9 @@ class GenericRequestBuilder implements RequestBuilderInterface
      *
      * @param string $name
      * @param mixed  $value
-     * @return GenericRequestBuilder
+     * @return RequestBuilder
      */
-    public function addPayloadParam(string $name, $value): GenericRequestBuilder
+    public function addPayloadParam(string $name, $value): RequestBuilder
     {
         $this->payload[$name] = $value;
 
@@ -74,9 +74,9 @@ class GenericRequestBuilder implements RequestBuilderInterface
      * Sets the payload.
      *
      * @param array<string, mixed> $payload
-     * @return GenericRequestBuilder
+     * @return RequestBuilder
      */
-    public function setPayload(array $payload): GenericRequestBuilder
+    public function setPayload(array $payload): RequestBuilder
     {
         $this->payload = $payload;
 
@@ -88,9 +88,9 @@ class GenericRequestBuilder implements RequestBuilderInterface
      *
      * @param string $name
      * @param mixed  $value
-     * @return GenericRequestBuilder
+     * @return RequestBuilder
      */
-    public function addQueryParam(string $name, $value): GenericRequestBuilder
+    public function addQueryParam(string $name, $value): RequestBuilder
     {
         $this->queryParameters[$name] = $value;
 
@@ -98,15 +98,15 @@ class GenericRequestBuilder implements RequestBuilderInterface
     }
 
     /**
-     * @param int $serializerType
+     * @param int $payloadSerializerType
      * @return static
      * @throws InvalidArgumentException
      */
-    public function setSerializerType(int $serializerType)
+    public function setPayloadSerializerType(int $payloadSerializerType): RequestBuilder
     {
-        Assert::oneOf($serializerType, SerializerFactory::VALID_SERIALIZERS);
+        Assert::oneOf($payloadSerializerType, PayloadSerializerFactory::VALID_SERIALIZERS);
 
-        $this->serializerType = $serializerType;
+        $this->payloadSerializerType = $payloadSerializerType;
         return $this;
     }
 
@@ -117,7 +117,7 @@ class GenericRequestBuilder implements RequestBuilderInterface
      */
     public function build(): Request
     {
-        $serializer = SerializerFactory::create($this->serializerType);
+        $serializer = PayloadSerializerFactory::create($this->payloadSerializerType);
 
         return new Request(
             $this->method,
