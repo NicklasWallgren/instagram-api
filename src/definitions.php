@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK;
 
 /** @var int The hashtag feed type */

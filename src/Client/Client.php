@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK\Client;
 
-use Exception;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -15,22 +16,25 @@ use Instagram\SDK\Client\Features\GeneralFeaturesTrait;
 use Instagram\SDK\Client\Features\MediaFeaturesTrait;
 use Instagram\SDK\Client\Features\SearchFeaturesTrait;
 use Instagram\SDK\Client\Features\UsersFeaturesTrait;
-use Instagram\SDK\Devices\Builders\DeviceBuilder;
-use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
-use Instagram\SDK\DTO\Envelope;
-use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
-use Instagram\SDK\Http\HttpClient;
-use Instagram\SDK\Requests\Exceptions\EncodingException;
-use Instagram\SDK\Requests\Http\Builders\RequestBuilder;
-use Instagram\SDK\Requests\Request;
-use Instagram\SDK\Responses\Interfaces\SerializerInterface;
-use Instagram\SDK\Responses\Serializers\Serializer;
+use Instagram\SDK\Device\Builders\DeviceBuilder;
+use Instagram\SDK\Device\DeviceBuilderInterface;
+use Instagram\SDK\Device\DeviceInterface;
+use Instagram\SDK\Exceptions\InstagramException;
+use Instagram\SDK\Exceptions\NotAuthenticatedException;
+use Instagram\SDK\Request\Http\Builders\RequestBuilder;
+use Instagram\SDK\Request\Http\HttpClient;
+use Instagram\SDK\Request\Http\HttpClientConfiguration;
+use Instagram\SDK\Request\Request;
+use Instagram\SDK\Response\Interfaces\ResponseSerializerInterface;
+use Instagram\SDK\Response\Responses\ResponseEnvelope;
+use Instagram\SDK\Response\Responses\ResponseInterface;
+use Instagram\SDK\Response\Serializers\ResponseSerializer;
 use Instagram\SDK\Session\Session;
+use Instagram\SDK\Utils\PromiseUtils;
+use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use Throwable;
-use function GuzzleHttp\Promise\rejection_for;
-use function GuzzleHttp\Promise\task;
 
 /**
  * Class Client
@@ -53,176 +57,139 @@ class Client
     /** @var HttpClient */
     protected $client;
 
-    /** @var Session */
+    /** @var Session|null */
     protected $session;
 
-    /** @var DeviceBuilderInterface */
-    protected $builder;
+    /** @var DeviceInterface */
+    protected $device;
 
     /**
      * Client constructor.
      *
      * @param DeviceBuilderInterface|null $builder
+     * @param Session|null                $session
+     * @param string|null                 $proxyUri
      */
-    public function __construct(?DeviceBuilderInterface $builder = null)
+    public function __construct(?DeviceBuilderInterface $builder, ?Session $session, ?string $proxyUri)
     {
-        $this->client = new HttpClient();
-        $this->builder = $builder ?: new DeviceBuilder();
-    }
-
-    /**
-     * Returns the current session.
-     *
-     * @return Session|null
-     */
-    public function getSession(): ?Session
-    {
-        return $this->session;
-    }
-
-    /**
-     * Sets the current session.
-     *
-     * @param Session $session
-     * @return self
-     */
-    public function setSession(Session $session): self
-    {
+        $this->client = new HttpClient($session ? $session->getCookies() : null, new HttpClientConfiguration($proxyUri));
+        $this->device = $builder ? $builder->build() : DeviceBuilder::builder()->build();
         $this->session = $session;
-
-        $this->client->setCookies($session->getCookies());
-
-        return $this;
     }
 
     /**
-     * Sets the proxy uri.
-     *
-     * @param string $uri
-     * @return self
-     */
-    public function setProxyUri(string $uri): self
-    {
-        $this->client->getConfiguration()->addProxyUri($uri);
-
-        return $this;
-    }
-
-    /**
-     * Validate the state.
-     *
-     * @return void
-     * @throws Exception
-     */
-    protected function checkPrerequisites(): void
-    {
-        // Check whether the user is authenticated or not
-        if (!$this->isSessionAvailable()) {
-            throw new Exception('Session is missing. Please log in.');
-        }
-    }
-
-    /**
-     * Returns true if session is available, false otherwise.
-     *
-     * @return bool
-     */
-    protected function isSessionAvailable(): bool
-    {
-        return $this->session !== null;
-    }
-
-    /**
-     * Fire the request.
+     * Executes the request.
      *
      * @param Request $request
-     * @return PromiseInterface
+     * @return PromiseInterface<ResponseEnvelope|InstagramException>
      * @suppress PhanThrowTypeAbsentForCall
      */
     protected function call(Request $request): PromiseInterface
     {
-        $result = null;
+        $httpRequest = null;
 
         try {
-            $result = $request->toHttpRequest();
-        } catch (EncodingException $e) {
-            return rejection_for($e->getMessage());
+            $httpRequest = $request->toHttpRequest();
+        } catch (Throwable $e) {
+            // @phan-suppress-next-line PhanDeprecatedFunction
+            return Create::rejectionFor($e->getMessage());
         }
 
-        return $this->doRequest($result, $request->getSerializer());
-    }
-
-    /**
-     * Builds a {@link doRequest} instance for the provided parameters.
-     *
-     * @param string   $uri
-     * @param Envelope $message
-     * @param string   $method
-     * @return Request
-     */
-    protected function buildRequest(string $uri, Envelope $message, string $method = 'POST'): Request
-    {
-        return new Request(
-            new RequestBuilder($uri, $method, $this->session),
-            new Serializer($this, $message)
-        );
+        return $this->doRequest($httpRequest, $request->getSerializer());
     }
 
     /**
      * Builds a {@link Request} instance for the provided parameters.
      *
-     * @param string              $uri
-     * @param Envelope            $message
-     * @param SerializerInterface $serializer
-     * @param string              $method
+     * @param string           $uri
+     * @param ResponseEnvelope $response
+     * @param string           $method
      * @return Request
+     * @throws InvalidArgumentException
      */
-    // phpcs:ignore
-    protected function buildRequestWithSerializer(string $uri, Envelope $message, SerializerInterface $serializer, string $method = 'POST'): Request
+    protected function buildRequest(string $uri, ResponseEnvelope $response, string $method = 'POST'): Request
     {
         return new Request(
-            new RequestBuilder($uri, $method, $this->session),
-            $serializer
+            new RequestBuilder($uri, $method, $this->device),
+            new ResponseSerializer($this, $response)
         );
+    }
+
+    /**
+     * @inheritDoc
+     * @throws NotAuthenticatedException
+     */
+    protected function checkSessionPrerequisites(): void
+    {
+        // Check whether the user is authenticated or not
+        if (!$this->isSessionAvailable()) {
+            throw new NotAuthenticatedException('User not authenticated. Please log in.');
+        }
+    }
+
+    /**
+     * Authenticated task.
+     *
+     * @param callable $callable
+     * @return PromiseInterface<ResponseEnvelope|NotAuthenticatedException>
+     */
+    protected function authenticated(callable $callable): PromiseInterface
+    {
+        return PromiseUtils::task(function () use ($callable): PromiseInterface {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+            $this->checkSessionPrerequisites();
+
+            return $callable();
+        });
     }
 
     /**
      * Executes an asynchronous request.
      *
-     * @param RequestInterface    $request
-     * @param SerializerInterface $serializer
-     * @return PromiseInterface
+     * @param RequestInterface            $request
+     * @param ResponseSerializerInterface $serializer
+     * @return PromiseInterface<ResponseEnvelope|InstagramException>
      */
-    protected function doRequest(RequestInterface $request, SerializerInterface $serializer): PromiseInterface
+    private function doRequest(RequestInterface $request, ResponseSerializerInterface $serializer): PromiseInterface
     {
-        // Execute the asynchronous request
         $promise = $this->client->requestAsync($request);
 
-        // Return a promise chain
         return $promise->then(function (HttpResponseInterface $response) use ($serializer): PromiseInterface {
             return $this->decode($response, $serializer);
         })->otherwise(function (Throwable $exception) use ($serializer): PromiseInterface {
-            if (!self::isRequestException($exception)) {
-                return Create::rejectionFor($exception);
-            }
-
-            // @phan-suppress-next-line PhanUndeclaredMethod
-            return $this->decode($exception->getResponse(), $serializer);
+            return $this->decodeError($exception, $serializer);
         });
     }
 
     /**
      * Decode the response.
      *
-     * @param HttpResponseInterface $response
-     * @param SerializerInterface   $serializer
-     * @return PromiseInterface
+     * @param HttpResponseInterface       $response
+     * @param ResponseSerializerInterface $serializer
+     * @return PromiseInterface<ResponseEnvelope|InstagramException>
      */
-    private function decode(HttpResponseInterface $response, SerializerInterface $serializer)
+    private function decode(HttpResponseInterface $response, ResponseSerializerInterface $serializer): PromiseInterface
     {
-        return task(function () use ($response, $serializer): ResponseMessageInterface {
+        return PromiseUtils::task(function () use ($response, $serializer): ResponseInterface {
             return $serializer->decode($response, $this);
         });
+    }
+
+    /**
+     * Decodes a error response.
+     *
+     * @param Throwable                   $throwable
+     * @param ResponseSerializerInterface $serializer
+     * @return PromiseInterface
+     */
+    private function decodeError(Throwable $throwable, ResponseSerializerInterface $serializer): PromiseInterface
+    {
+        if (!self::isRequestException($throwable)) {
+            return Create::rejectionFor($throwable);
+        }
+
+        // @phan-suppress-next-line PhanUndeclaredMethod
+        return $this->decode($throwable->getResponse(), $serializer);
     }
 
     /**
@@ -234,6 +201,16 @@ class Client
     private static function isRequestException(Throwable $exception): bool
     {
         return $exception instanceof RequestException;
+    }
+
+    /**
+     * Returns true if session is available, false otherwise.
+     *
+     * @return bool
+     */
+    private function isSessionAvailable(): bool
+    {
+        return $this->session !== null;
     }
 
     /**

@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Instagram\SDK\Client\Features;
 
 use GuzzleHttp\Promise\PromiseInterface;
-use Instagram\SDK\DTO\Messages\Friendships\FollowersMessage;
-use Instagram\SDK\DTO\Messages\Friendships\FollowingMessage;
-use Instagram\SDK\DTO\Messages\Friendships\FollowMessage;
-use Instagram\SDK\Requests\Request;
-use Instagram\SDK\Requests\Http\Factories\PayloadSerializerFactory;
-use function GuzzleHttp\Promise\task;
-use function Instagram\SDK\Support\request;
+use Instagram\SDK\Exceptions\InstagramException;
+use Instagram\SDK\Request\Http\Factories\PayloadSerializerFactory;
+use Instagram\SDK\Response\Responses\Friendships\FollowersResponse;
+use Instagram\SDK\Response\Responses\Friendships\FollowingResponse;
+use Instagram\SDK\Response\Responses\Friendships\FollowResponse;
 
 /**
  * Trait FriendshipsFeaturesTrait
@@ -28,30 +26,19 @@ trait FriendshipsFeaturesTrait
      * Follow a user by user id.
      *
      * @param string $userId
-     * @return PromiseInterface<FollowMessage>
+     * @return PromiseInterface<FollowResponse|InstagramException>
      */
     public function follow(string $userId): PromiseInterface
     {
-        return task(function () use ($userId): PromiseInterface {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
-
-            /** @var Request $request */
-            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
-            $request = request(sprintf('friendships/create/%s/', $userId), new FollowMessage())(
-                $this,
-                $this->session,
-                $this->client
-            );
-
-            // Prepare the request payload
-            $request
-                ->addCSRFTokenAndUserId()
-                ->addUuid()
+        return $this->authenticated(function () use ($userId): PromiseInterface {
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString, PhanThrowTypeAbsentForCall
+            $request = $this->buildRequest(sprintf('friendships/create/%s/', $userId), new FollowResponse())
+                ->addCSRFTokenAndUserId($this->session)
+                ->addUuid($this->session)
                 ->addPayloadParam('user_id', $userId)
                 ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 
@@ -59,32 +46,19 @@ trait FriendshipsFeaturesTrait
      * Unfollow a user by user id.
      *
      * @param string $userId
-     * @return PromiseInterface<FollowMessage>
+     * @return PromiseInterface<FollowResponse|InstagramException>
      */
     public function unfollow(string $userId): PromiseInterface
     {
-        return task(function () use ($userId): PromiseInterface {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
-
-            /**
-             * @var Request $request
-             */
-            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
-            $request = request(sprintf('friendships/destroy/%s/', $userId), new FollowMessage())(
-                $this,
-                $this->session,
-                $this->client
-            );
-
-            // Prepare the request payload
-            $request
-                ->addCSRFTokenAndUserId()
-                ->addUuid()
+        return $this->authenticated(function () use ($userId): PromiseInterface {
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString, PhanThrowTypeAbsentForCall
+            $request = $this->buildRequest(sprintf('friendships/destroy/%s/', $userId), new FollowResponse())
+                ->addCSRFTokenAndUserId($this->session)
+                ->addUuid($this->session)
                 ->addPayloadParam('user_id', $userId)
                 ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 
@@ -93,26 +67,19 @@ trait FriendshipsFeaturesTrait
      *
      * @param string      $userId
      * @param string|null $maxId
-     * @return PromiseInterface<FollowersMessage>
+     * @return PromiseInterface<FollowersResponse|InstagramException>
      */
     public function followers(string $userId, ?string $maxId = null): PromiseInterface
     {
-        return task(function () use ($userId, $maxId): PromiseInterface {
-            /** @var Request $request */
+        return $this->authenticated(function () use ($userId, $maxId): PromiseInterface {
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
             // phpcs:ignore
-            $request = request(sprintf('friendships/%s/followers/', $userId), (new FollowersMessage())->setUserId($userId))(
-                $this,
-                $this->session,
-                $this->client
-            );
-
-            // Prepare the request payload
-            $request
-                ->addRankedToken()
+            $request = $this->buildRequest(sprintf('friendships/%s/followers/', $userId), new FollowersResponse($userId), 'GET')
+                ->addRankedToken($this->session)
+                ->addQueryParam('rank_mutual', 0)
                 ->addQueryParamIfNotNull('max_id', $maxId);
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 
@@ -121,26 +88,21 @@ trait FriendshipsFeaturesTrait
      *
      * @param string      $userId
      * @param null|string $maxId
-     * @return PromiseInterface<FollowingMessage>
+     * @return PromiseInterface<FollowingResponse|InstagramException>
      */
     public function following(string $userId, ?string $maxId): PromiseInterface
     {
-        return task(function () use ($userId, $maxId): PromiseInterface {
-            /** @var Request $request */
-            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
+        return $this->authenticated(function () use ($userId, $maxId): PromiseInterface {
             // phpcs:ignore
-            $request = request(sprintf('friendships/%s/following/', $userId), (new FollowingMessage())->setUserId($userId))(
-                $this,
-                $this->session,
-                $this->client
-            );
+            $request = $this->buildRequest(sprintf('friendships/%s/following/', $userId), new FollowingResponse($userId), 'GET');
 
             // Prepare the request payload
             $request
-                ->addRankedToken()
+                ->addRankedToken($this->session)
+                ->addQueryParam('rank_mutual', 0)
                 ->addQueryParamIfNotNull('max_id', $maxId);
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 }

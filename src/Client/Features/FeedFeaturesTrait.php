@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Instagram\SDK\Client\Features;
 
+use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
-use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
-use Instagram\SDK\DTO\Messages\Feed\TimelineMessage;
-use Instagram\SDK\Requests\Feed\TimelineOptions;
-use Instagram\SDK\Requests\Request;
-use function GuzzleHttp\Promise\rejection_for;
-use function GuzzleHttp\Promise\task;
+use Instagram\SDK\Exceptions\InstagramException;
+use Instagram\SDK\Request\Payload\Feed\TimelineRequestPayload;
+use Instagram\SDK\Response\Responses\Feed\FeedResponse;
+use Instagram\SDK\Response\Responses\Feed\TimelineResponse;
 use const Instagram\SDK\TYPE_HASHTAG;
 use const Instagram\SDK\TYPE_USER;
 
@@ -25,43 +24,43 @@ trait FeedFeaturesTrait
     use DefaultFeaturesTrait;
 
     /**
-     * Retrieves feed by hashtag.
+     * Retrieve feed by hashtag.
      *
-     * @param string $tag
-     * @return PromiseInterface<FeedMessage>
+     * @param string $hashTag
+     * @return PromiseInterface<FeedResponse|InstagramException>
      */
-    public function feedByHashtag(string $tag): PromiseInterface
+    public function feedByHashtag(string $hashTag): PromiseInterface
     {
-        return $this->feed(TYPE_HASHTAG, $tag);
+        return $this->feed(TYPE_HASHTAG, $hashTag);
     }
 
     /**
-     * Retrieves feed by user.
+     * Retrieve feed by user id.
      *
-     * @param string $user
-     * @return PromiseInterface<FeedMessage>
+     * @param string $userId
+     * @return PromiseInterface<FeedResponse|InstagramException>
      */
-    public function feedByUser(string $user): PromiseInterface
+    public function feedByUser(string $userId): PromiseInterface
     {
-        return $this->feed(TYPE_USER, $user);
+        return $this->feed(TYPE_USER, $userId);
     }
 
     /**
-     * Retrieves the feed for a specified hashtag.
+     * Retrieve the feed for a specified hashtag.
      *
      * @param int         $type
      * @param string      $query
      * @param string|null $maxId
-     * @return PromiseInterface<FeedMessage>
+     * @return PromiseInterface<FeedResponse|InstagramException>
      */
     public function feed(int $type, string $query, ?string $maxId = null): PromiseInterface
     {
         switch ($type) {
             case TYPE_HASHTAG:
-                $result = $this->queryFeed($type, 'feed/tag/%s/', $query, FeedMessage::class, $maxId);
+                $result = $this->queryFeed($type, 'feed/tag/%s/', $query, $maxId);
                 break;
             case TYPE_USER:
-                $result = $this->queryFeed($type, 'feed/user/%s/', $query, FeedMessage::class, $maxId);
+                $result = $this->queryFeed($type, 'feed/user/%s/', $query, $maxId);
                 break;
             default:
                 $result = $this->getInvalidFeedTypeError();
@@ -72,57 +71,46 @@ trait FeedFeaturesTrait
     }
 
     /**
-     * Retrieves the timeline feed for the current user.
+     * Retrieve the timeline feed for the current user.
      *
-     * @param TimelineOptions $options
-     * @return PromiseInterface<TimelineMessage>
+     * @param TimelineRequestPayload $payload
+     * @return PromiseInterface<TimelineResponse|InstagramException>
      */
-    public function timeline(TimelineOptions $options): PromiseInterface
+    public function timeline(TimelineRequestPayload $payload): PromiseInterface
     {
-        return task(function () use ($options): PromiseInterface {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
-
+        return $this->authenticated(function () use ($payload): PromiseInterface {
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall, PhanUndeclaredMethod
-            $request = $this->buildRequest('feed/timeline/', new TimelineMessage())
-                ->addCSRFToken()
-                ->addUuid()
-                ->addPhoneId()
-                ->addSessionId()
+            $request = $this->buildRequest('feed/timeline/', new TimelineResponse())
+                ->addCSRFToken($this->session)
+                ->addUuid($this->session)
+                ->addPhoneId($this->session)
+                ->addSessionId($this->session)
                 ->addPayloadParam('reason', 'cold_start_fetch')
-                ->addPayloadOptions($options);
+                ->addPayloadParams($payload);
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 
     /**
-     * Queries for the feed result.
+     * Query for the feed result.
      *
      * @param int         $type
      * @param string      $uri
      * @param string      $query
-     * @param string      $result
      * @param string|null $maxId
-     * @return PromiseInterface<FeedMessage>
+     * @return PromiseInterface<FeedResponse|InstagramException>
      */
-    // phpcs:ignore
-    protected function queryFeed(int $type, string $uri, string $query, string $result, ?string $maxId): PromiseInterface
+    protected function queryFeed(int $type, string $uri, string $query, ?string $maxId): PromiseInterface
     {
-        // Prepare the tag query
-        $tag = rawurlencode($query);
+        return $this->authenticated(function () use ($type, $uri, $query, $maxId): PromiseInterface {
+            $response = new FeedResponse($tag = rawurlencode($query), $type);
 
-        return task(function () use ($type, $uri, $tag, $maxId, $result): PromiseInterface {
-            $message = new $result();
-            $message->setQuery($tag);
-            $message->setType($type);
-
-            /** @var Request $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
-            $request = $this->buildRequest(sprintf($uri, $tag), $message)
+            $request = $this->buildRequest(sprintf($uri, $tag), $response)
                 ->addQueryParamIfNotNull('max_id', $maxId);
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 
@@ -133,6 +121,7 @@ trait FeedFeaturesTrait
      */
     protected function getInvalidFeedTypeError(): PromiseInterface
     {
-        return rejection_for('Invalid type provided');
+        // @phan-suppress-next-line PhanDeprecatedFunction
+        return Create::rejectionFor('Invalid feed type provided');
     }
 }

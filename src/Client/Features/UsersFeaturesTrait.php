@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Instagram\SDK\Client\Features;
 
 use GuzzleHttp\Promise\PromiseInterface;
-use Instagram\SDK\DTO\Messages\Users\UserInformationMessage;
-use function GuzzleHttp\Promise\task;
+use Instagram\SDK\Response\Responses\Users\UserInformationResponse;
 
 /**
  * Trait AccountFeaturesTrait
@@ -23,21 +22,18 @@ trait UsersFeaturesTrait
      * Returns detailed information about a user by username.
      *
      * @param string $username The username
-     * @return PromiseInterface<UserInformationMessage>
+     * @return PromiseInterface<UserInformationResponse>
      */
     public function getUserByName(string $username): PromiseInterface
     {
-        return task(function () use ($username): PromiseInterface {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
-
+        return $this->authenticated(function () use ($username): PromiseInterface {
             $request = $this->buildRequest(
                 sprintf('users/%s/usernameinfo/', $username),
-                new UserInformationMessage(),
+                new UserInformationResponse(),
                 'GET'
             );
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 
@@ -45,19 +41,16 @@ trait UsersFeaturesTrait
      * Returns detailed information about a user by id.
      *
      * @param string $userId
-     * @return PromiseInterface<UserInformationMessage>
+     * @return PromiseInterface<UserInformationResponse>
      */
     public function getUserById(string $userId): PromiseInterface
     {
-        return task(function () use ($userId): PromiseInterface {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
-
-            $request = $this->buildRequest(sprintf('users/%s/info/', $userId), new UserInformationMessage(), 'GET');
+        return $this->authenticated(function () use ($userId): PromiseInterface {
+            $request = $this->buildRequest(sprintf('users/%s/info/', $userId), new UserInformationResponse(), 'GET');
 
             $request->addPayloadParam('device_id', $this->session->getDevice()->deviceId());
 
-            return $request->fire();
+            return $this->call($request);
         });
     }
 }
