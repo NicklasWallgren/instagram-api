@@ -1,30 +1,24 @@
 <?php
 
-use Instagram\SDK\DTO\General\ItemType;
 use Instagram\SDK\Instagram;
+use Instagram\SDK\Response\DTO\General\ItemType;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Initialize the Instagram library
-$instagram = new Instagram();
-
-// Authenticate using username and password
+$instagram = Instagram::builder()->build();
 $instagram->login('INSERT_USERNAME', 'INSERT_PASSWORD');
 
-// Invoke the request
-$envelope = $instagram->inbox();
-
-// Retrieve the inbox
-$inbox = $envelope->getInbox();
+$response = $instagram->inbox();
+$inbox = $response->getInbox();
 
 // Retrieve the first thread in the inbox
-if(!$thread = current($inbox->getThreads())) {
+if (!$thread = current($inbox->getThreads())) {
     // No thread found
     return;
 }
 
 // Retrieve the whole thread including thread items
-$thread->whole();
+$thread = $thread->whole()->getThread();
 
 // Iterate through the list of items
 foreach ($thread->getItems() as $item) {
@@ -41,8 +35,8 @@ foreach ($thread->getItems() as $item) {
 }
 
 // Retrieve the next batch of thread items
-$thread->next();
+$threadItemsInNextPage = $thread->next()->getThread();
 
-var_dump($thread->getItems());
+var_dump($threadItemsInNextPage->getItems());
 
 

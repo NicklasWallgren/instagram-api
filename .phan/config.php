@@ -30,7 +30,7 @@ return [
     // If this is set to null,
     // then Phan assumes the PHP version which is closest to the minor version
     // of the php executable used to execute phan.
-    "target_php_version" => 7.1,
+    "target_php_version" => 7.2,
 
     // Default: true. If this is set to true,
     // and target_php_version is newer than the version used to run Phan,
@@ -266,6 +266,7 @@ return [
         'PhanPluginDescriptionlessCommentOnPrivateMethod',
         'PhanPluginDescriptionlessCommentOnPublicMethod',
         'PhanUndeclaredInvokeInCallable',
+        'PhanPluginNoCommentOnPublicMethod'
     ],
 
     // If empty, no filter against issues types will be applied.

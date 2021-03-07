@@ -1,57 +1,60 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK\Session;
 
 use GuzzleHttp\Cookie\CookieJar;
-use Instagram\SDK\Devices\Interfaces\DeviceInterface;
-use Instagram\SDK\DTO\Session\User;
-use Instagram\SDK\Http\Traits\CookieMethodsTrait;
+use Instagram\SDK\Device\DeviceInterface;
+use Instagram\SDK\Response\DTO\Session\User;
 
 /**
  * Class Session
  *
  * @package Instagram\SDK\Session
  */
-class Session
+final class Session
 {
 
-    use CookieMethodsTrait {
-        getSessionId as protected _getSessionId;
-    }
-    use SessionMethodsTrait;
-
-    /**
-     * @var string The unique id
-     */
+    /** @var string The unique id */
     private $uuid;
 
-    /**
-     * @var User
-     */
+    /** @var User */
     private $user;
 
-    /**
-     * @var DeviceInterface
-     */
+    /** @var DeviceInterface */
     private $device;
 
-    /**
-     * @var string Session id.
-     */
+    /** @var string Session id. */
     private $sessionId;
 
-    /**
-     * @var CookieJar
-     */
+    /** @var CookieJar */
     private $cookies;
 
     /**
+     * Session constructor.
+     *
+     * @param string          $uuid
+     * @param User            $user
+     * @param DeviceInterface $device
+     * @param string          $sessionId
+     * @param CookieJar       $cookies
+     */
+    public function __construct(string $uuid, User $user, DeviceInterface $device, string $sessionId, CookieJar $cookies)
+    {
+        $this->uuid = $uuid;
+        $this->user = $user;
+        $this->device = $device;
+        $this->sessionId = $sessionId;
+        $this->cookies = $cookies;
+    }
+
+    /**
      * @return string
-     * @throws \Exception
      */
     public function getId(): string
     {
-        return $this->_getSessionId()->getId();
+        return $this->sessionId;
     }
 
     /**
@@ -63,33 +66,11 @@ class Session
     }
 
     /**
-     * @param string $uuid
-     * @return static
-     */
-    public function setUuid(string $uuid)
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
-    /**
      * @return User
      */
     public function getUser(): User
     {
         return $this->user;
-    }
-
-    /**
-     * @param User $user
-     * @return static
-     */
-    public function setUser(User $user)
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     /**
@@ -101,60 +82,9 @@ class Session
     }
 
     /**
-     * @param DeviceInterface $device
-     * @return static
-     */
-    public function setDevice(DeviceInterface $device)
-    {
-        $this->device = $device;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSessionId(): string
-    {
-        return $this->sessionId;
-    }
-
-    /**
-     * @param string $sessionId
-     * @return static
-     */
-    public function setSessionId(string $sessionId): self
-    {
-        $this->sessionId = $sessionId;
-
-        return $this;
-    }
-
-    /**
      * @return CookieJar
      */
     public function getCookies(): CookieJar
-    {
-        return $this->cookies;
-    }
-
-    /**
-     * @param CookieJar $cookies
-     * @return static
-     */
-    public function setCookies(CookieJar $cookies)
-    {
-        $this->cookies = $cookies;
-
-        return $this;
-    }
-
-    /**
-     * Returns the cookie jar.
-     *
-     * @return CookieJar
-     */
-    protected function getCookieJar(): CookieJar
     {
         return $this->cookies;
     }
@@ -165,5 +95,15 @@ class Session
     public function getSession(): Session
     {
         return $this;
+    }
+
+    /**
+     * Returns the ranked token.
+     *
+     * @return string
+     */
+    public function getRankedToken(): string
+    {
+        return sprintf('%s_%s', $this->user->getId(), $this->getUuid());
     }
 }

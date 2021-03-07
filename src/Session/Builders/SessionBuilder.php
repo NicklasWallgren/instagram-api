@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK\Session\Builders;
 
-use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
-use Instagram\SDK\Http\HttpClient;
-use Instagram\SDK\Requests\Utils\SignatureUtils;
+use GuzzleHttp\Cookie\CookieJar;
+use Instagram\SDK\Device\DeviceInterface;
+use Instagram\SDK\Response\DTO\Session\User;
 use Instagram\SDK\Session\Session;
 
 /**
@@ -15,22 +17,46 @@ use Instagram\SDK\Session\Session;
 final class SessionBuilder
 {
 
+    /** @var string */
+    private $uuid;
+
+    /** @var User */
+    private $user;
+
+    /** @var DeviceInterface */
+    private $device;
+
+    /** @var string */
+    private $sessionId;
+
+    /** @var CookieJar */
+    private $cookies;
+
+    /**
+     * SessionBuilder constructor.
+     *
+     * @param string          $uuid
+     * @param User            $user
+     * @param DeviceInterface $device
+     * @param string          $sessionId
+     * @param CookieJar       $cookies
+     */
+    public function __construct(string $uuid, User $user, DeviceInterface $device, string $sessionId, CookieJar $cookies)
+    {
+        $this->uuid = $uuid;
+        $this->user = $user;
+        $this->device = $device;
+        $this->sessionId = $sessionId;
+        $this->cookies = $cookies;
+    }
+
     /**
      * The session builder.
      *
-     * @param DeviceBuilderInterface $deviceBuilder
-     * @param HttpClient             $client
      * @return Session
      */
-    public function build(DeviceBuilderInterface $deviceBuilder, HttpClient $client): Session
+    public function build(): Session
     {
-        // Build the device instance
-        $device = $deviceBuilder->build();
-
-        return (new Session())
-            ->setUuid(SignatureUtils::uuid())
-            ->setDevice($device)
-            ->setSessionId(SignatureUtils::uuid())
-            ->setCookies($client->getCookies());
+        return new Session($this->uuid, $this->user, $this->device, $this->sessionId, $this->cookies);
     }
 }

@@ -5,14 +5,8 @@ use Instagram\SDK\Instagram;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Initialize the Instagram library, pass the client
-$instagram = new Instagram();
-
-$instagram->setProxyUri('INSERT_PROXY');
-
-// Authenticate using username and password
-$envelope = $instagram->login('INSERT_USERNAME', 'INSERT_PASSWORD')->wait();
+$instagram = Instagram::builder()->setProxyUri('INSERT_PROXY')->build();
+$response = $instagram->login('INSERT_USERNAME', 'INSERT_PASSWORD');
 
 // Output the response
-var_dump($envelope);
-
+var_dump($response);

@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Instagram\SDK\Client\Features;
 
 use GuzzleHttp\Promise\PromiseInterface;
-use Instagram\SDK\DTO\Messages\User\LogoutMessage;
-use Instagram\SDK\DTO\Messages\User\SessionMessage;
-use Instagram\SDK\Requests\Http\Factories\PayloadSerializerFactory;
-use Instagram\SDK\Requests\Utils\SignatureUtils;
-use Instagram\SDK\Responses\Serializers\User\LoginSerializer;
-use Instagram\SDK\Session\Builders\SessionBuilder;
-use function GuzzleHttp\Promise\task;
+use Instagram\SDK\Exceptions\InstagramException;
+use Instagram\SDK\Request\Http\Factories\PayloadSerializerFactory;
+use Instagram\SDK\Request\Utils\SignatureUtils;
+use Instagram\SDK\Response\Responses\User\AuthenticatedUserResponse;
+use Instagram\SDK\Response\Responses\User\LogoutResponse;
+use Instagram\SDK\Response\Responses\User\SessionResponse;
+use Instagram\SDK\Response\Serializers\User\LoginResponseSerializer;
 
 /**
  * Trait AccountFeaturesTrait
@@ -25,50 +25,45 @@ trait AccountFeaturesTrait
     use DefaultFeaturesTrait;
 
     /**
-     * Authenticates a user.
+     * Authenticate a user by username and password.
      *
      * @param string $username The username
      * @param string $password The password
-     * @return PromiseInterface<SessionMessage>
+     * @return PromiseInterface<AuthenticatedUserResponse|InstagramException>
      */
     public function login(string $username, string $password): PromiseInterface
     {
-        $this->session = (new SessionBuilder())->build($this->builder, $this->client);
-
         // @phan-suppress-next-line PhanUndeclaredMethod
         return $this->headers()->then(function () use ($username, $password): PromiseInterface {
-            // phpcs:ignore
-            $request = $this->buildRequestWithSerializer('accounts/login/', new SessionMessage(), new LoginSerializer($this->session, $this->client));
+            $request = $this->buildRequest('accounts/login/', new SessionResponse());
 
-            $body = [
+            $payload = [
                 'username'            => $username,
                 'password'            => $password,
                 'login_attempt_count' => '0',
-                'device_id'           => $this->session->getDevice()->deviceId(),
+                'device_id'           => $this->device->deviceId(),
             ];
 
-            $request->setPayload($body)
-                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+            $request->setPayload($payload, PayloadSerializerFactory::TYPE_SIGNED)
+                ->setResponseSerializer(new LoginResponseSerializer($this->device, $this->client));
 
             return $this->call($request);
         });
     }
 
     /**
-     * Authenticates a user using nonce.
+     * Authenticate a user by nonce.
      *
      * @param string $nonce
-     * @return PromiseInterface<SessionMessage>
+     * @return PromiseInterface<SessionResponse>
      */
     public function loginUsingNonce(string $nonce): PromiseInterface
     {
-        return task(function () use ($nonce): PromiseInterface {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
+        return $this->authenticated(function () use ($nonce): PromiseInterface {
+            $request = $this->buildRequest('accounts/one_tap_app_login/', new SessionResponse());
 
-            $request = $this->buildRequest('accounts/one_tap_app_login/', new SessionMessage());
-
-            $body = [
+            $payload = [
                 'device_id'   => $this->session->getDevice()->deviceId(),
                 'user_id'     => $this->session->getUser()->getId(),
                 'login_nonce' => $nonce,
@@ -76,8 +71,8 @@ trait AccountFeaturesTrait
             ];
 
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $request->setPayload($body)
-                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
+            $request->setPayload($payload, PayloadSerializerFactory::TYPE_SIGNED)
+                ->setResponseSerializer(new LoginResponseSerializer($this->device, $this->client));
 
             return $this->call($request);
         });
@@ -86,15 +81,12 @@ trait AccountFeaturesTrait
     /**
      * Logout the authenticated user.
      *
-     * @return PromiseInterface<LogoutMessage>
+     * @return PromiseInterface<LogoutResponse|InstagramException>
      */
     public function logout(): PromiseInterface
     {
-        return task(function (): PromiseInterface {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
-
-            $request = $this->buildRequest('accounts/logout/', new LogoutMessage())
+        return $this->authenticated(function (): PromiseInterface {
+            $request = $this->buildRequest('accounts/logout/', new LogoutResponse())
                 ->addPayloadParam('device_id', $this->session->getDevice()->deviceId())
                 ->addPayloadParam('one_tap_app_login', true);
 
