@@ -9,19 +9,20 @@
   ],
   "description": "Instagram private API SDK",
   "require": {
-    "guzzlehttp/guzzle": "^6.2",
-    "psr/http-message": "^1.0",
-    "php": ">=7.2",
-    "webmozart/assert": "^1.0",
+    "guzzlehttp/guzzle": "*",
+    "psr/http-message": "*",
+    "php": "^7|^8",
+    "webmozart/assert": "*",
     "tebru/gson-php": "^0.7",
     "ext-curl": "*",
     "ext-json": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "~6.0",
-    "squizlabs/php_codesniffer": "^3.0",
-    "phan/phan": "^3.0",
-    "drenso/phan-extensions": "^3.2"
+    "phpunit/phpunit": "*",
+    "squizlabs/php_codesniffer": "*",
+    "phan/phan": "*",
+    "drenso/phan-extensions": "*",
+    "larapack/dd": "*"
   },
   "autoload": {
     "psr-4": {
@@ -32,12 +33,5 @@
       "src/Support/definitions.php",
       "src/Support/Promises/functions.php"
     ]
-  },
-  "scripts": {
-    "test": "/vendor/bin/phpunit",
-    "lint": "vendor/bin/phpcs --standard=ruleset.xml ./src",
-    "lint-fix": "vendor/bin/phpcbf --standard=ruleset.xml ./src",
-    "code-analyze": "vendor/bin/phan --color",
-    "code-analyze-report": "vendor/bin/phan -m build/logs/checkstyle.cs"
   }
 }
