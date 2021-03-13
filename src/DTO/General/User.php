@@ -61,6 +61,11 @@ class User implements UserInterface, OnItemDecodeInterface
     protected $isVerified;
 
     /**
+     * @var int
+     */
+    protected $followerCount;
+
+    /**
      * @var bool
      */
     protected $hasAnonymousProfilePicture;
@@ -116,6 +121,14 @@ class User implements UserInterface, OnItemDecodeInterface
     public function getFriendshipStatus()
     {
         return $this->friendshipStatus;
+    }
+
+    /**
+     * @return int
+     */
+    public function followerCount(): bool
+    {
+        return $this->followerCount;
     }
 
     /**
