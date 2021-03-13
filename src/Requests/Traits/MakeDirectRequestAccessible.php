@@ -53,6 +53,18 @@ trait MakeDirectRequestAccessible
     }
 
     /**
+     * Sends a message to a user.
+     *
+     * @param string $text
+     * @param string $userId
+     * @return DirectSendItemMessage|Promise<DirectSendItemMessage>
+     */
+    public function sendDirectMessage(string $text, string $userId)
+    {
+        return $this->getClient()->sendDirectMessage($text, $userId);
+    }
+
+    /**
      * Sets thread item as seen.
      *
      * @param string $threadId

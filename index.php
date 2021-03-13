@@ -19,8 +19,8 @@ if (!is_file('pouriyak7')) {
 }
 
 
-$users = $instagram->getByUsername('braveputak');
-dd($users);
+$users = $instagram->getByUsername('alijvhr');
+//dd($users);
 //if (!$users->isSuccess()) {
 //    die($users);
 //}
@@ -53,7 +53,7 @@ dd($users);
 
 // Retrieve the inbox envelope
 
-//$instagram->sendThreadMessage('', '');
+dd($instagram->sendDirectMessage('salam', '1400882993'));
 //
 //$envelope = $instagram->inbox();
 

@@ -54,7 +54,7 @@ trait DirectFeaturesTrait
     /**
      * Retrieves a thread.
      *
-     * @param string      $id     The thread id
+     * @param string $id The thread id
      * @param string|null $cursor The cursor id
      * @return ThreadMessage|Promise<ThreadMessage>
      */
@@ -92,6 +92,39 @@ trait DirectFeaturesTrait
             $request->addPayloadParam('text', $text)
                 ->addPayloadParam('thread_ids', "[$threadId]")
                 ->addPayloadParam('action', 'send_item')
+                ->addUniqueContext()
+                ->addCSRFTokenAndUserId();
+
+            // Invoke the request
+            return $request->fire();
+        })($this->getMode());
+    }
+
+    /**
+     * Sends a direct message.
+     *
+     * @param string $text
+     * @param string $userId
+     * @return DirectSendItemMessage|Promise<DirectSendItemMessage>
+     */
+    public function sendDirectMessage(string $text, string $UserId)
+    {
+        return task(function () use ($text, $UserId): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+            $this->checkPrerequisites();
+
+            /** @var GenericRequest $request */
+            $request = request(self::$URI_BROADCAST_MESSAGE, new DirectSendItemMessage())(
+                $this,
+                $this->session,
+                $this->client
+            );
+
+            // Prepare the request payload
+            $request->addPayloadParam('text', $text)
+                ->addPayloadParam('thread_ids', "[0]")
+                ->addPayloadParam('recipient_users', "[[$UserId]]")
+//                ->addPayloadParam('action', 'send_item')
                 ->addUniqueContext()
                 ->addCSRFTokenAndUserId();
 
