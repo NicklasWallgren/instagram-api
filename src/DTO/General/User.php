@@ -126,7 +126,7 @@ class User implements UserInterface, OnItemDecodeInterface
     /**
      * @return int
      */
-    public function followerCount(): bool
+    public function getFollowerCount(): int
     {
         return $this->followerCount;
     }
