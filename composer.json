@@ -15,7 +15,7 @@
   "require": {
     "guzzlehttp/guzzle": "*",
     "psr/http-message": "*",
-    "php": "^7|^8",
+    "php": "^7.4|^8",
     "webmozart/assert": "*",
     "tebru/gson-php": "^0.7",
     "ext-curl": "*",

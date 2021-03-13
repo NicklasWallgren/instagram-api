@@ -7,6 +7,7 @@ use Instagram\SDK\Client\Client;
 use Instagram\SDK\DTO\Interfaces\UserInterface;
 use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
 use Instagram\SDK\DTO\Messages\Friendships\FollowersMessage;
+use Instagram\SDK\DTO\Messages\Friendships\FollowingMessage;
 use Instagram\SDK\DTO\Messages\Friendships\FollowMessage;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
@@ -87,8 +88,9 @@ class User implements UserInterface, OnItemDecodeInterface
 
     /**
      * @var int
+     * @SerializedName("total_igtv_videos")
      */
-    protected $TotalIgtvVideos;
+    protected $igtvCount;
 
     /**
      * @var bool
@@ -187,7 +189,7 @@ class User implements UserInterface, OnItemDecodeInterface
      */
     public function getIgtvCount(): int
     {
-        return $this->TotalIgtvVideos;
+        return $this->igtvCount;
     }
 
     /**
@@ -262,10 +264,22 @@ class User implements UserInterface, OnItemDecodeInterface
     /**
      * Returns a list of followers.
      *
+     * @param int|null $max
      * @return FollowersMessage|Promise<FollowersMessage>
      */
-    public function followers()
+    public function followers(?int $max = null)
     {
-        return $this->client->followers($this->id);
+        return $this->client->followers($this->id, $max);
+    }
+
+    /**
+     * Returns a list of followings.
+     *
+     * @param int|null $max
+     * @return FollowingMessage|Promise<FollowingMessage>
+     */
+    public function following(?int $max = null)
+    {
+        return $this->client->following($this->id, $max);
     }
 }

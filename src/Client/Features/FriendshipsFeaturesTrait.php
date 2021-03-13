@@ -122,7 +122,7 @@ trait FriendshipsFeaturesTrait
              * @var GenericRequest $request
              */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
-            $request = request(sprintf(self::$URI_FOLLOWERS, $userId), (new FollowersMessage())->setUserId($userId))(
+            $request = request(sprintf(self::$URI_FOLLOWERS, $userId), (new FollowersMessage())->setUserId($userId), 'GET')(
                 $this,
                 $this->session,
                 $this->client
@@ -145,14 +145,14 @@ trait FriendshipsFeaturesTrait
      * @param null|string $maxId
      * @return FollowingMessage|Promise<FollowingMessage>
      */
-    public function following(string $userId, ?string $maxId)
+    public function following(string $userId, ?string $maxId = null)
     {
         return task(function () use ($userId, $maxId): Promise {
             /**
              * @var GenericRequest $request
              */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
-            $request = request(sprintf(self::$URI_FOLLOWING, $userId), (new FollowingMessage())->setUserId($userId))(
+            $request = request(sprintf(self::$URI_FOLLOWING, $userId), (new FollowingMessage())->setUserId($userId), 'GET')(
                 $this,
                 $this->session,
                 $this->client
