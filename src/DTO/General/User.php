@@ -40,6 +40,11 @@ class User implements UserInterface, OnItemDecodeInterface
     protected $fullName;
 
     /**
+     * @var string
+     */
+    protected $biography;
+
+    /**
      * @var bool
      */
     protected $isPrivate;
@@ -61,9 +66,29 @@ class User implements UserInterface, OnItemDecodeInterface
     protected $isVerified;
 
     /**
+     * @var bool
+     */
+    protected $isBusiness;
+
+    /**
      * @var int
      */
     protected $followerCount;
+
+    /**
+     * @var int
+     */
+    protected $FollowingCount;
+
+    /**
+     * @var int
+     */
+    protected $mediaCount;
+
+    /**
+     * @var int
+     */
+    protected $TotalIgtvVideos;
 
     /**
      * @var bool
@@ -99,6 +124,15 @@ class User implements UserInterface, OnItemDecodeInterface
         return $this->fullName;
     }
 
+
+    /**
+     * @return string|null
+     */
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
     /**
      * @return bool
      */
@@ -115,6 +149,7 @@ class User implements UserInterface, OnItemDecodeInterface
         return $this->profilePictureUrl;
     }
 
+
     /**
      * @return FriendshipStatus
      */
@@ -129,6 +164,38 @@ class User implements UserInterface, OnItemDecodeInterface
     public function getFollowerCount(): int
     {
         return $this->followerCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFollowingCount(): int
+    {
+        return $this->FollowingCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMediaCount(): int
+    {
+        return $this->mediaCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIgtvCount(): int
+    {
+        return $this->TotalIgtvVideos;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBusiness(): bool
+    {
+        return $this->isBusiness;
     }
 
     /**
