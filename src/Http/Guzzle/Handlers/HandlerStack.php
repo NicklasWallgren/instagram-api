@@ -25,7 +25,7 @@ class HandlerStack extends \GuzzleHttp\HandlerStack
      *                          system will be utilized.
      * @return HandlerStack
      */
-    public static function create(callable $handler = null)
+    public static function create(callable $handler = null): self
     {
         $stack = new self(static::createHandler());
         $stack->push(Middleware::httpErrors(), 'http_errors');
@@ -41,8 +41,8 @@ class HandlerStack extends \GuzzleHttp\HandlerStack
      *
      * The returned handler is not wrapped by any default middlewares.
      *
-     * @throws RuntimeException if no viable Handler is available.
      * @return callable Returns the best handler for the given system.
+     * @throws RuntimeException if no viable Handler is available.
      */
     protected static function createHandler()
     {

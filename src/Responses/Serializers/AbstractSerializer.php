@@ -5,6 +5,7 @@ namespace Instagram\SDK\Responses\Serializers;
 use Exception;
 use Instagram\SDK\DTO\Envelope;
 use Instagram\SDK\DTO\Interfaces\ResponseMessageInterface;
+use Instagram\SDK\DTO\Messages\User\UserMessage;
 use Instagram\SDK\Responses\Exceptions\ApiResponseException;
 use Instagram\SDK\Responses\Exceptions\InvalidRequestException;
 use Instagram\SDK\Responses\Interfaces\SerializerInterface;

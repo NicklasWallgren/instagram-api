@@ -4,6 +4,8 @@ namespace Instagram\SDK\Client\Features;
 
 use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
+use Instagram\SDK\DTO\General\User;
+use Instagram\SDK\DTO\Messages\User\UserMessage;
 use Instagram\SDK\DTO\Messages\User\LogoutMessage;
 use Instagram\SDK\DTO\Messages\User\SessionMessage;
 use Instagram\SDK\Instagram;
@@ -36,6 +38,11 @@ trait UserFeaturesTrait
      * @var string The logout uri
      */
     private static $URI_LOGOUT = 'accounts/logout/';
+
+    /**
+     * @var string The username info uri
+     */
+    private static $URI_GET_USERNAME = 'users/%s/usernameinfo/';
 
     /**
      * Authenticates a user.
@@ -80,10 +87,10 @@ trait UserFeaturesTrait
 
             // Prepare the payload
             $body = [
-                'device_id'   => $this->session->getDevice()->deviceId(),
-                'user_id'     => $this->session->getUser()->getId(),
+                'device_id' => $this->session->getDevice()->deviceId(),
+                'user_id' => $this->session->getUser()->getId(),
                 'login_nonce' => $nonce,
-                'adid'        => SignatureSupport::uuid(),
+                'adid' => SignatureSupport::uuid(),
             ];
 
             $request->setPayload($body)
@@ -115,6 +122,29 @@ trait UserFeaturesTrait
             // Prepare the request payload
             $request->addPayloadParam('device_id', $this->session->getDevice()->deviceId())
                 ->addPayloadParam('one_tap_app_login', true);
+
+            // Invoke the request
+            return $request->fire();
+        })($this->getMode());
+    }
+
+    /**
+     * Logout the authenticated user.
+     *
+     * @return UserMessage|Promise<UserMessage>
+     */
+    public function getByUsername($uname)
+    {
+        return task(function () use ($uname): Promise {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+            $this->checkPrerequisites();
+
+            /** @var GenericRequest $request */
+            $request = request(sprintf(self::$URI_GET_USERNAME, $uname), new UserMessage(), 'GET')(
+                $this,
+                $this->session,
+                $this->client
+            );
 
             // Invoke the request
             return $request->fire();

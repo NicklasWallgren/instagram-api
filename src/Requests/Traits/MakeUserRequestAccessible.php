@@ -4,6 +4,8 @@ namespace Instagram\SDK\Requests\Traits;
 
 use GuzzleHttp\Promise\Promise;
 use Instagram\SDK\Client\Client;
+use Instagram\SDK\DTO\General\User;
+use Instagram\SDK\DTO\Messages\User\UserMessage;
 use Instagram\SDK\DTO\Messages\User\LogoutMessage;
 use Instagram\SDK\DTO\Messages\User\SessionMessage;
 
@@ -47,6 +49,17 @@ trait MakeUserRequestAccessible
     public function logout()
     {
         return $this->getClient()->logout();
+    }
+
+    /**
+     * Logout the authenticated user.
+     *
+     * @param string $uname
+     * @return UserMessage|Promise<User>
+     */
+    public function getByUsername(string $uname)
+    {
+        return $this->getClient()->getByUsername($uname);
     }
 
     /**

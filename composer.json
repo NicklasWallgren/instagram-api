@@ -5,6 +5,10 @@
     {
       "name": "Nicklas Wallgren",
       "email": "nicklas.wallgren@gmail.com"
+    },
+    {
+      "name": "Alijvhr",
+      "email": "eng.alijvhr@gmail.com"
     }
   ],
   "description": "Instagram private API SDK",
@@ -18,8 +22,6 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "*",
-    "squizlabs/php_codesniffer": "*",
     "phan/phan": "*",
     "drenso/phan-extensions": "*",
     "larapack/dd": "*"

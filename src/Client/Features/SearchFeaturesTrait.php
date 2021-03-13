@@ -4,9 +4,9 @@ namespace Instagram\SDK\Client\Features;
 
 use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
-use Instagram\SDK\DTO\Messages\Search\HashtagSearchResultMessage;
-use Instagram\SDK\DTO\Messages\Search\SearchResultMessage;
-use Instagram\SDK\DTO\Messages\Search\UserSearchResultMessage;
+use Instagram\SDK\DTO\Messages\User\HashtagSearchResultMessage;
+use Instagram\SDK\DTO\Messages\User\SearchResultMessage;
+use Instagram\SDK\DTO\Messages\User\UserSearchResultMessage;
 use Instagram\SDK\Instagram;
 use Instagram\SDK\Requests\GenericRequest;
 use Instagram\SDK\Support\Promise;

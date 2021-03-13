@@ -1,4 +1,5 @@
 <?php
+
 use Instagram\SDK\Instagram;
 use Validator\Rules\DoubleArrayRule;
 
@@ -12,43 +13,43 @@ if (!is_file('pouriyak7')) {
     $envelope = $instagram->login('pouriyak7', 'h6364501');
     $session = $envelope->getSession();
     file_put_contents($session->getUser()->getUsername(), serialize($session));
-}
-else {
+} else {
     $session = unserialize(file_get_contents('pouriyak7'));
     $instagram->setSession($session);
 }
 
 
-$users = $instagram->searchByUser('braveputak');
-if (!$users->isSuccess()) {
-    die($users);
-}
-foreach ($users->getUsers() as $user){
-    if('braveputak' == $user->getUsername()){
-        $userID = $user->getId();
-        $feed = $user->feed();
-    }
-}
-
-
-if($feed->isSuccess()){
-    $items = $feed->getItems();
-    dd($feed);
-    foreach ($items as $item) {
-        dd($item);
-    }
-}
-try {
-
-    $feed = $instagram->feedByHashtag('hello');
-    var_dump($feed);
-}catch (Exception $e){
-    dd($e->getMessage());
-}
-
+$users = $instagram->getByUsername('braveputak');
+dd($users);
+//if (!$users->isSuccess()) {
+//    die($users);
+//}
+//foreach ($users->getUsers() as $user){
+//    if('braveputak' == $user->getUsername()){
+//        $userID = $user->getId();
+//        $feed = $user->feed();
+//    }
+//}
 //
-if (!isset($userID))
-    die('fuck mark zackerburg');
+//
+//if($feed->isSuccess()){
+//    $items = $feed->getItems();
+//    dd($feed);
+//    foreach ($items as $item) {
+//        dd($item);
+//    }
+//}
+//try {
+//
+//    $feed = $instagram->feedByHashtag('hello');
+//    var_dump($feed);
+//}catch (Exception $e){
+//    dd($e->getMessage());
+//}
+//
+////
+//if (!isset($userID))
+//    die('fuck mark zackerburg');
 
 // Retrieve the inbox envelope
 
