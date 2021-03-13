@@ -1,6 +1,6 @@
 <?php
 
-namespace Instagram\SDK\DTO\Messages\User;
+namespace Instagram\SDK\DTO\Messages\Search;
 
 use Instagram\SDK\DTO\Hashtag\ResultItem;
 

@@ -3,9 +3,9 @@
 namespace Instagram\SDK\Requests\Traits;
 
 use Instagram\SDK\Client\Client;
-use Instagram\SDK\DTO\Messages\User\HashtagSearchResultMessage;
-use Instagram\SDK\DTO\Messages\User\SearchResultMessage;
-use Instagram\SDK\DTO\Messages\User\UserSearchResultMessage;
+use Instagram\SDK\DTO\Messages\Search\HashtagSearchResultMessage;
+use Instagram\SDK\DTO\Messages\Search\SearchResultMessage;
+use Instagram\SDK\DTO\Messages\Search\UserSearchResultMessage;
 use Instagram\SDK\Support\Promise;
 
 /**
