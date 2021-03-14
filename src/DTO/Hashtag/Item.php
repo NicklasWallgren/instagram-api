@@ -62,7 +62,7 @@ class Item implements OnItemDecodeInterface
     protected $filterType;
 
     /**
-     * @var \Instagram\SDK\DTO\General\Media\ImageVersions2[]
+     * @var object
      */
     protected $imageVersions2;
 
