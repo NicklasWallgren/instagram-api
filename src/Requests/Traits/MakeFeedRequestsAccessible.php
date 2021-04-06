@@ -51,6 +51,18 @@ trait MakeFeedRequestsAccessible
     }
 
     /**
+     * Retrieves story by user.
+     *
+     * @param string $userId
+     * @return FeedMessage|Promise
+     * @throws \Exception
+     */
+    public function storyByUser(string $userId)
+    {
+        return $this->story($userId);
+    }
+
+    /**
      * Retrieves feed by type.
      *
      * @param int         $type
@@ -62,6 +74,19 @@ trait MakeFeedRequestsAccessible
     public function feed(int $type, string $query, ?string $maxId = null)
     {
         return $this->getClient()->feed($type, $query, $maxId);
+    }
+
+    /**
+     * Retrieves story by type.
+     *
+     * @param string      $query
+     * @param string|null $maxId
+     * @return FeedMessage|Promise<FeedMessage>
+     * @throws \Exception
+     */
+    public function story(string $query, ?string $maxId = null)
+    {
+        return $this->getClient()->story($query, $maxId);
     }
 
     /**

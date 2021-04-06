@@ -242,6 +242,17 @@ class User implements UserInterface, OnItemDecodeInterface
     }
 
     /**
+     * Returns the user story.
+     *
+     * @return FeedMessage|Promise<FeedMessage>
+     * @throws Exception
+     */
+    public function story()
+    {
+        return $this->client->storyByUser($this->id);
+    }
+
+    /**
      * Follow the user.
      *
      * @return FollowMessage|Promise<FollowMessage>

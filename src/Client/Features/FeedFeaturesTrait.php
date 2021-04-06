@@ -38,6 +38,11 @@ trait FeedFeaturesTrait
     private static $URI_USER_FEED = 'feed/user/%s/';
 
     /**
+     * @var string The user reels uri
+     */
+    private static $URI_USER_REELS = 'feed/user/%s/reel_media/';
+
+    /**
      * @var string The timeline uri
      */
     private static $URI_TIMELINE_FEED = 'feed/timeline/';
@@ -67,10 +72,22 @@ trait FeedFeaturesTrait
     }
 
     /**
+     * Retrieves story by user.
+     *
+     * @param string $user
+     * @return FeedMessage|Promise<FeedMessage>
+     * @throws Exception
+     */
+    public function storyByUser(string $user)
+    {
+        return $this->story(TYPE_USER, $user);
+    }
+
+    /**
      * Retrieves the feed for a specified hashtag.
      *
-     * @param int         $type
-     * @param string      $query
+     * @param int $type
+     * @param string $query
      * @param string|null $maxId
      * @return FeedMessage|Promise<FeedMessage>
      * @throws Exception
@@ -92,6 +109,22 @@ trait FeedFeaturesTrait
 
                 break;
         }
+
+        return $result;
+    }
+
+    /**
+     * Retrieves the story for a specified hashtag.
+     *
+     * @param int $type
+     * @param string $query
+     * @param string|null $maxId
+     * @return FeedMessage|Promise<FeedMessage>
+     * @throws Exception
+     */
+    public function story(string $query, ?string $maxId = null)
+    {
+        $result = $this->queryFeed(TYPE_USER, self::$URI_USER_REELS, $query, FeedMessage::class, $maxId);
 
         return $result;
     }
@@ -133,10 +166,10 @@ trait FeedFeaturesTrait
     /**
      * Queries for the feed result.
      *
-     * @param int         $type
-     * @param string      $uri
-     * @param string      $query
-     * @param string      $result
+     * @param int $type
+     * @param string $uri
+     * @param string $query
+     * @param string $result
      * @param string|null $maxId
      * @return FeedMessage|Promise <SearchResultMessage>
      */
@@ -152,7 +185,7 @@ trait FeedFeaturesTrait
 
             /** @var GenericRequest $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
-            $request = request(sprintf($uri, $tag), $message)(
+            $request = request(sprintf($uri, $tag), $message, 'GET')(
                 $this,
                 $this->session,
                 $this->client
@@ -169,7 +202,7 @@ trait FeedFeaturesTrait
     /**
      * Creates a generic request.
      *
-     * @param string   $uri
+     * @param string $uri
      * @param Envelope $message
      * @return GenericRequest
      */

@@ -73,5 +73,10 @@ class ItemType
     /**
      * @var string
      */
+    const REELS_MEDIA = 'reels_media';
+
+    /**
+     * @var string
+     */
     const LINK = 'link';
 }
