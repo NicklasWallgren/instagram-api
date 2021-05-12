@@ -4,5 +4,7 @@ vendor/
 # travis
 travis/
 
+TODO.md
+
 .php_cs
 .php_cs.cache

@@ -1,18 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK\Client\Features;
 
-use Exception;
-use Instagram\SDK\DTO\Messages\Direct\DirectSendItemMessage;
-use Instagram\SDK\DTO\Messages\Direct\InboxMessage;
-use Instagram\SDK\DTO\Messages\Direct\SeenMessage;
-use Instagram\SDK\DTO\Messages\Direct\ThreadMessage;
-use Instagram\SDK\Requests\Direct\InboxRequest;
-use Instagram\SDK\Requests\Direct\ThreadRequest;
-use Instagram\SDK\Requests\GenericRequest;
-use Instagram\SDK\Support\Promise;
-use function Instagram\SDK\Support\Promises\task;
-use function Instagram\SDK\Support\request;
+use GuzzleHttp\Promise\PromiseInterface;
+use Instagram\SDK\Exceptions\InstagramException;
+use Instagram\SDK\Response\Responses\Direct\DirectSendItemResponse;
+use Instagram\SDK\Response\Responses\Direct\InboxResponse;
+use Instagram\SDK\Response\Responses\Direct\SeenResponse;
+use Instagram\SDK\Response\Responses\Direct\ThreadResponse;
 
 /**
  * Trait DirectFeaturesTrait
@@ -26,29 +23,17 @@ trait DirectFeaturesTrait
     use DefaultFeaturesTrait;
 
     /**
-     * @var string The message broadcast uri
-     */
-    private static $URI_BROADCAST_MESSAGE = 'direct_v2/threads/broadcast/text/';
-
-    /**
-     * @var string The thread seen uri
-     */
-    private static $URI_SEEN = 'direct_v2/threads/%s/items/%s/seen/';
-
-    /**
-     * Retrieves the inbox.
+     * Retrieve the {@link InboxResponse}.
      *
-     * @return InboxMessage|Promise<InboxMessage>
-     * @throws Exception
+     * @return PromiseInterface<InboxResponse|InstagramException>
      */
-    public function inbox()
+    public function inbox(): PromiseInterface
     {
-        return task(function (): Promise {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
+        return $this->authenticated(function (): PromiseInterface {
+            $request = $this->buildRequest('direct_v2/inbox/', new InboxResponse(), 'GET');
 
-            return (new InboxRequest($this->getSubject(), $this->session, $this->client))->fire();
-        })($this->getMode());
+            return $this->call($request);
+        });
     }
 
     /**
@@ -56,16 +41,16 @@ trait DirectFeaturesTrait
      *
      * @param string      $id     The thread id
      * @param string|null $cursor The cursor id
-     * @return ThreadMessage|Promise<ThreadMessage>
+     * @return PromiseInterface<ThreadResponse>
      */
-    public function thread(string $id, ?string $cursor = null)
+    public function thread(string $id, ?string $cursor = null): PromiseInterface
     {
-        return task(function () use ($id, $cursor): Promise {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
+        return $this->authenticated(function () use ($id, $cursor): PromiseInterface {
+            $request = $this->buildRequest(sprintf('direct_v2/threads/%s/', $id), new ThreadResponse(), 'GET')
+                ->addQueryParamIfNotNull('cursor', $cursor);
 
-            return (new ThreadRequest($this->getSubject(), $this->session, $this->client, $id, $cursor))->fire();
-        })($this->getMode());
+            return $this->call($request);
+        });
     }
 
     /**
@@ -73,31 +58,20 @@ trait DirectFeaturesTrait
      *
      * @param string $text
      * @param string $threadId
-     * @return DirectSendItemMessage|Promise<DirectSendItemMessage>
+     * @return PromiseInterface<DirectSendItemResponse>
      */
-    public function sendThreadMessage(string $text, string $threadId)
+    public function sendThreadMessage(string $text, string $threadId): PromiseInterface
     {
-        return task(function () use ($text, $threadId): Promise {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
-
-            /** @var GenericRequest $request */
-            $request = request(self::$URI_BROADCAST_MESSAGE, new DirectSendItemMessage())(
-                $this,
-                $this->session,
-                $this->client
-            );
-
-            // Prepare the request payload
-            $request->addPayloadParam('text', $text)
+        return $this->authenticated(function () use ($text, $threadId): PromiseInterface {
+            $request = $this->buildRequest('direct_v2/threads/broadcast/text/', new DirectSendItemResponse())
+                ->addPayloadParam('text', $text)
                 ->addPayloadParam('thread_ids', "[$threadId]")
                 ->addPayloadParam('action', 'send_item')
                 ->addUniqueContext()
-                ->addCSRFTokenAndUserId();
+                ->addCSRFTokenAndUserId($this->session);
 
-            // Invoke the request
-            return $request->fire();
-        })($this->getMode());
+            return $this->call($request);
+        });
     }
 
     /**
@@ -105,32 +79,18 @@ trait DirectFeaturesTrait
      *
      * @param string $threadId
      * @param string $threadItemId
-     * @return SeenMessage|Promise<SeenMessage>
+     * @return PromiseInterface<SeenResponse>
      */
-    public function seen(string $threadId, string $threadItemId)
+    public function seen(string $threadId, string $threadItemId): PromiseInterface
     {
-        return task(function () use ($threadId, $threadItemId): Promise {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
-
-            /**
-             * @var GenericRequest $request
-             */
+        return $this->authenticated(function () use ($threadId, $threadItemId): PromiseInterface {
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
-            $request = request(sprintf(self::$URI_SEEN, $threadId, $threadItemId), new SeenMessage())(
-                $this,
-                $this->session,
-                $this->client
-            );
+            // phpcs:ignore
+            $request = $this->buildRequest(sprintf('direct_v2/threads/%s/items/%s/seen/', $threadId, $threadItemId), new SeenResponse())
+                ->addCSRFToken($this->session)
+                ->addUuid($this->session);
 
-            // Prepare the request payload
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall, PhanUndeclaredMethod
-            $request
-                ->addCSRFToken()
-                ->addUuid();
-
-            // Invoke the request
-            return $request->fire();
-        })($this->getMode());
+            return $this->call($request);
+        });
     }
 }

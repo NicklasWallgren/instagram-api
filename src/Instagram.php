@@ -1,88 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK;
 
 use Instagram\SDK\Client\Client;
-use Instagram\SDK\Devices\Interfaces\DeviceBuilderInterface;
-use Instagram\SDK\Requests\Traits\MakeRequestsAccessible;
-use Instagram\SDK\Session\Session;
+use Instagram\SDK\Traits\MakeRequestsAccessible;
 
 /**
  * Class Instagram
  *
  * @package Instagram\SDK
  */
-class Instagram
+final class Instagram
 {
 
     use MakeRequestsAccessible;
 
-    /**
-     * @var bool The promise mode flag
-     */
-    public const MODE_PROMISE = false;
-
-    /**
-     * @var bool The unwrap mode flag
-     */
-    public const MODE_UNWRAP = true;
-
-    /**
-     * @var Client The Instagram API client
-     */
-    public $client;
+    /** @var Client */
+    private $client;
 
     /**
      * Instagram constructor.
      *
-     * @param DeviceBuilderInterface|null $builder
+     * @param Client $client
      */
-    public function __construct(?DeviceBuilderInterface $builder = null)
+    public function __construct(Client $client)
     {
-        $this->client = new Client($builder);
+        $this->client = $client;
     }
 
     /**
-     * Sets the current session.
+     * Create a new {@link InstagramBuilder}.
      *
-     * @param Session $session
-     * @return static
+     * @return InstagramBuilder
      */
-    public function setSession(Session $session)
+    public static function builder(): InstagramBuilder
     {
-        $this->client->setSession($session);
-
-        return $this;
+        return new InstagramBuilder();
     }
 
     /**
-     * Sets the result mode.
-     *
-     * @param bool $mode
-     * @return static
-     */
-    public function setMode(bool $mode): self
-    {
-        $this->client->setMode($mode);
-
-        return $this;
-    }
-
-    /**
-     * Sets the proxy uri.
-     *
-     * @param string $uri
-     * @return self
-     */
-    public function setProxyUri(string $uri): self
-    {
-        $this->client->setProxyUri($uri);
-
-        return $this;
-    }
-
-    /**
-     * Returns the client.
+     * Returns the {@link Client}.
      *
      * @return Client
      */

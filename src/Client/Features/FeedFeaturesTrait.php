@@ -1,19 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK\Client\Features;
 
-use Exception;
+use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
-use Instagram\SDK\DTO\Envelope;
-use Instagram\SDK\DTO\Messages\Feed\FeedMessage;
-use Instagram\SDK\DTO\Messages\Feed\Timeline;
-use Instagram\SDK\Instagram;
-use Instagram\SDK\Requests\Feed\TimelineOptions;
-use Instagram\SDK\Requests\GenericRequest;
-use Instagram\SDK\Support\Promise;
-use function Instagram\SDK\Support\Promises\rejection_for;
-use function Instagram\SDK\Support\Promises\task;
-use function Instagram\SDK\Support\request;
+use Instagram\SDK\Exceptions\InstagramException;
+use Instagram\SDK\Request\Payload\Feed\TimelineRequestPayload;
+use Instagram\SDK\Response\Responses\Feed\FeedResponse;
+use Instagram\SDK\Response\Responses\Feed\TimelineResponse;
 use const Instagram\SDK\TYPE_HASHTAG;
 use const Instagram\SDK\TYPE_USER;
 
@@ -28,68 +24,46 @@ trait FeedFeaturesTrait
     use DefaultFeaturesTrait;
 
     /**
-     * @var string The hastag feed uri
-     */
-    private static $URI_HASHTAG_FEED = 'feed/tag/%s/';
-
-    /**
-     * @var string The user feed uri
-     */
-    private static $URI_USER_FEED = 'feed/user/%s/';
-
-    /**
-     * @var string The timeline uri
-     */
-    private static $URI_TIMELINE_FEED = 'feed/timeline/';
-
-    /**
-     * Retrieves feed by hashtag.
+     * Retrieve feed by hashtag.
      *
-     * @param string $tag
-     * @return FeedMessage|Promise<FeedMessage>
-     * @throws Exception
+     * @param string $hashTag
+     * @return PromiseInterface<FeedResponse|InstagramException>
      */
-    public function feedByHashtag(string $tag)
+    public function feedByHashtag(string $hashTag): PromiseInterface
     {
-        return $this->feed(TYPE_HASHTAG, $tag);
+        return $this->feed(TYPE_HASHTAG, $hashTag);
     }
 
     /**
-     * Retrieves feed by user.
+     * Retrieve feed by user id.
      *
-     * @param string $user
-     * @return FeedMessage|Promise<FeedMessage>
-     * @throws Exception
+     * @param string $userId
+     * @return PromiseInterface<FeedResponse|InstagramException>
      */
-    public function feedByUser(string $user)
+    public function feedByUser(string $userId): PromiseInterface
     {
-        return $this->feed(TYPE_USER, $user);
+        return $this->feed(TYPE_USER, $userId);
     }
 
     /**
-     * Retrieves the feed for a specified hashtag.
+     * Retrieve the feed for a specified hashtag.
      *
      * @param int         $type
      * @param string      $query
      * @param string|null $maxId
-     * @return FeedMessage|Promise<FeedMessage>
-     * @throws Exception
+     * @return PromiseInterface<FeedResponse|InstagramException>
      */
-    public function feed(int $type, string $query, ?string $maxId = null)
+    public function feed(int $type, string $query, ?string $maxId = null): PromiseInterface
     {
         switch ($type) {
             case TYPE_HASHTAG:
-                $result = $this->queryFeed($type, self::$URI_HASHTAG_FEED, $query, FeedMessage::class, $maxId);
-
+                $result = $this->queryFeed($type, 'feed/tag/%s/', $query, $maxId);
                 break;
             case TYPE_USER:
-                $result = $this->queryFeed($type, self::$URI_USER_FEED, $query, FeedMessage::class, $maxId);
-
+                $result = $this->queryFeed($type, 'feed/user/%s/', $query, $maxId);
                 break;
-
             default:
                 $result = $this->getInvalidFeedTypeError();
-
                 break;
         }
 
@@ -97,103 +71,57 @@ trait FeedFeaturesTrait
     }
 
     /**
-     * Retrieves the timeline feed for the current user.
+     * Retrieve the timeline feed for the current user.
      *
-     * @param TimelineOptions $options
-     * @return Promise|Promise<Timeline>
+     * @param TimelineRequestPayload $payload
+     * @return PromiseInterface<TimelineResponse|InstagramException>
      */
-    public function timeline(TimelineOptions $options)
+    public function timeline(TimelineRequestPayload $payload): PromiseInterface
     {
-        return task(function () use ($options): Promise {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
-
-            /** @var GenericRequest $request */
-            $request = request(self::$URI_TIMELINE_FEED, new Timeline())(
-                $this,
-                $this->session,
-                $this->client
-            );
-
-            // Prepare the request payload
+        return $this->authenticated(function () use ($payload): PromiseInterface {
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall, PhanUndeclaredMethod
-            $request
-                ->addCSRFToken()
-                ->addUuid()
-                ->addPhoneId()
-                ->addSessionId()
+            $request = $this->buildRequest('feed/timeline/', new TimelineResponse())
+                ->addCSRFToken($this->session)
+                ->addUuid($this->session)
+                ->addPhoneId($this->session)
+                ->addSessionId($this->session)
                 ->addPayloadParam('reason', 'cold_start_fetch')
-                ->addPayloadOptions($options);
+                ->addPayloadParams($payload);
 
-            // Invoke the request
-            return $request->fire();
-        })($this->getMode());
+            return $this->call($request);
+        });
     }
 
     /**
-     * Queries for the feed result.
+     * Query for the feed result.
      *
      * @param int         $type
      * @param string      $uri
      * @param string      $query
-     * @param string      $result
      * @param string|null $maxId
-     * @return FeedMessage|Promise <SearchResultMessage>
+     * @return PromiseInterface<FeedResponse|InstagramException>
      */
-    protected function queryFeed(int $type, string $uri, string $query, string $result, ?string $maxId)
+    protected function queryFeed(int $type, string $uri, string $query, ?string $maxId): PromiseInterface
     {
-        // Prepare the tag query
-        $tag = rawurlencode($query);
+        return $this->authenticated(function () use ($type, $uri, $query, $maxId): PromiseInterface {
+            $response = new FeedResponse($tag = rawurlencode($query), $type);
 
-        return task(function () use ($type, $uri, $tag, $maxId, $result): Promise {
-            $message = new $result();
-            $message->setQuery($tag);
-            $message->setType($type);
-
-            /** @var GenericRequest $request */
             // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
-            $request = request(sprintf($uri, $tag), $message)(
-                $this,
-                $this->session,
-                $this->client
-            );
+            $request = $this->buildRequest(sprintf($uri, $tag), $response)
+                ->addQueryParamIfNotNull('max_id', $maxId);
 
-            // Prepare the request parameters
-            $request->addQueryParamIfNotNull('max_id', $maxId);
-
-            // Invoke the request
-            return $request->fire();
-        })($this->getMode());
-    }
-
-    /**
-     * Creates a generic request.
-     *
-     * @param string   $uri
-     * @param Envelope $message
-     * @return GenericRequest
-     */
-    protected function request(string $uri, Envelope $message): GenericRequest
-    {
-        return request($uri, $message)(
-            $this,
-            $this->session,
-            $this->client
-        );
+            return $this->call($request);
+        });
     }
 
     /**
      * Returns the invalid type error.
      *
      * @return PromiseInterface
-     * @throws Exception
      */
     protected function getInvalidFeedTypeError(): PromiseInterface
     {
-        if ($this->getMode() === Instagram::MODE_PROMISE) {
-            return rejection_for('Invalid type provided');
-        }
-
-        throw new Exception('Invalid type provided');
+        // @phan-suppress-next-line PhanDeprecatedFunction
+        return Create::rejectionFor('Invalid feed type provided');
     }
 }

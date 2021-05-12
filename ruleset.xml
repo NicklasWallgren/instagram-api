@@ -2,4 +2,9 @@
 <ruleset>
     <rule ref="PSR2"/>
     <exclude-pattern>src/Support/Promise.php</exclude-pattern>
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="160"/>
+        </properties>
+    </rule>
 </ruleset>

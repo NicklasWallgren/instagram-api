@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK\Client\Features;
 
-use Exception;
-use Instagram\SDK\Requests\General\HeaderRequest;
-use Instagram\SDK\Requests\Support\SignatureSupport;
-use Instagram\SDK\Support\Promise;
-use function Instagram\SDK\Support\Promises\rejection_for;
-use function Instagram\SDK\Support\Promises\task;
-use function Instagram\SDK\Support\uuid;
+use GuzzleHttp\Promise\PromiseInterface;
+use Instagram\SDK\Exceptions\InstagramException;
+use Instagram\SDK\Request\Utils\SignatureUtils;
+use Instagram\SDK\Response\Responses\Common\HeaderResponse;
+use Instagram\SDK\Utils\PromiseUtils;
 
 /**
  * Trait GeneralFeaturesTrait
@@ -21,30 +21,25 @@ trait GeneralFeaturesTrait
     use DefaultFeaturesTrait;
 
     /**
-     * Returns the headers containing the initial CSRF token.
+     * Return the headers containing the initial CSRF token.
      *
-     * @throws Exception
-     * @return Promise<HeaderMessage>
+     * @return PromiseInterface<HeaderResponse|InstagramException>
      */
-    protected function headers()
+    protected function headers(): PromiseInterface
     {
-        return task(function (): Promise {
-            // Check whether the user is authenticated or not
-            if (!$this->isSessionAvailable()) {
-                return rejection_for('The session is not available. Please authenticate first');
-            }
+        // @phan-suppress-next-line PhanDeprecatedFunction
+        return PromiseUtils::task(function (): PromiseInterface {
+            $request = $this->buildRequest('si/fetch_headers/', new HeaderResponse());
 
-            return (new HeaderRequest(uuid(SignatureSupport::TYPE_COMBINED), $this->session, $this->client))->fire();
-        })($this->getMode());
-    }
+            $payload = [
+                'challenge_type' => 'signup',
+                'guid'           => SignatureUtils::uuid(SignatureUtils::TYPE_COMBINED),
+            ];
 
-    /**
-     * Returns true if session is available, false otherwise.
-     *
-     * @return bool
-     */
-    protected function isSessionAvailable(): bool
-    {
-        return $this->session !== null;
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
+            $request->setPayload($payload);
+
+            return $this->call($request);
+        });
     }
 }

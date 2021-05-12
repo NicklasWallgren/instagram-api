@@ -1,20 +1,20 @@
-# Instagram Private API
-
-[![PHP7.1 Ready](https://img.shields.io/badge/PHP71-ready-green.svg)][link-packagist]
+[![PHP7.2 Ready](https://img.shields.io/badge/PHP72-ready-green.svg)][link-packagist]
 [![Latest Stable Version](https://poser.pugx.org/nicklasw/instagram-api/v/stable)](https://packagist.org/packages/nicklasw/instagram-api)
 [![Latest Unstable Version](https://poser.pugx.org/nicklasw/instagram-api/v/unstable)](https://packagist.org/packages/nicklasw/instagram-api)
 [![Build Status](https://travis-ci.org/NicklasWallgren/instagram-api.svg?branch=master)](https://travis-ci.org/NicklasWallgren/instagram-api)
 [![License](https://poser.pugx.org/nicklasw/instagram-api/license)](https://packagist.org/packages/nicklasw/instagram-api)
 
-Instagram Private API library
+# Instagram Private API Library
+To learn how to use this library, please refer to the source code as well as the [examples](./examples).
 
-# Installation
-You can install this by using composer 
-```
+## Installation
+
+You can install this library by using composer
+```bash
 composer require nicklasw/instagram-api
 ```
 
-# Features
+## Features
 - Supports asynchronous and parallel requests
 - Easily extendable with new requests
 - Session and device management
@@ -22,154 +22,44 @@ composer require nicklasw/instagram-api
 - Access direct feeds (inbox, thread)
 - Much more
 
-# Usage
+## Example
 
-## Promise pattern
-
-### Basic example
 ```php
-use Instagram\SDK\Responses\Exceptions\ApiResponseException;
-use Instagram\SDK\DTO\Messages\InboxMessage;
-use Instagram\SDK\DTO\Messages\SessionMessage;
+<?php
+
 use Instagram\SDK\Instagram;
 
 require_once 'vendor/autoload.php';
 
-$instagram = new Instagram();
-
-// Set result mode
-$instagram->setMode(Instagram::MODE_PROMISE);
-
-$instagram
-    ->login('INSERT_USERNAME', 'INSERT_PASSWORD')
-    ->then(function (SessionMessage $envelope) use ($instagram) {
-        return $instagram->inbox();
-    })->then(function (InboxMessage $envelope) {
-        // Outputs the threads
-        var_dump($envelope->getInbox()->getThreads());
-    })->otherwise(function (ApiResponseException $exception) {
-        // Outputs the error message
-        var_dump($exception->getEnvelope()->getMessage());
-    })
-    ->wait();
-```
-
-### Flat promise example
-
-
-```php
-use Instagram\SDK\Responses\Exceptions\ApiResponseException;
-use Instagram\SDK\DTO\Messages\InboxMessage;
-use Instagram\SDK\DTO\Messages\SessionMessage;
-use Instagram\SDK\Instagram;
-
-require_once 'vendor/autoload.php';
-
-$instagram = new Instagram();
-
-// Set result mode
-$instagram->setMode(Instagram::MODE_PROMISE);
-
-$instagram
-    ->login('INSERT_USERNAME', 'INSERT_PASSWORD')
-    ->wait();
-
-// Flat promise chain
-$threads = $instagram
-    ->inbox()
-    ->getInbox()
-    ->getThreads()
-    ->wait();
-
-```
-
-## Unwrap pattern
-
-### Basic example
-```php
-use Instagram\SDK\DTO\General\ItemType;
-use Instagram\SDK\Instagram;
-
-require_once 'vendor/autoload.php';
-
-// Initialize the Instagram library
-$instagram = new Instagram();
-
-// Authenticate using username and password
+$instagram = Instagram::builder()->build();
 $instagram->login('INSERT_USERNAME', 'INSERT_PASSWORD');
 
-// Invoke the request
-$envelope = $instagram->inbox();
+$response = $instagram->inbox();
 
-// Retrieve the inbox
-$inbox = $envelope->getInbox();
-
-// Retrieve the first thread in the inbox
-if(!$thread = current($inbox->getThreads())) {
-    // No thread found
-    return;
-}
-
-// Retrieve the whole thread including thread items
-$thread->whole();
-
-// Iterate through the list of items
-foreach ($thread->getItems() as $item) {
-    // Check whether the item is of type media
-    if ($item->isItemType(ItemType::MEDIA)) {
-        // Retrieve the images
-        $images = $item->getMedia()->getImages()->getCandidates();
-
-        foreach ($images as $image) {
-            // Output the image url
-            var_dump($image->getUrl());
-        }
-    }
+foreach ($response->getInbox()->getThreads() as $thread) {
+    $thread->sendMessage("Hello");
 }
 ```
 
-## Exception classes
-- ApiResponseException
-    - Generic API response exception, includes envelope
-- BadPasswordException
-- InvalidUserException
-- RateLimitException
-- InvalidResponseException
-    - Generic HTTP response exception
+## Changelog
 
-
-## Proxy
-
-```php
-require_once '/vendor/autoload.php';
-
-// Initialize the Instagram library, pass the client
-$instagram = new Instagram();
-
-$instagram->setProxyUri('INSERT_PROXY');
-
-// Authenticate using username and password
-$envelope = $instagram->login('INSERT_USERNAME', 'INSERT_PASSWORD')->wait();
-
-// Output the response
-var_dump($envelope);
-
-```
+Please see the [changelog](./CHANGELOG.md) for a release history and indications on how to upgrade from one version to another.
 
 ## Contributing
-  - Fork it!
-  - Create your feature branch: `git checkout -b my-new-feature`
-  - Commit your changes: `git commit -am 'Useful information about your new features'`
-  - Push to the branch: `git push origin my-new-feature`
-  - Submit a pull request
 
-## Contributors
-  - [Nicklas Wallgren](https://github.com/NicklasWallgren)
-  - [All Contributors][link-contributors]
+If you find any problems or have suggestions about this crate, please submit an issue. Moreover, any pull request, code review and feedback are welcome.
 
-## Credits
-- [mgp25](https://github.com/mgp25) for the inspiration
+### Code Guide
+
+We use GitHub Actions to make sure the codebase is consistent (`composer run lint-fix && composer run code-analyze`). We try to keep comments at a maximum of
+160 characters of length and code at 120.
+
+## License
+
+[MIT](./LICENSE)
 
 [ico-downloads]: https://img.shields.io/packagist/dt/nicklasw/instagram-api.svg?style=flat-square
+
 [link-packagist]: https://packagist.org/packages/nicklasw/instagram-api
+
 [link-contributors]: ../../contributors

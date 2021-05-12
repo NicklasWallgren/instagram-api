@@ -1,15 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK\Client\Features;
 
-use Instagram\SDK\DTO\Messages\Discover\ChannelsMessage;
-use Instagram\SDK\DTO\Messages\Discover\ExploreMessage;
-use Instagram\SDK\DTO\Messages\Discover\TopLiveMessage;
-use Instagram\SDK\Requests\Discover\ChannelsRequest;
-use Instagram\SDK\Requests\Discover\ExploreRequest;
-use Instagram\SDK\Requests\Discover\TopLiveRequest;
-use Instagram\SDK\Support\Promise;
-use function Instagram\SDK\Support\Promises\task;
+use GuzzleHttp\Promise\PromiseInterface;
+use Instagram\SDK\Exceptions\InstagramException;
+use Instagram\SDK\Response\Responses\Discover\ChannelsResponse;
+use Instagram\SDK\Response\Responses\Discover\ExploreResponse;
+use Instagram\SDK\Response\Responses\Discover\TopLiveResponse;
 
 /**
  * Trait DiscoverFeaturesTrait
@@ -22,47 +21,44 @@ trait DiscoverFeaturesTrait
     use DefaultFeaturesTrait;
 
     /**
-     * Retrieves the discover explore items.
+     * Retrieve the discover explore items.
      *
-     * @return ExploreMessage|Promise<ExploreMessage>
+     * @return PromiseInterface<ExploreResponse|InstagramException>
      */
-    public function explore()
+    public function explore(): PromiseInterface
     {
-        return task(function (): Promise {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
+        return $this->authenticated(function (): PromiseInterface {
+            $request = $this->buildRequest('discover/explore/', new ExploreResponse(), 'GET');
 
-            return (new ExploreRequest($this->getSubject(), $this->session, $this->client))->fire();
-        })($this->getMode());
+            return $this->call($request);
+        });
     }
 
     /**
-     * Retrieves the discover top lives items.
+     * Retrieve the discover top lives items.
      *
-     * @return TopLiveMessage|Promise<TopLiveMessage>
+     * @return PromiseInterface<TopLiveResponse|InstagramException>
      */
-    public function topLives()
+    public function topLives(): PromiseInterface
     {
-        return task(function (): Promise {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
+        return $this->authenticated(function (): PromiseInterface {
+            $request = $this->buildRequest('discover/top_live/', new TopLiveResponse(), 'GET');
 
-            return (new TopLiveRequest($this->getSubject(), $this->session, $this->client))->fire();
-        })($this->getMode());
+            return $this->call($request);
+        });
     }
 
     /**
-     * Retrieves the discover channels items.
+     * Retrieve the discover channels items.
      *
-     * @return ChannelsMessage|Promise<ChannelsMessage>
+     * @return PromiseInterface<ChannelsResponse|InstagramException>
      */
-    public function channels()
+    public function channels(): PromiseInterface
     {
-        return task(function (): Promise {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
+        return $this->authenticated(function (): PromiseInterface {
+            $request = $this->buildRequest('discover/channels_home/', new ChannelsResponse(), 'GET');
 
-            return (new ChannelsRequest($this->getSubject(), $this->session, $this->client))->fire();
-        })($this->getMode());
+            return $this->call($request);
+        });
     }
 }

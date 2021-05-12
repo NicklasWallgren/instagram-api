@@ -1,16 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instagram\SDK\Client\Features;
 
-use Instagram\SDK\DTO\Envelope;
-use Instagram\SDK\DTO\Messages\Media\CommentMessage;
-use Instagram\SDK\Requests\GenericRequest;
-use Instagram\SDK\Requests\Http\Builders\GenericRequestBuilder;
-use Instagram\SDK\Requests\Http\Factories\SerializerFactory;
-use Instagram\SDK\Support\Promise;
-use function Instagram\SDK\Support\Promises\task;
-use function Instagram\SDK\Support\request;
-use function Instagram\SDK\Support\uuid;
+use GuzzleHttp\Promise\PromiseInterface;
+use Instagram\SDK\Exceptions\InstagramException;
+use Instagram\SDK\Request\Http\Factories\PayloadSerializerFactory;
+use Instagram\SDK\Request\Utils\SignatureUtils;
+use Instagram\SDK\Response\Responses\Common\GeneralResponse;
+use Instagram\SDK\Response\Responses\Media\CommentResponse;
+use Instagram\SDK\Response\Responses\ResponseEnvelope;
 
 /**
  * Trait MediaFeaturesTrait
@@ -47,70 +47,42 @@ trait MediaFeaturesTrait
      * Likes a media item.
      *
      * @param string $mediaId
-     * @return Envelope|Promise<Envelope>
+     * @return PromiseInterface<GeneralResponse|InstagramException>
      */
-    public function like(string $mediaId)
+    public function like(string $mediaId): PromiseInterface
     {
-        return task(function () use ($mediaId): Promise {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
-
-            /**
-             * @var GenericRequest $request
-             */
-            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
-            $request = request(sprintf(self::$URI_LIKE, $mediaId), new Envelope())(
-                $this,
-                $this->session,
-                $this->client
-            );
-
-            // Prepare the request payload
-            $request
-                ->addCSRFTokenAndUserId()
-                ->addUuidAndUid()
+        return $this->authenticated(function () use ($mediaId): PromiseInterface {
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString, PhanThrowTypeAbsentForCall
+            $request = $this->buildRequest(sprintf(self::$URI_LIKE, $mediaId), new GeneralResponse())
+                ->addCSRFTokenAndUserId($this->session)
+                ->addUuidAndUid($this->session)
                 ->addPayloadParam('module_name', 'photo_view')
                 ->addPayloadParam('media_id', $mediaId)
-                ->setSerializerType(SerializerFactory::SIGNED);
+                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
 
-            // Invoke the request
-            return $request->fire();
-        })($this->getMode());
+            return $this->call($request);
+        });
     }
 
     /**
      * Unlike a previous liked media item.
      *
      * @param string $mediaId
-     * @return Envelope|Promise<Envelope>
+     * @return PromiseInterface<GeneralResponse|InstagramException>
      */
-    public function unlike(string $mediaId)
+    public function unlike(string $mediaId): PromiseInterface
     {
-        return task(function () use ($mediaId): Promise {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
-
-            /**
-             * @var GenericRequest $request
-             */
-            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
-            $request = request(sprintf(self::$URI_UNLIKE, $mediaId), new Envelope())(
-                $this,
-                $this->session,
-                $this->client
-            );
-
-            // Prepare the request payload
-            $request
-                ->addCSRFTokenAndUserId()
-                ->addUuidAndUid()
+        return $this->authenticated(function () use ($mediaId): PromiseInterface {
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString, PhanThrowTypeAbsentForCall
+            $request = $this->buildRequest(sprintf(self::$URI_UNLIKE, $mediaId), new GeneralResponse())
+                ->addCSRFTokenAndUserId($this->session)
+                ->addUuidAndUid($this->session)
                 ->addPayloadParam('module_name', 'photo_view')
                 ->addPayloadParam('media_id', $mediaId)
-                ->setSerializerType(SerializerFactory::SIGNED);
+                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
 
-            // Invoke the request
-            return $request->fire();
-        })($this->getMode());
+            return $this->call($request);
+        });
     }
 
     /**
@@ -118,69 +90,41 @@ trait MediaFeaturesTrait
      *
      * @param string $mediaId
      * @param string $comment
-     * @return CommentMessage|Promise<CommentMessage>
+     * @return PromiseInterface<CommentResponse|InstagramException>
      */
-    public function comment(string $mediaId, string $comment)
+    public function comment(string $mediaId, string $comment): PromiseInterface
     {
-        return task(function () use ($mediaId, $comment): Promise {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
-
-            /**
-             * @var GenericRequest $request
-             */
-            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
-            $request = request(sprintf(self::$URI_ADD_COMMENT, $mediaId), new CommentMessage())(
-                $this,
-                $this->session,
-                $this->client
-            );
-
-            // Prepare the request payload
-            $request
-                ->addCSRFToken()
-                ->addUuidAndUid()
+        return $this->authenticated(function () use ($mediaId, $comment): PromiseInterface {
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString, PhanThrowTypeAbsentForCall
+            $request = $this->buildRequest(sprintf(self::$URI_ADD_COMMENT, $mediaId), new CommentResponse())
+                ->addCSRFToken($this->session)
+                ->addUuidAndUid($this->session)
                 ->addPayloadParam('comment_text', $comment)
-                ->addPayloadParam('idempotence_token', uuid())
-                ->setSerializerType(SerializerFactory::SIGNED);
+                ->addPayloadParam('idempotence_token', SignatureUtils::uuid())
+                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
 
-            // Invoke the request
-            return $request->fire();
-        })($this->getMode());
+            return $this->call($request);
+        });
     }
 
     /**
-     * Deletes a previous comment.
+     * Delete a previous comment.
      *
      * @param string $mediaId
      * @param int    $commentId
-     * @return Envelope|Promise<Envelope>
+     * @return PromiseInterface<GeneralResponse|InstagramException>
      */
-    public function deleteComment(string $mediaId, int $commentId)
+    public function deleteComment(string $mediaId, int $commentId): PromiseInterface
     {
-        return task(function () use ($mediaId, $commentId): Promise {
-            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
-            $this->checkPrerequisites();
-
-            /**
-             * @var GenericRequest $request
-             */
-            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString
-            $request = request(sprintf(self::$URI_DELETE_COMMENT, $mediaId), new Envelope())(
-                $this,
-                $this->session,
-                $this->client
-            );
-
-            // Prepare the request payload
-            $request
-                ->addCSRFToken()
-                ->addUuidAndUid()
+        return $this->authenticated(function () use ($mediaId, $commentId): PromiseInterface {
+            // @phan-suppress-next-line PhanPluginPrintfVariableFormatString, PhanThrowTypeAbsentForCall
+            $request = $this->buildRequest(sprintf(self::$URI_DELETE_COMMENT, $mediaId), new GeneralResponse())
+                ->addCSRFToken($this->session)
+                ->addUuidAndUid($this->session)
                 ->addPayloadParam('comment_ids_to_delete', (string)$commentId)
-                ->setSerializerType(SerializerFactory::SIGNED);
+                ->setPayloadSerializerType(PayloadSerializerFactory::TYPE_SIGNED);
 
-            // Invoke the request
-            return $request->fire();
-        })($this->getMode());
+            return $this->call($request);
+        });
     }
 }
