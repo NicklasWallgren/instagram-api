@@ -3,6 +3,7 @@
 namespace Instagram\SDK\DTO\Hashtag;
 
 use Instagram\SDK\Client\Client;
+use Instagram\SDK\DTO\Traits\PropertiesTrait;
 use Instagram\SDK\Responses\Serializers\Interfaces\OnItemDecodeInterface;
 use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 
@@ -14,6 +15,7 @@ use Instagram\SDK\Responses\Serializers\Traits\OnPropagateDecodeEventTrait;
 class Item implements OnItemDecodeInterface
 {
 
+    use PropertiesTrait;
     use OnPropagateDecodeEventTrait;
 
     /**
