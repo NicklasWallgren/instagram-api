@@ -66,6 +66,16 @@ final class User implements UserInterface, OnResponseDecodeInterface
     private $hasAnonymousProfilePicture;
 
     /**
+     * @var int
+     */
+    private $followerCount;
+
+    /**
+     * @var int
+     */
+    private $followingCount;
+
+    /**
      * @var Client
      */
     private $client;
@@ -132,6 +142,22 @@ final class User implements UserInterface, OnResponseDecodeInterface
     public function hasAnonymousProfilePicture(): bool
     {
         return $this->hasAnonymousProfilePicture;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFollowerCount(): int
+    {
+        return $this->followerCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFollowingCount(): int
+    {
+        return $this->followingCount;
     }
 
     /**
