@@ -53,7 +53,11 @@ abstract class AbstractResponseSerializer implements ResponseSerializerInterface
             ->setReaderContext(new OnDecodeContext($client))
             ->build();
 
-        $gson->fromJson((string)$response->getBody(), $responseInstance);
+        $body = (string)$response->getBody();
+
+        $gson->fromJson($body, $responseInstance);
+
+        $responseInstance->setRawResponse($response);
 
         if (!self::isValidResponse($responseInstance)) {
             throw $this->toException($responseInstance->getErrorType(), $responseInstance);

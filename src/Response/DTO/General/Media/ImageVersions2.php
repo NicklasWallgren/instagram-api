@@ -11,7 +11,6 @@ namespace Instagram\SDK\Response\DTO\General\Media;
  */
 final class ImageVersions2
 {
-
     /**
      * @var Image[]
      */
