@@ -24,6 +24,12 @@ final class CarouselMedia
      */
     private $image_versions2;
 
+
+    /**
+     * @var VideoVersion[]
+     */
+    private $video_versions;
+
     /**
      * @var int
      */
@@ -79,6 +85,14 @@ final class CarouselMedia
     public function getImageVersions2(): ImageVersions2
     {
         return $this->image_versions2;
+    }
+
+    /**
+     * @return VideoVersion[]
+     */
+    public function getVideoVersions(): array
+    {
+        return $this->video_versions;
     }
 
     /**
