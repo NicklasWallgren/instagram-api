@@ -164,7 +164,7 @@ final class Item
     private $maxNumVisiblePreviewComments;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $commentCount;
 
@@ -416,9 +416,9 @@ final class Item
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getCommentCount(): int
+    public function getCommentCount(): ?int
     {
         return $this->commentCount;
     }

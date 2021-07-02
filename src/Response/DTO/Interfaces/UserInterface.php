@@ -43,9 +43,9 @@ interface UserInterface
     /**
      * Returns the profile picture url.
      *
-     * @return string
+     * @return string|null
      */
-    public function getProfilePictureUrl(): string;
+    public function getProfilePictureUrl(): ?string;
 
     /**
      * Returns true if the profile has a anonymous profile picture, false otherwise.

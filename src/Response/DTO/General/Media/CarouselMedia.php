@@ -20,13 +20,13 @@ final class CarouselMedia
     private $media_type;
 
     /**
-     * @var ImageVersions2
+     * @var ImageVersions2[]|null
      */
     private $image_versions2;
 
 
     /**
-     * @var VideoVersion[]
+     * @var VideoVersion[]|null
      */
     private $video_versions;
 
@@ -80,17 +80,17 @@ final class CarouselMedia
     }
 
     /**
-     * @return ImageVersions2
+     * @return ImageVersions2[]|null
      */
-    public function getImageVersions2(): ImageVersions2
+    public function getImageVersions2(): ?array
     {
         return $this->image_versions2;
     }
 
     /**
-     * @return VideoVersion[]
+     * @return VideoVersion[]|null
      */
-    public function getVideoVersions(): array
+    public function getVideoVersions(): ?array
     {
         return $this->video_versions;
     }

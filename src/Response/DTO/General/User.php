@@ -113,9 +113,9 @@ final class User implements UserInterface, OnResponseDecodeInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getProfilePictureUrl(): string
+    public function getProfilePictureUrl(): ?string
     {
         return $this->profilePictureUrl;
     }

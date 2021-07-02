@@ -25,10 +25,10 @@ final class Location
     /** @var string */
     private $city;
 
-    /** @var float */
+    /** @var float|null */
     private $lng;
 
-    /** @var float */
+    /** @var float|null */
     private $lat;
 
     /** @var bool */
@@ -91,17 +91,17 @@ final class Location
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getLng(): float
+    public function getLng(): ?float
     {
         return $this->lng;
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getLat(): float
+    public function getLat(): ?float
     {
         return $this->lat;
     }
