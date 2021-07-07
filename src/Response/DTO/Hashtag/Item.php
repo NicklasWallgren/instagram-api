@@ -344,9 +344,9 @@ final class Item
     }
 
     /**
-     * @return Caption
+     * @return Caption|null
      */
-    public function getCaption(): Caption
+    public function getCaption(): ?Caption
     {
         return $this->caption;
     }
