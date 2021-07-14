@@ -15,6 +15,7 @@ use function Instagram\SDK\Support\Promises\rejection_for;
 use function Instagram\SDK\Support\Promises\task;
 use function Instagram\SDK\Support\request;
 use const Instagram\SDK\TYPE_HASHTAG;
+use const Instagram\SDK\TYPE_SINGLE;
 use const Instagram\SDK\TYPE_USER;
 
 /**
@@ -36,6 +37,11 @@ trait FeedFeaturesTrait
      * @var string The user feed uri
      */
     private static $URI_USER_FEED = 'feed/user/%s/';
+
+    /**
+     * @var string The single feed uri
+     */
+    private static $URI_SINGLE_FEED = 'media/%s/info/';
 
     /**
      * @var string The user reels uri
@@ -101,6 +107,10 @@ trait FeedFeaturesTrait
                 break;
             case TYPE_USER:
                 $result = $this->queryFeed($type, self::$URI_USER_FEED, $query, FeedMessage::class, $maxId);
+
+                break;
+            case TYPE_SINGLE:
+                $result = $this->queryFeed($type, self::$URI_SINGLE_FEED, $query, FeedMessage::class, $maxId);
 
                 break;
 

@@ -27,9 +27,15 @@ trait MakeFeedRequestsAccessible
     public static $TYPE_FEED_USER = 2;
 
     /**
+     * @var int The single feed type
+     */
+    public static $TYPE_FEED_SINGLE = 3;
+
+    /**
      * Retrieves feed by hashtag.
      *
-     * @param string $tag
+     * @param  string  $tag
+     *
      * @return FeedMessage|Promise
      * @throws \Exception
      */
@@ -41,7 +47,8 @@ trait MakeFeedRequestsAccessible
     /**
      * Retrieves feed by user.
      *
-     * @param string $userId
+     * @param  string  $userId
+     *
      * @return FeedMessage|Promise
      * @throws \Exception
      */
@@ -53,7 +60,8 @@ trait MakeFeedRequestsAccessible
     /**
      * Retrieves story by user.
      *
-     * @param string $userId
+     * @param  string  $userId
+     *
      * @return FeedMessage|Promise
      * @throws \Exception
      */
@@ -63,11 +71,25 @@ trait MakeFeedRequestsAccessible
     }
 
     /**
+     * Retrieves feed by ID.
+     *
+     * @param  string  $feedId
+     *
+     * @return FeedMessage|Promise
+     * @throws \Exception
+     */
+    public function feedByID(string $feedId)
+    {
+        return $this->feed(self::$TYPE_FEED_SINGLE, $feedId);
+    }
+
+    /**
      * Retrieves feed by type.
      *
-     * @param int         $type
-     * @param string      $query
-     * @param string|null $maxId
+     * @param  int  $type
+     * @param  string  $query
+     * @param  string|null  $maxId
+     *
      * @return FeedMessage|Promise<FeedMessage>
      * @throws \Exception
      */
@@ -79,8 +101,9 @@ trait MakeFeedRequestsAccessible
     /**
      * Retrieves story by type.
      *
-     * @param string      $query
-     * @param string|null $maxId
+     * @param  string  $query
+     * @param  string|null  $maxId
+     *
      * @return FeedMessage|Promise<FeedMessage>
      * @throws \Exception
      */
@@ -92,7 +115,8 @@ trait MakeFeedRequestsAccessible
     /**
      * Retrieves the timeline feed for the current user.
      *
-     * @param TimelineOptions|null $options
+     * @param  TimelineOptions|null  $options
+     *
      * @return Timeline|Promise<Timeline>
      */
     public function timeline(?TimelineOptions $options = null)

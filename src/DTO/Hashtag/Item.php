@@ -69,6 +69,16 @@ class Item implements OnItemDecodeInterface
     protected $imageVersions2;
 
     /**
+     * @var int
+     */
+    protected $carouselMediaCount;
+
+    /**
+     * @var item[]
+     */
+    protected $carouselMedia;
+
+    /**
      * @var float
      */
     protected $originalWidth;
