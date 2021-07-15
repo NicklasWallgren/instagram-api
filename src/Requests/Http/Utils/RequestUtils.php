@@ -26,7 +26,7 @@ class RequestUtils
         $uri = new Uri();
 
         return $uri->withHost($host)
-            ->withPath('api/v1/' . $path)
+            ->withPath('/api/v1/' . $path)
             ->withScheme('https')
             ->withQuery(self::createQuery($queryParameters));
     }
