@@ -59,7 +59,7 @@ final class Item
     private $filterType;
 
     /**
-     * @var ImageVersions2[]|null
+     * @var ImageVersions2|null
      */
     private $imageVersions2;
 
@@ -253,9 +253,9 @@ final class Item
     }
 
     /**
-     * @return ImageVersions2[]
+     * @return ImageVersions2
      */
-    public function getImageVersions2(): ?array
+    public function getImageVersions2(): ?ImageVersions2
     {
         return $this->imageVersions2;
     }
