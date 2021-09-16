@@ -184,6 +184,11 @@ final class Item
     private $organicTrackingToken;
 
     /**
+     * @var string|null
+     */
+    private $productType;
+
+    /**
      * @return int
      */
     public function getTakenAt(): int
@@ -445,5 +450,13 @@ final class Item
     public function getOrganicTrackingToken(): string
     {
         return $this->organicTrackingToken;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductType(): ?string
+    {
+        return $this->productType;
     }
 }
