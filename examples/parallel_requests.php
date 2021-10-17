@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 use GuzzleHttp\Promise\Utils;
 use Instagram\SDK\Instagram;
-
-declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
