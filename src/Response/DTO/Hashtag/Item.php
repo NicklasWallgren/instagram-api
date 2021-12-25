@@ -280,9 +280,9 @@ final class Item
     }
 
     /**
-     * @return object
+     * @return array
      */
-    public function getUser(): object
+    public function getUser(): array
     {
         return $this->user;
     }
