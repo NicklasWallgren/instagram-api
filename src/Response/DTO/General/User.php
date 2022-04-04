@@ -47,6 +47,7 @@ final class User implements UserInterface, OnResponseDecodeInterface
 
     /**
      * @var string
+     * @SerializedName("profile_pic_url")
      */
     private $profilePictureUrl;
 
