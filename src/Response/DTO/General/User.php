@@ -47,8 +47,21 @@ final class User implements UserInterface, OnResponseDecodeInterface
 
     /**
      * @var string
+     * @SerializedName("profile_pic_url")
      */
     private $profilePictureUrl;
+
+    /**
+     * @var ProfilePictureVersion[]
+     * @SerializedName("hd_profile_pic_versions")
+     */
+    private $profilePictureVersions;
+
+    /**
+     * @var ProfilePictureVersion
+     * @SerializedName("hd_profile_pic_url_info")
+     */
+    private $profilePictureUrlInfo;
 
     /**
      * @var FriendshipStatus
