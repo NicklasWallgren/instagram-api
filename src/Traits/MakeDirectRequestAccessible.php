@@ -94,6 +94,31 @@ trait MakeDirectRequestAccessible
     }
 
     /**
+     * Sends a message to a thread.
+     *
+     * @param string $text
+     * @param string $userId
+     * @return DirectSendItemResponse
+     * @throws InstagramException in case of an error
+     */
+    public function sendDirectMessage(string $text, string $userId): DirectSendItemResponse
+    {
+        return PromiseUtils::wait($this->sendDirectMessagePromise($text, $userId));
+    }
+
+    /**
+     * Sends a message to a thread.
+     *
+     * @param string $text
+     * @param string $userId
+     * @return PromiseInterface<DirectSendItemResponse|InstagramException>
+     */
+    public function sendDirectMessagePromise(string $text, string $userId): PromiseInterface
+    {
+        return $this->getClient()->sendDirectMessage($text, $userId);
+    }
+
+    /**
      * Sets thread item as seen.
      *
      * @param string $threadId

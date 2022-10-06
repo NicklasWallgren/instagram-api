@@ -75,6 +75,27 @@ trait DirectFeaturesTrait
     }
 
     /**
+     * Sends a thread message.
+     *
+     * @param string $text
+     * @param string $userId
+     * @return PromiseInterface<DirectSendItemResponse>
+     */
+    public function sendDirectMessage(string $text, string $userId): PromiseInterface
+    {
+        return $this->authenticated(function () use ($text, $userId): PromiseInterface {
+            $request = $this->buildRequest('direct_v2/threads/broadcast/text/', new DirectSendItemResponse())
+                ->addPayloadParam('text', $text)
+                ->addPayloadParam('thread_ids', "[0]")
+                ->addPayloadParam('recipient_users', "[[$userId]]")
+                ->addUniqueContext()
+                ->addCSRFTokenAndUserId($this->session);
+
+            return $this->call($request);
+        });
+    }
+
+    /**
      * Set thread id as seen.
      *
      * @param string $threadId
