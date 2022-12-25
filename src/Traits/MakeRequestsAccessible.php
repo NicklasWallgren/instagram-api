@@ -22,6 +22,7 @@ trait MakeRequestsAccessible
     use MakeSearchRequestsAccessible;
     use MakeFriendshipsRequestsAccessible;
     use MakeMediaRequestsAccessible;
+    use MakeNotesRequestAccessible;
     use MakeUsersRequestAccessible;
 
     /**
