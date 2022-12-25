@@ -23,7 +23,7 @@ final class NotesResponse extends ResponseEnvelope
     /**
      * @return Note[]
      */
-    public function getItems(): Note[]
+    public function getItems(): array
     {
         return $this->items;
     }
