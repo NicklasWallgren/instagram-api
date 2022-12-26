@@ -15,9 +15,9 @@ use Instagram\SDK\Response\Responses\ResponseEnvelope;
 final class NotesResponse extends ResponseEnvelope
 {
 
-    /** 
+    /**
      * @var Note[]
-     */ 
+     */
     private $items;
 
     /**

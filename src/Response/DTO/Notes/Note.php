@@ -27,7 +27,7 @@ final class Note
     /**
      * @var int
      */
-    private $user_id;
+    private $userId;
 
     /**
      * @var User
@@ -42,22 +42,22 @@ final class Note
     /**
      * @var int
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @var int
      */
-    private $expires_at;
+    private $expiresAt;
 
     /**
      * @var bool
      */
-    private $is_emoji_only;
+    private $isEmojiOnly;
 
     /**
      * @var bool
      */
-    private $has_translation;
+    private $hasTranslation;
 
     /**
      * @return int
@@ -80,7 +80,7 @@ final class Note
      */
     public function getUserId(): int
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
     /**
@@ -104,7 +104,7 @@ final class Note
      */
     public function getCreatedAt(): int
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
@@ -112,7 +112,7 @@ final class Note
      */
     public function getExpiresAt(): int
     {
-        return $this->expires_at;
+        return $this->expiresAt;
     }
 
     /**
@@ -120,7 +120,7 @@ final class Note
      */
     public function isEmojiOnly(): bool
     {
-        return $this->is_emoji_only;
+        return $this->isEmojiOnly;
     }
 
     /**
@@ -128,6 +128,6 @@ final class Note
      */
     public function getHasTranslation(): bool
     {
-        return $this->has_translation;
+        return $this->hasTranslation;
     }
 }
