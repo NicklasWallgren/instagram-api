@@ -14,6 +14,7 @@ use Instagram\SDK\Client\Features\FeedFeaturesTrait;
 use Instagram\SDK\Client\Features\FriendshipsFeaturesTrait;
 use Instagram\SDK\Client\Features\GeneralFeaturesTrait;
 use Instagram\SDK\Client\Features\MediaFeaturesTrait;
+use Instagram\SDK\Client\Features\NotesFeaturesTrait;
 use Instagram\SDK\Client\Features\SearchFeaturesTrait;
 use Instagram\SDK\Client\Features\UsersFeaturesTrait;
 use Instagram\SDK\Device\Builders\DeviceBuilder;
@@ -52,6 +53,7 @@ class Client
     use FeedFeaturesTrait;
     use FriendshipsFeaturesTrait;
     use MediaFeaturesTrait;
+    use NotesFeaturesTrait;
     use UsersFeaturesTrait;
 
     /** @var HttpClient */
