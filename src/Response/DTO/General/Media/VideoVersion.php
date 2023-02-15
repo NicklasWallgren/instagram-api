@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Instagram\SDK\DTO\General\Media;
+namespace Instagram\SDK\Response\DTO\General\Media;
 
 /**
  * Class VideoVersion
@@ -11,6 +11,10 @@ namespace Instagram\SDK\DTO\General\Media;
  */
 final class VideoVersion
 {
+    /**
+     * @var string
+     */
+    private $id;
 
     /**
      * @var int
@@ -18,12 +22,12 @@ final class VideoVersion
     private $type;
 
     /**
-     * @var float
+     * @var int
      */
     private $width;
 
     /**
-     * @var float
+     * @var int
      */
     private $height;
 
@@ -31,6 +35,14 @@ final class VideoVersion
      * @var string
      */
     private $url;
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
 
     /**
      * @return int
@@ -41,17 +53,17 @@ final class VideoVersion
     }
 
     /**
-     * @return float
+     * @return int
      */
-    public function getWidth(): float
+    public function getWidth(): int
     {
         return $this->width;
     }
 
     /**
-     * @return float
+     * @return int
      */
-    public function getHeight(): float
+    public function getHeight(): int
     {
         return $this->height;
     }

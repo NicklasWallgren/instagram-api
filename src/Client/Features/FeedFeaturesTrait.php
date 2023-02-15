@@ -11,6 +11,7 @@ use Instagram\SDK\Request\Payload\Feed\TimelineRequestPayload;
 use Instagram\SDK\Response\Responses\Feed\FeedResponse;
 use Instagram\SDK\Response\Responses\Feed\TimelineResponse;
 use const Instagram\SDK\TYPE_HASHTAG;
+use const Instagram\SDK\TYPE_LOCATION;
 use const Instagram\SDK\TYPE_USER;
 
 /**
@@ -32,6 +33,17 @@ trait FeedFeaturesTrait
     public function feedByHashtag(string $hashTag): PromiseInterface
     {
         return $this->feed(TYPE_HASHTAG, $hashTag);
+    }
+
+    /**
+     * Retrieve feed by hashtag.
+     *
+     * @param string $locationId
+     * @return PromiseInterface<FeedResponse|InstagramException>
+     */
+    public function feedByLocation(string $locationId): PromiseInterface
+    {
+        return $this->feed(TYPE_LOCATION, $locationId);
     }
 
     /**
@@ -61,6 +73,9 @@ trait FeedFeaturesTrait
                 break;
             case TYPE_USER:
                 $result = $this->queryFeed($type, 'feed/user/%s/', $query, $maxId);
+                break;
+            case TYPE_LOCATION:
+                $result = $this->queryFeed($type, 'feed/location/%s/', $query, $maxId);
                 break;
             default:
                 $result = $this->getInvalidFeedTypeError();

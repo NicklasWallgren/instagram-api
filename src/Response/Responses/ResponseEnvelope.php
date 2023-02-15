@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Instagram\SDK\Response\Responses;
 
+use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
+
 /**
  * Class ResponseEnvelope
  *
@@ -26,6 +28,9 @@ abstract class ResponseEnvelope implements ResponseInterface
 
     /** @var bool */
     protected $invalidCredentials;
+
+    /** @var HttpResponseInterface|null */
+    protected $rawResponse;
 
     /**
      * @return string|null
@@ -67,5 +72,19 @@ abstract class ResponseEnvelope implements ResponseInterface
     public function isSuccess(): bool
     {
         return $this->status === static::STATUS_SUCCESS;
+    }
+
+    /** @inheritdoc */
+    public function getRawResponse(): HttpResponseInterface
+    {
+        return $this->rawResponse;
+    }
+
+    /** @inheritdoc */
+    public function setRawResponse(HttpResponseInterface $response): ResponseInterface
+    {
+        $this->rawResponse = $response;
+
+        return $this;
     }
 }

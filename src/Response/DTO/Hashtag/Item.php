@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace Instagram\SDK\Response\DTO\Hashtag;
 
+use Instagram\SDK\Response\DTO\General\Media\Caption;
+use Instagram\SDK\Response\DTO\General\Media\CarouselMedia;
 use Instagram\SDK\Response\DTO\General\Media\ImageVersions2;
+use Instagram\SDK\Response\DTO\General\Media\Location;
+use Instagram\SDK\Response\DTO\General\Media\VideoVersion;
+use Instagram\SDK\Response\DTO\General\User;
 
 /**
  * Class Item
@@ -13,7 +18,6 @@ use Instagram\SDK\Response\DTO\General\Media\ImageVersions2;
  */
 final class Item
 {
-
     /**
      * @var float
      */
@@ -55,9 +59,14 @@ final class Item
     private $filterType;
 
     /**
-     * @var ImageVersions2[]
+     * @var ImageVersions2|null
      */
     private $imageVersions2;
+
+    /**
+     * @var CarouselMedia[]|null
+     */
+    private $carousel_media;
 
     /**
      * @var float
@@ -70,7 +79,7 @@ final class Item
     private $originalHeight;
 
     /**
-     * @var object
+     * @var VideoVersion[]|null
      */
     private $videoVersions;
 
@@ -80,22 +89,37 @@ final class Item
     private $hasAudio;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $videoDuration;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $viewCount;
 
     /**
-     * @var object // TODO
+     * @var Location|null
+     */
+    private $location;
+
+    /**
+     * @var float|null
+     */
+    private $lng;
+
+    /**
+     * @var float|null
+     */
+    private $lat;
+
+    /**
+     * @var User
      */
     private $user;
 
     /**
-     * @var object // TODO
+     * @var Caption
      */
     private $caption;
 
@@ -140,7 +164,7 @@ final class Item
     private $maxNumVisiblePreviewComments;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $commentCount;
 
@@ -158,6 +182,11 @@ final class Item
      * @var string
      */
     private $organicTrackingToken;
+
+    /**
+     * @var string|null
+     */
+    private $productType;
 
     /**
      * @return int
@@ -224,11 +253,19 @@ final class Item
     }
 
     /**
-     * @return ImageVersions2[]
+     * @return ImageVersions2
      */
-    public function getImageVersions2(): array
+    public function getImageVersions2(): ?ImageVersions2
     {
         return $this->imageVersions2;
+    }
+
+    /**
+     * @return CarouselMedia[]
+     */
+    public function getCarouselMedia(): ?array
+    {
+        return $this->carousel_media;
     }
 
     /**
@@ -248,9 +285,9 @@ final class Item
     }
 
     /**
-     * @return object
+     * @return VideoVersion[]|null
      */
-    public function getVideoVersions(): object
+    public function getVideoVersions(): ?array
     {
         return $this->videoVersions;
     }
@@ -280,17 +317,41 @@ final class Item
     }
 
     /**
-     * @return object
+     * @return Location|null
      */
-    public function getUser(): object
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getLng(): ?float
+    {
+        return $this->lng;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getLat(): ?float
+    {
+        return $this->lat;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
     {
         return $this->user;
     }
 
     /**
-     * @return object
+     * @return Caption|null
      */
-    public function getCaption(): object
+    public function getCaption(): ?Caption
     {
         return $this->caption;
     }
@@ -360,9 +421,9 @@ final class Item
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getCommentCount(): int
+    public function getCommentCount(): ?int
     {
         return $this->commentCount;
     }
@@ -389,5 +450,13 @@ final class Item
     public function getOrganicTrackingToken(): string
     {
         return $this->organicTrackingToken;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductType(): ?string
+    {
+        return $this->productType;
     }
 }

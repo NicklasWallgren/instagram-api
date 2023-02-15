@@ -12,6 +12,7 @@ use Instagram\SDK\Response\Responses\Feed\FeedResponse;
 use Instagram\SDK\Response\Responses\Feed\TimelineResponse;
 use Instagram\SDK\Utils\PromiseUtils;
 use const Instagram\SDK\TYPE_HASHTAG;
+use const Instagram\SDK\TYPE_LOCATION;
 use const Instagram\SDK\TYPE_USER;
 
 /**
@@ -35,6 +36,18 @@ trait MakeFeedRequestsAccessible
     }
 
     /**
+     * Retrieves feed by location.
+     *
+     * @param string $locationId
+     * @return FeedResponse
+     * @throws InstagramException in case of an error
+     */
+    public function feedByLocation(string $locationId): FeedResponse
+    {
+        return PromiseUtils::wait($this->feedByLocationPromise($locationId));
+    }
+
+    /**
      * Retrieves feed by hashtag.
      *
      * @param string $tag
@@ -43,6 +56,17 @@ trait MakeFeedRequestsAccessible
     public function feedByHashtagPromise(string $tag): PromiseInterface
     {
         return $this->feed(TYPE_HASHTAG, $tag);
+    }
+
+    /**
+     * Retrieves feed by location.
+     *
+     * @param string $locationId
+     * @return PromiseInterface<FeedResponse|InstagramException>
+     */
+    public function feedByLocationPromise(string $locationId): PromiseInterface
+    {
+        return $this->feed(TYPE_LOCATION, $locationId);
     }
 
     /**
