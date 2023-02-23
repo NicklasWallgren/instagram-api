@@ -224,81 +224,81 @@ final class Item
     }
 
     /**
-     * @return ImageVersions2[]
+     * @return ImageVersions2|null
      */
-    public function getImageVersions2(): array
+    public function getImageVersions2(): ?ImageVersions2
     {
         return $this->imageVersions2;
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getOriginalWidth(): float
+    public function getOriginalWidth(): ?float
     {
         return $this->originalWidth;
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getOriginalHeight(): float
+    public function getOriginalHeight(): ?float
     {
         return $this->originalHeight;
     }
 
     /**
-     * @return object
+     * @return object|null
      */
-    public function getVideoVersions(): object
+    public function getVideoVersions(): ?object
     {
         return $this->videoVersions;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isHasAudio(): bool
+    public function isHasAudio(): ?bool
     {
         return $this->hasAudio;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getVideoDuration(): int
+    public function getVideoDuration(): ?int
     {
         return $this->videoDuration;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getViewCount(): int
+    public function getViewCount(): ?int
     {
         return $this->viewCount;
     }
 
     /**
-     * @return object
+     * @return object|null
      */
-    public function getUser(): object
+    public function getUser(): ?object
     {
         return $this->user;
     }
 
     /**
-     * @return object
+     * @return object|null
      */
-    public function getCaption(): object
+    public function getCaption(): ?object
     {
         return $this->caption;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isCaptionIsEdited(): bool
+    public function isCaptionIsEdited(): ?bool
     {
         return $this->captionIsEdited;
     }
@@ -344,17 +344,17 @@ final class Item
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getNextMaxId(): float
+    public function getNextMaxId(): ?float
     {
         return $this->nextMaxId;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaxNumVisiblePreviewComments(): int
+    public function getMaxNumVisiblePreviewComments(): ?int
     {
         return $this->maxNumVisiblePreviewComments;
     }
