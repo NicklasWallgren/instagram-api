@@ -41,6 +41,11 @@ final class User implements UserInterface, OnResponseDecodeInterface
     private $fullName;
 
     /**
+     * @var string
+     */
+    private $biography;
+
+    /**
      * @var bool
      */
     private $isPrivate;
@@ -50,6 +55,12 @@ final class User implements UserInterface, OnResponseDecodeInterface
      * @SerializedName("profile_pic_url")
      */
     private $profilePictureUrl;
+
+    /**
+     * @var string
+     * @SerializedName("profile_pic_id")
+     */
+    private $profilePictureId;
 
     /**
      * @var ProfilePictureVersion[]
@@ -118,6 +129,14 @@ final class User implements UserInterface, OnResponseDecodeInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
+    /**
      * @return bool
      */
     public function isPrivate(): bool
@@ -131,6 +150,14 @@ final class User implements UserInterface, OnResponseDecodeInterface
     public function getProfilePictureUrl(): string
     {
         return $this->profilePictureUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfilePictureId(): string
+    {
+        return $this->profilePictureId;
     }
 
     /**
