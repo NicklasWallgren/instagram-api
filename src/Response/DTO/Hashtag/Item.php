@@ -55,7 +55,7 @@ final class Item
     private $filterType;
 
     /**
-     * @var ImageVersions2[]
+     * @var ImageVersions2
      */
     private $imageVersions2;
 
