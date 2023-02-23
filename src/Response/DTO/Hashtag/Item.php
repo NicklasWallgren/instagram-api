@@ -55,7 +55,7 @@ final class Item
     private $filterType;
 
     /**
-     * @var ImageVersions2[]
+     * @var ImageVersions2
      */
     private $imageVersions2;
 
@@ -70,7 +70,7 @@ final class Item
     private $originalHeight;
 
     /**
-     * @var object
+     * @var object // TODO
      */
     private $videoVersions;
 
@@ -224,81 +224,90 @@ final class Item
     }
 
     /**
-     * @return ImageVersions2[]
+     * @return ImageVersions2|null
      */
-    public function getImageVersions2(): array
+    public function getImageVersions2(): ?ImageVersions2
     {
         return $this->imageVersions2;
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getOriginalWidth(): float
+    public function getOriginalWidth(): ?float
     {
         return $this->originalWidth;
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getOriginalHeight(): float
+    public function getOriginalHeight(): ?float
     {
         return $this->originalHeight;
     }
 
     /**
-     * @return object
+     * @return object|null
      */
-    public function getVideoVersions(): object
+    public function getVideoVersions(): ?object
     {
+        if (is_array($this->videoVersions)) {
+            return (object)$this->videoVersions;
+        }
         return $this->videoVersions;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isHasAudio(): bool
+    public function isHasAudio(): ?bool
     {
         return $this->hasAudio;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getVideoDuration(): int
+    public function getVideoDuration(): ?int
     {
         return $this->videoDuration;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getViewCount(): int
+    public function getViewCount(): ?int
     {
         return $this->viewCount;
     }
 
     /**
-     * @return object
+     * @return object|null
      */
-    public function getUser(): object
+    public function getUser(): ?object
     {
+        if (is_array($this->user)) {
+            return (object)$this->user;
+        }
         return $this->user;
     }
 
     /**
-     * @return object
+     * @return object|null
      */
-    public function getCaption(): object
+    public function getCaption(): ?object
     {
+        if (is_array($this->caption)) {
+            return (object)$this->caption;
+        }
         return $this->caption;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isCaptionIsEdited(): bool
+    public function isCaptionIsEdited(): ?bool
     {
         return $this->captionIsEdited;
     }
@@ -344,17 +353,17 @@ final class Item
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getNextMaxId(): float
+    public function getNextMaxId(): ?float
     {
         return $this->nextMaxId;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaxNumVisiblePreviewComments(): int
+    public function getMaxNumVisiblePreviewComments(): ?int
     {
         return $this->maxNumVisiblePreviewComments;
     }
