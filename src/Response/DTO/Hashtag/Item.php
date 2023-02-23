@@ -70,7 +70,7 @@ final class Item
     private $originalHeight;
 
     /**
-     * @var object
+     * @var object // TODO
      */
     private $videoVersions;
 
@@ -252,6 +252,9 @@ final class Item
      */
     public function getVideoVersions(): ?object
     {
+        if (is_array($this->videoVersions)) {
+            return (object)$this->videoVersions;
+        }
         return $this->videoVersions;
     }
 
@@ -284,6 +287,9 @@ final class Item
      */
     public function getUser(): ?object
     {
+        if (is_array($this->user)) {
+            return (object)$this->user;
+        }
         return $this->user;
     }
 
@@ -292,6 +298,9 @@ final class Item
      */
     public function getCaption(): ?object
     {
+        if (is_array($this->caption)) {
+            return (object)$this->caption;
+        }
         return $this->caption;
     }
 
