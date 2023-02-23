@@ -134,6 +134,22 @@ final class User implements UserInterface, OnResponseDecodeInterface
     }
 
     /**
+     * @return ProfilePictureVersion[]
+     */
+    public function getProfilePictureVersions(): array
+    {
+        return $this->profilePictureVersions;
+    }
+
+    /**
+     * @return ProfilePictureVersion
+     */
+    public function getProfilePictureUrlInfo(): ProfilePictureVersion
+    {
+        return $this->profilePictureUrlInfo;
+    }
+
+    /**
      * @return FriendshipStatus
      */
     public function getFriendshipStatus()
