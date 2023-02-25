@@ -9,11 +9,11 @@
   ],
   "description": "Instagram private API SDK",
   "require": {
-    "guzzlehttp/guzzle": "^6.0|^7.0",
+    "guzzlehttp/guzzle": "^7.5",
     "psr/http-message": "^1.0",
     "php": ">=7.2",
     "webmozart/assert": "^1.0",
-    "tebru/gson-php": "^0.7",
+    "tebru/gson-php": "^0.7.5",
     "ext-curl": "*",
     "ext-json": "*"
   },
